@@ -1,6 +1,6 @@
-# Rails Todo App - Step-by-Step Execution Guide
+# Rails Todo App - Step-by-Step Execution Guide (Simplified)
 
-**Purpose:** A comprehensive, beginner-friendly execution guide with detailed explanations, code examples, and learning notes for building a Rails 8.2 todo application.
+**Purpose:** A beginner-friendly execution guide with detailed explanations for building a simple Rails 8.0.2 todo application using SQLite and basic deployment.
 
 ---
 
@@ -9,22 +9,14 @@
 Before we start, let's verify your development environment:
 
 ```bash
-# Check Ruby version (should be >= 3.1.0 for Rails 8.2)
+# Check Ruby version (should be >= 3.1.0 for Rails 8.0.2)
 ruby --version
 
-# Check if Rails is installed
+# Check if Rails is installed (if not, install with: gem install rails)
 rails --version
-
-# Check if Node.js is available (needed for Tailwind)
-node --version
-
-# Check if Yarn or npm is available
-yarn --version
-# OR
-npm --version
 ```
 
-**Learning Note:** Rails 8.0.2 requires Ruby 3.1+ because it uses newer Ruby features for better performance and security. Rails 8.0 introduces Solid gems (Queue, Cache, Cable) replacing Redis for many use cases.
+**Learning Note:** Rails 8.0.2 requires Ruby 3.1+ and comes with everything we need built-in, including SQLite for the database. We'll keep things simple and use the defaults.
 
 ---
 
@@ -42,8 +34,8 @@ cd todo_app
 **Learning Explanation:**
 
 - `--css=tailwind`: Automatically configures Tailwind CSS with the Rails asset pipeline
-- `--database=sqlite3`: Uses SQLite for development (we'll switch to PostgreSQL for production)
-- `--skip-test`: We'll set up testing manually to understand the process better
+- `--database=sqlite3`: Uses SQLite for both development and production (simple and reliable)
+- `--skip-test`: We'll set up basic testing later to understand the process
 
 **What Rails Created:**
 
@@ -1029,941 +1021,215 @@ Now you can test:
 
 ---
 
-## Phase 5: Advanced Styling and User Experience (Days 6-8)
+## Phase 5: Basic Styling Improvements (Days 6-7)
 
-### Step 16: Add Handwritten Font and Dotted Background
+### Step 16: Add Simple Custom Styles
 
-Add to `app/views/layouts/application.html.erb` in the `<head>` section:
-
-```erb
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
-```
-
-Update `tailwind.config.js`:
-
-```js
-const defaultTheme = require("tailwindcss/defaultTheme");
-
-module.exports = {
-  content: [
-    "./public/*.html",
-    "./app/**/*.{js,jsx,ts,tsx,vue,erb}",
-    "./app/helpers/**/*.rb",
-    "./app/javascript/**/*.js",
-    "./app/views/**/*.{erb,haml,html,slim}",
-  ],
-  theme: {
-    extend: {
-      fontFamily: {
-        handwriting: ["Gloria Hallelujah", "cursive"],
-        casual: ["Kalam", "cursive"],
-        sans: ["Inter var", ...defaultTheme.fontFamily.sans],
-      },
-      animation: {
-        "write-in": "write-in 2s ease-out forwards",
-        "fade-in": "fade-in 0.5s ease-out forwards",
-        "bounce-in": "bounce-in 0.6s ease-out forwards",
-      },
-      keyframes: {
-        "write-in": {
-          "0%": { width: "0%", opacity: "0" },
-          "50%": { opacity: "1" },
-          "100%": { width: "100%", opacity: "1" },
-        },
-        "fade-in": {
-          "0%": { opacity: "0", transform: "translateY(10px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        "bounce-in": {
-          "0%": { opacity: "0", transform: "scale(0.3)" },
-          "50%": { opacity: "1", transform: "scale(1.05)" },
-          "70%": { transform: "scale(0.9)" },
-          "100%": { opacity: "1", transform: "scale(1)" },
-        },
-      },
-    },
-  },
-  plugins: [require("@tailwindcss/forms")],
-};
-```
-
-Add custom styles to `app/assets/stylesheets/application.tailwind.css`:
+Let's add some basic custom styles to make our app look more polished. Add to `app/assets/stylesheets/application.tailwind.css`:
 
 ```css
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-/* Dotted background pattern */
-@layer base {
-  body {
-    background-image: radial-gradient(circle, #e5e7eb 1px, transparent 1px);
-    background-size: 20px 20px;
-    font-family: "Kalam", cursive;
-  }
-
-  /* Override for specific elements */
-  .font-handwriting {
-    font-family: "Gloria Hallelujah", cursive;
-  }
-}
-
-/* Custom checkbox styles */
+/* Simple custom styles */
 @layer components {
-  .custom-checkbox {
-    @apply relative inline-block w-6 h-6 cursor-pointer;
+  .btn-primary {
+    @apply bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors;
   }
 
-  .custom-checkbox input {
-    @apply sr-only;
+  .btn-secondary {
+    @apply bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors;
   }
 
-  .custom-checkbox svg {
-    @apply w-full h-full transition-all duration-200;
+  .card {
+    @apply bg-white rounded-lg shadow-md p-6;
   }
 
-  .custom-checkbox input:checked + svg .checkbox-tick {
-    stroke-dasharray: 20;
-    stroke-dashoffset: 0;
-    animation: draw-tick 0.5s ease-out forwards;
-  }
-
-  .custom-checkbox svg .checkbox-tick {
-    stroke-dasharray: 20;
-    stroke-dashoffset: 20;
-  }
-
-  @keyframes draw-tick {
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
-}
-
-/* Write-in effect for new todos */
-@layer components {
-  .write-in-effect {
-    overflow: hidden;
-    border-right: 2px solid #3b82f6;
-    white-space: nowrap;
-    animation: typing 2s steps(40, end), blink-caret 0.75s step-end infinite;
-  }
-
-  @keyframes typing {
-    from {
-      width: 0;
-    }
-    to {
-      width: 100%;
-    }
-  }
-
-  @keyframes blink-caret {
-    from,
-    to {
-      border-color: transparent;
-    }
-    50% {
-      border-color: #3b82f6;
-    }
-  }
-}
-
-/* Hand-drawn style elements */
-@layer components {
-  .hand-drawn-border {
-    border: 2px solid #374151;
-    border-radius: 8px;
-    position: relative;
-  }
-
-  .hand-drawn-border::before {
-    content: "";
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    border: 2px solid #374151;
-    border-radius: 8px;
-    transform: rotate(0.5deg);
-    z-index: -1;
+  .form-input {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500;
   }
 }
 ```
 
-### Step 17: Create Custom Checkbox Component
+### Step 17: Update Views to Use Custom Styles
 
-Create `app/views/shared/_custom_checkbox.html.erb`:
+Now let's update our views to use the custom CSS classes we created. This will make our code cleaner and more maintainable.
+
+Update the form buttons in your views to use the new classes:
 
 ```erb
-<label class="custom-checkbox">
-  <%= check_box_tag name, value, checked,
-      { class: "sr-only",
-        onchange: onchange_js,
-        data: { todo_id: todo_id } } %>
+<!-- Instead of long Tailwind classes, use: -->
+<%= form.submit "Create Project", class: "btn-primary" %>
+<%= link_to "Cancel", projects_path, class: "btn-secondary" %>
 
-  <svg viewBox="0 0 24 24" class="text-gray-600 hover:text-blue-600 transition-colors">
-    <!-- Hand-drawn style checkbox -->
-    <path d="M3 5c0-1.1.9-2 2-2h14c1.1 0 2 .9 2 2v14c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V5z"
-          stroke="currentColor"
-          stroke-width="2"
-          fill="none"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="checkbox-box"/>
+<!-- For form inputs, use: -->
+<%= form.text_field :name, class: "form-input", placeholder: "Project name" %>
 
-    <!-- Animated checkmark -->
-    <path d="M7 12l3 3 7-7"
-          stroke="currentColor"
-          stroke-width="2.5"
-          fill="none"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="checkbox-tick <%= 'opacity-100' if checked %> <%= 'opacity-0' unless checked %>"/>
-  </svg>
-</label>
+<!-- For cards, use: -->
+<div class="card">
+  <!-- content here -->
+</div>
 ```
 
-### Step 18: Add Stimulus Controller for Interactive Features
+**Learning Note:** At this point, you have a clean, functional Rails application with:
 
-Create `app/javascript/controllers/todo_controller.js`:
+- Simple, maintainable styling using Tailwind CSS
+- Reusable CSS component classes
+- Clean, responsive user interface
+- Good separation of concerns between styling and functionality
 
-```javascript
-import { Controller } from "@hotwired/stimulus";
-
-export default class extends Controller {
-  static targets = ["checkbox", "title", "notes"];
-  static values = {
-    projectId: Number,
-    todoId: Number,
-    completed: Boolean,
-  };
-
-  connect() {
-    // Add animation class when controller connects
-    if (this.element.dataset.newTodo === "true") {
-      this.animateIn();
-    }
-  }
-
-  toggle(event) {
-    const checkbox = event.target;
-    const isCompleted = checkbox.checked;
-
-    // Animate the change
-    this.animateToggle(isCompleted);
-
-    // Submit the form via AJAX
-    this.submitToggle(isCompleted);
-  }
-
-  animateToggle(isCompleted) {
-    const title = this.titleTarget;
-    const notes = this.hasNotesTarget ? this.notesTarget : null;
-
-    if (isCompleted) {
-      title.classList.add(
-        "line-through",
-        "text-gray-500",
-        "transition-all",
-        "duration-300"
-      );
-      if (notes) notes.classList.add("line-through", "text-gray-400");
-    } else {
-      title.classList.remove("line-through", "text-gray-500");
-      if (notes) notes.classList.remove("line-through", "text-gray-400");
-    }
-  }
-
-  animateIn() {
-    this.element.classList.add("animate-fade-in");
-
-    // Remove the data attribute so it doesn't animate again
-    setTimeout(() => {
-      this.element.removeAttribute("data-new-todo");
-    }, 500);
-  }
-
-  submitToggle(isCompleted) {
-    const form = new FormData();
-    form.append("todo[completed]", isCompleted);
-    form.append("_method", "PATCH");
-
-    // Get CSRF token
-    const token = document.querySelector('meta[name="csrf-token"]').content;
-
-    fetch(`/projects/${this.projectIdValue}/todos/${this.todoIdValue}`, {
-      method: "POST",
-      headers: {
-        "X-CSRF-Token": token,
-        "X-Requested-With": "XMLHttpRequest",
-      },
-      body: form,
-    })
-      .then((response) => {
-        if (!response.ok) {
-          // Revert the checkbox if the request failed
-          const checkbox = this.checkboxTarget;
-          checkbox.checked = !isCompleted;
-          this.animateToggle(!isCompleted);
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating todo:", error);
-        // Revert the checkbox
-        const checkbox = this.checkboxTarget;
-        checkbox.checked = !isCompleted;
-        this.animateToggle(!isCompleted);
-      });
-  }
-}
-```
-
-Create `app/javascript/controllers/typing_controller.js`:
-
-```javascript
-import { Controller } from "@hotwired/stimulus";
-
-export default class extends Controller {
-  static values = {
-    text: String,
-    speed: { type: Number, default: 50 },
-  };
-
-  connect() {
-    this.typeText();
-  }
-
-  typeText() {
-    const text = this.textValue || this.element.textContent;
-    const speed = this.speedValue;
-
-    // Clear the element
-    this.element.textContent = "";
-    this.element.classList.add("write-in-effect");
-
-    let i = 0;
-    const typeInterval = setInterval(() => {
-      if (i < text.length) {
-        this.element.textContent += text.charAt(i);
-        i++;
-      } else {
-        clearInterval(typeInterval);
-        // Remove the blinking cursor after typing is complete
-        setTimeout(() => {
-          this.element.classList.remove("write-in-effect");
-        }, 1000);
-      }
-    }, speed);
-  }
-}
-```
-
-### Step 19: Update Views to Use Custom Components
-
-Update the todo display in `app/views/projects/show.html.erb` to use the new components:
-
-```erb
-<!-- Replace the existing todos section with: -->
-<% if @todos.any? %>
-  <div class="space-y-3">
-    <% @todos.each do |todo| %>
-      <div class="todo-item flex items-start space-x-3 p-4 bg-white border-2 border-gray-200 rounded-lg hover:border-gray-300 transition-all duration-200 hand-drawn-border"
-           data-controller="todo"
-           data-todo-project-id-value="<%= @project.id %>"
-           data-todo-todo-id-value="<%= todo.id %>"
-           data-todo-completed-value="<%= todo.completed %>">
-
-        <!-- Custom Checkbox -->
-        <div class="flex-shrink-0 mt-1">
-          <%= render 'shared/custom_checkbox',
-              name: "todo[completed]",
-              value: "1",
-              checked: todo.completed,
-              onchange_js: "todo#toggle",
-              todo_id: todo.id %>
-        </div>
-
-        <!-- Todo Content -->
-        <div class="flex-1 min-w-0">
-          <div class="flex items-center justify-between">
-            <h4 class="text-lg font-handwriting text-gray-900 transition-all duration-300 <%= 'line-through text-gray-500' if todo.completed %>"
-                data-todo-target="title">
-              <%= todo.title %>
-            </h4>
-
-            <div class="flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
-              <%= link_to "✏️", edit_project_todo_path(@project, todo),
-                  class: "text-blue-600 hover:text-blue-800 text-sm hover:scale-110 transition-transform" %>
-              <%= link_to "🗑️", project_todo_path(@project, todo),
-                  method: :delete,
-                  confirm: "Are you sure?",
-                  class: "text-red-600 hover:text-red-800 text-sm hover:scale-110 transition-transform" %>
-            </div>
-          </div>
-
-          <% if todo.notes.present? %>
-            <p class="mt-2 text-sm text-gray-600 font-casual transition-all duration-300 <%= 'line-through text-gray-400' if todo.completed %>"
-               data-todo-target="notes">
-              <%= todo.notes %>
-            </p>
-          <% end %>
-
-          <div class="mt-2 flex items-center space-x-4 text-xs text-gray-400">
-            <span>Position: <%= todo.position %></span>
-            <span>Created: <%= todo.created_at.strftime("%b %d") %></span>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  </div>
-<% else %>
-  <!-- Enhanced empty state -->
-  <div class="text-center py-12">
-    <div class="animate-bounce-in">
-      <div class="text-6xl mb-4">📝</div>
-      <h3 class="text-xl font-handwriting text-gray-900 mb-2">No todos yet!</h3>
-      <p class="text-gray-600 font-casual">Add your first todo above to get started on this project.</p>
-    </div>
-  </div>
-<% end %>
-```
-
-**Learning Explanation - Advanced Rails/JavaScript Integration:**
-
-1. **Stimulus Data API**: `data-controller`, `data-target`, and `data-value` attributes connect HTML to JavaScript
-2. **AJAX Forms**: Submitting forms without page refresh using `fetch()` API
-3. **CSS Animations**: Combining Tailwind utility classes with custom keyframe animations
-4. **Progressive Enhancement**: The app works without JavaScript, but is enhanced with it
+This approach keeps your code organized and makes it easy to maintain and update your styles consistently across the application.
 
 ---
 
-## Phase 6: Testing and Quality Assurance (Days 8-9)
+## Phase 6: Basic Testing (Day 7)
 
-### Step 20: Set Up Testing Framework
+### Step 18: Set Up Simple Testing
+
+Rails comes with a built-in testing framework. Let's add just a few basic tests to ensure our app works:
 
 ```bash
-# Add testing gems to Gemfile (in test group)
-bundle add rspec-rails capybara selenium-webdriver --group=test
-
-# Generate RSpec configuration
-bin/rails generate rspec:install
-
-# Generate system test configuration
-bin/rails generate system_test_config
+# Generate basic test files
+bin/rails generate test_unit:model user
+bin/rails generate test_unit:model project
+bin/rails generate test_unit:model todo
 ```
 
-### Step 21: Write Model Tests
+### Step 19: Write Basic Model Tests
 
-Create `spec/models/user_spec.rb`:
+Let's write a simple test to make sure our User model works correctly. Edit `test/models/user_test.rb`:
 
 ```ruby
-require 'rails_helper'
+require "test_helper"
 
-RSpec.describe User, type: :model do
-  describe 'validations' do
-    it 'requires an email address' do
-      user = User.new(password: 'password123')
-      expect(user).not_to be_valid
-      expect(user.errors[:email_address]).to include("can't be blank")
-    end
-
-    it 'requires a unique email address' do
-      User.create!(email_address: 'test@example.com', password: 'password123')
-      duplicate_user = User.new(email_address: 'test@example.com', password: 'password123')
-
-      expect(duplicate_user).not_to be_valid
-      expect(duplicate_user.errors[:email_address]).to include('has already been taken')
-    end
-
-    it 'requires a valid email format' do
-      user = User.new(email_address: 'invalid-email', password: 'password123')
-      expect(user).not_to be_valid
-      expect(user.errors[:email_address]).to include('is invalid')
-    end
+class UserTest < ActiveSupport::TestCase
+  test "should not save user without email" do
+    user = User.new(password: "password123")
+    assert_not user.save, "Saved user without an email address"
   end
 
-  describe 'associations' do
-    it 'has many projects' do
-      user = User.create!(email_address: 'test@example.com', password: 'password123')
-      project1 = user.projects.create!(name: 'Project 1')
-      project2 = user.projects.create!(name: 'Project 2')
+  test "should not save user with duplicate email" do
+    User.create!(email_address: "test@example.com", password: "password123")
+    duplicate_user = User.new(email_address: "test@example.com", password: "password123")
+    assert_not duplicate_user.save, "Saved user with duplicate email"
+  end
 
-      expect(user.projects).to include(project1, project2)
-    end
-
-    it 'destroys associated projects when user is deleted' do
-      user = User.create!(email_address: 'test@example.com', password: 'password123')
-      project = user.projects.create!(name: 'Test Project')
-
-      expect { user.destroy }.to change { Project.count }.by(-1)
-    end
+  test "should save valid user" do
+    user = User.new(email_address: "test@example.com", password: "password123")
+    assert user.save, "Could not save valid user"
   end
 end
 ```
 
-Create `spec/models/project_spec.rb`:
+Edit `test/models/project_test.rb`:
 
 ```ruby
-require 'rails_helper'
+require "test_helper"
 
-RSpec.describe Project, type: :model do
-  let(:user) { User.create!(email_address: 'test@example.com', password: 'password123') }
-
-  describe 'validations' do
-    it 'requires a name' do
-      project = user.projects.build(name: '')
-      expect(project).not_to be_valid
-      expect(project.errors[:name]).to include("can't be blank")
-    end
-
-    it 'requires a user' do
-      project = Project.new(name: 'Test Project')
-      expect(project).not_to be_valid
-      expect(project.errors[:user]).to include("can't be blank")
-    end
+class ProjectTest < ActiveSupport::TestCase
+  test "should not save project without name" do
+    user = User.create!(email_address: "test@example.com", password: "password123")
+    project = user.projects.build(name: "")
+    assert_not project.save, "Saved project without a name"
   end
 
-  describe 'associations' do
-    it 'belongs to a user' do
-      project = user.projects.create!(name: 'Test Project')
-      expect(project.user).to eq(user)
-    end
+  test "should calculate completion percentage" do
+    user = User.create!(email_address: "test@example.com", password: "password123")
+    project = user.projects.create!(name: "Test Project")
 
-    it 'has many todos' do
-      project = user.projects.create!(name: 'Test Project')
-      todo1 = project.todos.create!(title: 'Todo 1')
-      todo2 = project.todos.create!(title: 'Todo 2')
+    project.todos.create!(title: "Todo 1", completed: true)
+    project.todos.create!(title: "Todo 2", completed: false)
 
-      expect(project.todos).to include(todo1, todo2)
-    end
-  end
-
-  describe 'methods' do
-    let(:project) { user.projects.create!(name: 'Test Project') }
-
-    it 'calculates completion percentage correctly' do
-      project.todos.create!(title: 'Todo 1', completed: true)
-      project.todos.create!(title: 'Todo 2', completed: false)
-      project.todos.create!(title: 'Todo 3', completed: true)
-
-      expect(project.completion_percentage).to eq(67) # 2/3 * 100, rounded
-    end
-
-    it 'returns 0% for projects with no todos' do
-      expect(project.completion_percentage).to eq(0)
-    end
+    assert_equal 50, project.completion_percentage
   end
 end
 ```
 
-### Step 22: Write System Tests
+### Step 20: Run Your Tests
 
-Create `spec/system/authentication_spec.rb`:
-
-```ruby
-require 'rails_helper'
-
-RSpec.describe 'Authentication', type: :system do
-  before do
-    driven_by(:rack_test)
-  end
-
-  describe 'User registration' do
-    it 'allows a user to sign up with valid information' do
-      visit sign_up_path
-
-      fill_in 'Email address', with: 'newuser@example.com'
-      fill_in 'Password', with: 'password123'
-      fill_in 'Password confirmation', with: 'password123'
-      click_button 'Create Account'
-
-      expect(page).to have_content('Welcome! Your account was created successfully.')
-      expect(page).to have_content('My Projects')
-    end
-
-    it 'shows errors for invalid registration' do
-      visit sign_up_path
-
-      fill_in 'Email address', with: 'invalid-email'
-      fill_in 'Password', with: 'short'
-      click_button 'Create Account'
-
-      expect(page).to have_content('There was a problem creating your account')
-    end
-  end
-
-  describe 'User sign in' do
-    let!(:user) { User.create!(email_address: 'test@example.com', password: 'password123') }
-
-    it 'allows a user to sign in with valid credentials' do
-      visit new_session_path
-
-      fill_in 'Email address', with: 'test@example.com'
-      fill_in 'Password', with: 'password123'
-      click_button 'Sign In'
-
-      expect(page).to have_content('My Projects')
-    end
-
-    it 'rejects invalid credentials' do
-      visit new_session_path
-
-      fill_in 'Email address', with: 'test@example.com'
-      fill_in 'Password', with: 'wrongpassword'
-      click_button 'Sign In'
-
-      expect(page).to have_content('Sign In') # Still on sign in page
-    end
-  end
-end
-```
-
-Create `spec/system/todo_management_spec.rb`:
-
-```ruby
-require 'rails_helper'
-
-RSpec.describe 'Todo Management', type: :system do
-  let!(:user) { User.create!(email_address: 'test@example.com', password: 'password123') }
-  let!(:project) { user.projects.create!(name: 'Test Project') }
-
-  before do
-    driven_by(:rack_test)
-
-    # Sign in the user
-    visit new_session_path
-    fill_in 'Email address', with: 'test@example.com'
-    fill_in 'Password', with: 'password123'
-    click_button 'Sign In'
-  end
-
-  describe 'Creating todos' do
-    it 'allows creating a new todo' do
-      visit project_path(project)
-
-      fill_in 'What needs to be done?', with: 'Learn RSpec testing'
-      fill_in 'Additional notes (optional)', with: 'Focus on system tests'
-      click_button 'Add Todo'
-
-      expect(page).to have_content('Learn RSpec testing')
-      expect(page).to have_content('Focus on system tests')
-      expect(page).to have_content('Todo was successfully created.')
-    end
-
-    it 'shows validation errors for empty todos' do
-      visit project_path(project)
-
-      fill_in 'What needs to be done?', with: ''
-      click_button 'Add Todo'
-
-      expect(page).to have_content("Title can't be blank")
-    end
-  end
-
-  describe 'Managing todos' do
-    let!(:todo) { project.todos.create!(title: 'Test todo', notes: 'Test notes') }
-
-    it 'allows marking todos as complete' do
-      visit project_path(project)
-
-      check 'todo[completed]'
-
-      # The form should submit automatically via JavaScript
-      # In a real browser test, we'd see the visual changes
-      expect(todo.reload).to be_completed
-    end
-
-    it 'allows editing todos' do
-      visit project_path(project)
-
-      click_link 'Edit'
-      fill_in 'Title', with: 'Updated todo title'
-      click_button 'Update Todo'
-
-      expect(page).to have_content('Updated todo title')
-      expect(page).to have_content('Todo was successfully updated.')
-    end
-
-    it 'allows deleting todos' do
-      visit project_path(project)
-
-      accept_confirm do
-        click_link 'Delete'
-      end
-
-      expect(page).not_to have_content('Test todo')
-      expect(page).to have_content('Todo was successfully deleted.')
-    end
-  end
-end
-```
-
-### Step 23: Run Tests and Fix Issues
+Now let's run our simple tests to make sure everything works:
 
 ```bash
 # Run all tests
-bundle exec rspec
+bin/rails test
 
 # Run specific test files
-bundle exec rspec spec/models/user_spec.rb
-bundle exec rspec spec/system/authentication_spec.rb
-
-# Run tests with coverage (add simplecov gem first)
-bundle add simplecov --group=test
-bundle exec rspec --format documentation
+bin/rails test test/models/user_test.rb
+bin/rails test test/models/project_test.rb
 ```
 
-**Learning Note:** Testing is crucial for maintaining code quality as your application grows. System tests verify the entire user experience, while unit tests ensure individual components work correctly.
+If your tests pass, great! If not, check that your models have the proper validations and associations as defined earlier in this guide.
+
+**Learning Note:** Testing is crucial for maintaining code quality as your application grows. These basic model tests ensure your core business logic works correctly and will catch errors when you make changes later.
 
 ---
 
-## Phase 7: Deployment and Production Setup (Days 9-10)
+## Phase 7: Simple Deployment (Day 8)
 
-### Step 24: Prepare for Production
+### Step 21: Prepare for Production
 
-Add production gems to `Gemfile`:
-
-```ruby
-group :production do
-  gem 'pg' # PostgreSQL for production
-  gem 'redis' # For caching and background jobs
-end
-```
-
-Update `config/database.yml` for production:
-
-```yaml
-production:
-  <<: *default
-  adapter: postgresql
-  url: <%= ENV['DATABASE_URL'] %>
-```
-
-Create `config/environments/production.rb` optimizations:
+Rails comes with good production defaults, but let's make a few small tweaks. First, ensure your `config/environments/production.rb` has these settings:
 
 ```ruby
-Rails.application.configure do
-  # Existing configuration...
-
-  # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  config.asset_host = ENV['ASSET_HOST'] if ENV['ASSET_HOST'].present?
-
-  # Compress CSS using a preprocessor.
-  config.assets.css_compressor = :sass
-
-  # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  config.assets.compile = false
-
-  # Asset digests allow you to set far-future HTTP expiration dates on all assets,
-  # yet still be able to expire them through the digest params.
-  config.assets.digest = true
-
-  # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.variant_processor = :mini_magick
-end
+# In config/environments/production.rb, make sure these are set:
+config.force_ssl = true  # Redirect HTTP to HTTPS
+config.log_level = :info  # Don't log debug info in production
 ```
 
-### Step 25: Deploy to Digital Ocean with Docker
+### Step 22: Deploy to Heroku (Simple Option)
 
-Rails 8.0.2 comes with Docker support built-in. We'll deploy to a Digital Ocean droplet.
+Heroku is the easiest way to deploy a Rails app. Here's how:
 
-First, let's verify the Docker setup:
+1. **Install the Heroku CLI** and create an account at heroku.com
+
+2. **Prepare your app for Heroku:**
 
 ```bash
-# Rails 8.0.2 includes a Dockerfile by default
-cat Dockerfile
+# Add a Procfile to tell Heroku how to start your app
+echo "web: bundle exec puma -C config/puma.rb" > Procfile
 
-# Build the Docker image locally to test
-docker build -t todo-app .
-
-# Test the container locally
-docker run -p 3000:3000 -e RAILS_MASTER_KEY=$(cat config/master.key) todo-app
+# Heroku uses PostgreSQL, so add the pg gem for production only
+echo "gem 'pg', '~> 1.1', group: :production" >> Gemfile
+bundle install
 ```
 
-**Set up Digital Ocean Droplet:**
-
-1. Create a Digital Ocean account and droplet:
-
-   - Choose Ubuntu 22.04 LTS
-   - Select at least 2GB RAM / 1 CPU
-   - Enable monitoring and backups
-
-2. Install Docker on the droplet:
+3. **Deploy to Heroku:**
 
 ```bash
-# SSH into your droplet
-ssh root@your-droplet-ip
+# Initialize git if you haven't already
+git init
+git add .
+git commit -m "Initial commit"
 
-# Install Docker
-curl -fsSL https://get.docker.com -o get-docker.sh
-sh get-docker.sh
+# Create Heroku app
+heroku create your-todo-app-name
 
-# Install Docker Compose
-apt install docker-compose-plugin
+# Deploy
+git push heroku main
 
-# Create app directory
-mkdir -p /var/www/todo-app
-cd /var/www/todo-app
+# Run database migrations on Heroku
+heroku run rails db:migrate
+
+# Open your app
+heroku open
 ```
 
-3. Create production docker-compose.yml:
+### Step 23: Alternative Deployment Options
 
-```yaml
-# docker-compose.production.yml
-version: "3.8"
-services:
-  app:
-    build: .
-    ports:
-      - "80:3000"
-    environment:
-      - RAILS_ENV=production
-      - DATABASE_URL=postgresql://todo_user:your_password@db:5432/todo_production
-      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
-    depends_on:
-      - db
-    volumes:
-      - storage_data:/rails/storage
-    restart: unless-stopped
+If you prefer other hosting options, here are some beginner-friendly alternatives:
 
-  db:
-    image: postgres:15-alpine
-    environment:
-      - POSTGRES_DB=todo_production
-      - POSTGRES_USER=todo_user
-      - POSTGRES_PASSWORD=your_password
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    restart: unless-stopped
+**Option 1: Railway**
 
-  nginx:
-    image: nginx:alpine
-    ports:
-      - "443:443"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./ssl:/etc/nginx/ssl
-    depends_on:
-      - app
-    restart: unless-stopped
+- Similar to Heroku but with more generous free tier
+- Visit railway.app, connect your GitHub repo, and deploy with one click
 
-volumes:
-  postgres_data:
-  storage_data:
-```
+**Option 2: Render**
 
-4. Deploy the application:
+- Free hosting for static sites and web services
+- Visit render.com, connect your repo, and follow their Rails deployment guide
 
-```bash
-# Copy your app files to the droplet
-scp -r . root@your-droplet-ip:/var/www/todo-app/
-
-# SSH into droplet and start services
-ssh root@your-droplet-ip
-cd /var/www/todo-app
-
-# Set environment variables
-export RAILS_MASTER_KEY=your_master_key_here
-
-# Build and start services
-docker compose -f docker-compose.production.yml up -d --build
-
-# Run database migrations
-docker compose -f docker-compose.production.yml exec app bin/rails db:create db:migrate
-```
-
-### Step 26: Set Up Custom Domain and SSL
-
-1. **Configure Nginx with SSL:**
-
-Create `/var/www/todo-app/nginx.conf`:
-
-```nginx
-events {
-    worker_connections 1024;
-}
-
-http {
-    upstream app {
-        server app:3000;
-    }
-
-    server {
-        listen 80;
-        server_name todos.yourdomain.com;
-        return 301 https://$server_name$request_uri;
-    }
-
-    server {
-        listen 443 ssl http2;
-        server_name todos.yourdomain.com;
-
-        ssl_certificate /etc/nginx/ssl/cert.pem;
-        ssl_certificate_key /etc/nginx/ssl/key.pem;
-
-        location / {
-            proxy_pass http://app;
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
-        }
-    }
-}
-```
-
-2. **Set up SSL certificates using Let's Encrypt:**
-
-```bash
-# Install certbot
-apt install certbot
-
-# Get SSL certificate
-certbot certonly --standalone -d todos.yourdomain.com
-
-# Copy certificates to nginx directory
-mkdir -p /var/www/todo-app/ssl
-cp /etc/letsencrypt/live/todos.yourdomain.com/fullchain.pem /var/www/todo-app/ssl/cert.pem
-cp /etc/letsencrypt/live/todos.yourdomain.com/privkey.pem /var/www/todo-app/ssl/key.pem
-```
-
-3. **Update DNS records:**
-   - Add an A record pointing `todos.yourdomain.com` to your droplet's IP address
-
-### Step 27: Post-Deployment Tasks
-
-```bash
-# Check application status
-docker compose -f docker-compose.production.yml ps
-
-# View application logs
-docker compose -f docker-compose.production.yml logs -f app
-
-# Access Rails console in production
-docker compose -f docker-compose.production.yml exec app bin/rails console
-
-# Run database migrations (if needed)
-docker compose -f docker-compose.production.yml exec app bin/rails db:migrate
-
-# Restart services
-docker compose -f docker-compose.production.yml restart
-
-# Update SSL certificates (set up auto-renewal)
-crontab -e
-# Add: 0 12 * * * /usr/bin/certbot renew --quiet && docker compose -f /var/www/todo-app/docker-compose.production.yml restart nginx
-```
-
-**Learning Note:** Production deployment involves many considerations:
-
-- Database differences (SQLite vs PostgreSQL)
-- Environment variables for sensitive data
-- Asset compilation and serving
-- SSL certificates and domain configuration
-- Monitoring and logging
+**Learning Note:** The beauty of Rails is that it runs anywhere. Once you understand the basics of deployment (environment variables, database setup, asset compilation), you can deploy to any hosting provider.
 
 ---
 
@@ -1974,104 +1240,83 @@ crontab -e
 **Issue: Tailwind styles not loading**
 
 ```bash
-# Rebuild Tailwind
-bin/rails tailwindcss:build
-
-# Check if Tailwind process is running
-bin/rails tailwindcss:watch
+# Restart the Rails server and check if Tailwind is watching for changes
+bin/rails server
 ```
 
 **Issue: Authentication not working**
 
 ```bash
-# Check if sessions table exists
+# Check in Rails console if your User model is set up correctly
 bin/rails console
-Session.count
-
-# Verify User model has has_secure_password
-User.new.respond_to?(:authenticate)
+User.first.authenticate("password123")
 ```
 
 **Issue: Database relationship errors**
 
 ```bash
-# Check foreign keys
+# Check your associations in Rails console
 bin/rails console
-Project.first.user
-Todo.first.project
+user = User.first
+user.projects
 ```
 
-**Issue: JavaScript not working**
+**Issue: Tests failing**
 
 ```bash
-# Check Stimulus controllers are loaded
-# Open browser dev tools, look for JavaScript errors
-# Verify data-controller attributes match controller names
-```
-
-**Issue: Deployment failures**
-
-```bash
-# Check container logs
-docker compose -f docker-compose.production.yml logs app
-
-# Check all services status
-docker compose -f docker-compose.production.yml ps
-
-# Check database connection
-docker compose -f docker-compose.production.yml exec app bin/rails db:migrate:status
-
-# Rebuild containers if needed
-docker compose -f docker-compose.production.yml up -d --build
+# Make sure your test database is set up
+bin/rails db:test:prepare
+bin/rails test
 ```
 
 ---
 
 ## Final Learning Summary
 
-Congratulations! You've built a complete Rails application with modern authentication, beautiful UI, and production deployment. Here's what you've learned:
+Congratulations! You've built a complete Rails application with authentication, clean UI, and deployment knowledge. Here's what you've learned:
 
-### Core Rails Concepts Mastered
+### Core Rails Concepts You Now Understand
 
-- **MVC Architecture**: Clean separation of concerns
-- **Active Record**: Database relationships and queries
-- **Routing**: RESTful routes and nested resources
-- **Authentication**: Rails 8.2 built-in auth system
-- **Asset Pipeline**: Tailwind CSS integration
-- **Testing**: Model and system tests with RSpec
+- **MVC Architecture**: How controllers, models, and views work together
+- **Active Record**: Database relationships, validations, and queries
+- **Routing**: RESTful routes and nested resources for related data
+- **Authentication**: User registration, login, and session management
+- **Styling**: Using Tailwind CSS with Rails for responsive design
+- **Testing**: Writing basic tests to ensure your code works
+- **Deployment**: Getting your app online for others to use
 
-### Advanced Techniques Applied
+### Key Skills You've Developed
 
-- **Custom Stimulus Controllers**: Interactive JavaScript behavior
-- **CSS Animations**: Hand-drawn aesthetic with smooth transitions
-- **Form Handling**: AJAX submissions and validation
-- **Database Design**: Proper relationships and constraints
-- **Deployment**: Production-ready configuration
+- **Problem-solving**: Breaking down features into manageable steps
+- **Rails conventions**: Following Rails' "convention over configuration" philosophy
+- **Database design**: Creating proper relationships between your data models
+- **User experience**: Building forms, navigation, and feedback for users
+- **Code organization**: Keeping your code clean and maintainable
 
-### Best Practices Implemented
+### What You Can Build Next
 
-- **Security**: CSRF protection, password hashing, data scoping
-- **Performance**: Database query optimization, asset compilation
-- **User Experience**: Progressive enhancement, responsive design
-- **Code Quality**: Testing, validation, error handling
+Now that you understand the fundamentals, you can:
 
-### Next Steps for Continued Learning
+1. **Add new features**: Search, categories, due dates, file uploads
+2. **Improve the design**: Custom themes, better mobile experience
+3. **Add collaboration**: Share projects with other users
+4. **Learn more Rails**: Background jobs, email sending, APIs
 
-1. **Add more features**: File uploads, email notifications, team collaboration
-2. **Improve performance**: Caching, background jobs, database optimization
-3. **Enhance testing**: More comprehensive test coverage, performance testing
-4. **Learn advanced Rails**: Action Cable (WebSockets), API development, microservices
-
-You now have a solid foundation in modern Rails development and can confidently build and deploy web applications!
+You now have a solid foundation in Rails development and the confidence to build web applications!
 
 ---
 
 ## Additional Resources
 
-- **Rails Guides**: https://guides.rubyonrails.org/
-- **Rails API Docs**: https://api.rubyonrails.org/
-- **Tailwind CSS**: https://tailwindcss.com/docs
-- **Stimulus Handbook**: https://stimulus.hotwired.dev/handbook/introduction
-- **RSpec Documentation**: https://rspec.info/documentation/
-- **Docker with Rails**: https://docs.docker.com/samples/rails/
-- **Digital Ocean Droplet Setup**: https://www.digitalocean.com/community/tutorials
+- **Rails Guides**: https://guides.rubyonrails.org/ - The official Rails documentation
+- **Rails Tutorial**: https://railstutorial.org/ - Michael Hartl's comprehensive Rails book
+- **Tailwind CSS**: https://tailwindcss.com/docs - Complete CSS framework documentation
+- **Heroku Rails Guide**: https://devcenter.heroku.com/articles/getting-started-with-rails8 - Deployment help
+- **Ruby on Rails Community**: https://rubyonrails.org/community - Forums and help
+
+**Learning Path Suggestions:**
+
+1. Complete this todo app with all the features
+2. Try building a different app (blog, recipe manager, etc.)
+3. Learn about Rails APIs and build a mobile app backend
+4. Explore advanced Rails features like Action Cable for real-time features
