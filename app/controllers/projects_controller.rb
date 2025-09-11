@@ -10,8 +10,8 @@ class ProjectsController < ApplicationController
 
   def show
     # @project is set by before_action
-    @todos = @project.todos.where.not(id: nil)  # Only get saved todos
-    @new_todo = @project.todos.build            # New todo for the form
+    @todos = @project.todos.ordered.where.not(id: nil)  # Get saved todos in order
+    @new_todo = @project.todos.build                    # New todo for the form
   end
 
   def new

@@ -1,15 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
   <!-- Hand-drawn checkbox background -->
-  <rect x="32" y="32" width="448" height="448" rx="48" ry="48" 
+  <rect x="2" y="2" width="28" height="28" rx="3" ry="3" 
         fill="#4a5568" 
         stroke="#4a5568" 
-        stroke-width="16"/>
+        stroke-width="1"/>
   
   <!-- Hand-drawn checkmark -->
-  <path d="M128 256l96 96 192-192" 
+  <path d="M8 16l6 6 12-12" 
         fill="none" 
         stroke="#10b981" 
-        stroke-width="48" 
+        stroke-width="3" 
         stroke-linecap="round" 
         stroke-linejoin="round"/>
 </svg>

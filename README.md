@@ -40,16 +40,11 @@ A stunning, professional notebook-style todo application built with Rails 8.0, f
 
 ### ⚡ **Advanced User Experience**
 
-- **Smart keyboard shortcuts**:
-  - `Alt+N` - Add new todo instantly
-  - `Alt+X` - Close forms
-  - `NN` (double-tap) - Quick todo creation
-  - `T` - Cycle through themes
-  - `Ctrl+Enter` - Submit forms quickly
-- **Theme persistence** across all pages with instant switching
+- **Drag-and-drop todo reordering** - Effortlessly reorganize todos with smooth visual feedback
+- **Theme persistence** across all pages with instant switching via theme selector
 - **Auto-dismissing flash messages** (3-second timeout with smooth fade)
 - **Turbo-powered navigation** for SPA-like speed
-- **Responsive design** that works perfectly on all devices
+- **Mobile-first responsive design** optimized for touch devices and desktop
 
 ### 🎯 **Smart UI/UX Design**
 
@@ -102,7 +97,7 @@ Todo
 - **Complete CRUD operations** for projects and todos with edit/delete
 - **5 beautiful themes** with instant switching and persistence
 - **Smart progress tracking** with counters and visual progress bars
-- **Advanced keyboard shortcuts** for power users
+- **Intuitive drag-and-drop reordering** for todos
 - **Auto-dismissing notifications** with smooth animations
 - **Hand-drawn aesthetics** throughout - checkboxes, underlines, margins
 - **Professional UX** with contextual UI elements
@@ -149,16 +144,15 @@ Visit http://localhost:3000 to experience the app!
 1. Click "Sign Up" to create your account
 2. Start creating projects and todos
 3. Try different themes using the theme selector
-4. Use keyboard shortcuts for faster productivity
+4. Drag and drop todos to reorder them within projects
 5. Each user has their own private workspace
 
-## Keyboard Shortcuts
+## Interactive Features
 
-- **`Alt+N`** - Add new todo (when on project page)
-- **`Alt+X`** - Close any open form
-- **`NN`** - Double-tap 'n' for quick todo creation
-- **`T`** - Cycle through all 5 themes
-- **`Ctrl+Enter`** - Submit any form quickly
+- **Click theme selector** - Switch between 5 beautiful notebook themes
+- **Drag and drop** - Reorder todos within any project
+- **Click checkboxes** - Mark todos as complete/incomplete
+- **Collapsible forms** - Clean interface with expandable todo creation
 
 ## Key Learning Achievements 🎓
 

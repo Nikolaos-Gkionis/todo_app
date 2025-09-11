@@ -44,16 +44,27 @@
     <h2 class="text-xl font-semibold mb-4">Todos (<%= @todos.count %>)</h2>
 
     <% if @todos.any? %>
-    <div class="space-y-3">
+    <div class="space-y-3" 
+         data-controller="sortable" 
+         data-sortable-url-value="<%= reorder_project_todos_path(@project) %>">
       <% @todos.each do |todo| %>
 
-      <div class="todo-item flex items-start p-3">
+      <div class="todo-item flex items-start p-3" 
+           data-sortable-target="item" 
+           data-todo-id="<%= todo.id %>">
         <%= form_with model: [@project, todo], method: :patch, local: true, class: "flex items-center mr-3" do |form| %>
         <div class="hand-checkbox <%= todo.completed? ? 'hand-checkbox-checked' : 'hand-checkbox-unchecked' %>" 
              onclick="this.closest('form').submit()">
         </div>
         <%= form.hidden_field :completed, value: !todo.completed %>
         <% end %>
+
+        <!-- Drag handle -->
+        <div class="drag-handle mr-3 mt-1">
+          <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M7 2v2H5V2h2zm0 4v2H5V6h2zm0 4v2H5v-2h2zm0 4v2H5v-2h2zm0 4v2H5v-2h2zM9 2v2h2V2H9zm0 4v2h2V6H9zm0 4v2h2v-2H9zm0 4v2h2v-2H9zm0 4v2h2v-2H9z"/>
+          </svg>
+        </div>
 
         <div class="flex-1">
           <h4 class="font-medium <%= 'line-through text-gray-500' if todo.completed %>">
@@ -135,65 +146,5 @@ function toggleAddTodo() {
   }
 }
 
-// Keyboard shortcuts for better productivity
-// Use window property to avoid redeclaration issues with Turbo
-window.todoAppLastNPress = window.todoAppLastNPress || 0;
-
-document.addEventListener('keydown', function(e) {
-  // Special case: Ctrl/Cmd + Enter to submit form quickly
-  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-      const form = e.target.closest('form');
-      if (form) {
-        e.preventDefault();
-        form.submit();
-      }
-    }
-    return;
-  }
-
-  // Alt+N to add new todo (non-conflicting shortcut)
-  if (e.altKey && e.key.toLowerCase() === 'n') {
-    e.preventDefault();
-    const form = document.getElementById('add-todo-form');
-    if (form.classList.contains('hidden')) {
-      toggleAddTodo();
-    }
-  }
-  
-  // Alt+X to close the form (non-conflicting shortcut)
-  if (e.altKey && e.key.toLowerCase() === 'x') {
-    e.preventDefault();
-    const formEsc = document.getElementById('add-todo-form');
-    if (!formEsc.classList.contains('hidden')) {
-      toggleAddTodo();
-    }
-  }
-  
-  // Double-tap 'n' for quick todo creation (alternative method)
-  if (e.key.toLowerCase() === 'n' && !e.altKey && !e.ctrlKey && !e.metaKey) {
-    const now = Date.now();
-    if (now - window.todoAppLastNPress < 300) { // Double-tap within 300ms
-      e.preventDefault();
-      const form = document.getElementById('add-todo-form');
-      if (form.classList.contains('hidden')) {
-        toggleAddTodo();
-      }
-    }
-    window.todoAppLastNPress = now;
-  }
-});
-
-// Show keyboard shortcuts hint
-document.addEventListener('DOMContentLoaded', function() {
-  // Add a subtle hint about keyboard shortcuts
-  const hint = document.createElement('div');
-  hint.className = 'text-xs text-gray-400 mt-2 text-center';
-  hint.innerHTML = '💡 Tip: <kbd class="px-1 py-0.5 bg-gray-100 rounded text-xs">Alt+N</kbd> to add todo, <kbd class="px-1 py-0.5 bg-gray-100 rounded text-xs">Alt+X</kbd> to close, <kbd class="px-1 py-0.5 bg-gray-100 rounded text-xs">NN</kbd> (double-tap) or <kbd class="px-1 py-0.5 bg-gray-100 rounded text-xs">Ctrl+Enter</kbd> to submit';
-  
-  const container = document.querySelector('.container');
-  if (container) {
-    container.appendChild(hint);
-  }
-});
+// Clean, mobile-friendly interface - no keyboard shortcuts needed
 </script>

@@ -13,9 +13,18 @@
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
+    <!-- Favicon and App Icons -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="apple-touch-icon" href="/icon-large.svg">
+    <meta name="theme-color" content="#4a5568">
+    
+    <!-- App Meta Tags -->
+    <meta name="description" content="Do it - Beautiful notebook-style todo app with hand-drawn aesthetics">
+    <meta name="author" content="Do it App">
+    <meta property="og:title" content="Do it - Beautiful Todo App">
+    <meta property="og:description" content="Organize your tasks in a beautiful notebook-style interface">
+    <meta property="og:type" content="website">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
@@ -158,24 +167,7 @@
           }
         }
         
-        // Keyboard shortcut: 't' to cycle through themes
-        document.addEventListener('keydown', function(e) {
-          if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-          
-          if (e.key.toLowerCase() === 't' && !e.ctrlKey && !e.metaKey) {
-            e.preventDefault();
-            const themes = ['classic', 'lined', 'graph', 'vintage', 'dark'];
-            const currentTheme = localStorage.getItem('notebook-theme') || 'classic';
-            const currentIndex = themes.indexOf(currentTheme);
-            const nextTheme = themes[(currentIndex + 1) % themes.length];
-            
-            if (window.applyThemeGlobal) {
-              window.applyThemeGlobal(nextTheme);
-            }
-            localStorage.setItem('notebook-theme', nextTheme);
-            updateActiveButton(nextTheme);
-          }
-        });
+        // Theme switching is handled by clicking the theme selector buttons
 
         // Auto-dismiss flash messages after 3 seconds
         function setupFlashMessages() {

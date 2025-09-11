@@ -264,3 +264,69 @@
 .theme-dark .text-red-700 {
   color: #f87171 !important;
 }
+
+/* =================================
+   DRAG AND DROP STYLES
+   ================================= */
+
+/* Todo item when being dragged */
+.dragging {
+  transform: rotate(2deg);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  cursor: grabbing !important;
+}
+
+/* Todo item when drag is hovering over it */
+.drag-over {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  border-color: #3b82f6 !important;
+  background-color: rgba(59, 130, 246, 0.05);
+}
+
+/* Placeholder for drop target */
+.todo-placeholder {
+  margin: 8px 0;
+  transition: all 0.2s ease;
+}
+
+/* Make todo items look draggable */
+[data-sortable-target="item"] {
+  cursor: grab;
+  transition: all 0.2s ease;
+}
+
+[data-sortable-target="item"]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Drag handle icon styles */
+.drag-handle {
+  opacity: 0.4;
+  transition: opacity 0.2s ease;
+  cursor: grab;
+}
+
+[data-sortable-target="item"]:hover .drag-handle {
+  opacity: 0.8;
+}
+
+/* Dark mode drag styles */
+.theme-dark .drag-over {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-color: #60a5fa !important;
+}
+
+.theme-dark .todo-placeholder {
+  color: #60a5fa;
+}
+
+.theme-dark .todo-placeholder .border-blue-300 {
+  border-color: #60a5fa !important;
+}
+
+.theme-dark .todo-placeholder .bg-blue-50 {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+}

@@ -16,6 +16,10 @@ Rails.application.routes.draw do
   root 'projects#index'
   
   resources :projects do
-    resources :todos, except: [:show]
+    resources :todos, except: [:show] do
+      collection do
+        patch :reorder
+      end
+    end
   end
 end

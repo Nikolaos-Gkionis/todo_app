@@ -18,9 +18,10 @@ class TodosController < ApplicationController
     if @todo.save
       redirect_to @project, notice: 'Todo was successfully created.'
     else
-      @todos = @project.todos
+      # Only get saved todos to avoid routing errors
+      @todos = @project.todos.ordered.where.not(id: nil)
       @new_todo = @todo
-      render 'projects/show'
+      render 'projects/show', status: :unprocessable_entity
     end
   end
 
@@ -31,15 +32,39 @@ class TodosController < ApplicationController
     if @todo.update(todo_params)
       redirect_to @project, notice: 'Todo was successfully updated.'
     else
-      @todos = @project.todos
+      # Only get saved todos to avoid routing errors  
+      @todos = @project.todos.ordered.where.not(id: nil)
       @new_todo = @project.todos.build
-      render 'projects/show'
+      render 'projects/show', status: :unprocessable_entity
     end
   end
 
   def destroy
     @todo.destroy
     redirect_to @project, notice: 'Todo was successfully deleted.'
+  end
+
+  # AJAX endpoint for reordering todos
+  def reorder
+    Rails.logger.info "=== REORDER DEBUG ==="
+    Rails.logger.info "Params: #{params.inspect}"
+    Rails.logger.info "todo_ids: #{params[:todo_ids].inspect}"
+    
+    todo_ids = params[:todo_ids]
+    
+    if todo_ids.present?
+      Rails.logger.info "Reordering todos: #{todo_ids}"
+      Todo.reorder_positions!(@project, todo_ids)
+      Rails.logger.info "Reorder completed successfully"
+      render json: { success: true, message: "Todos reordered successfully" }
+    else
+      Rails.logger.error "No todo IDs provided in reorder request"
+      render json: { success: false, error: 'No todo IDs provided' }, status: :bad_request
+    end
+  rescue => e
+    Rails.logger.error "Error in reorder: #{e.message}"
+    Rails.logger.error e.backtrace.join("\n")
+    render json: { success: false, error: e.message }, status: :internal_server_error
   end
 
   private

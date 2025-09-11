@@ -13,7 +13,7 @@ We successfully implemented a full user authentication system with:
 - User data isolation
 - Modern Rails patterns with Turbo
 
-**🚀 NEXT PRIORITY:** Complete CRUD Operations (Edit/Delete)
+**🚀 CURRENT STATUS:** Phase 5 Advanced Features - Drag-and-Drop Complete!
 
 ---
 
@@ -44,20 +44,27 @@ We successfully implemented a full user authentication system with:
 
 ## 2) Must-haves (prioritised) - STATUS UPDATE
 
-✅ **COMPLETED:**
+✅ **COMPLETED - PHASE 5 ADVANCED FEATURES:**
 
 1. Rails + Tailwind setup (foundation) ✅
 2. SQLite database (development) + migrations ✅
 3. Authentication system with bcrypt (sessions + passwords) ✅
 4. Sign-up/registration flow ✅
 5. Projects model + association to todos ✅
-6. Todo model + basic CRUD (Create, Read) ✅
+6. Complete CRUD operations (Create, Read, Update, Delete) ✅
 7. User authentication and data isolation ✅
-8. Beautiful Tailwind UI with navigation ✅
+8. Beautiful hand-drawn notebook UI with 5 themes ✅
+9. Drag-and-drop todo reordering with visual feedback ✅
+10. Custom favicon and branding ("Do it" logo) ✅
+11. Mobile-first responsive design ✅
+12. Professional error handling and flash messages ✅
 
-🚧 **IN PROGRESS - PHASE 4:** 9. Complete CRUD operations (Edit/Delete for projects and todos)
+🔮 **FUTURE ENHANCEMENT PHASES:**
 
-🔮 **FUTURE PHASES:** 10. Dotted background across app UI 11. Pen / handwritten font (global) 12. Hand-drawn checkboxes + ticks (SVG assets) 13. Write/draw-in effect on new todos (SVG stroke or typing animation) 14. Project organiser / carousel UI 15. Publish on a subdomain (DNS + host)
+- Due dates with visual indicators
+- Write/draw-in animation effects for new todos
+- Search and filtering functionality
+- Advanced productivity features
 
 ---
 
