@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Todo App" %></title>
+    <title><%= content_for(:title) || "Do it" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -24,12 +24,13 @@
 
   <body class="notebook-background handwritten">
   <!-- Navigation Header -->
-  <nav class="bg-white shadow">
+  <nav class="bg-transparent shadow-none">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between h-16">
         <div class="flex items-center">
-          <%= link_to root_path, class: "text-xl font-bold text-gray-800" do %>
-            📋 Todo App
+          <%= link_to root_path, class: "text-xl font-bold text-gray-800 flex items-center" do %>
+            <div class="logo-checkbox"></div>
+            Do it
           <% end %>
         </div>
         
@@ -37,12 +38,12 @@
           <% if logged_in? %>
             <span class="text-gray-700">Welcome, <%= current_user.email_address %>!</span>
             <%= link_to "Logout", logout_path, data: { "turbo-method": :delete }, 
-                  class: "bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm font-medium" %>
+                  class: "text-red-600 hover:text-red-800 font-medium hand-underline hand-underline-red text-sm" %>
           <% else %>
             <%= link_to "Login", login_path, 
                   class: "text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium" %>
             <%= link_to "Sign Up", signup_path, 
-                  class: "bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 rounded-md text-sm font-medium" %>
+                  class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline-blue text-sm" %>
           <% end %>
         </div>
       </div>
@@ -51,14 +52,14 @@
 
   <!-- Flash Messages -->
   <% if notice %>
-    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4 mx-4 mt-4">
-      <%= notice %>
+    <div class="text-green-700 px-4 py-3 mx-4 mt-4 text-center font-medium">
+      ✅ <%= notice %>
     </div>
   <% end %>
   
   <% if alert %>
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 mx-4 mt-4">
-      <%= alert %>
+    <div class="text-red-700 px-4 py-3 mx-4 mt-4 text-center font-medium">
+      ⚠️ <%= alert %>
     </div>
   <% end %>
 

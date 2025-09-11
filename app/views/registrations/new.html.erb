@@ -1,4 +1,4 @@
-<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-md w-full space-y-8">
     <div>
       <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -9,21 +9,15 @@
     <%= form_with model: @user, url: signup_path, local: true, class: "mt-8 space-y-6" do |form| %>
       <!-- Display validation errors -->
       <% if @user.errors.any? %>
-        <div class="rounded-md bg-red-50 p-4">
-          <div class="flex">
-            <div class="ml-3">
-              <h3 class="text-sm font-medium text-red-800">
-                <%= pluralize(@user.errors.count, "error") %> prohibited this account from being saved:
-              </h3>
-              <div class="mt-2 text-sm text-red-700">
-                <ul class="list-disc pl-5 space-y-1">
-                  <% @user.errors.full_messages.each do |message| %>
-                    <li><%= message %></li>
-                  <% end %>
-                </ul>
-              </div>
-            </div>
-          </div>
+        <div class="text-red-700 mb-4 text-center">
+          <h3 class="font-medium mb-2">
+            ⚠️ <%= pluralize(@user.errors.count, "error") %> prohibited this account from being saved:
+          </h3>
+          <ul class="list-disc pl-5 space-y-1 text-left">
+            <% @user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
         </div>
       <% end %>
 
@@ -33,27 +27,27 @@
           <%= form.email_field :email_address, 
                 placeholder: "Email address", 
                 required: true,
-                class: "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" %>
+                class: "w-full" %>
         </div>
         <div>
           <%= form.label :password, "Password", class: "sr-only" %>
           <%= form.password_field :password, 
                 placeholder: "Password", 
                 required: true,
-                class: "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" %>
+                class: "w-full" %>
         </div>
         <div>
           <%= form.label :password_confirmation, "Confirm Password", class: "sr-only" %>
           <%= form.password_field :password_confirmation, 
                 placeholder: "Confirm Password", 
                 required: true,
-                class: "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" %>
+                class: "w-full" %>
         </div>
       </div>
 
       <div>
         <%= form.submit "Create Account", 
-              class: "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+              class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline-blue cursor-pointer bg-transparent border-0 w-full flex justify-center" %>
       </div>
       
       <div class="text-center">

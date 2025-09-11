@@ -1,12 +1,7 @@
 /* Notebook Theme Styles */
 
-/* Import the handwritten font */
-@font-face {
-  font-family: 'Gloria Hallelujah';
-  src: url('GloriaHallelujah.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
+/* Import the handwritten font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap');
 
 /* Dotted notebook background pattern */
 .notebook-background {
@@ -17,9 +12,9 @@
   background-position: 0 0, 10px 10px;
 }
 
-/* Apply handwritten font globally */
+/* Apply handwritten font globally with good fallbacks */
 body {
-  font-family: 'Gloria Hallelujah', cursive, sans-serif;
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif;
 }
 
 /* Notebook paper lines effect (subtle) */
@@ -31,80 +26,134 @@ body {
 
 /* Handwritten style adjustments */
 .handwritten {
-  font-family: 'Gloria Hallelujah', cursive, sans-serif;
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif;
   line-height: 1.6;
 }
 
-/* Project card with notebook feel */
+/* Project card with clean notebook feel */
 .notebook-card {
   background-color: transparent;
-  border: 2px solid #d1d5db;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: none;
   position: relative;
-  /* Hand-drawn style border */
-  border-style: solid;
-  border-image: url("data:image/svg+xml,%3csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='m0,10 q5,-5 10,0 t10,0 t10,0 t10,0 t10,0 t10,0 t10,0 t10,0 t10,0 t10,0' stroke='%23d1d5db' stroke-width='2' fill='none'/%3e%3c/svg%3e") 2;
+  padding: 24px;
 }
 
+/* Hand-drawn margin line */
 .notebook-card::before {
   content: '';
   position: absolute;
-  left: 0;
+  left: 15px;
   top: 0;
   bottom: 0;
   width: 2px;
-  background: #ef4444;
-  margin-left: 20px;
+  background: url("data:image/svg+xml,%3csvg width='2' height='100' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M1,0 Q1.5,10 1,20 T1,40 T1,60 T1,80 T1,100' stroke='%23ef4444' stroke-width='1.5' fill='none'/%3e%3c/svg%3e") repeat-y;
 }
 
-/* Todo items with transparent background */
+/* Hand-drawn checkbox styles - larger and more organic */
+.hand-checkbox {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.hand-checkbox-unchecked {
+  background: url("data:image/svg+xml,%3csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M3,2.5 Q3.2,2.2 4.5,2.8 L19.2,3.1 Q21,2.9 21.5,4.8 L21.8,18.5 Q21.3,20.2 19.1,20.5 L4.8,20.2 Q2.9,20.8 2.5,18.8 L2.2,4.5 Q2.8,2.8 3,2.5 Z' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3e%3c/svg%3e") no-repeat center;
+}
+
+.hand-checkbox-checked {
+  background: url("data:image/svg+xml,%3csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M3,2.5 Q3.2,2.2 4.5,2.8 L19.2,3.1 Q21,2.9 21.5,4.8 L21.8,18.5 Q21.3,20.2 19.1,20.5 L4.8,20.2 Q2.9,20.8 2.5,18.8 L2.2,4.5 Q2.8,2.8 3,2.5 Z' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3e%3cpath d='M5.5,11.8 Q7.2,13.5 8.5,15.2 Q13.8,9.5 18.2,6.8' stroke='%2316a34a' stroke-width='2.2' fill='none' stroke-linecap='round'/%3e%3c/svg%3e") no-repeat center;
+}
+
+/* Clean todo items - completely borderless */
 .todo-item {
   background-color: transparent;
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  border-style: dashed;
+  border: none;
+  border-radius: 0;
+  padding: 12px 0;
   transition: all 0.2s ease;
 }
 
 .todo-item:hover {
-  border-color: #9ca3af;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: rgba(59, 130, 246, 0.03);
+  border-radius: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
-/* Softer, more organic button styles */
+/* Outline button styles */
 .notebook-button {
-  border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  border: 2px solid;
+  background: transparent;
+  padding: 8px 16px;
   transition: all 0.2s ease;
+  font-weight: 500;
 }
 
 .notebook-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Collapsible Add Todo Form */
+/* Button color variants */
+.btn-green {
+  border-color: #16a34a;
+  color: #16a34a;
+}
+
+.btn-green:hover {
+  background-color: rgba(22, 163, 74, 0.1);
+}
+
+.btn-red {
+  border-color: #dc2626;
+  color: #dc2626;
+}
+
+.btn-red:hover {
+  background-color: rgba(220, 38, 38, 0.1);
+}
+
+.btn-blue {
+  border-color: #2563eb;
+  color: #2563eb;
+}
+
+.btn-blue:hover {
+  background-color: rgba(37, 99, 235, 0.1);
+}
+
+.btn-gray {
+  border-color: #6b7280;
+  color: #6b7280;
+}
+
+.btn-gray:hover {
+  background-color: rgba(107, 114, 128, 0.1);
+}
+
+/* Clean Collapsible Add Todo Form - no boxes */
 .add-todo-collapsed {
   background-color: transparent;
-  border: 2px dashed #9ca3af;
-  border-radius: 8px;
-  padding: 16px;
+  border: none;
+  padding: 16px 0;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-top: 20px;
 }
 
 .add-todo-collapsed:hover {
-  border-color: #6b7280;
-  background-color: rgba(156, 163, 175, 0.05);
+  background-color: rgba(59, 130, 246, 0.02);
+  border-radius: 4px;
 }
 
 .add-todo-expanded {
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 2px solid #9ca3af;
-  border-radius: 8px;
-  padding: 20px;
+  background-color: transparent;
+  border: none;
+  padding: 20px 0;
+  margin-top: 20px;
   animation: expandForm 0.3s ease-out;
 }
 
@@ -117,6 +166,116 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Logo checkbox - same as hand-drawn but with green checkmark */
+.logo-checkbox {
+  width: 24px;
+  height: 24px;
+  background: url("data:image/svg+xml,%3csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M3,2.5 Q3.2,2.2 4.5,2.8 L19.2,3.1 Q21,2.9 21.5,4.8 L21.8,18.5 Q21.3,20.2 19.1,20.5 L4.8,20.2 Q2.9,20.8 2.5,18.8 L2.2,4.5 Q2.8,2.8 3,2.5 Z' stroke='%23374151' stroke-width='1.8' fill='none' stroke-linecap='round'/%3e%3cpath d='M5.5,11.8 Q7.2,13.5 8.5,15.2 Q13.8,9.5 18.2,6.8' stroke='%2316a34a' stroke-width='2.5' fill='none' stroke-linecap='round'/%3e%3c/svg%3e") no-repeat center;
+  background-size: contain;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+/* Hand-drawn underline styles for links */
+.hand-underline {
+  position: relative;
+  text-decoration: none;
+  border: none !important;
+  padding-bottom: 4px;
+}
+
+.hand-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background: url("data:image/svg+xml,%3csvg width='100' height='3' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3e%3cpath d='M0,1.5 Q10,0.8 20,1.2 T40,1.8 T60,1.1 T80,1.6 T100,1.3' stroke='%23374151' stroke-width='1.5' fill='none' stroke-linecap='round'/%3e%3c/svg%3e") repeat-x;
+  background-size: 100px 3px;
+}
+
+.hand-underline-blue::after {
+  background: url("data:image/svg+xml,%3csvg width='100' height='3' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3e%3cpath d='M0,1.5 Q10,0.8 20,1.2 T40,1.8 T60,1.1 T80,1.6 T100,1.3' stroke='%232563eb' stroke-width='1.5' fill='none' stroke-linecap='round'/%3e%3c/svg%3e") repeat-x;
+}
+
+.hand-underline-green::after {
+  background: url("data:image/svg+xml,%3csvg width='100' height='3' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3e%3cpath d='M0,1.5 Q10,0.8 20,1.2 T40,1.8 T60,1.1 T80,1.6 T100,1.3' stroke='%2316a34a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3e%3c/svg%3e") repeat-x;
+}
+
+.hand-underline-red::after {
+  background: url("data:image/svg+xml,%3csvg width='100' height='3' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3e%3cpath d='M0,1.5 Q10,0.8 20,1.2 T40,1.8 T60,1.1 T80,1.6 T100,1.3' stroke='%23dc2626' stroke-width='1.5' fill='none' stroke-linecap='round'/%3e%3c/svg%3e") repeat-x;
+}
+
+.hand-underline-gray::after {
+  background: url("data:image/svg+xml,%3csvg width='100' height='3' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3e%3cpath d='M0,1.5 Q10,0.8 20,1.2 T40,1.8 T60,1.1 T80,1.6 T100,1.3' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3e%3c/svg%3e") repeat-x;
+}
+
+/* Hover effects for hand-drawn underlines */
+.hand-underline:hover::after {
+  height: 4px;
+  bottom: -1px;
+}
+
+/* Remove all form input boxes - make them transparent with hand-drawn underlines */
+input[type="text"], 
+input[type="email"], 
+input[type="password"], 
+textarea {
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  padding: 8px 0 4px 0 !important;
+  position: relative;
+  background-image: url("data:image/svg+xml,%3csvg width='100' height='2' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3e%3cpath d='M0,1 Q10,0.5 20,1.2 T40,0.8 T60,1.3 T80,0.9 T100,1.1' stroke='%23d1d5db' stroke-width='1.2' fill='none' stroke-linecap='round'/%3e%3c/svg%3e") !important;
+  background-repeat: repeat-x !important;
+  background-position: bottom !important;
+  background-size: 100px 2px !important;
+}
+
+input[type="text"]:focus, 
+input[type="email"]:focus, 
+input[type="password"]:focus, 
+textarea:focus {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  background-image: url("data:image/svg+xml,%3csvg width='100' height='3' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3e%3cpath d='M0,1.5 Q10,0.8 20,1.8 T40,1.2 T60,1.9 T80,1.3 T100,1.6' stroke='%232563eb' stroke-width='1.8' fill='none' stroke-linecap='round'/%3e%3c/svg%3e") !important;
+  background-repeat: repeat-x !important;
+  background-position: bottom !important;
+  background-size: 100px 3px !important;
+}
+
+/* Style autocomplete and dropdown elements */
+input[type="text"]::-webkit-contacts-auto-fill-button,
+input[type="text"]::-webkit-credentials-auto-fill-button {
+  display: none !important;
+}
+
+/* Hide browser autocomplete styling */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+  -webkit-text-fill-color: inherit !important;
+  background-color: transparent !important;
+}
+
+/* Style any remaining form elements */
+.form-control, .form-input {
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 8px 0 4px 0 !important;
+  background-image: url("data:image/svg+xml,%3csvg width='100' height='2' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3e%3cpath d='M0,1 Q10,0.5 20,1.2 T40,0.8 T60,1.3 T80,0.9 T100,1.1' stroke='%23d1d5db' stroke-width='1.2' fill='none' stroke-linecap='round'/%3e%3c/svg%3e") !important;
+  background-repeat: repeat-x !important;
+  background-position: bottom !important;
+  background-size: 100px 2px !important;
 }
 
 /* Hide/show toggle */
