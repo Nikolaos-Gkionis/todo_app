@@ -10,22 +10,39 @@
         <div class="notebook-card">
           <div class="flex justify-between items-start">
             <div class="flex-grow">
-              <h2 class="text-xl font-semibold">
-                <%= link_to project.name, project_path(project), class: "text-blue-600 hover:text-blue-800" %>
-              </h2>
+              <div class="flex items-center space-x-3 mb-1">
+                <h2 class="text-xl font-semibold">
+                  <%= link_to project.name, project_path(project), class: "text-blue-600 hover:text-blue-800" %>
+                </h2>
+                <% if project.total_todos_count > 0 %>
+                  <div class="flex items-center space-x-2">
+                    <span class="text-sm font-medium text-gray-700 bg-gray-100 px-2 py-1 rounded-full">
+                      <%= project.progress_text %>
+                    </span>
+                    <% if project.completion_percentage > 0 %>
+                      <div class="w-12 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="h-full bg-green-500 transition-all duration-300" 
+                             style="width: <%= project.completion_percentage %>%"></div>
+                      </div>
+                    <% end %>
+                  </div>
+                <% else %>
+                  <span class="text-xs text-gray-400 italic">No todos yet</span>
+                <% end %>
+              </div>
               <% if project.description.present? %>
                 <p class="text-gray-600 mt-2"><%= project.description %></p>
               <% end %>
             </div>
             <div class="flex space-x-2 ml-4">
               <%= link_to "Edit", edit_project_path(project), 
-                    class: "text-green-600 hover:text-green-800 text-sm font-medium border-b border-green-600 hover:border-green-800" %>
+                    class: "text-green-600 hover:text-green-800 text-sm font-medium hand-underline hand-underline-green" %>
               <%= link_to "Delete", project, 
                     data: { 
                       "turbo-method": :delete,
                       confirm: "Are you sure? This will delete the project and all its todos!" 
                     },
-                    class: "text-red-600 hover:text-red-800 text-sm font-medium border-b border-red-600 hover:border-red-800" %>
+                    class: "text-red-600 hover:text-red-800 text-sm font-medium hand-underline hand-underline-red" %>
             </div>
           </div>
         </div>
