@@ -1,4 +1,6 @@
 class TodosController < ApplicationController
+  # Require authentication for all actions
+  before_action :require_login
   before_action :set_project
   before_action :set_todo, only: [:edit, :update, :destroy]
 
@@ -43,7 +45,8 @@ class TodosController < ApplicationController
   private
 
   def set_project
-    @project = Project.find(params[:project_id])
+    # Only allow access to current user's projects
+    @project = current_user.projects.find(params[:project_id])
   end
 
   def set_todo

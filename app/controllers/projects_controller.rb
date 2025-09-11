@@ -1,27 +1,32 @@
 class ProjectsController < ApplicationController
+  # Require authentication for all actions
+  before_action :require_login
+
   def index
-    @projects = Project.all
+    # Only show current user's projects
+    @projects = current_user.projects
   end
 
   def show
-    @project = Project.find(params[:id])
+    # Only allow access to current user's projects
+    @project = current_user.projects.find(params[:id])
     @todos = @project.todos
     @new_todo = @project.todos.build
   end
 
   def new
-    @project = Project.new
-    @project.user = User.first  # Temporary: assign to first user
+    # Create new project for current user
+    @project = current_user.projects.build
   end
 
   def create
-    @project = Project.new(project_params)
-    @project.user = User.first  # Temporary: assign to first user
+    # Create project for current user
+    @project = current_user.projects.build(project_params)
   
     if @project.save
       redirect_to projects_path, notice: 'Project was successfully created.'
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
