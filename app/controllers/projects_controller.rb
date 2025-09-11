@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   # Require authentication for all actions
   before_action :require_login
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   def index
     # Only show current user's projects
@@ -8,10 +9,9 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    # Only allow access to current user's projects
-    @project = current_user.projects.find(params[:id])
-    @todos = @project.todos
-    @new_todo = @project.todos.build
+    # @project is set by before_action
+    @todos = @project.todos.where.not(id: nil)  # Only get saved todos
+    @new_todo = @project.todos.build            # New todo for the form
   end
 
   def new
@@ -30,18 +30,35 @@ class ProjectsController < ApplicationController
     end
   end
 
-  private
-
-  def project_params
-    params.require(:project).permit(:name, :description, :cover_color)
-  end
-
   def edit
+    # @project is set by before_action
+    # Just render the edit form
   end
 
   def update
+    # @project is set by before_action
+    if @project.update(project_params)
+      redirect_to @project, notice: 'Project was successfully updated.'
+    else
+      flash.now[:alert] = 'Please fix the errors below.'
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
+    # @project is set by before_action
+    @project.destroy
+    redirect_to projects_path, notice: 'Project was successfully deleted.'
+  end
+
+  private
+
+  def set_project
+    # Only allow access to current user's projects
+    @project = current_user.projects.find(params[:id])
+  end
+
+  def project_params
+    params.require(:project).permit(:name, :description, :cover_color)
   end
 end

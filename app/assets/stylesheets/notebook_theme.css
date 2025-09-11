@@ -1,0 +1,124 @@
+/* Notebook Theme Styles */
+
+/* Import the handwritten font */
+@font-face {
+  font-family: 'Gloria Hallelujah';
+  src: url('GloriaHallelujah.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Dotted notebook background pattern */
+.notebook-background {
+  background-color: #fefefe;
+  background-image: 
+    radial-gradient(circle, #ddd 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+/* Apply handwritten font globally */
+body {
+  font-family: 'Gloria Hallelujah', cursive, sans-serif;
+}
+
+/* Notebook paper lines effect (subtle) */
+.notebook-lines {
+  background-image: 
+    linear-gradient(to bottom, transparent 24px, #e5e7eb 24px, #e5e7eb 26px, transparent 26px);
+  background-size: 100% 26px;
+}
+
+/* Handwritten style adjustments */
+.handwritten {
+  font-family: 'Gloria Hallelujah', cursive, sans-serif;
+  line-height: 1.6;
+}
+
+/* Project card with notebook feel */
+.notebook-card {
+  background-color: transparent;
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+  /* Hand-drawn style border */
+  border-style: solid;
+  border-image: url("data:image/svg+xml,%3csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='m0,10 q5,-5 10,0 t10,0 t10,0 t10,0 t10,0 t10,0 t10,0 t10,0 t10,0 t10,0' stroke='%23d1d5db' stroke-width='2' fill='none'/%3e%3c/svg%3e") 2;
+}
+
+.notebook-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #ef4444;
+  margin-left: 20px;
+}
+
+/* Todo items with transparent background */
+.todo-item {
+  background-color: transparent;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  border-style: dashed;
+  transition: all 0.2s ease;
+}
+
+.todo-item:hover {
+  border-color: #9ca3af;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Softer, more organic button styles */
+.notebook-button {
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.notebook-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Collapsible Add Todo Form */
+.add-todo-collapsed {
+  background-color: transparent;
+  border: 2px dashed #9ca3af;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-todo-collapsed:hover {
+  border-color: #6b7280;
+  background-color: rgba(156, 163, 175, 0.05);
+}
+
+.add-todo-expanded {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid #9ca3af;
+  border-radius: 8px;
+  padding: 20px;
+  animation: expandForm 0.3s ease-out;
+}
+
+@keyframes expandForm {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hide/show toggle */
+.hidden { display: none; }
+.block { display: block; }

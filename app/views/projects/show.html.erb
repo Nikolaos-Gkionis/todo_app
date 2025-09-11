@@ -2,40 +2,36 @@
   <!-- Project Header -->
   <div class="mb-8">
     <%= link_to "← Back to Projects", projects_path, class: "text-blue-600 hover:text-blue-800 mb-4 inline-block" %>
-    <h1 class="text-3xl font-bold"><%= @project.name %></h1>
-    <% if @project.description.present? %>
-    <p class="text-gray-600 mt-2"><%= @project.description %></p>
-    <% end %>
+    <div class="flex justify-between items-start">
+      <div>
+        <h1 class="text-3xl font-bold"><%= @project.name %></h1>
+        <% if @project.description.present? %>
+        <p class="text-gray-600 mt-2"><%= @project.description %></p>
+        <% end %>
+      </div>
+      <div class="flex space-x-3">
+        <%= link_to "Edit Project", edit_project_path(@project), 
+              class: "bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 text-sm" %>
+        <%= link_to "Delete Project", @project, 
+              data: { 
+                "turbo-method": :delete,
+                confirm: "Are you sure? This will delete the project and all its todos!" 
+              },
+              class: "bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 text-sm" %>
+      </div>
+    </div>
   </div>
 
-  <!-- Add New Todo Form -->
-  <div class="bg-white p-6 rounded-lg shadow-md mb-8">
-    <h2 class="text-xl font-semibold mb-4">Add New Todo</h2>
-
-    <%= form_with model: [@project, @new_todo], local: true, class: "space-y-4" do |form| %>
-    <div>
-      <%= form.text_field :title, class: "w-full px-3 py-2 border border-gray-300 rounded-md", placeholder: "What needs to be done?" %>
-    </div>
-
-    <div>
-      <%= form.text_area :notes, class: "w-full px-3 py-2 border border-gray-300 rounded-md", placeholder: "Additional notes (optional)", rows: 2 %>
-    </div>
-
-    <div>
-      <%= form.submit "Add Todo", class: "bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700" %>
-    </div>
-    <% end %>
-  </div>
 
   <!-- Todos List -->
-  <div class="bg-white p-6 rounded-lg shadow-md">
+  <div class="notebook-card p-6 rounded-lg">
     <h2 class="text-xl font-semibold mb-4">Todos (<%= @todos.count %>)</h2>
 
     <% if @todos.any? %>
     <div class="space-y-3">
       <% @todos.each do |todo| %>
 
-      <div class="flex items-start p-3 border border-gray-200 rounded-lg">
+      <div class="todo-item flex items-start p-3">
         <%= form_with model: [@project, todo], method: :patch, local: true, class: "flex items-center mr-3" do |form| %>
         <%= form.check_box :completed, class: "h-4 w-4 text-blue-600", onchange: "this.form.submit()" %>
         <% end %>
@@ -48,11 +44,75 @@
           <p class="text-sm text-gray-600 mt-1 <%= 'line-through' if todo.completed %>"><%= todo.notes %></p>
           <% end %>
         </div>
+        
+        <!-- Edit/Delete buttons for todos -->
+        <div class="flex space-x-2 ml-3">
+          <%= link_to "Edit", edit_project_todo_path(@project, todo), 
+                class: "text-green-600 hover:text-green-800 text-sm font-medium" %>
+          <%= link_to "Delete", project_todo_path(@project, todo), 
+                data: { 
+                  "turbo-method": :delete,
+                  confirm: "Are you sure you want to delete this todo?" 
+                },
+                class: "text-red-600 hover:text-red-800 text-sm font-medium" %>
+        </div>
       </div>
       <% end %>
     </div>
-    <% else %>
-    <p class="text-gray-500">No todos yet. Add your first todo above!</p>
+    <% end %>
+    
+    <!-- Collapsible Add Todo Form -->
+    <div class="mt-6">
+      <!-- Collapsed state - click to expand -->
+      <div id="add-todo-trigger" class="add-todo-collapsed" onclick="toggleAddTodo()">
+        <p class="text-gray-600">✏️ Add a new todo...</p>
+      </div>
+      
+      <!-- Expanded form - hidden by default -->
+      <div id="add-todo-form" class="add-todo-expanded hidden">
+        <h3 class="text-lg font-semibold mb-4">Add New Todo</h3>
+        <%= form_with model: [@project, @new_todo], local: true, class: "space-y-4" do |form| %>
+          <div>
+            <%= form.text_field :title, class: "w-full px-3 py-2 border border-gray-300 rounded-md bg-transparent", placeholder: "What needs to be done?" %>
+          </div>
+
+          <div>
+            <%= form.text_area :notes, class: "w-full px-3 py-2 border border-gray-300 rounded-md bg-transparent", placeholder: "Additional notes (optional)", rows: 2 %>
+          </div>
+
+          <div class="flex space-x-3">
+            <%= form.submit "Add Todo", class: "notebook-button bg-blue-600 text-white px-4 py-2 hover:bg-blue-700" %>
+            <button type="button" onclick="toggleAddTodo()" class="notebook-button bg-gray-500 text-white px-4 py-2 hover:bg-gray-600">Cancel</button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    
+    <% if @todos.empty? %>
+      <div class="text-center py-8">
+        <p class="text-gray-500">📝 No todos yet. Click above to add your first one!</p>
+      </div>
     <% end %>
   </div>
 </div>
+
+<script>
+function toggleAddTodo() {
+  const trigger = document.getElementById('add-todo-trigger');
+  const form = document.getElementById('add-todo-form');
+  
+  if (form.classList.contains('hidden')) {
+    // Show form, hide trigger
+    form.classList.remove('hidden');
+    trigger.classList.add('hidden');
+    // Focus on the title input
+    form.querySelector('input[name="todo[title]"]').focus();
+  } else {
+    // Hide form, show trigger
+    form.classList.add('hidden');
+    trigger.classList.remove('hidden');
+    // Clear the form
+    form.querySelector('form').reset();
+  }
+}
+</script>
