@@ -1,0 +1,264 @@
+<div class="container mx-auto px-4 py-8" 
+     data-controller="settings" 
+     data-settings-can-use-premium-value="<%= current_user.can_use_premium_themes? %>"
+     data-settings-pricing-path="<%= pricing_path %>">
+  <div class="max-w-4xl mx-auto">
+    <!-- Header -->
+    <div class="mb-8">
+      <%= link_to "← Back to Pages", pages_path, class: "text-blue-600 hover:text-blue-800 mb-4 inline-block" %>
+      <h1 class="text-3xl font-bold text-gray-900">Settings</h1>
+      <p class="text-gray-600 mt-2">Customize your Todo-it experience</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      <!-- Themes Section -->
+      <div class="notebook-card">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+          <span class="mr-2">🎨</span>
+          Themes
+        </h2>
+        
+        <% if current_user.free? %>
+          <div class="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6">
+            <div class="flex items-center">
+              <span class="text-orange-600 mr-2">⚠️</span>
+              <div>
+                <div class="font-medium text-orange-800">Free Account</div>
+                <div class="text-sm text-orange-700">Premium themes are locked</div>
+              </div>
+            </div>
+            <div class="mt-3">
+              <%= link_to "Upgrade to Premium", pricing_path, class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-block" %>
+            </div>
+          </div>
+        <% end %>
+        
+        <div class="space-y-4">
+          <!-- Classic Theme -->
+          <div class="theme-preview-card" data-theme="classic" data-settings-target="themeCard" data-action="click->settings#selectTheme">
+            <div class="theme-preview bg-gradient-to-br from-amber-50 to-orange-100 notebook-background">
+              <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle, #d4b896 1px, transparent 1px); background-size: 20px 20px;"></div>
+              <div class="relative p-4">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <h3 class="font-semibold text-gray-800">📝 Classic Dotted</h3>
+                    <p class="text-sm text-gray-600">Warm notebook feel</p>
+                  </div>
+                  <button class="theme-select-btn">
+                    <span class="selected-indicator">✓</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Premium Themes -->
+          <% if current_user.can_use_premium_themes? %>
+            <!-- Lined Theme -->
+            <div class="theme-preview-card" data-theme="lined" data-settings-target="themeCard" data-action="click->settings#selectTheme">
+              <div class="theme-preview bg-gradient-to-br from-blue-50 to-cyan-100">
+                <div class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(transparent, transparent 19px, #94a3b8 19px, #94a3b8 20px); background-size: 100% 20px;"></div>
+                <div class="relative p-4">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <h3 class="font-semibold text-gray-800">📏 Lined Paper</h3>
+                      <p class="text-sm text-gray-600">Clean and organized</p>
+                    </div>
+                    <button class="theme-select-btn">
+                      <span class="selected-indicator">✓</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Graph Theme -->
+            <div class="theme-preview-card" data-theme="graph" data-settings-target="themeCard" data-action="click->settings#selectTheme">
+              <div class="theme-preview bg-gradient-to-br from-green-50 to-emerald-100">
+                <div class="absolute inset-0 opacity-20" style="background-image: linear-gradient(rgba(34, 197, 94, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 197, 94, 0.3) 1px, transparent 1px); background-size: 20px 20px;"></div>
+                <div class="relative p-4">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <h3 class="font-semibold text-gray-800">📊 Graph Paper</h3>
+                      <p class="text-sm text-gray-600">Perfect for planning</p>
+                    </div>
+                    <button class="theme-select-btn">
+                      <span class="selected-indicator">✓</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Vintage Theme -->
+            <div class="theme-preview-card" data-theme="vintage" data-settings-target="themeCard" data-action="click->settings#selectTheme">
+              <div class="theme-preview bg-gradient-to-br from-yellow-50 to-amber-100">
+                <div class="absolute inset-0 opacity-25" style="background-image: radial-gradient(circle, #d97706 1px, transparent 1px); background-size: 24px 24px;"></div>
+                <div class="relative p-4">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <h3 class="font-semibold text-gray-800">📜 Vintage</h3>
+                      <p class="text-sm text-gray-600">Aged paper charm</p>
+                    </div>
+                    <button class="theme-select-btn">
+                      <span class="selected-indicator">✓</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Dark Theme -->
+            <div class="theme-preview-card" data-theme="dark" data-settings-target="themeCard" data-action="click->settings#selectTheme">
+              <div class="theme-preview bg-gradient-to-br from-slate-800 to-slate-900">
+                <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle, #64748b 1px, transparent 1px); background-size: 20px 20px;"></div>
+                <div class="relative p-4">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <h3 class="font-semibold text-slate-100">🌙 Dark Mode</h3>
+                      <p class="text-sm text-slate-300">Easy on the eyes</p>
+                    </div>
+                    <button class="theme-select-btn text-white">
+                      <span class="selected-indicator">✓</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% else %>
+            <!-- Locked Premium Themes -->
+            <div class="space-y-4">
+              <% %w[lined graph vintage dark].each_with_index do |theme, index| %>
+                <div class="theme-preview-card locked">
+                  <div class="theme-preview bg-gray-100 opacity-60">
+                    <div class="relative p-4">
+                      <div class="flex items-center justify-between">
+                        <div>
+                          <h3 class="font-semibold text-gray-600">
+                            <%= case theme
+                                when 'lined' then '📏 Lined Paper'
+                                when 'graph' then '📊 Graph Paper' 
+                                when 'vintage' then '📜 Vintage'
+                                when 'dark' then '🌙 Dark Mode'
+                                end %>
+                          </h3>
+                          <p class="text-sm text-gray-500">Premium theme</p>
+                        </div>
+                        <div class="bg-orange-500 text-white px-2 py-1 rounded text-xs font-medium">
+                          🔒 Locked
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      
+      <!-- Account Section -->
+      <div class="notebook-card">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+          <span class="mr-2">👤</span>
+          Account
+        </h2>
+        
+        <div class="space-y-4">
+          <div>
+            <label for="email-display" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+            <div id="email-display" class="text-gray-900 bg-gray-50 px-3 py-2 rounded-lg">
+              <%= @user.email_address %>
+            </div>
+          </div>
+          
+          <div>
+            <label for="account-type-display" class="block text-sm font-medium text-gray-700 mb-1">Account Type</label>
+            <div id="account-type-display" class="flex items-center">
+              <% if @user.premium? %>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                  ✨ Premium
+                </span>
+              <% else %>
+                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium mr-3">
+                  Free
+                </span>
+                <%= link_to "Upgrade", pricing_path, class: "bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg text-sm font-medium transition-colors" %>
+              <% end %>
+            </div>
+          </div>
+          
+          <hr class="border-gray-200">
+          
+          <div>
+            <%= link_to "Change Password", "#", class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline-blue" %>
+          </div>
+          
+          <div>
+            <%= link_to "Update Email", "#", class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline-blue" %>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Usage & Limits -->
+      <div class="notebook-card">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+          <span class="mr-2">📊</span>
+          Usage
+        </h2>
+        
+        <div class="space-y-6">
+          <!-- Pages Usage -->
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-sm font-medium text-gray-700">Pages</span>
+              <span class="text-sm text-gray-600">
+                <%= @user.pages.count %><% unless @user.premium? %> / <%= User::MAX_FREE_PAGES %><% end %>
+              </span>
+            </div>
+            <% unless @user.premium? %>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-blue-600 h-2 rounded-full transition-all duration-300" 
+                     style="width: <%= [@user.pages.count.to_f / User::MAX_FREE_PAGES * 100, 100].min %>%"></div>
+              </div>
+              <% if @user.pages.count >= User::MAX_FREE_PAGES %>
+                <p class="text-red-600 text-sm mt-1">⚠️ Page limit reached</p>
+              <% end %>
+            <% else %>
+              <p class="text-green-600 text-sm">✓ Unlimited</p>
+            <% end %>
+          </div>
+          
+          <!-- Todo Usage (average per page) -->
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-sm font-medium text-gray-700">Total Todos</span>
+              <span class="text-sm text-gray-600">
+                <%= @user.pages.joins(:todos).count %>
+              </span>
+            </div>
+            <% unless @user.premium? %>
+              <p class="text-sm text-gray-600">Max <%= User::MAX_FREE_TODOS_PER_PAGE %> per page</p>
+            <% else %>
+              <p class="text-green-600 text-sm">✓ Unlimited</p>
+            <% end %>
+          </div>
+          
+          <% unless @user.premium? %>
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <div class="font-medium text-blue-900 mb-2">Upgrade to Premium</div>
+              <div class="text-sm text-blue-800 mb-3">
+                • Unlimited pages & todos<br>
+                • All premium themes<br>
+                • Priority support
+              </div>
+              <%= link_to "Upgrade Now", pricing_path, class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors inline-block" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

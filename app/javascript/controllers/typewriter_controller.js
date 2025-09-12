@@ -70,8 +70,9 @@ export default class extends Controller {
         setTimeout(() => {
           if (this.cursor && this.cursor.parentNode) {
             this.cursor.remove()
+            this.cursor = null
           }
-        }, 1000)
+        }, 500) // Reduced from 1000ms to 500ms for faster cleanup
       }
     }, this.speedValue)
   }
@@ -80,6 +81,7 @@ export default class extends Controller {
     // Clean up if controller is removed
     if (this.cursor && this.cursor.parentNode) {
       this.cursor.remove()
+      this.cursor = null
     }
   }
 }
