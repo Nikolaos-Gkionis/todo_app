@@ -2,24 +2,24 @@ class StripeController < ApplicationController
   before_action :require_login
 
   def create_checkout_session
-    # Create a Stripe checkout session for premium subscription
+    # Create a Stripe checkout session for premium upgrade
     begin
       session = Stripe::Checkout::Session.create({
         customer_email: current_user.email_address,
-        payment_method_types: ['card'],
-        line_items: [{
+        payment_method_types: [ "card" ],
+        line_items: [ {
           price_data: {
-            currency: 'usd',
+            currency: "usd",
             product_data: {
-              name: 'Todo-it Premium',
-              description: 'Unlock all themes, unlimited pages, and premium features',
+              name: "Todo-it Premium",
+              description: "Unlock all themes, unlimited pages, and premium features"
             },
-            unit_amount: 2900, # $29.00 in cents
+            unit_amount: 2900 # $29.00 in cents
           },
-          quantity: 1,
-        }],
-        mode: 'payment',
-        success_url: success_stripe_url + '?session_id={CHECKOUT_SESSION_ID}',
+          quantity: 1
+        } ],
+        mode: "payment",
+        success_url: success_stripe_url + "?session_id={CHECKOUT_SESSION_ID}",
         cancel_url: cancel_stripe_url,
         metadata: {
           user_id: current_user.id
@@ -40,7 +40,7 @@ class StripeController < ApplicationController
       begin
         session = Stripe::Checkout::Session.retrieve(session_id)
 
-        if session.payment_status == 'paid'
+        if session.payment_status == "paid"
           # Update user to premium
           current_user.update(premium: true)
 
@@ -71,6 +71,6 @@ class StripeController < ApplicationController
   private
 
   def configure_stripe
-    Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+    Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
   end
 end

@@ -1,6 +1,6 @@
 class RegistrationsController < ApplicationController
   # Allow access to signup pages without authentication
-  skip_before_action :require_login, only: [:new, :create]
+  skip_before_action :require_login, only: [ :new, :create ]
 
   def new
     # Show the signup form
@@ -10,11 +10,11 @@ class RegistrationsController < ApplicationController
   def create
     # Create new user with provided parameters
     @user = User.new(user_params)
-    
+
     if @user.save
       # Signup successful - automatically log them in
       session[:user_id] = @user.id
-      redirect_to app_root_path, notice: 'Account created successfully! Welcome!'
+      redirect_to app_root_path, notice: "Account created successfully! Welcome!"
     else
       # Signup failed - show errors
       render :new, status: :unprocessable_entity

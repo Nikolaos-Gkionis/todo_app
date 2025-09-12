@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:80"
+    volumes:
+      - .:/rails
+      - bundle_cache:/usr/local/bundle
+      - db_data:/rails/storage
+    environment:
+      - RAILS_ENV=development
+    env_file:
+      - .env
+    command: ./bin/rails server -b 0.0.0.0 -p 80
+
+volumes:
+  bundle_cache:
+  db_data:

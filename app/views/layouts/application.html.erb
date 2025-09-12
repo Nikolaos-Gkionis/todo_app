@@ -144,6 +144,7 @@
           <%= button_to "Unlock All Themes",
                 create_checkout_session_path,
                 method: :post,
+                data: { turbo: false },
                 class: "text-xs text-blue-600 hover:text-blue-800 underline cursor-pointer bg-transparent border-0" %>
         </div>
       <% end %>

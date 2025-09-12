@@ -11,12 +11,12 @@ class Page < ApplicationRecord
     return true if user.premium?
     todos.count < User::MAX_FREE_TODOS_PER_PAGE
   end
-  
+
   def remaining_todos
     return "∞" if user.premium?
-    [User::MAX_FREE_TODOS_PER_PAGE - todos.count, 0].max
+    [ User::MAX_FREE_TODOS_PER_PAGE - todos.count, 0 ].max
   end
-  
+
   def at_todo_limit?
     return false if user.premium?
     todos.count >= User::MAX_FREE_TODOS_PER_PAGE

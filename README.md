@@ -195,6 +195,49 @@ Through building this app, you've mastered:
 - **Code Organization** - Maintainable, scalable architecture
 - **Production Readiness** - Robust error handling and user feedback
 
+## 🐳 Docker Deployment
+
+### **Quick Start with Docker Compose**
+
+1. **Clone and setup:**
+
+   ```bash
+   git clone <your-repo>
+   cd todo_app
+   cp .env.example .env
+   # Edit .env with your Stripe keys
+   ```
+
+2. **Launch with Docker:**
+
+   ```bash
+   docker-compose up --build
+   ```
+
+3. **Access your app:**
+   - **App**: http://localhost:3000
+
+That's it! The app uses SQLite (file-based database) so no separate database setup needed.
+
+### **Production Deployment**
+
+For production deployment, use the included Dockerfile with Kamal:
+
+```bash
+# Build and deploy
+kamal deploy
+```
+
+### **Environment Variables**
+
+Required environment variables (copy from `.env.example`):
+
+```bash
+# Stripe (required for payments)
+STRIPE_PUBLISHABLE_KEY=pk_test_...
+STRIPE_SECRET_KEY=sk_test_...
+```
+
 ---
 
 **"Do it" represents a complete, production-ready Rails application with professional-grade features, beautiful design, and exceptional user experience. It's a testament to modern Rails development and thoughtful UI/UX design.**

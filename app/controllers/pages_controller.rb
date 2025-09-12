@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   # Require authentication for all actions
   before_action :require_login
-  before_action :set_page, only: [:show, :edit, :update, :destroy]
+  before_action :set_page, only: [ :show, :edit, :update, :destroy ]
 
   def index
     # Only show current user's pages
@@ -25,12 +25,12 @@ class PagesController < ApplicationController
       redirect_to pages_path, alert: "Free users can only create #{User::MAX_FREE_PAGES} pages. Upgrade to Premium for unlimited pages!"
       return
     end
-    
+
     # Create page for current user
     @page = current_user.pages.build(page_params)
-  
+
     if @page.save
-      redirect_to pages_path, notice: 'Page was successfully created.'
+      redirect_to pages_path, notice: "Page was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -44,9 +44,9 @@ class PagesController < ApplicationController
   def update
     # @page is set by before_action
     if @page.update(page_params)
-      redirect_to @page, notice: 'Page was successfully updated.'
+      redirect_to @page, notice: "Page was successfully updated."
     else
-      flash.now[:alert] = 'Please fix the errors below.'
+      flash.now[:alert] = "Please fix the errors below."
       render :edit, status: :unprocessable_entity
     end
   end
@@ -54,7 +54,7 @@ class PagesController < ApplicationController
   def destroy
     # @page is set by before_action
     @page.destroy
-    redirect_to pages_path, notice: 'Page was successfully deleted.'
+    redirect_to pages_path, notice: "Page was successfully deleted."
   end
 
   private

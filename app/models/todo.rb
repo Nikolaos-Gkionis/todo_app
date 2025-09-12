@@ -9,19 +9,19 @@ class Todo < ApplicationRecord
   scope :ordered, -> { order(:position) }
   scope :completed, -> { where(completed: true) }
   scope :pending, -> { where(completed: false) }
-  
+
   # Due date scopes
-  scope :overdue, -> { where('due_date < ?', Date.current) }
+  scope :overdue, -> { where("due_date < ?", Date.current) }
   scope :due_today, -> { where(due_date: Date.current) }
   scope :due_soon, -> { where(due_date: Date.current..3.days.from_now) }
   scope :with_due_dates, -> { where.not(due_date: nil) }
-  
+
   # Smart ordering: overdue first, then due soon, then by position
-  scope :ordered_by_priority, -> { 
+  scope :ordered_by_priority, -> {
     order(
-      Arel.sql("CASE 
+      Arel.sql("CASE
         WHEN due_date IS NOT NULL AND due_date < '#{Date.current}' THEN 1
-        WHEN due_date = '#{Date.current}' THEN 2  
+        WHEN due_date = '#{Date.current}' THEN 2
         WHEN due_date IS NOT NULL AND due_date <= '#{3.days.from_now.to_date}' THEN 3
         ELSE 4
       END"),
@@ -49,12 +49,12 @@ class Todo < ApplicationRecord
     Todo.transaction do
       if new_position < position
         # Moving up - shift others down
-        page.todos.where(position: new_position...position).update_all('position = position + 1')
+        page.todos.where(position: new_position...position).update_all("position = position + 1")
       else
         # Moving down - shift others up
-        page.todos.where(position: (position + 1)..new_position).update_all('position = position - 1')
+        page.todos.where(position: (position + 1)..new_position).update_all("position = position - 1")
       end
-      
+
       update!(position: new_position)
     end
   end
@@ -74,7 +74,7 @@ class Todo < ApplicationRecord
 
   def due_status
     return nil unless due_date.present?
-    
+
     if overdue?
       :overdue
     elsif due_today?
@@ -88,7 +88,7 @@ class Todo < ApplicationRecord
 
   def due_date_display
     return nil unless due_date.present?
-    
+
     case due_status
     when :overdue
       "#{days_overdue} day#{'s' if days_overdue != 1} overdue"
@@ -104,13 +104,13 @@ class Todo < ApplicationRecord
   def due_date_color_class
     case due_status
     when :overdue
-      'text-red-600 bg-red-50 border-red-200'
+      "text-red-600 bg-red-50 border-red-200"
     when :due_today
-      'text-orange-600 bg-orange-50 border-orange-200'
+      "text-orange-600 bg-orange-50 border-orange-200"
     when :due_soon
-      'text-green-600 bg-green-50 border-green-200'
+      "text-green-600 bg-green-50 border-green-200"
     else
-      'text-gray-600 bg-gray-50 border-gray-200'
+      "text-gray-600 bg-gray-50 border-gray-200"
     end
   end
 
@@ -126,7 +126,7 @@ class Todo < ApplicationRecord
 
   def set_position
     return if position.present?
-    
+
     max_position = page.todos.maximum(:position) || 0
     self.position = max_position + 1
   end

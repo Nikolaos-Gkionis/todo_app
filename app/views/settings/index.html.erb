@@ -94,8 +94,8 @@
 
         <!-- Stripe Customer Portal Link -->
         <div class="border-t border-gray-200 pt-4">
-          <p class="text-sm text-gray-600 mb-3">Manage your billing and subscription:</p>
-          <%= link_to "Manage Billing & Subscription",
+          <p class="text-sm text-gray-600 mb-3">Manage your billing:</p>
+          <%= link_to "Manage Billing",
                 customer_portal_path,
                 class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
         </div>
@@ -123,6 +123,7 @@
           <%= button_to "Upgrade to Premium",
                 create_checkout_session_path,
                 method: :post,
+                data: { turbo: false },
                 class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline-blue cursor-pointer bg-transparent border-0" %>
         </div>
       <% end %>
