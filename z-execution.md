@@ -61,13 +61,12 @@
 - [x] Professional error handling and user experience
 - [x] 5 beautiful notebook themes with persistence
 
-### 🔮 Phase 6: Predeployment
+### 🔮 Phase 6: Advanced Features (FUTURE)
 
+- [ ] Todo reordering/positioning
+- [ ] Project colors and themes
 - [ ] Due dates for todos
 - [ ] Search and filtering
-
-### Phase 7: Deploy
-
 - [ ] Deployment to production
 
 ---
