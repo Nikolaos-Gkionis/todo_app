@@ -1,0 +1,74 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h1 class="text-3xl font-bold">My Pages</h1>
+      <% if current_user.free? %>
+        <p class="text-sm text-gray-600 mt-1">
+          <span class="<%= current_user.remaining_pages == 0 ? 'text-red-600 font-medium' : '' %>">
+            <%= current_user.remaining_pages %> of <%= User::MAX_FREE_PAGES %> pages remaining
+          </span>
+          <% if current_user.remaining_pages == 0 %>
+            • <span class="text-red-600">Page limit reached!</span>
+          <% end %>
+        </p>
+      <% end %>
+    </div>
+    
+    <% if current_user.can_create_page? %>
+      <%= link_to "New Page", new_page_path, class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline-blue" %>
+    <% else %>
+      <div class="text-center">
+        <div class="text-gray-400 text-sm mb-2">Page limit reached</div>
+        <%= link_to "Upgrade to Premium", pricing_path, class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors text-sm" %>
+      </div>
+    <% end %>
+  </div>
+  
+  <% if @pages.any? %>
+    <div class="space-y-4">
+      <% @pages.each do |page| %>
+        <div class="notebook-card">
+          <div class="flex justify-between items-start">
+            <div class="flex-grow">
+              <div class="flex items-center space-x-3 mb-1">
+                <h2 class="text-xl font-semibold">
+                  <%= link_to page.name, page_path(page), class: "text-blue-600 hover:text-blue-800" %>
+                </h2>
+                <% if page.total_todos_count > 0 %>
+                  <div class="flex items-center space-x-2">
+                    <span class="text-sm font-medium text-gray-700 bg-gray-100 px-2 py-1 rounded-full">
+                      <%= page.progress_text %>
+                    </span>
+                    <% if page.completion_percentage > 0 %>
+                      <div class="w-12 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="h-full bg-green-500 transition-all duration-300" 
+                             style="width: <%= page.completion_percentage %>%"></div>
+                      </div>
+                    <% end %>
+                  </div>
+                <% else %>
+                  <span class="text-xs text-gray-400 italic">No todos yet</span>
+                <% end %>
+              </div>
+              <% if page.description.present? %>
+                <p class="text-gray-600 mt-2"><%= page.description %></p>
+              <% end %>
+            </div>
+            <div class="flex space-x-2 ml-4">
+              <%= link_to "Edit", edit_page_path(page), 
+                    class: "text-green-600 hover:text-green-800 text-sm font-medium hand-underline hand-underline-green" %>
+              <%= link_to "Delete", page, 
+                    data: { 
+                      "turbo-method": :delete,
+                      confirm: "Are you sure? This will delete the page and all its todos!" 
+                    },
+                    class: "text-red-600 hover:text-red-800 text-sm font-medium hand-underline hand-underline-red" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="text-gray-500">No pages yet. Create your first page!</p>
+  <% end %>
+</div>

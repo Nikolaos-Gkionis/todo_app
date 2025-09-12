@@ -1,0 +1,242 @@
+<!-- Navigation -->
+<nav class="bg-white shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center py-6">
+      <div class="flex items-center">
+        <%= link_to root_path, class: "flex items-center" do %>
+          <div class="logo-checkbox mr-3"></div>
+          <span class="text-2xl font-bold text-gray-900">Todo-it</span>
+        <% end %>
+      </div>
+      <div class="flex items-center space-x-8">
+        <%= link_to "Home", root_path, class: "text-gray-600 hover:text-blue-600 font-medium" %>
+        <span class="text-blue-600 font-medium">Pricing</span>
+        <%= link_to "How to Use", how_to_path, class: "text-gray-600 hover:text-blue-600 font-medium" %>
+        <div class="flex space-x-4">
+          <%= link_to "Sign In", login_path, class: "text-gray-600 hover:text-blue-600 font-medium" %>
+          <%= link_to "Get Started", signup_path, class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Pricing Hero -->
+<section class="py-20 bg-gradient-to-br from-blue-50 to-indigo-100">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h1 class="text-5xl font-bold text-gray-900 mb-6">Simple, Honest Pricing</h1>
+    <p class="text-xl text-gray-600 mb-8">
+      No subscriptions, no monthly fees. Pay once, create beautiful pages forever.
+    </p>
+  </div>
+</section>
+
+<!-- Pricing Cards -->
+<section class="py-20 bg-white">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      
+      <!-- Free Plan -->
+      <div class="bg-white border-2 border-gray-200 rounded-2xl p-8 relative">
+        <div class="text-center mb-8">
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">Free Forever</h3>
+          <div class="text-4xl font-bold text-gray-900 mb-2">$0</div>
+          <p class="text-gray-600">Perfect for trying Todo-it</p>
+        </div>
+        
+        <ul class="space-y-4 mb-8">
+          <li class="flex items-center">
+            <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
+            <span class="text-gray-700">Up to 3 pages</span>
+          </li>
+          <li class="flex items-center">
+            <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
+            <span class="text-gray-700">Up to 20 todos per page</span>
+          </li>
+          <li class="flex items-center">
+            <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
+            <span class="text-gray-700">Classic dotted theme only</span>
+          </li>
+          <li class="flex items-center">
+            <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
+            <span class="text-gray-700">Drag-and-drop reordering</span>
+          </li>
+          <li class="flex items-center">
+            <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
+            <span class="text-gray-700">Due date management</span>
+          </li>
+          <li class="flex items-center">
+            <div class="hand-checkbox hand-checkbox-unchecked mr-3 scale-75"></div>
+            <span class="text-gray-400">Premium themes locked</span>
+          </li>
+        </ul>
+        
+        <%= link_to signup_path, class: "w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 px-6 rounded-lg font-semibold transition-colors text-center block" do %>
+          Start Free
+        <% end %>
+      </div>
+      
+      <!-- Premium Plan -->
+      <div class="bg-white border-2 border-blue-500 rounded-2xl p-8 relative shadow-lg">
+        <!-- Popular Badge -->
+        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+          <span class="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
+            ⭐ Most Popular
+          </span>
+        </div>
+        
+        <div class="text-center mb-8">
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">Premium</h3>
+          <div class="text-4xl font-bold text-blue-600 mb-2">$29</div>
+          <p class="text-gray-600">One-time payment, lifetime access</p>
+        </div>
+        
+        <ul class="space-y-4 mb-8">
+          <li class="flex items-center">
+            <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
+            <span class="text-gray-700 font-medium">Everything in Free, plus:</span>
+          </li>
+          <li class="flex items-center">
+            <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
+            <span class="text-gray-700">✨ Unlimited pages & todos</span>
+          </li>
+          <li class="flex items-center">
+            <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
+            <span class="text-gray-700">🎨 5 beautiful themes (lined, graph, vintage, dark)</span>
+          </li>
+          <li class="flex items-center">
+            <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
+            <span class="text-gray-700">📱 Mobile app access (coming soon)</span>
+          </li>
+          <li class="flex items-center">
+            <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
+            <span class="text-gray-700">🔄 Automatic backups</span>
+          </li>
+          <li class="flex items-center">
+            <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
+            <span class="text-gray-700">📧 Priority email support</span>
+          </li>
+          <li class="flex items-center">
+            <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
+            <span class="text-gray-700">🚀 Early access to new features</span>
+          </li>
+        </ul>
+        
+        <%= link_to signup_path, class: "w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold transition-colors text-center block" do %>
+          Get Premium
+        <% end %>
+      </div>
+    </div>
+    
+    <!-- Value Proposition -->
+    <div class="text-center mt-16">
+      <p class="text-gray-600 mb-4">
+        💡 <strong>Why one-time payment?</strong> We believe in honest pricing. 
+        Buy once, use forever. No monthly surprises, no feature locks.
+      </p>
+      <p class="text-sm text-gray-500">
+        30-day money-back guarantee • Secure payment via Stripe
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-20 bg-gray-50">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Frequently Asked Questions</h2>
+    
+    <div class="space-y-8">
+      <div class="bg-white rounded-lg p-6 shadow-sm">
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">What happens to my free todos after 30 days?</h3>
+        <p class="text-gray-600">
+          To keep our free tier sustainable, todos older than 30 days are automatically archived. 
+          Upgrade to Premium to keep all your todos forever and support continued development.
+        </p>
+      </div>
+      
+      <div class="bg-white rounded-lg p-6 shadow-sm">
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">Can I upgrade from Free to Premium later?</h3>
+        <p class="text-gray-600">
+          Absolutely! Upgrade anytime and all your existing pages and todos will be preserved. 
+          The 30-day deletion policy will be immediately lifted.
+        </p>
+      </div>
+      
+      <div class="bg-white rounded-lg p-6 shadow-sm">
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">Do you offer refunds?</h3>
+        <p class="text-gray-600">
+          Yes! We offer a 30-day money-back guarantee. If Todo-it isn't right for you, 
+          contact us within 30 days for a full refund, no questions asked.
+        </p>
+      </div>
+      
+      <div class="bg-white rounded-lg p-6 shadow-sm">
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">Will there be mobile apps?</h3>
+        <p class="text-gray-600">
+          Yes! Native iOS and Android apps are in development and will be available to Premium users 
+          at no additional cost. The web app already works great on mobile browsers.
+        </p>
+      </div>
+      
+      <div class="bg-white rounded-lg p-6 shadow-sm">
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">How is my data protected?</h3>
+        <p class="text-gray-600">
+          Your data is encrypted in transit and at rest. We never sell your information, 
+          and Premium users get automatic daily backups for extra peace of mind.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section class="py-20 bg-blue-600">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-4xl font-bold text-white mb-4">Start Your Beautiful Todo Journey</h2>
+    <p class="text-xl text-blue-100 mb-8">
+      Try Todo-it free today. Upgrade when you're ready to keep your pages forever.
+    </p>
+    
+    <%= link_to signup_path, class: "bg-white hover:bg-gray-100 text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold transition-colors inline-block" do %>
+      🚀 Get Started Free
+    <% end %>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div class="col-span-2">
+        <div class="flex items-center mb-4">
+          <div class="logo-checkbox mr-3" style="filter: brightness(0) invert(1);"></div>
+          <span class="text-2xl font-bold">Todo-it</span>
+        </div>
+        <p class="text-gray-400 mb-4">
+          Beautiful notebook-style todo pages that make productivity feel personal and delightful.
+        </p>
+        <p class="text-gray-500 text-sm">
+          © 2025 Todo-it. Made with ❤️ for productivity enthusiasts.
+        </p>
+      </div>
+      
+      <div>
+        <h3 class="font-semibold mb-4">Product</h3>
+        <ul class="space-y-2 text-gray-400">
+          <li><%= link_to "Home", root_path, class: "hover:text-white transition-colors" %></li>
+          <li><span class="text-white">Pricing</span></li>
+          <li><%= link_to "How to Use", how_to_path, class: "hover:text-white transition-colors" %></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h3 class="font-semibold mb-4">Account</h3>
+        <ul class="space-y-2 text-gray-400">
+          <li><%= link_to "Sign In", login_path, class: "hover:text-white transition-colors" %></li>
+          <li><%= link_to "Create Account", signup_path, class: "hover:text-white transition-colors" %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>

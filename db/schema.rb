@@ -10,26 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_11_084832) do
-  create_table "projects", force: :cascade do |t|
+ActiveRecord::Schema[8.0].define(version: 2025_09_12_110144) do
+  create_table "pages", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.string "cover_color"
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_projects_on_user_id"
+    t.index ["user_id"], name: "index_pages_on_user_id"
   end
 
   create_table "todos", force: :cascade do |t|
     t.string "title"
     t.text "notes"
     t.boolean "completed"
-    t.integer "project_id", null: false
+    t.integer "page_id", null: false
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["project_id"], name: "index_todos_on_project_id"
+    t.date "due_date"
+    t.index ["page_id"], name: "index_todos_on_page_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -37,8 +38,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_11_084832) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "password_digest"
+    t.boolean "premium", default: false, null: false
   end
 
-  add_foreign_key "projects", "users"
-  add_foreign_key "todos", "projects"
+  add_foreign_key "pages", "users"
+  add_foreign_key "todos", "pages"
 end

@@ -14,7 +14,7 @@ class RegistrationsController < ApplicationController
     if @user.save
       # Signup successful - automatically log them in
       session[:user_id] = @user.id
-      redirect_to root_path, notice: 'Account created successfully! Welcome!'
+      redirect_to app_root_path, notice: 'Account created successfully! Welcome!'
     else
       # Signup failed - show errors
       render :new, status: :unprocessable_entity

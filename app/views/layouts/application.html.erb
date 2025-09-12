@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title><%= content_for(:title) || "Do it" %></title>
+    <title><%= content_for(:title) || "Todo-it" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -20,9 +20,9 @@
     <meta name="theme-color" content="#4a5568">
     
     <!-- App Meta Tags -->
-    <meta name="description" content="Do it - Beautiful notebook-style todo app with hand-drawn aesthetics">
-    <meta name="author" content="Do it App">
-    <meta property="og:title" content="Do it - Beautiful Todo App">
+    <meta name="description" content="Todo-it - Beautiful notebook-style todo app with hand-drawn aesthetics">
+    <meta name="author" content="Todo-it App">
+    <meta property="og:title" content="Todo-it - Beautiful Todo App">
     <meta property="og:description" content="Organize your tasks in a beautiful notebook-style interface">
     <meta property="og:type" content="website">
 
@@ -72,44 +72,72 @@
         window.applyThemeGlobal = applyTheme;
       })();
     </script>
-  <!-- Navigation Header -->
+  <!-- App Navigation Header (only for authenticated app pages) -->
+  <% if controller_name != 'marketing' && logged_in? %>
   <nav class="bg-transparent shadow-none">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between h-16">
         <div class="flex items-center">
-          <%= link_to root_path, class: "text-xl font-bold text-gray-800 flex items-center" do %>
+          <%= link_to pages_path, class: "text-xl font-bold text-gray-800 flex items-center" do %>
             <div class="logo-checkbox"></div>
-            Do it
+            Todo-it
           <% end %>
         </div>
         
         <div class="flex items-center space-x-4">
-          <% if logged_in? %>
-            <span class="text-gray-700">Welcome, <%= current_user.email_address %>!</span>
-            <%= link_to "Logout", logout_path, data: { "turbo-method": :delete }, 
-                  class: "text-red-600 hover:text-red-800 font-medium hand-underline hand-underline-red text-sm" %>
-          <% else %>
-            <%= link_to "Login", login_path, 
-                  class: "text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium" %>
-            <%= link_to "Sign Up", signup_path, 
-                  class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline-blue text-sm" %>
-          <% end %>
+          <span class="text-gray-700">Welcome, <%= current_user.email_address %>!</span>
+          <%= link_to "Logout", logout_path, data: { "turbo-method": :delete }, 
+                class: "text-red-600 hover:text-red-800 font-medium hand-underline hand-underline-red text-sm" %>
         </div>
       </div>
     </div>
   </nav>
+  <% end %>
 
-  <!-- Theme Selector - Only show on projects index page -->
-  <% if controller_name == 'projects' && action_name == 'index' %>
+  <!-- Theme Selector - Only show on pages index page -->
+  <% if controller_name == 'pages' && action_name == 'index' %>
     <div class="theme-selector">
-      <div class="text-xs text-gray-600 mb-2 text-center font-medium">Themes</div>
+      <div class="text-xs text-gray-600 mb-2 text-center font-medium">
+        Themes
+        <% if current_user.free? %>
+          <span class="text-orange-600">(Premium themes locked)</span>
+        <% end %>
+      </div>
       <div class="flex flex-wrap justify-center">
         <button class="theme-btn-classic active" data-theme="classic" title="Classic Dotted"></button>
-        <button class="theme-btn-lined" data-theme="lined" title="Lined Paper"></button>
-        <button class="theme-btn-graph" data-theme="graph" title="Graph Paper"></button>
-        <button class="theme-btn-vintage" data-theme="vintage" title="Vintage Paper"></button>
-        <button class="theme-btn-dark" data-theme="dark" title="Dark Mode"></button>
+        <% if current_user.can_use_premium_themes? %>
+          <button class="theme-btn-lined" data-theme="lined" title="Lined Paper"></button>
+          <button class="theme-btn-graph" data-theme="graph" title="Graph Paper"></button>
+          <button class="theme-btn-vintage" data-theme="vintage" title="Vintage Paper"></button>
+          <button class="theme-btn-dark" data-theme="dark" title="Dark Mode"></button>
+        <% else %>
+          <div class="theme-btn-lined opacity-50 cursor-not-allowed relative" title="Premium Feature">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <span class="text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
+            </div>
+          </div>
+          <div class="theme-btn-graph opacity-50 cursor-not-allowed relative" title="Premium Feature">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <span class="text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
+            </div>
+          </div>
+          <div class="theme-btn-vintage opacity-50 cursor-not-allowed relative" title="Premium Feature">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <span class="text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
+            </div>
+          </div>
+          <div class="theme-btn-dark opacity-50 cursor-not-allowed relative" title="Premium Feature">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <span class="text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
+            </div>
+          </div>
+        <% end %>
       </div>
+      <% if current_user.free? %>
+        <div class="text-center mt-2">
+          <%= link_to "Unlock All Themes", pricing_path, class: "text-xs text-blue-600 hover:text-blue-800 underline" %>
+        </div>
+      <% end %>
     </div>
   <% end %>
 

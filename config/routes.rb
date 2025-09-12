@@ -12,13 +12,19 @@ Rails.application.routes.draw do
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, or 500 otherwise.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Defines the root path route ("/")
-  root 'projects#index'
+  # Marketing pages (public)
+  root 'marketing#landing'
+  get '/pricing', to: 'marketing#pricing'
+  get '/how-to', to: 'marketing#how_to'
   
-  resources :projects do
-    resources :todos, except: [:show] do
-      collection do
-        patch :reorder
+  # App routes (authenticated)
+  get '/app', to: 'pages#index', as: 'app_root'
+  scope '/app' do
+    resources :pages do
+      resources :todos, except: [:show] do
+        collection do
+          patch :reorder
+        end
       end
     end
   end

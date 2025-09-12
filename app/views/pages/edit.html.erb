@@ -1,15 +1,15 @@
 <div class="container mx-auto px-4 py-8">
-  <h1 class="text-2xl font-bold mb-6">Edit Project</h1>
+  <h1 class="text-2xl font-bold mb-6">Edit Page</h1>
   
-  <%= form_with model: @project, local: true, data: { turbo: false }, class: "space-y-4" do |form| %>
+  <%= form_with model: @page, local: true, data: { turbo: false }, class: "space-y-4" do |form| %>
     <!-- Display validation errors -->
-    <% if @project.errors.any? %>
+    <% if @page.errors.any? %>
       <div class="text-red-700 mb-4">
         <h3 class="font-medium mb-2">
-          ⚠️ <%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:
+          ⚠️ <%= pluralize(@page.errors.count, "error") %> prohibited this page from being saved:
         </h3>
         <ul class="list-disc pl-5 space-y-1">
-          <% @project.errors.full_messages.each do |message| %>
+          <% @page.errors.full_messages.each do |message| %>
             <li><%= message %></li>
           <% end %>
         </ul>
@@ -28,11 +28,11 @@
     
     <div class="flex space-x-3">
       <%= form.submit "Save changes", class: "text-green-600 hover:text-green-800 font-medium hand-underline hand-underline-green cursor-pointer bg-transparent border-0" %>
-      <%= link_to "Cancel", @project, class: "text-gray-600 hover:text-gray-800 font-medium hand-underline hand-underline-gray" %>
-      <%= link_to "Delete Project", @project, 
+      <%= link_to "Cancel", @page, class: "text-gray-600 hover:text-gray-800 font-medium hand-underline hand-underline-gray" %>
+      <%= link_to "Delete Page", @page, 
             data: { 
               "turbo-method": :delete,
-              confirm: "Are you sure? This will delete the project and all its todos!" 
+              confirm: "Are you sure? This will delete the page and all its todos!" 
             },
             class: "text-red-600 hover:text-red-800 font-medium hand-underline hand-underline-red" %>
     </div>

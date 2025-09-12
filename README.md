@@ -1,4 +1,4 @@
-# Do it - Beautiful Notebook-Style Todo App
+# Todo-it - Beautiful Notebook-Style Todo App
 
 A stunning, professional notebook-style todo application built with Rails 8.0, featuring authentic hand-drawn aesthetics, complete user authentication, and a delightful productivity experience that feels like writing in a real moleskin notebook.
 
@@ -16,7 +16,9 @@ A stunning, professional notebook-style todo application built with Rails 8.0, f
 
 - **Complete CRUD operations** for projects and todos
 - **Rich project details** with names, descriptions, and creation dates
-- **Todo management** with titles, notes, and completion status
+- **Advanced todo management** with titles, notes, completion status, and due dates
+- **Smart due date system** with visual priority indicators (overdue, due today, due soon)
+- **Intelligent auto-sorting** - due dates prioritized automatically
 - **Smart progress tracking** with completion counters (e.g., "3/7 completed")
 - **Visual progress bars** showing completion percentage
 - **Collapsible forms** for seamless todo creation
@@ -36,11 +38,15 @@ A stunning, professional notebook-style todo application built with Rails 8.0, f
 - **Wavy red margin lines** that look genuinely hand-sketched
 - **Transparent forms** with hand-drawn underlines for authentic feel
 - **Gloria Hallelujah font** from Google Fonts with smart fallbacks
-- **"Do it" branding** with custom checked checkbox logo
+- **"Todo-it" branding** with custom checked checkbox logo
 
 ### ⚡ **Advanced User Experience**
 
+- **Magical typewriter animations** - New todos appear as if written with a pen in real-time
+- **Smooth checkbox animations** - Delightful hover and completion effects
 - **Drag-and-drop todo reordering** - Effortlessly reorganize todos with smooth visual feedback
+- **Smart due date management** - Color-coded priority badges (red=overdue, orange=today, green=soon)
+- **Intelligent auto-prioritization** - Due todos automatically sort to the top
 - **Theme persistence** across all pages with instant switching via theme selector
 - **Auto-dismissing flash messages** (3-second timeout with smooth fade)
 - **Turbo-powered navigation** for SPA-like speed

@@ -1,0 +1,315 @@
+<!-- Hero Section -->
+<div class="min-h-screen flex flex-col">
+  <!-- Navigation -->
+  <nav class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center py-6">
+        <div class="flex items-center">
+          <!-- Logo -->
+          <div class="logo-checkbox mr-3"></div>
+          <span class="text-2xl font-bold text-gray-900">Todo-it</span>
+        </div>
+        <div class="flex items-center space-x-8">
+          <%= link_to "Pricing", pricing_path, class: "text-gray-600 hover:text-blue-600 font-medium" %>
+          <%= link_to "How to Use", how_to_path, class: "text-gray-600 hover:text-blue-600 font-medium" %>
+          <div class="flex space-x-4">
+            <%= link_to "Sign In", login_path, class: "text-gray-600 hover:text-blue-600 font-medium" %>
+            <%= link_to "Get Started", signup_path, class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Content -->
+  <div class="flex-1 bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        
+        <!-- Left Column - Content -->
+        <div>
+          <h1 class="text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+            Beautiful
+            <span class="text-blue-600">Notebook-Style</span>
+            Todo Pages
+          </h1>
+          
+          <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+            Transform your productivity with Todo-it's authentic hand-drawn aesthetic. 
+            Create beautiful pages, organize your thoughts, and get things done with style.
+          </p>
+          
+          <div class="flex flex-col sm:flex-row gap-4 mb-12">
+            <%= link_to signup_path, class: "bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors text-center" do %>
+              ✨ Start Creating Pages
+            <% end %>
+            <%= link_to pricing_path, class: "border-2 border-gray-300 hover:border-blue-600 text-gray-700 hover:text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold transition-colors text-center" do %>
+              View Pricing
+            <% end %>
+          </div>
+          
+          <!-- Features List -->
+          <div class="space-y-4">
+            <div class="flex items-center">
+              <div class="hand-checkbox hand-checkbox-checked mr-4"></div>
+              <span class="text-gray-700 font-medium">Hand-drawn notebook aesthetics</span>
+            </div>
+            <div class="flex items-center">
+              <div class="hand-checkbox hand-checkbox-checked mr-4"></div>
+              <span class="text-gray-700 font-medium">Drag-and-drop reordering</span>
+            </div>
+            <div class="flex items-center">
+              <div class="hand-checkbox hand-checkbox-checked mr-4"></div>
+              <span class="text-gray-700 font-medium">Smart due date management</span>
+            </div>
+            <div class="flex items-center">
+              <div class="hand-checkbox hand-checkbox-checked mr-4"></div>
+              <span class="text-gray-700 font-medium">Beautiful theme collection</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right Column - App Preview -->
+        <div class="relative">
+          <div class="bg-white rounded-2xl shadow-2xl p-8 notebook-background">
+            <!-- Mock App Interface -->
+            <div class="mb-6">
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">My Pages</h2>
+              <div class="space-y-3">
+                <!-- Sample Page -->
+                <div class="notebook-card p-4">
+                  <div class="flex justify-between items-start">
+                    <div class="flex-grow">
+                      <h3 class="text-lg font-semibold text-blue-600 mb-2">📝 Daily Tasks</h3>
+                      <div class="flex items-center space-x-2 text-sm text-gray-600">
+                        <span class="bg-gray-100 px-2 py-1 rounded-full">3/5 completed</span>
+                        <div class="w-12 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                          <div class="h-full bg-green-500" style="width: 60%"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Sample Todos -->
+                <div class="space-y-2 ml-4">
+                  <div class="flex items-center">
+                    <div class="hand-checkbox hand-checkbox-checked mr-3"></div>
+                    <span class="text-gray-500 line-through">Review marketing copy</span>
+                  </div>
+                  <div class="flex items-center">
+                    <div class="hand-checkbox hand-checkbox-checked mr-3"></div>
+                    <span class="text-gray-500 line-through">Update website design</span>
+                  </div>
+                  <div class="flex items-center">
+                    <div class="hand-checkbox hand-checkbox-unchecked mr-3"></div>
+                    <span class="text-gray-700">Plan team meeting</span>
+                    <span class="ml-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border border-orange-300 text-orange-700 bg-orange-50">
+                      📅 Today
+                    </span>
+                  </div>
+                  <div class="flex items-center">
+                    <div class="hand-checkbox hand-checkbox-unchecked mr-3"></div>
+                    <span class="text-gray-700">Prepare presentation</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Floating elements -->
+          <div class="absolute -top-4 -right-4 bg-yellow-200 p-3 rounded-lg shadow-lg transform rotate-12">
+            <span class="text-sm font-medium">✏️ Add new todo...</span>
+          </div>
+          <div class="absolute -bottom-4 -left-4 bg-green-200 p-3 rounded-lg shadow-lg transform -rotate-6">
+            <span class="text-sm font-medium">🎨 5 Beautiful Themes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Features Section -->
+<section id="features" class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-bold text-gray-900 mb-4">Why Todo-it is Different</h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Move beyond boring todo apps. Todo-it brings the warmth and creativity of handwritten notebooks to your digital workflow.
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Feature 1 -->
+      <div class="text-center p-6">
+        <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+          <span class="text-2xl">🎨</span>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">Authentic Hand-Drawn Design</h3>
+        <p class="text-gray-600">
+          Every element feels hand-crafted. From checkboxes to underlines, experience the warmth of analog design in a digital world.
+        </p>
+      </div>
+      
+      <!-- Feature 2 -->
+      <div class="text-center p-6">
+        <div class="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+          <span class="text-2xl">⚡</span>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">Magical Interactions</h3>
+        <p class="text-gray-600">
+          Drag-and-drop reordering, typewriter animations, and smooth checkbox transitions make every action delightful.
+        </p>
+      </div>
+      
+      <!-- Feature 3 -->
+      <div class="text-center p-6">
+        <div class="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+          <span class="text-2xl">📱</span>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">Works Everywhere</h3>
+        <p class="text-gray-600">
+          Responsive design, offline support, and coming soon to iOS and Android app stores. Your pages, everywhere.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Themes Preview Section -->
+<section class="py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-bold text-gray-900 mb-4">Beautiful Themes for Every Mood</h2>
+      <p class="text-xl text-gray-600">
+        Choose from our curated collection of notebook styles
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Classic Theme -->
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div class="h-48 bg-gradient-to-br from-amber-50 to-orange-100 p-6 relative notebook-background">
+          <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle, #d4b896 1px, transparent 1px); background-size: 20px 20px;"></div>
+          <h3 class="font-semibold text-gray-800 mb-2">📝 Classic Dotted</h3>
+          <div class="space-y-2">
+            <div class="flex items-center">
+              <div class="hand-checkbox hand-checkbox-checked mr-2 scale-75"></div>
+              <span class="text-sm text-gray-700">Morning coffee</span>
+            </div>
+            <div class="flex items-center">
+              <div class="hand-checkbox hand-checkbox-unchecked mr-2 scale-75"></div>
+              <span class="text-sm text-gray-700">Read chapter 3</span>
+            </div>
+          </div>
+        </div>
+        <div class="p-4">
+          <p class="text-gray-600 text-sm">The warm, familiar feel of a traditional notebook</p>
+        </div>
+      </div>
+      
+      <!-- Lined Theme -->
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div class="h-48 bg-gradient-to-br from-blue-50 to-cyan-100 p-6 relative">
+          <div class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(transparent, transparent 19px, #94a3b8 19px, #94a3b8 20px); background-size: 100% 20px;"></div>
+          <h3 class="font-semibold text-gray-800 mb-2">📏 Lined Paper</h3>
+          <div class="space-y-2">
+            <div class="flex items-center">
+              <div class="hand-checkbox hand-checkbox-checked mr-2 scale-75"></div>
+              <span class="text-sm text-gray-700">Team standup</span>
+            </div>
+            <div class="flex items-center">
+              <div class="hand-checkbox hand-checkbox-unchecked mr-2 scale-75"></div>
+              <span class="text-sm text-gray-700">Code review</span>
+            </div>
+          </div>
+        </div>
+        <div class="p-4">
+          <p class="text-gray-600 text-sm">Clean lines for structured thinking</p>
+        </div>
+      </div>
+      
+      <!-- Dark Theme -->
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div class="h-48 bg-gradient-to-br from-slate-800 to-slate-900 p-6 relative">
+          <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle, #64748b 1px, transparent 1px); background-size: 20px 20px;"></div>
+          <h3 class="font-semibold text-slate-100 mb-2">🌙 Dark Mode</h3>
+          <div class="space-y-2">
+            <div class="flex items-center">
+              <div class="hand-checkbox hand-checkbox-checked mr-2 scale-75" style="filter: brightness(0) invert(1);"></div>
+              <span class="text-sm text-slate-200">Night coding</span>
+            </div>
+            <div class="flex items-center">
+              <div class="hand-checkbox hand-checkbox-unchecked mr-2 scale-75" style="filter: brightness(0) invert(1);"></div>
+              <span class="text-sm text-slate-200">Deploy updates</span>
+            </div>
+          </div>
+        </div>
+        <div class="p-4">
+          <p class="text-gray-600 text-sm">Easy on the eyes for late-night productivity</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 bg-blue-600">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-4xl font-bold text-white mb-4">Ready to Transform Your Productivity?</h2>
+    <p class="text-xl text-blue-100 mb-8">
+      Join thousands of users who've fallen in love with Todo-it's beautiful, intuitive approach to task management.
+    </p>
+    
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <%= link_to signup_path, class: "bg-white hover:bg-gray-100 text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold transition-colors" do %>
+        🚀 Get Started Free
+      <% end %>
+      <%= link_to pricing_path, class: "border-2 border-white hover:bg-white hover:text-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors" do %>
+        View Pricing
+      <% end %>
+    </div>
+    
+    <p class="text-blue-200 mt-6 text-sm">
+      No credit card required • Start creating beautiful pages in seconds
+    </p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div class="col-span-2">
+        <div class="flex items-center mb-4">
+          <div class="logo-checkbox mr-3" style="filter: brightness(0) invert(1);"></div>
+          <span class="text-2xl font-bold">Todo-it</span>
+        </div>
+        <p class="text-gray-400 mb-4">
+          Beautiful notebook-style todo pages that make productivity feel personal and delightful.
+        </p>
+        <p class="text-gray-500 text-sm">
+          © 2025 Todo-it. Made with ❤️ for productivity enthusiasts.
+        </p>
+      </div>
+      
+      <div>
+        <h3 class="font-semibold mb-4">Product</h3>
+        <ul class="space-y-2 text-gray-400">
+          <li><%= link_to "Features", "#features", class: "hover:text-white transition-colors" %></li>
+          <li><%= link_to "Pricing", pricing_path, class: "hover:text-white transition-colors" %></li>
+          <li><%= link_to "How to Use", how_to_path, class: "hover:text-white transition-colors" %></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h3 class="font-semibold mb-4">Account</h3>
+        <ul class="space-y-2 text-gray-400">
+          <li><%= link_to "Sign In", login_path, class: "hover:text-white transition-colors" %></li>
+          <li><%= link_to "Create Account", signup_path, class: "hover:text-white transition-colors" %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
