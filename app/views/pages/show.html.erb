@@ -136,7 +136,7 @@
             <div class="font-medium">Todo limit reached!</div>
             <div class="text-sm">Free users can add up to <%= User::MAX_FREE_TODOS_PER_PAGE %> todos per page</div>
           </div>
-          <%= link_to "Upgrade to Premium", pricing_path, class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors inline-block" %>
+          <%= link_to "Upgrade", pricing_path, class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors inline-block" %>
         </div>
       <% end %>
       
