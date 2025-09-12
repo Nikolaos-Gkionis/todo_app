@@ -30,5 +30,14 @@ Rails.application.routes.draw do
     
     # Settings
     get '/settings', to: 'settings#index', as: 'settings'
+    patch '/settings', to: 'settings#update'
+    get '/settings/delete', to: 'settings#delete', as: 'delete_account'
+    delete '/settings', to: 'settings#destroy'
+
+    # Stripe Integration
+    post '/stripe/create-checkout-session', to: 'stripe#create_checkout_session', as: 'create_checkout_session'
+    get '/stripe/success', to: 'stripe#success', as: 'success_stripe'
+    get '/stripe/cancel', to: 'stripe#cancel', as: 'cancel_stripe'
+    get '/stripe/customer-portal', to: 'stripe#customer_portal', as: 'customer_portal'
   end
 end

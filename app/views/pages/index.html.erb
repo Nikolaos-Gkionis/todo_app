@@ -19,7 +19,10 @@
     <% else %>
       <div class="text-center">
         <div class="text-gray-400 text-sm mb-2">Page limit reached</div>
-        <%= link_to "Upgrade", pricing_path, class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors text-sm" %>
+        <%= button_to "Upgrade",
+              create_checkout_session_path,
+              method: :post,
+              class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline-blue cursor-pointer bg-transparent border-0" %>
       </div>
     <% end %>
   </div>

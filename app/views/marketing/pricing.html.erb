@@ -122,8 +122,15 @@
           </li>
         </ul>
         
-        <%= link_to signup_path, class: "w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold transition-colors text-center block" do %>
-          Get Premium
+        <% if logged_in? %>
+          <%= button_to "Upgrade to Premium",
+                create_checkout_session_path,
+                method: :post,
+                class: "w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold transition-colors text-center cursor-pointer border-0" %>
+        <% else %>
+          <%= link_to signup_path, class: "w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold transition-colors text-center block" do %>
+            Get Premium
+          <% end %>
         <% end %>
       </div>
     </div>
