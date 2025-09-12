@@ -10,8 +10,8 @@ class Todo < ApplicationRecord
   scope :completed, -> { where(completed: true) }
   scope :pending, -> { where(completed: false) }
 
-  # Set position before creating
-  before_create :set_position
+  # Set position before validation
+  before_validation :set_position, on: :create
 
   # Method to reorder todos within a project
   def self.reorder_positions!(project, new_order)

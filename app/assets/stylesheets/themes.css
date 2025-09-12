@@ -330,3 +330,124 @@
 .theme-dark .todo-placeholder .bg-blue-50 {
   background-color: rgba(59, 130, 246, 0.1) !important;
 }
+
+/* =================================
+   ANIMATION STYLES
+   ================================= */
+
+/* Typewriter effect for new todos */
+.todo-item-new {
+  opacity: 0;
+  animation: fadeInSlide 0.5s ease-out forwards;
+}
+
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced checkbox animations */
+.hand-checkbox {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.hand-checkbox:hover {
+  transform: scale(1.05);
+}
+
+.hand-checkbox:active {
+  transform: scale(0.95);
+}
+
+/* Checkbox completion animation */
+.hand-checkbox-checked {
+  animation: checkboxComplete 0.6s ease-out;
+}
+
+@keyframes checkboxComplete {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2) rotate(5deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Form slide-in animations */
+.form-slide-in {
+  animation: slideIn 0.4s ease-out;
+}
+
+.form-slide-out {
+  animation: slideOut 0.3s ease-in forwards;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 300px;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 300px;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+    max-height: 0;
+  }
+}
+
+/* Pulse animation for focus states */
+.pulse-focus:focus {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+}
+
+/* Dark mode animation adjustments */
+.theme-dark .pulse-focus:focus {
+  animation: pulseDark 2s infinite;
+}
+
+@keyframes pulseDark {
+  0% {
+    box-shadow: 0 0 0 0 rgba(96, 165, 250, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(96, 165, 250, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(96, 165, 250, 0);
+  }
+}

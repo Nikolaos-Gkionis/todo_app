@@ -49,7 +49,7 @@
          data-sortable-url-value="<%= reorder_project_todos_path(@project) %>">
       <% @todos.each do |todo| %>
 
-      <div class="todo-item flex items-start p-3" 
+      <div class="todo-item flex items-start p-3 <%= 'todo-item-new' if flash[:new_todo_id] == todo.id %>" 
            data-sortable-target="item" 
            data-todo-id="<%= todo.id %>">
         <%= form_with model: [@project, todo], method: :patch, local: true, class: "flex items-center mr-3" do |form| %>
@@ -67,8 +67,18 @@
         </div>
 
         <div class="flex-1">
-          <h4 class="font-medium <%= 'line-through text-gray-500' if todo.completed %>">
-            <%= todo.title %>
+          <h4 class="font-medium <%= 'line-through text-gray-500' if todo.completed %>"
+              <% if flash[:new_todo_id] == todo.id %>
+                data-controller="typewriter"
+                data-typewriter-text-value="<%= todo.title %>"
+                data-typewriter-speed-value="75"
+                data-typewriter-delay-value="300"
+              <% end %>>
+            <% if flash[:new_todo_id] == todo.id %>
+              <!-- Text will be animated by typewriter controller -->
+            <% else %>
+              <%= todo.title %>
+            <% end %>
           </h4>
           <% if todo.notes.present? %>
           <p class="text-sm text-gray-600 mt-1 <%= 'line-through' if todo.completed %>"><%= todo.notes %></p>
@@ -99,15 +109,15 @@
       </div>
       
       <!-- Expanded form - hidden by default -->
-      <div id="add-todo-form" class="add-todo-expanded hidden">
+      <div id="add-todo-form" class="add-todo-expanded hidden form-slide-in">
         <h3 class="text-lg font-semibold mb-4">Add New Todo</h3>
         <%= form_with model: [@project, @new_todo], local: true, class: "space-y-4" do |form| %>
           <div>
-            <%= form.text_field :title, class: "w-full", placeholder: "What needs to be done?" %>
+            <%= form.text_field :title, class: "w-full pulse-focus px-3 py-2 border-0 bg-transparent", placeholder: "What needs to be done?" %>
           </div>
 
           <div>
-            <%= form.text_area :notes, class: "w-full", placeholder: "Additional notes (optional)", rows: 2 %>
+            <%= form.text_area :notes, class: "w-full pulse-focus px-3 py-2 border-0 bg-transparent", placeholder: "Additional notes (optional)", rows: 2 %>
           </div>
 
           <div class="flex space-x-3">
