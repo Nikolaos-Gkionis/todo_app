@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
     validates :email_address, presence: true, uniqueness: true
     validates :email_address, format: { with: URI::MailTo::EMAIL_REGEXP }
+    validates :name, presence: true, length: { minimum: 2, maximum: 50 }, on: :create
+    validates :name, length: { minimum: 2, maximum: 50 }, allow_blank: true, on: :update
 
     # Freemium limits
     MAX_FREE_PAGES = 3
@@ -36,4 +38,9 @@ class User < ApplicationRecord
     def can_use_premium_themes?
       premium?
     end
-end
+
+    # Display name for the user (name if available, otherwise email)
+    def display_name
+      name.presence || email_address
+    end
+  end

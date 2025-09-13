@@ -21,11 +21,28 @@ class SettingsController < ApplicationController
         render :index, status: :unprocessable_entity
       end
     else
-      # Update email without password change
-      if @user.update(user_params.except(:password, :password_confirmation, :current_password))
-        redirect_to settings_path, notice: "Account updated successfully!"
+      # Check if sensitive fields (email) are being updated
+      sensitive_changes = params[:user][:email_address] != @user.email_address
+
+      if sensitive_changes
+        # Require current password for sensitive changes
+        if @user.authenticate(params[:user][:current_password])
+          if @user.update(user_params.except(:password, :password_confirmation, :current_password))
+            redirect_to settings_path, notice: "Account updated successfully!"
+          else
+            render :index, status: :unprocessable_entity
+          end
+        else
+          @user.errors.add(:current_password, "is incorrect")
+          render :index, status: :unprocessable_entity
+        end
       else
-        render :index, status: :unprocessable_entity
+        # Update non-sensitive fields (like name) without password
+        if @user.update(user_params.except(:password, :password_confirmation, :current_password))
+          redirect_to settings_path, notice: "Account updated successfully!"
+        else
+          render :index, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -54,6 +71,6 @@ class SettingsController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email_address, :password, :password_confirmation, :current_password)
+    params.require(:user).permit(:name, :email_address, :password, :password_confirmation, :current_password)
   end
 end

@@ -23,9 +23,16 @@
 
       <div class="rounded-md shadow-sm -space-y-px">
         <div>
-          <%= form.label :email_address, "Email address", class: "sr-only" %>
-          <%= form.email_field :email_address, 
-                placeholder: "Email address", 
+          <%= form.label :name, "Name", class: "sr-only" %>
+          <%= form.text_field :name,
+                placeholder: "Name",
+                required: true,
+                class: "w-full" %>
+        </div>
+        <div>
+          <%= form.label :email_address, "Email", class: "sr-only" %>
+          <%= form.email_field :email_address,
+                placeholder: "Email",
                 required: true,
                 class: "w-full" %>
         </div>

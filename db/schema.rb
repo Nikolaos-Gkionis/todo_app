@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_12_112639) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_13_151941) do
   create_table "pages", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -39,6 +39,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_12_112639) do
     t.datetime "updated_at", null: false
     t.string "password_digest"
     t.boolean "premium", default: false, null: false
+    t.string "name"
   end
 
   add_foreign_key "pages", "users"
