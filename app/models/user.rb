@@ -43,4 +43,4 @@ class User < ApplicationRecord
     def display_name
       name.presence || email_address
     end
-  end
+end
