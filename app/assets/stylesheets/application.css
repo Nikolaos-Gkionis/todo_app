@@ -9,5 +9,6 @@
  * Consider organizing styles into separate files for maintainability.
  */
 
+@import "tailwindcss";
 @import "notebook_theme.css";
 @import "themes.css";
