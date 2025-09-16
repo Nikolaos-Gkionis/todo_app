@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
+  # Allow all browsers - remove the strict modern browser filter
+  # allow_browser versions: :modern
 
   # Require authentication for all actions by default
   before_action :require_login
