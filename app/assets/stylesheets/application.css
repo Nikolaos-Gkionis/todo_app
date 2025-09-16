@@ -9,6 +9,4 @@
  * Consider organizing styles into separate files for maintainability.
  */
 
-@import "tailwind.css";
-@import "notebook_theme.css";
-@import "themes.css";
+/* All CSS files are now included directly in the layout file */
