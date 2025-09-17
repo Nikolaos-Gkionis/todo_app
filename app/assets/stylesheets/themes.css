@@ -183,15 +183,6 @@
 }
 
 
-/* DEBUG: Force desktop navigation to show */
-@media (min-width: 640px) {
-  .hidden.sm\\:flex {
-    display: flex !important;
-  }
-  .block.sm\\:hidden {
-    display: none !important;
-  }
-}
 
 /* Theme selector styles */
 .theme-selector {
