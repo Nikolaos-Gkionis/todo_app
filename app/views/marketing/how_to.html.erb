@@ -1,25 +1,5 @@
 <!-- Navigation -->
-<nav class="bg-white shadow-sm">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center py-6">
-      <div class="flex items-center">
-        <%= link_to root_path, class: "flex items-center" do %>
-          <div class="logo-checkbox mr-3"></div>
-          <span class="text-2xl font-bold text-gray-900">Todo-it</span>
-        <% end %>
-      </div>
-      <div class="flex items-center space-x-8">
-        <%= link_to "Home", root_path, class: "text-gray-600 hover:text-blue-600 font-medium" %>
-        <%= link_to "Pricing", pricing_path, class: "text-gray-600 hover:text-blue-600 font-medium" %>
-        <span class="text-blue-600 font-medium">How to Use</span>
-        <div class="flex items-center space-x-4">
-          <%= link_to "Sign In", login_path, class: "text-gray-600 hover:text-blue-600 font-medium" %>
-          <%= link_to "Get Started", signup_path, class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors" %>
-        </div>
-      </div>
-    </div>
-  </div>
-</nav>
+<%= render 'shared/navbar' %>
 
 <!-- Hero -->
 <section class="py-20 bg-gradient-to-br from-blue-50 to-indigo-100">

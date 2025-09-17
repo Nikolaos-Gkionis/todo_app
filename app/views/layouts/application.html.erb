@@ -77,80 +77,124 @@
     </script>
   <!-- App Navigation Header (only for authenticated app pages) -->
   <% if controller_name != 'marketing' && logged_in? %>
-  <nav class="bg-transparent shadow-none">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16">
-        <div class="flex items-center">
-          <%= link_to pages_path, class: "text-xl font-bold text-gray-800 flex items-center" do %>
-            <div class="logo-checkbox"></div>
-            Todo-it
-          <% end %>
-        </div>
-        
-        <div class="flex items-center space-x-4">
-          <span class="text-gray-700"><%= random_motivational_message %>, <%= current_user.display_name %>!</span>
-          <%= link_to settings_path, class: "text-gray-600 hover:text-gray-800 font-medium text-sm" do %>
-            <svg class="w-5 h-5 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-            </svg>
-          <% end %>
-          <%= link_to "Logout", logout_path, data: { "turbo-method": :delete },
-                class: "text-red-600 hover:text-red-800 font-medium hand-underline hand-underline-red text-sm" %>
-        </div>
-      </div>
-    </div>
-  </nav>
+    <%= render 'shared/navbar' %>
   <% end %>
 
   <!-- Theme Selector - Only show on pages index page -->
   <% if controller_name == 'pages' && action_name == 'index' %>
     <div class="theme-selector">
-      <div class="text-xs text-gray-600 mb-2 text-center font-medium">
-        Themes
-        <% if current_user.free? %>
-          <span class="text-orange-600">(Premium themes locked)</span>
-        <% end %>
+      <!-- Mobile Icon Toggle -->
+      <div class="theme-toggle-mobile md:hidden">
+        <button class="theme-toggle-btn" id="theme-toggle-mobile" title="Themes">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"/>
+          </svg>
+        </button>
       </div>
-      <div class="flex flex-wrap justify-center">
-        <button class="theme-btn-classic active" data-theme="classic" title="Classic Dotted"></button>
-        <% if current_user.can_use_premium_themes? %>
-          <button class="theme-btn-lined" data-theme="lined" title="Lined Paper"></button>
-          <button class="theme-btn-graph" data-theme="graph" title="Graph Paper"></button>
-          <button class="theme-btn-vintage" data-theme="vintage" title="Vintage Paper"></button>
-          <button class="theme-btn-dark" data-theme="dark" title="Dark Mode"></button>
-        <% else %>
-          <div class="theme-btn-lined opacity-50 cursor-not-allowed relative" title="Premium Feature">
-            <div class="absolute inset-0 flex items-center justify-center">
-              <span class="text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
-            </div>
-          </div>
-          <div class="theme-btn-graph opacity-50 cursor-not-allowed relative" title="Premium Feature">
-            <div class="absolute inset-0 flex items-center justify-center">
-              <span class="text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
-            </div>
-          </div>
-          <div class="theme-btn-vintage opacity-50 cursor-not-allowed relative" title="Premium Feature">
-            <div class="absolute inset-0 flex items-center justify-center">
-              <span class="text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
-            </div>
-          </div>
-          <div class="theme-btn-dark opacity-50 cursor-not-allowed relative" title="Premium Feature">
-            <div class="absolute inset-0 flex items-center justify-center">
-              <span class="text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
-            </div>
-          </div>
-        <% end %>
-      </div>
-      <% if current_user.free? %>
-        <div class="text-center mt-2">
-          <%= button_to "Unlock All Themes",
-                create_checkout_session_path,
-                method: :post,
-                data: { turbo: false },
-                class: "text-xs text-blue-600 hover:text-blue-800 underline cursor-pointer bg-transparent border-0" %>
+      
+      <!-- Desktop Theme Selector -->
+      <div class="theme-selector-desktop hidden md:block">
+        <div class="text-xs text-gray-600 mb-2 text-center font-medium">
+          Themes
+          <% if current_user.free? %>
+            <span class="text-orange-600">(Premium themes locked)</span>
+          <% end %>
         </div>
-      <% end %>
+        <div class="flex flex-wrap justify-center">
+          <button class="theme-btn-classic active" data-theme="classic" title="Classic Dotted"></button>
+          <% if current_user.can_use_premium_themes? %>
+            <button class="theme-btn-lined" data-theme="lined" title="Lined Paper"></button>
+            <button class="theme-btn-graph" data-theme="graph" title="Graph Paper"></button>
+            <button class="theme-btn-vintage" data-theme="vintage" title="Vintage Paper"></button>
+            <button class="theme-btn-dark" data-theme="dark" title="Dark Mode"></button>
+          <% else %>
+            <div class="theme-btn-lined opacity-50 cursor-not-allowed relative" title="Premium Feature">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
+              </div>
+            </div>
+            <div class="theme-btn-graph opacity-50 cursor-not-allowed relative" title="Premium Feature">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
+              </div>
+            </div>
+            <div class="theme-btn-vintage opacity-50 cursor-not-allowed relative" title="Premium Feature">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
+              </div>
+            </div>
+            <div class="theme-btn-dark opacity-50 cursor-not-allowed relative" title="Premium Feature">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <% if current_user.free? %>
+          <div class="text-center mt-2">
+            <%= button_to "Unlock All Themes",
+                  create_checkout_session_path,
+                  method: :post,
+                  data: { turbo: false },
+                  class: "text-xs text-blue-600 hover:text-blue-800 underline cursor-pointer bg-transparent border-0" %>
+          </div>
+        <% end %>
+      </div>
+      
+      <!-- Mobile Theme Dropdown -->
+      <div class="theme-selector-mobile hidden md:hidden" id="theme-dropdown-mobile">
+        <div class="text-xs text-gray-600 mb-2 text-center font-medium">
+          Themes
+          <% if current_user.free? %>
+            <span class="text-orange-600">(Premium locked)</span>
+          <% end %>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <button class="theme-btn-classic active flex items-center justify-center p-2" data-theme="classic" title="Classic Dotted">
+            <span class="text-xs">Classic</span>
+          </button>
+          <% if current_user.can_use_premium_themes? %>
+            <button class="theme-btn-lined flex items-center justify-center p-2" data-theme="lined" title="Lined Paper">
+              <span class="text-xs">Lined</span>
+            </button>
+            <button class="theme-btn-graph flex items-center justify-center p-2" data-theme="graph" title="Graph Paper">
+              <span class="text-xs">Graph</span>
+            </button>
+            <button class="theme-btn-vintage flex items-center justify-center p-2" data-theme="vintage" title="Vintage Paper">
+              <span class="text-xs">Vintage</span>
+            </button>
+            <button class="theme-btn-dark flex items-center justify-center p-2" data-theme="dark" title="Dark Mode">
+              <span class="text-xs">Dark</span>
+            </button>
+          <% else %>
+            <div class="theme-btn-lined opacity-50 cursor-not-allowed relative flex items-center justify-center p-2" title="Premium Feature">
+              <span class="text-xs">Lined</span>
+              <span class="absolute top-1 right-1 text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
+            </div>
+            <div class="theme-btn-graph opacity-50 cursor-not-allowed relative flex items-center justify-center p-2" title="Premium Feature">
+              <span class="text-xs">Graph</span>
+              <span class="absolute top-1 right-1 text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
+            </div>
+            <div class="theme-btn-vintage opacity-50 cursor-not-allowed relative flex items-center justify-center p-2" title="Premium Feature">
+              <span class="text-xs">Vintage</span>
+              <span class="absolute top-1 right-1 text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
+            </div>
+            <div class="theme-btn-dark opacity-50 cursor-not-allowed relative flex items-center justify-center p-2" title="Premium Feature">
+              <span class="text-xs">Dark</span>
+              <span class="absolute top-1 right-1 text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
+            </div>
+          <% end %>
+        </div>
+        <% if current_user.free? %>
+          <div class="mt-2 text-center">
+            <%= button_to "Unlock All Themes",
+                  create_checkout_session_path,
+                  method: :post,
+                  data: { turbo: false },
+                  class: "text-xs text-blue-600 hover:text-blue-800 underline cursor-pointer bg-transparent border-0" %>
+          </div>
+        <% end %>
+      </div>
     </div>
   <% end %>
 
@@ -196,6 +240,23 @@
               localStorage.setItem('notebook-theme', theme);
               updateActiveButton(theme);
             });
+          });
+        }
+        
+        // Mobile theme toggle functionality
+        const mobileToggle = document.getElementById('theme-toggle-mobile');
+        const mobileDropdown = document.getElementById('theme-dropdown-mobile');
+        
+        if (mobileToggle && mobileDropdown) {
+          mobileToggle.addEventListener('click', function() {
+            mobileDropdown.classList.toggle('hidden');
+          });
+          
+          // Close dropdown when clicking outside
+          document.addEventListener('click', function(e) {
+            if (!mobileToggle.contains(e.target) && !mobileDropdown.contains(e.target)) {
+              mobileDropdown.classList.add('hidden');
+            }
           });
         }
         

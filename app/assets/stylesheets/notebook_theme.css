@@ -303,6 +303,6 @@ input:-webkit-autofill:active {
   background-size: 100px 2px !important;
 }
 
-/* Hide/show toggle */
-.hidden { display: none; }
-.block { display: block; }
+/* Hide/show toggle - Removed to prevent conflicts with Tailwind responsive classes
+ * Tailwind CSS provides .hidden and .block classes with responsive variants
+ */

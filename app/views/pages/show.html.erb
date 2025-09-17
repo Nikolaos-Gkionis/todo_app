@@ -26,14 +26,28 @@
         <% end %>
       </div>
       <div class="flex space-x-3">
-        <%= link_to "Edit Page", edit_page_path(@page), 
-              class: "text-green-600 hover:text-green-800 font-medium hand-underline hand-underline-green text-sm" %>
-        <%= link_to "Delete Page", @page, 
+        <%= link_to edit_page_path(@page), 
+              class: "text-green-600 hover:text-green-800 font-medium hand-underline hand-underline-green text-sm flex items-center",
+              title: "Edit page" do %>
+          <svg class="w-4 h-4 md:hidden mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+          </svg>
+          <span class="hidden md:inline">Edit Page</span>
+          <span class="md:hidden">Edit</span>
+        <% end %>
+        <%= link_to @page, 
               data: { 
                 "turbo-method": :delete,
                 confirm: "Are you sure? This will delete the page and all its todos!" 
               },
-              class: "text-red-600 hover:text-red-800 font-medium hand-underline hand-underline-red text-sm" %>
+              class: "text-red-600 hover:text-red-800 font-medium hand-underline hand-underline-red text-sm flex items-center",
+              title: "Delete page" do %>
+          <svg class="w-4 h-4 md:hidden mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+          </svg>
+          <span class="hidden md:inline">Delete Page</span>
+          <span class="md:hidden">Delete</span>
+        <% end %>
       </div>
     </div>
   </div>
@@ -107,14 +121,26 @@
         
         <!-- Edit/Delete buttons for todos -->
         <div class="flex space-x-2 ml-3">
-          <%= link_to "Edit", edit_page_todo_path(@page, todo),
-                class: "text-green-600 hover:text-green-800 text-sm font-medium hand-underline hand-underline-green" %>
-          <%= link_to "Delete", page_todo_path(@page, todo),
+          <%= link_to edit_page_todo_path(@page, todo),
+                class: "text-green-600 hover:text-green-800 text-sm font-medium hand-underline hand-underline-green flex items-center",
+                title: "Edit todo" do %>
+            <svg class="w-4 h-4 md:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+            </svg>
+            <span class="hidden md:inline">Edit</span>
+          <% end %>
+          <%= link_to page_todo_path(@page, todo),
                 data: {
                   "turbo-method": :delete,
                   confirm: "Are you sure you want to delete this todo?"
                 },
-                class: "text-red-600 hover:text-red-800 text-sm font-medium hand-underline hand-underline-red" %>
+                class: "text-red-600 hover:text-red-800 text-sm font-medium hand-underline hand-underline-red flex items-center",
+                title: "Delete todo" do %>
+            <svg class="w-4 h-4 md:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+            </svg>
+            <span class="hidden md:inline">Delete</span>
+          <% end %>
         </div>
       </div>
       <% end %>
