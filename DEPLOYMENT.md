@@ -2,6 +2,38 @@
 
 Complete step-by-step guide to deploy Todo-it to Digital Ocean with Docker and Kamal.
 
+## 🎨 **Current CSS System**
+
+- **Custom BEM CSS** - No Tailwind dependencies
+- **Handwritten font** - Gloria Hallelujah from Google Fonts
+- **Responsive design** - Mobile-first approach
+- **Production ready** - Optimized for deployment
+
+## ⚡ **Quick Deploy (Already Configured)**
+
+If you've already set up Kamal and have your server configured:
+
+```bash
+# LOCAL: Navigate to project
+cd /Users/laptop/Documents/GitHub/train-of-thought/todo_app
+
+# LOCAL: Commit and push changes
+git add .
+git commit -m "Production deployment ready"
+git push origin main
+
+# LOCAL: Deploy to production
+kamal deploy
+
+# LOCAL: Check status
+kamal app status
+kamal app logs
+```
+
+**Production URL:** https://todo-it.app
+
+---
+
 ## 📋 Prerequisites
 
 ### 1. **SSH Key Setup (New Laptop)**
@@ -212,6 +244,11 @@ kamal deploy
 # Check status
 kamal app status
 kamal app logs
+
+# Quick deployment commands (after initial setup)
+kamal deploy
+kamal app restart  # if needed
+kamal app logs     # to check status
 ```
 
 ---

@@ -66,7 +66,7 @@ A stunning, professional notebook-style todo application built with Rails 8.0, f
 - **Backend**: Rails 8.0.2 with Ruby 3.4.5
 - **Database**: SQLite3 for development
 - **Authentication**: bcrypt with Rails `has_secure_password`
-- **Styling**: Custom CSS with hand-drawn SVG elements + Tailwind utilities
+- **Styling**: Custom BEM CSS with hand-drawn SVG elements (no Tailwind dependencies)
 - **Typography**: Google Fonts (Gloria Hallelujah) with comprehensive fallbacks
 - **Graphics**: Custom hand-drawn SVG elements throughout
 - **JavaScript**: Rails Turbo + vanilla JS for smooth interactions
@@ -150,8 +150,7 @@ rails db:seed
 # Start the application
 rails server
 
-# In another terminal (optional - for CSS changes)
-rails tailwindcss:watch
+# No additional CSS watching needed - using custom BEM CSS
 ```
 
 Visit http://localhost:3000 to experience the app!
@@ -235,9 +234,23 @@ That's it! The app uses SQLite (file-based database) so no separate database set
 For production deployment, use the included Dockerfile with Kamal:
 
 ```bash
-# Build and deploy
+# Navigate to project
+cd /Users/laptop/Documents/GitHub/train-of-thought/todo_app
+
+# Commit and push changes
+git add .
+git commit -m "Production deployment ready"
+git push origin main
+
+# Deploy to production
 kamal deploy
+
+# Check status
+kamal app status
+kamal app logs
 ```
+
+**Production URL:** https://todo-it.app
 
 ### **Environment Variables**
 
