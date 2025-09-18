@@ -26,10 +26,7 @@
     <meta property="og:description" content="Organize your tasks in a beautiful notebook-style interface">
     <meta property="og:type" content="website">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets - order matters! %>
-    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "notebook_theme", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "themes", "data-turbo-track": "reload" %>
+    <%# Custom BEM-based CSS system - no Tailwind needed! %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
@@ -84,8 +81,8 @@
   <% if controller_name == 'pages' && action_name == 'index' %>
     <div class="theme-selector">
       <!-- Mobile Icon Toggle -->
-      <div class="theme-toggle-mobile md:hidden">
-        <button class="theme-toggle-btn" id="theme-toggle-mobile" title="Themes">
+      <div class="theme-toggle--mobile md:hidden">
+        <button class="theme-toggle__btn" id="theme-toggle-mobile" title="Themes">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"/>
           </svg>
@@ -101,29 +98,29 @@
           <% end %>
         </div>
         <div class="flex flex-wrap justify-center">
-          <button class="theme-btn-classic active" data-theme="classic" title="Classic Dotted"></button>
+          <button class="theme-btn--classic active" data-theme="classic" title="Classic Dotted"></button>
           <% if current_user.can_use_premium_themes? %>
-            <button class="theme-btn-lined" data-theme="lined" title="Lined Paper"></button>
-            <button class="theme-btn-graph" data-theme="graph" title="Graph Paper"></button>
-            <button class="theme-btn-vintage" data-theme="vintage" title="Vintage Paper"></button>
-            <button class="theme-btn-dark" data-theme="dark" title="Dark Mode"></button>
+            <button class="theme-btn--lined" data-theme="lined" title="Lined Paper"></button>
+            <button class="theme-btn--graph" data-theme="graph" title="Graph Paper"></button>
+            <button class="theme-btn--vintage" data-theme="vintage" title="Vintage Paper"></button>
+            <button class="theme-btn--dark" data-theme="dark" title="Dark Mode"></button>
           <% else %>
-            <div class="theme-btn-lined opacity-50 cursor-not-allowed relative" title="Premium Feature">
+            <div class="theme-btn--lined opacity-50 cursor-not-allowed relative" title="Premium Feature">
               <div class="absolute inset-0 flex items-center justify-center">
                 <span class="text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
               </div>
             </div>
-            <div class="theme-btn-graph opacity-50 cursor-not-allowed relative" title="Premium Feature">
+            <div class="theme-btn--graph opacity-50 cursor-not-allowed relative" title="Premium Feature">
               <div class="absolute inset-0 flex items-center justify-center">
                 <span class="text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
               </div>
             </div>
-            <div class="theme-btn-vintage opacity-50 cursor-not-allowed relative" title="Premium Feature">
+            <div class="theme-btn--vintage opacity-50 cursor-not-allowed relative" title="Premium Feature">
               <div class="absolute inset-0 flex items-center justify-center">
                 <span class="text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
               </div>
             </div>
-            <div class="theme-btn-dark opacity-50 cursor-not-allowed relative" title="Premium Feature">
+            <div class="theme-btn--dark opacity-50 cursor-not-allowed relative" title="Premium Feature">
               <div class="absolute inset-0 flex items-center justify-center">
                 <span class="text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
               </div>
@@ -136,50 +133,50 @@
                   create_checkout_session_path,
                   method: :post,
                   data: { turbo: false },
-                  class: "text-xs text-blue-600 hover:text-blue-800 underline cursor-pointer bg-transparent border-0" %>
+                  class: "text-xs text-blue-600 hover:text-blue-800 hand-underline hand-underline--blue cursor-pointer bg-transparent border-0" %>
           </div>
         <% end %>
       </div>
       
       <!-- Mobile Theme Dropdown -->
-      <div class="theme-selector-mobile hidden md:hidden" id="theme-dropdown-mobile">
+      <div class="theme-selector--mobile hidden md:hidden" id="theme-dropdown-mobile">
         <div class="text-xs text-gray-600 mb-2 text-center font-medium">
           Themes
           <% if current_user.free? %>
             <span class="text-orange-600">(Premium locked)</span>
           <% end %>
         </div>
-        <div class="grid grid-cols-2 gap-2">
-          <button class="theme-btn-classic active flex items-center justify-center p-2" data-theme="classic" title="Classic Dotted">
+        <div class="grid grid--cols-2 grid--gap-4">
+          <button class="theme-btn--classic active flex items-center justify-center p-2" data-theme="classic" title="Classic Dotted">
             <span class="text-xs">Classic</span>
           </button>
           <% if current_user.can_use_premium_themes? %>
-            <button class="theme-btn-lined flex items-center justify-center p-2" data-theme="lined" title="Lined Paper">
+            <button class="theme-btn--lined flex items-center justify-center p-2" data-theme="lined" title="Lined Paper">
               <span class="text-xs">Lined</span>
             </button>
-            <button class="theme-btn-graph flex items-center justify-center p-2" data-theme="graph" title="Graph Paper">
+            <button class="theme-btn--graph flex items-center justify-center p-2" data-theme="graph" title="Graph Paper">
               <span class="text-xs">Graph</span>
             </button>
-            <button class="theme-btn-vintage flex items-center justify-center p-2" data-theme="vintage" title="Vintage Paper">
+            <button class="theme-btn--vintage flex items-center justify-center p-2" data-theme="vintage" title="Vintage Paper">
               <span class="text-xs">Vintage</span>
             </button>
-            <button class="theme-btn-dark flex items-center justify-center p-2" data-theme="dark" title="Dark Mode">
+            <button class="theme-btn--dark flex items-center justify-center p-2" data-theme="dark" title="Dark Mode">
               <span class="text-xs">Dark</span>
             </button>
           <% else %>
-            <div class="theme-btn-lined opacity-50 cursor-not-allowed relative flex items-center justify-center p-2" title="Premium Feature">
+            <div class="theme-btn--lined opacity-50 cursor-not-allowed relative flex items-center justify-center p-2" title="Premium Feature">
               <span class="text-xs">Lined</span>
               <span class="absolute top-1 right-1 text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
             </div>
-            <div class="theme-btn-graph opacity-50 cursor-not-allowed relative flex items-center justify-center p-2" title="Premium Feature">
+            <div class="theme-btn--graph opacity-50 cursor-not-allowed relative flex items-center justify-center p-2" title="Premium Feature">
               <span class="text-xs">Graph</span>
               <span class="absolute top-1 right-1 text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
             </div>
-            <div class="theme-btn-vintage opacity-50 cursor-not-allowed relative flex items-center justify-center p-2" title="Premium Feature">
+            <div class="theme-btn--vintage opacity-50 cursor-not-allowed relative flex items-center justify-center p-2" title="Premium Feature">
               <span class="text-xs">Vintage</span>
               <span class="absolute top-1 right-1 text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
             </div>
-            <div class="theme-btn-dark opacity-50 cursor-not-allowed relative flex items-center justify-center p-2" title="Premium Feature">
+            <div class="theme-btn--dark opacity-50 cursor-not-allowed relative flex items-center justify-center p-2" title="Premium Feature">
               <span class="text-xs">Dark</span>
               <span class="absolute top-1 right-1 text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
             </div>
@@ -191,7 +188,7 @@
                   create_checkout_session_path,
                   method: :post,
                   data: { turbo: false },
-                  class: "text-xs text-blue-600 hover:text-blue-800 underline cursor-pointer bg-transparent border-0" %>
+                  class: "text-xs text-blue-600 hover:text-blue-800 hand-underline hand-underline--blue cursor-pointer bg-transparent border-0" %>
           </div>
         <% end %>
       </div>
@@ -200,13 +197,13 @@
 
   <!-- Flash Messages -->
   <% if notice %>
-    <div class="flash-message text-green-700 px-4 py-3 mx-4 mt-4 text-center font-medium transition-opacity duration-500" data-auto-dismiss="true">
+    <div class="flash-message flash-message--success" data-auto-dismiss="true">
       ✅ <%= notice %>
     </div>
   <% end %>
   
   <% if alert %>
-    <div class="flash-message text-red-700 px-4 py-3 mx-4 mt-4 text-center font-medium transition-opacity duration-500" data-auto-dismiss="true">
+    <div class="flash-message flash-message--error" data-auto-dismiss="true">
       ⚠️ <%= alert %>
     </div>
   <% end %>

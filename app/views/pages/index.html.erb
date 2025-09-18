@@ -1,5 +1,5 @@
-<div class="container mx-auto px-4 py-8">
-  <div class="flex justify-between items-center mb-6">
+<div class="container px-4 py-8">
+  <div class="flex flex--justify-between flex--align-center mb-6">
     <div>
       <h1 class="text-3xl font-bold">My Pages</h1>
       <% if current_user.free? %>
@@ -15,7 +15,7 @@
     </div>
     
     <% if current_user.can_create_page? %>
-      <%= link_to "New Page", new_page_path, class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline-blue" %>
+      <%= link_to "New Page", new_page_path, class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline--blue" %>
     <% else %>
       <div class="text-center">
         <div class="text-gray-400 text-sm mb-2">Page limit reached</div>
@@ -23,7 +23,7 @@
               create_checkout_session_path,
               method: :post,
               data: { turbo: false },
-              class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline-blue cursor-pointer bg-transparent border-0" %>
+              class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline--blue cursor-pointer bg-transparent border-0" %>
       </div>
     <% end %>
   </div>
@@ -32,19 +32,19 @@
     <div class="space-y-4">
       <% @pages.each do |page| %>
         <div class="notebook-card">
-          <div class="flex justify-between items-start">
-            <div class="flex-grow">
-              <div class="flex items-center space-x-3 mb-1">
+          <div class="flex flex--justify-between flex--align-start">
+            <div class="flex--grow">
+              <div class="flex flex--align-center space-x-3 mb-1">
                 <h2 class="text-xl font-semibold">
                   <%= link_to page.name, page_path(page), class: "text-blue-600 hover:text-blue-800" %>
                 </h2>
                 <% if page.total_todos_count > 0 %>
-                  <div class="flex items-center space-x-2">
+                  <div class="flex flex--align-center space-x-2">
                     <span class="text-sm font-medium text-gray-700 bg-gray-100 px-2 py-1 rounded-full">
                       <%= page.progress_text %>
                     </span>
                     <% if page.completion_percentage > 0 %>
-                      <div class="w-12 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                      <div class="w-12 h-1\.5 bg-gray-200 rounded-full overflow-hidden">
                         <div class="h-full bg-green-500 transition-all duration-300" 
                              style="width: <%= page.completion_percentage %>%"></div>
                       </div>
@@ -60,7 +60,7 @@
             </div>
             <div class="flex space-x-2 ml-4">
               <%= link_to edit_page_path(page), 
-                    class: "text-green-600 hover:text-green-800 text-sm font-medium hand-underline hand-underline-green flex items-center",
+                    class: "text-green-600 hover:text-green-800 text-sm font-medium hand-underline hand-underline--green flex flex--align-center",
                     title: "Edit page" do %>
                 <svg class="w-4 h-4 md:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
@@ -72,7 +72,7 @@
                       "turbo-method": :delete,
                       confirm: "Are you sure? This will delete the page and all its todos!" 
                     },
-                    class: "text-red-600 hover:text-red-800 text-sm font-medium hand-underline hand-underline-red flex items-center",
+                    class: "text-red-600 hover:text-red-800 text-sm font-medium hand-underline hand-underline--red flex flex--align-center",
                     title: "Delete page" do %>
                 <svg class="w-4 h-4 md:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>

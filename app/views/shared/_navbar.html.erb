@@ -1,43 +1,47 @@
 <!-- Responsive Navigation Bar -->
-<nav class="bg-white shadow-sm">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center py-6">
+<nav class="navbar">
+  <div class="navbar__container">
+    <div class="navbar__content">
       <!-- Logo -->
-      <div class="flex items-center">
+      <div class="navbar__logo">
         <%= link_to (defined?(root_path) ? root_path : pages_path), class: "flex items-center" do %>
-          <div class="logo-checkbox mr-3"></div>
-          <span class="text-2xl font-bold text-gray-900">Todo-it</span>
+          <div class="logo-checkbox"></div>
+          <span class="navbar__logo-text">Todo-it</span>
         <% end %>
       </div>
       
       <!-- Desktop Navigation - Always visible on desktop -->
-      <div class="hidden sm:flex items-center space-x-8">
+      <div class="navbar__nav--desktop space-x-8">
         <% if @marketing_nav %>
           <!-- Marketing Navigation -->
-          <%= link_to "Home", root_path, class: "#{current_page?(root_path) ? 'text-blue-600' : 'text-gray-600 hover:text-blue-600'} font-medium" %>
-          <%= link_to "Pricing", pricing_path, class: "#{current_page?(pricing_path) ? 'text-blue-600' : 'text-gray-600 hover:text-blue-600'} font-medium" %>
-          <%= link_to "How to Use", how_to_path, class: "#{current_page?(how_to_path) ? 'text-blue-600' : 'text-gray-600 hover:text-blue-600'} font-medium" %>
-          <div class="flex items-center space-x-4">
-            <%= link_to "Sign In", login_path, class: "text-gray-600 hover:text-blue-600 font-medium" %>
-            <%= link_to "Get Started", signup_path, class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors" %>
+          <div class="navbar__nav-list">
+            <%= link_to "Home", root_path, class: "navbar__nav-link #{current_page?(root_path) ? 'navbar__nav-link--active' : ''}" %>
+            <%= link_to "Pricing", pricing_path, class: "navbar__nav-link #{current_page?(pricing_path) ? 'navbar__nav-link--active' : ''}" %>
+            <%= link_to "How to Use", how_to_path, class: "navbar__nav-link #{current_page?(how_to_path) ? 'navbar__nav-link--active' : ''}" %>
+          </div>
+          <div class="navbar__actions space-x-4">
+            <%= link_to "Sign In", login_path, class: "navbar__nav-link" %>
+            <%= link_to "Get Started", signup_path, class: "btn btn--primary" %>
           </div>
         <% elsif logged_in? %>
           <!-- Authenticated User Navigation -->
-          <span class="text-gray-700"><%= random_motivational_message %>, <%= current_user.display_name %>!</span>
-          <%= link_to settings_path, class: "text-gray-600 hover:text-gray-800 font-medium text-sm" do %>
-            <svg class="w-5 h-5 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-            </svg>
-          <% end %>
-          <%= link_to "Logout", logout_path, data: { "turbo-method": :delete },
-                class: "text-red-600 hover:text-red-800 font-medium hand-underline hand-underline-red text-sm" %>
+          <div class="navbar__actions space-x-4">
+            <span class="navbar__user-greeting"><%= random_motivational_message %>, <%= current_user.display_name %>!</span>
+            <%= link_to settings_path, class: "navbar__nav-link text-sm" do %>
+              <svg class="w-5 h-5 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+            <% end %>
+            <%= link_to "Logout", logout_path, data: { "turbo-method": :delete },
+                  class: "text-red-600 hover:text-red-800 font-medium hand-underline hand-underline--red text-sm" %>
+          </div>
         <% end %>
       </div>
       
       <!-- Mobile/Tablet Menu Button - Only visible on smaller screens -->
       <div class="block sm:hidden">
-        <button type="button" class="mobile-menu-button text-gray-600 hover:text-gray-800 focus:outline-none focus:text-gray-800" aria-controls="mobile-menu" aria-expanded="false">
+        <button type="button" class="navbar__menu-btn mobile-menu-button" aria-controls="mobile-menu" aria-expanded="false">
           <span class="sr-only">Open main menu</span>
           <!-- Hamburger Icon -->
           <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -49,15 +53,13 @@
   </div>
   
     <!-- Mobile/Tablet Full-Screen Menu (Hidden by default) -->
-    <div class="mobile-menu hidden sm:hidden fixed inset-0 z-50 bg-white" id="mobile-menu">
-    <div class="flex flex-col h-full">
-      <!-- Mobile Menu Header -->
-      <div class="flex justify-between items-center py-6 px-4 border-b border-gray-200">
+    <div class="mobile-menu hidden" id="mobile-menu">
+      <div class="mobile-menu__header">
         <%= link_to (defined?(root_path) ? root_path : pages_path), class: "flex items-center" do %>
           <div class="logo-checkbox mr-3"></div>
-          <span class="text-2xl font-bold text-gray-900">Todo-it</span>
+          <span class="navbar__logo-text">Todo-it</span>
         <% end %>
-        <button type="button" class="mobile-menu-close text-gray-600 hover:text-gray-800 focus:outline-none">
+        <button type="button" class="mobile-menu__close-btn mobile-menu-close">
           <span class="sr-only">Close menu</span>
           <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -66,34 +68,41 @@
       </div>
       
       <!-- Mobile Menu Content -->
-      <div class="flex-1 px-4 py-6 space-y-8">
+      <div class="mobile-menu__content">
         <% if @marketing_nav %>
           <!-- Marketing Mobile Navigation -->
-          <%= link_to "Home", root_path, class: "block text-3xl font-medium #{current_page?(root_path) ? 'text-blue-600' : 'text-gray-900 hover:text-blue-600'}" %>
-          <%= link_to "Pricing", pricing_path, class: "block text-3xl font-medium #{current_page?(pricing_path) ? 'text-blue-600' : 'text-gray-900 hover:text-blue-600'}" %>
-          <%= link_to "How to Use", how_to_path, class: "block text-3xl font-medium #{current_page?(how_to_path) ? 'text-blue-600' : 'text-gray-900 hover:text-blue-600'}" %>
-          <div class="pt-8 space-y-6">
-            <%= link_to "Sign In", login_path, class: "block text-2xl font-medium text-gray-600 hover:text-blue-600" %>
-            <%= link_to "Get Started", signup_path, class: "block bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg text-2xl font-medium text-center transition-colors" %>
+          <div class="mobile-menu__nav-list">
+            <%= link_to "Home", root_path, class: "mobile-menu__nav-link #{current_page?(root_path) ? 'mobile-menu__nav-link--active' : ''}" %>
+            <%= link_to "Pricing", pricing_path, class: "mobile-menu__nav-link #{current_page?(pricing_path) ? 'mobile-menu__nav-link--active' : ''}" %>
+            <%= link_to "How to Use", how_to_path, class: "mobile-menu__nav-link #{current_page?(how_to_path) ? 'mobile-menu__nav-link--active' : ''}" %>
+          </div>
+          <div class="mobile-menu__actions">
+            <div class="mobile-menu__action-item">
+              <%= link_to "Sign In", login_path, class: "mobile-menu__action-link" %>
+            </div>
+            <div class="mobile-menu__action-item">
+              <%= link_to "Get Started", signup_path, class: "mobile-menu__action-btn" %>
+            </div>
           </div>
         <% elsif logged_in? %>
           <!-- Authenticated User Mobile Navigation -->
-          <div class="text-xl text-gray-700 mb-8">
+          <div class="mobile-menu__user-greeting">
             <%= random_motivational_message %>, <%= current_user.display_name %>!
           </div>
-          <%= link_to settings_path, class: "flex items-center text-3xl font-medium text-gray-900 hover:text-blue-600" do %>
-            <svg class="w-8 h-8 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-            </svg>
-            Settings
-          <% end %>
-          <%= link_to "Logout", logout_path, data: { "turbo-method": :delete },
-                class: "block text-3xl font-medium text-red-600 hover:text-red-800 hand-underline hand-underline-red" %>
+          <div class="mobile-menu__nav-list">
+            <%= link_to settings_path, class: "mobile-menu__nav-link flex items-center" do %>
+              <svg class="w-8 h-8 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+              Settings
+            <% end %>
+            <%= link_to "Logout", logout_path, data: { "turbo-method": :delete },
+                  class: "mobile-menu__nav-link text-red-600 hover:text-red-800 hand-underline hand-underline--red" %>
+          </div>
         <% end %>
       </div>
     </div>
-  </div>
 </nav>
 
 <!-- Mobile Menu JavaScript -->
