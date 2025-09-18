@@ -49,7 +49,6 @@ RUN bundle exec bootsnap precompile app/ lib/
 RUN rm -rf public/assets/* tmp/cache/*
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
-RUN SECRET_KEY_BASE_DUMMY=1 bundle exec rails tailwindcss:build
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 
