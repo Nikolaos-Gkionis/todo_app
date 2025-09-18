@@ -1,5 +1,6 @@
 class StripeController < ApplicationController
   before_action :require_login
+  before_action :configure_stripe
 
   def create_checkout_session
     # Create a Stripe checkout session for premium upgrade
@@ -14,7 +15,7 @@ class StripeController < ApplicationController
               name: "Todo-it Premium",
               description: "Unlock all themes, unlimited pages, and premium features"
             },
-            unit_amount: 2900 # $29.00 in cents
+            unit_amount: 990 # $9.99 in cents
           },
           quantity: 1
         } ],
