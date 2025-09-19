@@ -212,28 +212,70 @@
 
     <!-- Theme Switching JavaScript -->
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
+      // Theme management functions
+      function applyTheme(theme) {
         const body = document.getElementById('app-body');
+        if (!body) return;
+        
+        // Remove all theme classes
+        body.className = body.className.replace(/theme-\w+/g, '');
+        
+        // Add new theme class
+        body.classList.add(`theme-${theme}`);
+        
+        // Update background class based on theme
+        if (theme === 'lined') {
+          body.classList.remove('notebook-background');
+          body.classList.add('theme-lined');
+        } else if (theme === 'graph') {
+          body.classList.remove('notebook-background');
+          body.classList.add('theme-graph');
+        } else if (theme === 'vintage') {
+          body.classList.remove('notebook-background');
+          body.classList.add('theme-vintage');
+        } else if (theme === 'dark') {
+          body.classList.remove('notebook-background');
+          body.classList.add('theme-dark');
+        } else {
+          // Classic theme
+          body.classList.add('notebook-background');
+          body.classList.remove('theme-lined', 'theme-graph', 'theme-vintage', 'theme-dark');
+        }
+      }
+      
+      function updateActiveButton(theme) {
+        const buttons = document.querySelectorAll('[data-theme]');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        const activeButton = document.querySelector(`[data-theme="${theme}"]`);
+        if (activeButton) {
+          activeButton.classList.add('active');
+        }
+      }
+      
+      function setupThemeSelector() {
         const themeButtons = document.querySelectorAll('[data-theme]');
         
         // Load saved theme from localStorage and apply it
         const savedTheme = localStorage.getItem('notebook-theme') || 'classic';
-        if (window.applyThemeGlobal) {
-          window.applyThemeGlobal(savedTheme);
-        }
+        applyTheme(savedTheme);
         
         // Only set up theme selector if theme buttons exist (projects index page only)
         if (themeButtons.length > 0) {
           // Update active button on page load
           updateActiveButton(savedTheme);
           
-          // Add click listeners to theme buttons
+          // Remove existing event listeners to prevent duplicates
           themeButtons.forEach(button => {
+            // Clone the button to remove all event listeners
+            const newButton = button.cloneNode(true);
+            button.parentNode.replaceChild(newButton, button);
+          });
+          
+          // Add click listeners to theme buttons
+          document.querySelectorAll('[data-theme]').forEach(button => {
             button.addEventListener('click', function() {
               const theme = this.dataset.theme;
-              if (window.applyThemeGlobal) {
-                window.applyThemeGlobal(theme);
-              }
+              applyTheme(theme);
               localStorage.setItem('notebook-theme', theme);
               updateActiveButton(theme);
             });
@@ -245,53 +287,58 @@
         const mobileDropdown = document.getElementById('theme-dropdown-mobile');
         
         if (mobileToggle && mobileDropdown) {
-          mobileToggle.addEventListener('click', function() {
+          // Remove existing event listeners
+          const newMobileToggle = mobileToggle.cloneNode(true);
+          mobileToggle.parentNode.replaceChild(newMobileToggle, mobileToggle);
+          
+          // Add new event listeners
+          document.getElementById('theme-toggle-mobile').addEventListener('click', function() {
             mobileDropdown.classList.toggle('hidden');
           });
           
           // Close dropdown when clicking outside
           document.addEventListener('click', function(e) {
-            if (!mobileToggle.contains(e.target) && !mobileDropdown.contains(e.target)) {
-              mobileDropdown.classList.add('hidden');
+            const currentToggle = document.getElementById('theme-toggle-mobile');
+            const currentDropdown = document.getElementById('theme-dropdown-mobile');
+            if (currentToggle && currentDropdown && 
+                !currentToggle.contains(e.target) && !currentDropdown.contains(e.target)) {
+              currentDropdown.classList.add('hidden');
             }
           });
         }
-        
-        function updateActiveButton(theme) {
-          const buttons = document.querySelectorAll('[data-theme]');
-          buttons.forEach(btn => btn.classList.remove('active'));
-          const activeButton = document.querySelector(`[data-theme="${theme}"]`);
-          if (activeButton) {
-            activeButton.classList.add('active');
-          }
-        }
-        
-        // Theme switching is handled by clicking the theme selector buttons
-
-        // Auto-dismiss flash messages after 3 seconds
-        function setupFlashMessages() {
-          const flashMessages = document.querySelectorAll('.flash-message[data-auto-dismiss="true"]:not([data-timeout-set])');
-          flashMessages.forEach(function(message) {
-            message.setAttribute('data-timeout-set', 'true'); // Prevent multiple timeouts
-            setTimeout(function() {
-              if (message && message.parentNode) {
-                message.style.opacity = '0';
-                setTimeout(function() {
-                  if (message && message.parentNode) {
-                    message.parentNode.removeChild(message);
-                  }
-                }, 500); // Wait for fade animation to complete
-              }
-            }, 3000); // Show for 3 seconds
-          });
-        }
-        
-        // Set up flash messages on initial load
+      }
+      
+      function setupFlashMessages() {
+        const flashMessages = document.querySelectorAll('.flash-message[data-auto-dismiss="true"]:not([data-timeout-set])');
+        flashMessages.forEach(function(message) {
+          message.setAttribute('data-timeout-set', 'true'); // Prevent multiple timeouts
+          setTimeout(function() {
+            if (message && message.parentNode) {
+              message.style.opacity = '0';
+              setTimeout(function() {
+                if (message && message.parentNode) {
+                  message.parentNode.removeChild(message);
+                }
+              }, 500); // Wait for fade animation to complete
+            }
+          }, 3000); // Show for 3 seconds
+        });
+      }
+      
+      // Initialize on DOM ready
+      document.addEventListener('DOMContentLoaded', function() {
+        setupThemeSelector();
         setupFlashMessages();
-        
-        // Also set up flash messages after Turbo navigation
-        document.addEventListener('turbo:load', setupFlashMessages);
       });
+      
+      // Re-initialize after Turbo navigation
+      document.addEventListener('turbo:load', function() {
+        setupThemeSelector();
+        setupFlashMessages();
+      });
+      
+      // Store the function globally for immediate use
+      window.applyThemeGlobal = applyTheme;
     </script>
   </body>
 </html>
