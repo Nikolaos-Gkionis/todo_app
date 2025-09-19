@@ -1,7 +1,7 @@
 <div class="container mx-auto px-4 py-8">
   <!-- Page Header -->
   <div class="mb-8">
-    <%= link_to "← Back to Settings", settings_path, class: "text-blue-600 hover:text-blue-800 mb-4 inline-block" %>
+    <%= link_to "← Back to Settings", settings_path, class: "text-blue-600 hover:text-blue-800 mb-4 inline-block hand-underline hand-underline--blue" %>
     <h1 class="text-3xl font-bold text-red-700">Delete Account</h1>
     <p class="text-gray-600 mt-2">This action cannot be undone. This will permanently delete your account and all associated data.</p>
   </div>
@@ -49,19 +49,20 @@
           <%= form.text_field :confirm_deletion,
                 placeholder: "Type DELETE here",
                 required: true,
-                class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500" %>
+                class: "form-input w-full px-3 py-2 pulse-focus",
+                style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
           <p class="text-sm text-gray-500 mt-1">This is to ensure you really want to delete your account.</p>
         </div>
 
         <!-- Action Buttons -->
         <div class="flex space-x-4">
           <%= form.submit "Delete Account Permanently",
-                class: "text-red-600 hover:text-red-800 font-medium hand-underline hand-underline-red cursor-pointer bg-transparent border-0",
+                class: "text-red-600 hover:text-red-800 font-medium hand-underline hand-underline--red cursor-pointer bg-transparent border-0",
                 data: { confirm: "Are you sure you want to delete your account? This action cannot be undone!" } %>
 
           <%= link_to "Cancel",
                 settings_path,
-                class: "text-gray-600 hover:text-gray-800 font-medium" %>
+                class: "text-gray-600 hover:text-gray-800 font-medium hand-underline hand-underline--gray" %>
         </div>
       <% end %>
     </div>

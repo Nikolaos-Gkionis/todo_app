@@ -662,6 +662,7 @@ input[type="text"]::placeholder,
 input[type="email"]::placeholder, 
 input[type="password"]::placeholder, 
 input[type="date"]::placeholder,
+input::placeholder,
 textarea::placeholder {
   font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
   color: #9ca3af !important;
@@ -675,6 +676,7 @@ input[type="text"]::-webkit-input-placeholder,
 input[type="email"]::-webkit-input-placeholder,
 input[type="password"]::-webkit-input-placeholder,
 input[type="date"]::-webkit-input-placeholder,
+input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
   font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
   color: #9ca3af !important;
@@ -687,6 +689,7 @@ input[type="text"]::-moz-placeholder,
 input[type="email"]::-moz-placeholder,
 input[type="password"]::-moz-placeholder,
 input[type="date"]::-moz-placeholder,
+input::-moz-placeholder,
 textarea::-moz-placeholder {
   font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
   color: #9ca3af !important;
@@ -699,6 +702,7 @@ input[type="text"]:-ms-input-placeholder,
 input[type="email"]:-ms-input-placeholder,
 input[type="password"]:-ms-input-placeholder,
 input[type="date"]:-ms-input-placeholder,
+input:-ms-input-placeholder,
 textarea:-ms-input-placeholder {
   font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
   color: #9ca3af !important;
@@ -1658,6 +1662,50 @@ input:-webkit-autofill:active {
   color: #9ca3af !important;
   font-style: italic !important;
   opacity: 1 !important;
+}
+
+/* Ensure handwritten font for all form placeholders - comprehensive coverage */
+input::placeholder,
+input::-webkit-input-placeholder,
+input::-moz-placeholder,
+input:-ms-input-placeholder,
+textarea::placeholder,
+textarea::-webkit-input-placeholder,
+textarea::-moz-placeholder,
+textarea:-ms-input-placeholder {
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
+  color: #9ca3af !important;
+  font-style: italic !important;
+  opacity: 1 !important;
+}
+
+/* Ensure handwritten font for all form input text - comprehensive coverage */
+.form-input,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+textarea {
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
+}
+
+/* More specific selectors to override any conflicting styles */
+input.form-input,
+input[type="text"].form-input,
+input[type="email"].form-input,
+input[type="password"].form-input,
+input[type="date"].form-input,
+textarea.form-input {
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
+}
+
+/* Ultra-specific selector to ensure handwritten font is applied */
+input[type="text"][class*="form-input"],
+input[type="email"][class*="form-input"],
+input[type="password"][class*="form-input"],
+input[type="date"][class*="form-input"],
+textarea[class*="form-input"] {
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
 }
 
 .form-slide-in {

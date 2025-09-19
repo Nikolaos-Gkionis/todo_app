@@ -31,7 +31,8 @@
           <%= form.label :name, "Name", class: "block text-sm font-medium text-gray-700 mb-2" %>
           <%= form.text_field :name,
                 placeholder: "Enter your name",
-                class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+                class: "form-input w-full px-3 py-2 pulse-focus",
+                style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
         </div>
 
         <!-- Email Update -->
@@ -40,7 +41,8 @@
           <%= form.email_field :email_address,
                 placeholder: "Enter your email",
                 required: true,
-                class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+                class: "form-input w-full px-3 py-2 pulse-focus",
+                style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
         </div>
 
         <!-- Current Password (required for email/password changes) -->
@@ -48,7 +50,8 @@
           <%= form.label :current_password, "Current Password", class: "block text-sm font-medium text-gray-700 mb-2" %>
           <%= form.password_field :current_password,
                 placeholder: "Enter your current password to make changes",
-                class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+                class: "form-input w-full px-3 py-2 pulse-focus",
+                style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
           <p class="text-sm text-gray-500 mt-1">Required to update your email or password. Optional for name changes.</p>
         </div>
 
@@ -57,7 +60,8 @@
           <%= form.label :password, "New Password (optional)", class: "block text-sm font-medium text-gray-700 mb-2" %>
           <%= form.password_field :password,
                 placeholder: "Leave blank to keep current password",
-                class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+                class: "form-input w-full px-3 py-2 pulse-focus",
+                style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
         </div>
 
         <!-- Confirm New Password -->
@@ -65,12 +69,13 @@
           <%= form.label :password_confirmation, "Confirm New Password", class: "block text-sm font-medium text-gray-700 mb-2" %>
           <%= form.password_field :password_confirmation,
                 placeholder: "Confirm your new password",
-                class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+                class: "form-input w-full px-3 py-2 pulse-focus",
+                style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
         </div>
 
         <!-- Submit Button -->
         <div>
-          <button type="submit" class="text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline-blue cursor-pointer bg-transparent border-0 inline-block">
+          <button type="submit" class="text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline--blue cursor-pointer bg-transparent border-0 inline-block">
             Update Account
           </button>
         </div>
@@ -132,7 +137,7 @@
                 create_checkout_session_path,
                 method: :post,
                 data: { turbo: false },
-                class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline-blue cursor-pointer bg-transparent border-0" %>
+                class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline--blue cursor-pointer bg-transparent border-0" %>
         </div>
       <% end %>
     </div>
@@ -145,7 +150,7 @@
         <p class="text-sm text-gray-600 mb-3">Once you delete your account, there is no going back. Please be certain.</p>
         <%= link_to "Delete Account",
               delete_account_path,
-              class: "text-red-600 hover:text-red-800 font-medium hand-underline hand-underline-red" %>
+              class: "text-red-600 hover:text-red-800 font-medium hand-underline hand-underline--red" %>
       </div>
     </div>
   </div>
