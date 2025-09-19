@@ -653,6 +653,57 @@ textarea {
   background-repeat: repeat-x !important;
   background-position: bottom !important;
   background-size: 100px 2px !important;
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
+}
+
+/* Placeholder text styling with handwritten font */
+.form-input::placeholder,
+input[type="text"]::placeholder, 
+input[type="email"]::placeholder, 
+input[type="password"]::placeholder, 
+input[type="date"]::placeholder,
+textarea::placeholder {
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
+  color: #9ca3af !important;
+  font-style: italic !important;
+  opacity: 1 !important;
+}
+
+/* More specific placeholder selectors for better browser compatibility */
+.form-input::-webkit-input-placeholder,
+input[type="text"]::-webkit-input-placeholder,
+input[type="email"]::-webkit-input-placeholder,
+input[type="password"]::-webkit-input-placeholder,
+input[type="date"]::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
+  color: #9ca3af !important;
+  font-style: italic !important;
+  opacity: 1 !important;
+}
+
+.form-input::-moz-placeholder,
+input[type="text"]::-moz-placeholder,
+input[type="email"]::-moz-placeholder,
+input[type="password"]::-moz-placeholder,
+input[type="date"]::-moz-placeholder,
+textarea::-moz-placeholder {
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
+  color: #9ca3af !important;
+  font-style: italic !important;
+  opacity: 1 !important;
+}
+
+.form-input:-ms-input-placeholder,
+input[type="text"]:-ms-input-placeholder,
+input[type="email"]:-ms-input-placeholder,
+input[type="password"]:-ms-input-placeholder,
+input[type="date"]:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
+  color: #9ca3af !important;
+  font-style: italic !important;
+  opacity: 1 !important;
 }
 
 .form-input:focus,
@@ -810,6 +861,43 @@ input:-webkit-autofill:active {
 .theme-dark input::placeholder,
 .theme-dark textarea::placeholder {
   color: #9ca3af !important;
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
+  font-style: italic !important;
+  opacity: 1 !important;
+}
+
+/* Dark mode placeholder selectors for better browser compatibility */
+.theme-dark input[type="text"]::-webkit-input-placeholder,
+.theme-dark input[type="email"]::-webkit-input-placeholder,
+.theme-dark input[type="password"]::-webkit-input-placeholder,
+.theme-dark input[type="date"]::-webkit-input-placeholder,
+.theme-dark textarea::-webkit-input-placeholder {
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
+  color: #9ca3af !important;
+  font-style: italic !important;
+  opacity: 1 !important;
+}
+
+.theme-dark input[type="text"]::-moz-placeholder,
+.theme-dark input[type="email"]::-moz-placeholder,
+.theme-dark input[type="password"]::-moz-placeholder,
+.theme-dark input[type="date"]::-moz-placeholder,
+.theme-dark textarea::-moz-placeholder {
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
+  color: #9ca3af !important;
+  font-style: italic !important;
+  opacity: 1 !important;
+}
+
+.theme-dark input[type="text"]:-ms-input-placeholder,
+.theme-dark input[type="email"]:-ms-input-placeholder,
+.theme-dark input[type="password"]:-ms-input-placeholder,
+.theme-dark input[type="date"]:-ms-input-placeholder,
+.theme-dark textarea:-ms-input-placeholder {
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
+  color: #9ca3af !important;
+  font-style: italic !important;
+  opacity: 1 !important;
 }
 
 /* Fix form input backgrounds in dark mode */
@@ -1360,6 +1448,47 @@ input:-webkit-autofill:active {
    FORM COMPONENTS (BEM)
    ================================= */
 
+/* Specific placeholder styling for page forms */
+.pages form input[type="text"]::placeholder,
+.pages form textarea::placeholder,
+.pages input[type="text"]::placeholder,
+.pages textarea::placeholder {
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
+  color: #9ca3af !important;
+  font-style: italic !important;
+  opacity: 1 !important;
+}
+
+.pages form input[type="text"]::-webkit-input-placeholder,
+.pages form textarea::-webkit-input-placeholder,
+.pages input[type="text"]::-webkit-input-placeholder,
+.pages textarea::-webkit-input-placeholder {
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
+  color: #9ca3af !important;
+  font-style: italic !important;
+  opacity: 1 !important;
+}
+
+.pages form input[type="text"]::-moz-placeholder,
+.pages form textarea::-moz-placeholder,
+.pages input[type="text"]::-moz-placeholder,
+.pages textarea::-moz-placeholder {
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
+  color: #9ca3af !important;
+  font-style: italic !important;
+  opacity: 1 !important;
+}
+
+.pages form input[type="text"]:-ms-input-placeholder,
+.pages form textarea:-ms-input-placeholder,
+.pages input[type="text"]:-ms-input-placeholder,
+.pages textarea:-ms-input-placeholder {
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
+  color: #9ca3af !important;
+  font-style: italic !important;
+  opacity: 1 !important;
+}
+
 .form-group {
   margin-bottom: 1.5rem;
 }
@@ -1504,6 +1633,32 @@ input:-webkit-autofill:active {
 /* =================================
    ANIMATIONS
    ================================= */
+
+/* =================================
+   PLACEHOLDER FONT OVERRIDE (HIGHEST PRIORITY)
+   ================================= */
+
+/* Ensure handwritten font for all form inputs with form-input class */
+.form-input::placeholder,
+.form-input::-webkit-input-placeholder,
+.form-input::-moz-placeholder,
+.form-input:-ms-input-placeholder {
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
+  color: #9ca3af !important;
+  font-style: italic !important;
+  opacity: 1 !important;
+}
+
+/* Dark mode override for form-input placeholders */
+.theme-dark .form-input::placeholder,
+.theme-dark .form-input::-webkit-input-placeholder,
+.theme-dark .form-input::-moz-placeholder,
+.theme-dark .form-input:-ms-input-placeholder {
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
+  color: #9ca3af !important;
+  font-style: italic !important;
+  opacity: 1 !important;
+}
 
 .form-slide-in {
   animation: slideIn 0.4s ease-out;

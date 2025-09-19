@@ -14,7 +14,8 @@
         <%= f.text_field :title,
                          class: "form-input w-full pulse-focus",
                          placeholder: "What needs to be done?",
-                         required: true %>
+                         required: true,
+                         style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
       </div>
 
       <!-- Notes -->
@@ -23,7 +24,8 @@
         <%= f.text_area :notes,
                         class: "form-input w-full pulse-focus resize-none",
                         placeholder: "Add any additional notes...",
-                        rows: 3 %>
+                        rows: 3,
+                        style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
       </div>
 
       <!-- Due Date -->
@@ -31,7 +33,8 @@
         <%= f.label :due_date, "Due Date (optional)", class: "form-label" %>
         <%= f.date_field :due_date,
                          class: "form-input w-full pulse-focus",
-                         min: Date.current %>
+                         min: Date.current,
+                         style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
       </div>
 
       <!-- Completed Status -->

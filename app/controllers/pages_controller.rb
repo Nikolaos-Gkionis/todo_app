@@ -4,8 +4,8 @@ class PagesController < ApplicationController
   before_action :set_page, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    # Only show current user's pages
-    @pages = current_user.pages
+    # Only show current user's pages, ordered by newest first
+    @pages = current_user.pages.order(created_at: :desc)
   end
 
   def show

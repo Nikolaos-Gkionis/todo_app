@@ -18,12 +18,12 @@
 
     <div>
       <%= form.label :name, class: "block text-sm font-medium mb-1" %>
-      <%= form.text_field :name, class: "w-full" %>
+      <%= form.text_field :name, class: "w-full form-input", placeholder: "What's this page about?", style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
     </div>
     
     <div>
       <%= form.label :description, class: "block text-sm font-medium mb-1" %>
-      <%= form.text_area :description, class: "w-full", rows: 3 %>
+      <%= form.text_area :description, class: "w-full form-input", rows: 3, placeholder: "Add some notes or details...", style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
     </div>
     
     <div class="flex space-x-3">

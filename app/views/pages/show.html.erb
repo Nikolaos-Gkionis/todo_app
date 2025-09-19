@@ -175,16 +175,16 @@
         <h3 class="text-lg font-semibold mb-4">Add New Todo</h3>
         <%= form_with model: [@page, @new_todo], local: true, class: "space-y-4" do |form| %>
           <div>
-            <%= form.text_field :title, class: "form-input w-full pulse-focus", placeholder: "What needs to be done?" %>
+            <%= form.text_field :title, class: "form-input w-full pulse-focus", placeholder: "What needs to be done?", style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
           </div>
 
           <div>
-            <%= form.text_area :notes, class: "form-input w-full pulse-focus", placeholder: "Additional notes (optional)", rows: 2 %>
+            <%= form.text_area :notes, class: "form-input w-full pulse-focus", placeholder: "Additional notes (optional)", rows: 2, style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
           </div>
 
           <div>
             <%= form.label :due_date, "Due Date (optional)", class: "form-label" %>
-            <%= form.date_field :due_date, class: "form-input w-full pulse-focus", min: Date.current %>
+            <%= form.date_field :due_date, class: "form-input w-full pulse-focus", min: Date.current, style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
           </div>
 
           <div class="flex space-x-3">
