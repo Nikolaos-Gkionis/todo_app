@@ -77,6 +77,7 @@
     <%= render 'shared/navbar' %>
   <% end %>
 
+
   <!-- Theme Selector - Only show on pages index page -->
   <% if controller_name == 'pages' && action_name == 'index' %>
     <div class="theme-selector">
@@ -93,104 +94,38 @@
       <div class="theme-selector-desktop hidden md:block">
         <div class="text-xs text-gray-600 mb-2 text-center font-medium">
           Themes
-          <% if current_user.free? %>
-            <span class="text-orange-600">(Premium themes locked)</span>
-          <% end %>
         </div>
         <div class="flex flex-wrap justify-center">
           <button class="theme-btn--classic active" data-theme="classic" title="Classic Dotted"></button>
-          <% if current_user.can_use_premium_themes? %>
-            <button class="theme-btn--lined" data-theme="lined" title="Lined Paper"></button>
-            <button class="theme-btn--graph" data-theme="graph" title="Graph Paper"></button>
-            <button class="theme-btn--vintage" data-theme="vintage" title="Vintage Paper"></button>
-            <button class="theme-btn--dark" data-theme="dark" title="Dark Mode"></button>
-          <% else %>
-            <div class="theme-btn--lined opacity-50 cursor-not-allowed relative" title="Premium Feature">
-              <div class="absolute inset-0 flex items-center justify-center">
-                <span class="text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
-              </div>
-            </div>
-            <div class="theme-btn--graph opacity-50 cursor-not-allowed relative" title="Premium Feature">
-              <div class="absolute inset-0 flex items-center justify-center">
-                <span class="text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
-              </div>
-            </div>
-            <div class="theme-btn--vintage opacity-50 cursor-not-allowed relative" title="Premium Feature">
-              <div class="absolute inset-0 flex items-center justify-center">
-                <span class="text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
-              </div>
-            </div>
-            <div class="theme-btn--dark opacity-50 cursor-not-allowed relative" title="Premium Feature">
-              <div class="absolute inset-0 flex items-center justify-center">
-                <span class="text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
-              </div>
-            </div>
-          <% end %>
+          <button class="theme-btn--lined" data-theme="lined" title="Lined Paper"></button>
+          <button class="theme-btn--graph" data-theme="graph" title="Graph Paper"></button>
+          <button class="theme-btn--vintage" data-theme="vintage" title="Vintage Paper"></button>
+          <button class="theme-btn--dark" data-theme="dark" title="Dark Mode"></button>
         </div>
-        <% if current_user.free? %>
-          <div class="text-center mt-2">
-            <%= button_to "Unlock All Themes",
-                  create_checkout_session_path,
-                  method: :post,
-                  data: { turbo: false },
-                  class: "text-xs text-blue-600 hover:text-blue-800 hand-underline hand-underline--blue cursor-pointer bg-transparent border-0" %>
-          </div>
-        <% end %>
       </div>
       
       <!-- Mobile Theme Dropdown -->
       <div class="theme-selector--mobile hidden md:hidden" id="theme-dropdown-mobile">
         <div class="text-xs text-gray-600 mb-2 text-center font-medium">
           Themes
-          <% if current_user.free? %>
-            <span class="text-orange-600">(Premium locked)</span>
-          <% end %>
         </div>
         <div class="grid grid--cols-2 grid--gap-4">
           <button class="theme-btn--classic active flex items-center justify-center p-2" data-theme="classic" title="Classic Dotted">
             <span class="text-xs">Classic</span>
           </button>
-          <% if current_user.can_use_premium_themes? %>
-            <button class="theme-btn--lined flex items-center justify-center p-2" data-theme="lined" title="Lined Paper">
-              <span class="text-xs">Lined</span>
-            </button>
-            <button class="theme-btn--graph flex items-center justify-center p-2" data-theme="graph" title="Graph Paper">
-              <span class="text-xs">Graph</span>
-            </button>
-            <button class="theme-btn--vintage flex items-center justify-center p-2" data-theme="vintage" title="Vintage Paper">
-              <span class="text-xs">Vintage</span>
-            </button>
-            <button class="theme-btn--dark flex items-center justify-center p-2" data-theme="dark" title="Dark Mode">
-              <span class="text-xs">Dark</span>
-            </button>
-          <% else %>
-            <div class="theme-btn--lined opacity-50 cursor-not-allowed relative flex items-center justify-center p-2" title="Premium Feature">
-              <span class="text-xs">Lined</span>
-              <span class="absolute top-1 right-1 text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
-            </div>
-            <div class="theme-btn--graph opacity-50 cursor-not-allowed relative flex items-center justify-center p-2" title="Premium Feature">
-              <span class="text-xs">Graph</span>
-              <span class="absolute top-1 right-1 text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
-            </div>
-            <div class="theme-btn--vintage opacity-50 cursor-not-allowed relative flex items-center justify-center p-2" title="Premium Feature">
-              <span class="text-xs">Vintage</span>
-              <span class="absolute top-1 right-1 text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
-            </div>
-            <div class="theme-btn--dark opacity-50 cursor-not-allowed relative flex items-center justify-center p-2" title="Premium Feature">
-              <span class="text-xs">Dark</span>
-              <span class="absolute top-1 right-1 text-xs text-white bg-orange-500 px-1 rounded">🔒</span>
-            </div>
-          <% end %>
+          <button class="theme-btn--lined flex items-center justify-center p-2" data-theme="lined" title="Lined Paper">
+            <span class="text-xs">Lined</span>
+          </button>
+          <button class="theme-btn--graph flex items-center justify-center p-2" data-theme="graph" title="Graph Paper">
+            <span class="text-xs">Graph</span>
+          </button>
+          <button class="theme-btn--vintage flex items-center justify-center p-2" data-theme="vintage" title="Vintage Paper">
+            <span class="text-xs">Vintage</span>
+          </button>
+          <button class="theme-btn--dark flex items-center justify-center p-2" data-theme="dark" title="Dark Mode">
+            <span class="text-xs">Dark</span>
+          </button>
         </div>
-        <% if current_user.free? %>
-          <div class="mt-2 text-center">
-            <%= button_to "Unlock All Themes",
-                  create_checkout_session_path,
-                  method: :post,
-                  data: { turbo: false },
-                  class: "text-xs text-blue-600 hover:text-blue-800 hand-underline hand-underline--blue cursor-pointer bg-transparent border-0" %>
-          </div>
-        <% end %>
       </div>
     </div>
   <% end %>
@@ -205,6 +140,12 @@
   <% if alert %>
     <div class="flash-message flash-message--error" data-auto-dismiss="true">
       ⚠️ <%= alert %>
+    </div>
+  <% end %>
+
+  <% if flash[:trial] %>
+    <div class="flash-message flash-message--trial" data-auto-dismiss="true">
+      <%= flash[:trial] %>
     </div>
   <% end %>
 

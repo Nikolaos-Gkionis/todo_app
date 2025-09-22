@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_13_151941) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_22_090530) do
   create_table "pages", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -40,6 +40,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_13_151941) do
     t.string "password_digest"
     t.boolean "premium", default: false, null: false
     t.string "name"
+    t.datetime "trial_started_at"
+    t.datetime "trial_expires_at"
+    t.boolean "device_downloaded", default: false, null: false
+    t.string "download_token", limit: 255
+    t.boolean "trial_data_exported", default: false, null: false
+    t.index ["device_downloaded"], name: "idx_users_device_downloaded"
+    t.index ["download_token"], name: "idx_users_download_token"
+    t.index ["trial_expires_at"], name: "idx_users_trial_expires"
+    t.check_constraint "trial_expires_at IS NULL OR trial_expires_at > trial_started_at", name: "check_trial_expires_after_start"
   end
 
   add_foreign_key "pages", "users"

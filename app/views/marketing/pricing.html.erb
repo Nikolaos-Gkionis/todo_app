@@ -6,7 +6,7 @@
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <h1 class="text-5xl font-bold text-gray-900 mb-6">Simple, Honest Pricing</h1>
     <p class="text-xl text-gray-600 mb-8">
-      No subscriptions, no monthly fees. Pay once, create beautiful pages forever.
+      Try free for 30 days on our servers, then pay once to download to your device forever.
     </p>
   </div>
 </section>
@@ -19,40 +19,40 @@
       <!-- Free Plan -->
       <div class="bg-white border-2 border-gray-200 rounded-2xl p-8 relative">
         <div class="text-center mb-8">
-          <h3 class="text-2xl font-bold text-gray-900 mb-2">Free Forever</h3>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">Free Trial</h3>
           <div class="text-4xl font-bold text-gray-900 mb-2">$0</div>
-          <p class="text-gray-600">Perfect for trying Todo-it</p>
+          <p class="text-gray-600">30 days on our servers</p>
         </div>
         
         <ul class="space-y-4 mb-8">
           <li class="flex items-center">
             <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
-            <span class="text-gray-700">Up to 3 pages</span>
+            <span class="text-gray-700">30-day free trial</span>
           </li>
           <li class="flex items-center">
             <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
-            <span class="text-gray-700">Up to 20 todos per page</span>
+            <span class="text-gray-700">Hosted on our servers</span>
           </li>
           <li class="flex items-center">
             <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
-            <span class="text-gray-700">Classic dotted theme only</span>
+            <span class="text-gray-700">All features included</span>
           </li>
           <li class="flex items-center">
             <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
-            <span class="text-gray-700">Drag-and-drop reordering</span>
+            <span class="text-gray-700">All themes available</span>
           </li>
           <li class="flex items-center">
             <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
-            <span class="text-gray-700">Due date management</span>
+            <span class="text-gray-700">No credit card required</span>
           </li>
           <li class="flex items-center">
             <div class="hand-checkbox hand-checkbox-unchecked mr-3 scale-75"></div>
-            <span class="text-gray-400">Premium themes locked</span>
+            <span class="text-gray-400">Data expires after 30 days</span>
           </li>
         </ul>
         
         <%= link_to signup_path, class: "w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 px-6 rounded-lg font-semibold transition-colors text-center block" do %>
-          Start Free
+          Start Free Trial
         <% end %>
       </div>
       
@@ -66,31 +66,31 @@
         </div>
         
         <div class="text-center mb-8">
-          <h3 class="text-2xl font-bold text-gray-900 mb-2">Premium</h3>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">Download to Device</h3>
           <div class="text-4xl font-bold text-blue-600 mb-2">$9.99</div>
-          <p class="text-gray-600">One-time payment, lifetime access</p>
+          <p class="text-gray-600">One-time payment, download forever</p>
         </div>
         
         <ul class="space-y-4 mb-8">
           <li class="flex items-center">
             <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
-            <span class="text-gray-700 font-medium">Everything in Free, plus:</span>
+            <span class="text-gray-700 font-medium">Download to your device:</span>
           </li>
           <li class="flex items-center">
             <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
-            <span class="text-gray-700">✨ Unlimited pages & todos</span>
+            <span class="text-gray-700">✨ Works completely offline</span>
           </li>
           <li class="flex items-center">
             <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
-            <span class="text-gray-700">🎨 5 beautiful themes (lined, graph, vintage, dark)</span>
+            <span class="text-gray-700">🎨 All 5 beautiful themes included</span>
           </li>
           <li class="flex items-center">
             <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
-            <span class="text-gray-700">📱 Mobile app access (coming soon)</span>
+            <span class="text-gray-700">📱 Install on any device</span>
           </li>
           <li class="flex items-center">
             <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
-            <span class="text-gray-700">🔄 Automatic backups</span>
+            <span class="text-gray-700">🔄 Your data stays on your device</span>
           </li>
           <li class="flex items-center">
             <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
@@ -98,19 +98,19 @@
           </li>
           <li class="flex items-center">
             <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
-            <span class="text-gray-700">🚀 Early access to new features</span>
+            <span class="text-gray-700">🚀 No monthly fees ever</span>
           </li>
         </ul>
         
         <% if logged_in? %>
-          <%= button_to "Upgrade to Premium",
+          <%= button_to "Download to Device",
                 create_checkout_session_path,
                 method: :post,
                 data: { turbo: false },
                 class: "w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold transition-colors text-center cursor-pointer border-0" %>
         <% else %>
           <%= link_to signup_path, class: "w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold transition-colors text-center block" do %>
-            Get Premium
+            Start Free Trial
           <% end %>
         <% end %>
       </div>
@@ -119,11 +119,11 @@
     <!-- Value Proposition -->
     <div class="text-center mt-16">
       <p class="text-gray-600 mb-4">
-        💡 <strong>Why one-time payment?</strong> We believe in honest pricing. 
-        Buy once, use forever. No monthly surprises, no feature locks.
+        💡 <strong>Why this model?</strong> Try free for 30 days on our servers, then download to your device forever. 
+        No monthly surprises, no ongoing fees, your data stays with you.
       </p>
       <p class="text-sm text-gray-500">
-        30-day money-back guarantee • Secure payment via Stripe
+        30-day free trial • 30-day money-back guarantee • Secure payment via Stripe
       </p>
     </div>
   </div>
@@ -136,18 +136,18 @@
     
     <div class="space-y-8">
       <div class="bg-white rounded-lg p-6 shadow-sm">
-        <h3 class="text-lg font-semibold text-gray-900 mb-2">What happens to my free todos after 30 days?</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">What happens after my 30-day trial?</h3>
         <p class="text-gray-600">
-          To keep our free tier sustainable, todos older than 30 days are automatically archived. 
-          Upgrade to Premium to keep all your todos forever and support continued development.
+          After 30 days, your trial data expires and you'll need to download the app to your device to continue. 
+          Pay once to download and keep your data forever on your own device.
         </p>
       </div>
       
       <div class="bg-white rounded-lg p-6 shadow-sm">
-        <h3 class="text-lg font-semibold text-gray-900 mb-2">Can I upgrade from Free to Premium later?</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">Can I download to my device anytime?</h3>
         <p class="text-gray-600">
-          Absolutely! Upgrade anytime and all your existing pages and todos will be preserved. 
-          The 30-day deletion policy will be immediately lifted.
+          Yes! During your 30-day trial, you can download the app to your device anytime. 
+          Your trial data will be transferred to your device when you download.
         </p>
       </div>
       
@@ -160,18 +160,18 @@
       </div>
       
       <div class="bg-white rounded-lg p-6 shadow-sm">
-        <h3 class="text-lg font-semibold text-gray-900 mb-2">Will there be mobile apps?</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">How do I download to my device?</h3>
         <p class="text-gray-600">
-          Yes! Native iOS and Android apps are in development and will be available to Premium users 
-          at no additional cost. The web app already works great on mobile browsers.
+          After payment, you'll get a download link for your device. The app works as a PWA (Progressive Web App) 
+          that you can install on any device - phone, tablet, or computer.
         </p>
       </div>
       
       <div class="bg-white rounded-lg p-6 shadow-sm">
         <h3 class="text-lg font-semibold text-gray-900 mb-2">How is my data protected?</h3>
         <p class="text-gray-600">
-          Your data is encrypted in transit and at rest. We never sell your information, 
-          and Premium users get automatic daily backups for extra peace of mind.
+          During the trial, your data is encrypted on our servers. After download, your data lives entirely on your device, 
+          encrypted and private. We never sell your information.
         </p>
       </div>
     </div>
@@ -183,11 +183,11 @@
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <h2 class="text-4xl font-bold text-white mb-4">Start Your Beautiful Todo Journey</h2>
     <p class="text-xl text-blue-100 mb-8">
-      Try Todo-it free today. Upgrade when you're ready to keep your pages forever.
+      Try Todo-it free for 30 days on our servers, then download to your device forever.
     </p>
     
     <%= link_to signup_path, class: "bg-white hover:bg-gray-100 text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold transition-colors inline-block" do %>
-      🚀 Get Started Free
+      🚀 Start Free Trial
     <% end %>
   </div>
 </section>
@@ -213,6 +213,7 @@
         <h3 class="font-semibold mb-4">Product</h3>
         <ul class="space-y-2 text-gray-400">
           <li><%= link_to "Home", root_path, class: "hover:text-white transition-colors" %></li>
+          <li><%= link_to "Why Todo-it", why_path, class: "hover:text-white transition-colors" %></li>
           <li><span class="text-white">Pricing</span></li>
           <li><%= link_to "How to Use", how_to_path, class: "hover:text-white transition-colors" %></li>
         </ul>

@@ -1,0 +1,166 @@
+<!-- Trial Status Header -->
+<div class="trial-status-header">
+  <div class="trial-status-header__content">
+    <h1 class="trial-status-header__title">Your Trial Status</h1>
+    <p class="trial-status-header__subtitle">
+      Manage your 30-day free trial and download options
+    </p>
+  </div>
+</div>
+
+<!-- Trial Status Card -->
+<div class="trial-status-card">
+  <div class="trial-status-card__content">
+    <% if current_user.on_trial? %>
+      <!-- Active Trial -->
+      <div class="trial-status--active">
+        <div class="trial-status__icon">⏰</div>
+        <div class="trial-status__info">
+          <h2 class="trial-status__title">Free Trial Active</h2>
+          <p class="trial-status__description">
+            You have <strong><%= pluralize(current_user.trial_days_remaining, 'day') %></strong> remaining in your free trial.
+          </p>
+          <div class="trial-status__progress">
+            <div class="trial-progress-bar">
+              <div class="trial-progress-bar__fill" style="width: <%= (current_user.trial_days_remaining.to_f / 30 * 100).round %>%"></div>
+            </div>
+            <div class="trial-progress-bar__labels">
+              <span>Day 1</span>
+              <span>Day 30</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% elsif current_user.device_downloaded? %>
+      <!-- Downloaded App -->
+      <div class="trial-status--downloaded">
+        <div class="trial-status__icon">✅</div>
+        <div class="trial-status__info">
+          <h2 class="trial-status__title">App Downloaded</h2>
+          <p class="trial-status__description">
+            You have successfully downloaded Todo-it to your device. Enjoy unlimited access!
+          </p>
+        </div>
+      </div>
+    <% elsif current_user.trial_expired? %>
+      <!-- Expired Trial -->
+      <div class="trial-status--expired">
+        <div class="trial-status__icon">⚠️</div>
+        <div class="trial-status__info">
+          <h2 class="trial-status__title">Trial Expired</h2>
+          <p class="trial-status__description">
+            Your 30-day free trial has ended. Download the app to continue using Todo-it.
+          </p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<!-- Actions Section -->
+<div class="trial-actions">
+  <div class="trial-actions__content">
+    <% if current_user.on_trial? %>
+      <!-- Trial Actions -->
+      <div class="trial-actions__grid">
+        <div class="action-card">
+          <div class="action-card__icon">📱</div>
+          <h3 class="action-card__title">Download App</h3>
+          <p class="action-card__description">
+            Get the full offline experience with all your data stored locally.
+          </p>
+          <%= link_to "Download Now", download_path, class: "action-card__button action-card__button--primary" %>
+        </div>
+        
+        <div class="action-card">
+          <div class="action-card__icon">📊</div>
+          <h3 class="action-card__title">Export Data</h3>
+          <p class="action-card__description">
+            Download your pages and todos as a backup before your trial ends.
+          </p>
+          <%= link_to "Export Data", export_trial_data_path, class: "action-card__button action-card__button--secondary" %>
+        </div>
+        
+        <div class="action-card">
+          <div class="action-card__icon">⏰</div>
+          <h3 class="action-card__title">Extend Trial</h3>
+          <p class="action-card__description">
+            Need more time? We can extend your trial by 7 days.
+          </p>
+          <%= button_to "Extend Trial", extend_trial_path, method: :post, class: "action-card__button action-card__button--secondary" %>
+        </div>
+      </div>
+    <% elsif current_user.device_downloaded? %>
+      <!-- Downloaded App Actions -->
+      <div class="trial-actions__grid">
+        <div class="action-card">
+          <div class="action-card__icon">🎉</div>
+          <h3 class="action-card__title">All Set!</h3>
+          <p class="action-card__description">
+            You have full access to all features. Your data is stored locally on your device.
+          </p>
+          <%= link_to "Continue Using App", app_root_path, class: "action-card__button action-card__button--primary" %>
+        </div>
+      </div>
+    <% elsif current_user.trial_expired? %>
+      <!-- Expired Trial Actions -->
+      <div class="trial-actions__grid">
+        <div class="action-card">
+          <div class="action-card__icon">📱</div>
+          <h3 class="action-card__title">Download App</h3>
+          <p class="action-card__description">
+            Download the app to continue using Todo-it with all your data.
+          </p>
+          <%= link_to "Download Now", download_path, class: "action-card__button action-card__button--primary" %>
+        </div>
+        
+        <div class="action-card">
+          <div class="action-card__icon">💰</div>
+          <h3 class="action-card__title">View Pricing</h3>
+          <p class="action-card__description">
+            Learn more about our one-time payment model.
+          </p>
+          <%= link_to "View Pricing", pricing_path, class: "action-card__button action-card__button--secondary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<!-- Trial Information -->
+<div class="trial-info">
+  <div class="trial-info__content">
+    <h3 class="trial-info__title">About Your Trial</h3>
+    <div class="trial-info__grid">
+      <div class="info-item">
+        <h4 class="info-item__title">What's Included</h4>
+        <ul class="info-item__list">
+          <li>All 5 beautiful themes</li>
+          <li>Unlimited pages and todos</li>
+          <li>Full feature access</li>
+          <li>Data export capability</li>
+        </ul>
+      </div>
+      
+      <div class="info-item">
+        <h4 class="info-item__title">After Trial</h4>
+        <ul class="info-item__list">
+          <li>Download app to your device</li>
+          <li>One-time payment of $9.99</li>
+          <li>Offline-first experience</li>
+          <li>Your data stays with you</li>
+        </ul>
+      </div>
+      
+      <div class="info-item">
+        <h4 class="info-item__title">Data Policy</h4>
+        <ul class="info-item__list">
+          <li>Trial data expires after 30 days</li>
+          <li>Download to keep your data forever</li>
+          <li>No data collection or tracking</li>
+          <li>Complete privacy protection</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

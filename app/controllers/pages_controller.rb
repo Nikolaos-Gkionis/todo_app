@@ -22,7 +22,11 @@ class PagesController < ApplicationController
   def create
     # Check if user can create more pages
     unless current_user.can_create_page?
-      redirect_to pages_path, alert: "Free users can only create #{User::MAX_FREE_PAGES} pages. Upgrade to Premium for unlimited pages!"
+      if current_user.trial_expired? && !current_user.device_downloaded?
+        redirect_to pages_path, alert: "Your trial has expired. Please download the app to continue creating pages."
+      else
+        redirect_to pages_path, alert: "You've reached the page limit. Download the app for unlimited pages!"
+      end
       return
     end
 

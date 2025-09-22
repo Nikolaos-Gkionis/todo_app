@@ -1316,10 +1316,11 @@ input:-webkit-autofill:active {
   position: relative;
   overflow: hidden;
   padding: 1rem;
-  margin: 1rem;
+  margin: 1rem auto;
   text-align: center;
   font-weight: 500;
   transition: opacity 0.5s ease-in-out;
+  max-width: 1200px;
 }
 
 .flash-message::before {
@@ -1339,6 +1340,16 @@ input:-webkit-autofill:active {
 
 .flash-message--error {
   color: #b91c1c;
+}
+
+.flash-message--trial {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+  font-weight: 600;
+}
+
+.flash-message--trial::before {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 /* Dark mode flash messages */
@@ -1769,5 +1780,562 @@ textarea[class*="form-input"] {
   }
   100% {
     box-shadow: 0 0 0 0 rgba(96, 165, 250, 0);
+  }
+}
+
+
+/* ========================================
+   DOWNLOAD PAGE COMPONENTS
+   ======================================== */
+
+.download-header {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.download-header__content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.download-header__title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.download-header__subtitle {
+  font-size: 1.25rem;
+  opacity: 0.9;
+}
+
+.download-status {
+  padding: 2rem 1rem;
+  background: #f8fafc;
+}
+
+.download-status__card {
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.download-status__icon {
+  font-size: 3rem;
+}
+
+.download-status__title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #1f2937;
+}
+
+.download-status__description {
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.download-instructions {
+  padding: 3rem 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.download-instructions__title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: #1f2937;
+}
+
+.download-instructions__steps {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.download-step {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.download-step__number {
+  background: #3b82f6;
+  color: white;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.download-step__content {
+  flex: 1;
+}
+
+.download-step__title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #1f2937;
+}
+
+.download-step__description {
+  color: #6b7280;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.download-step__action {
+  margin-top: 1rem;
+}
+
+.download-button {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: #3b82f6;
+  color: white;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1.125rem;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.download-button:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.device-instructions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.device-instructions__title {
+  font-size: 1.125rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #1f2937;
+}
+
+.device-instructions__list {
+  list-style: decimal;
+  padding-left: 1.5rem;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.device-instructions__list li {
+  margin-bottom: 0.5rem;
+}
+
+.download-benefits {
+  padding: 3rem 1rem;
+  background: #f8fafc;
+}
+
+.download-benefits__title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: #1f2937;
+}
+
+.download-benefits__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.benefit-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.benefit-card__icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.benefit-card__title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #1f2937;
+}
+
+.benefit-card__description {
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.download-troubleshooting {
+  padding: 2rem 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.troubleshooting-details {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.troubleshooting-summary {
+  padding: 1rem 1.5rem;
+  background: #f9fafb;
+  cursor: pointer;
+  font-weight: 600;
+  color: #374151;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.troubleshooting-summary:hover {
+  background: #f3f4f6;
+}
+
+.troubleshooting-content {
+  padding: 1.5rem;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.troubleshooting-content h4 {
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.troubleshooting-content ul {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.troubleshooting-content li {
+  margin-bottom: 0.5rem;
+}
+
+.troubleshooting-content a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.troubleshooting-content a:hover {
+  text-decoration: underline;
+}
+
+/* Mobile responsiveness for download page */
+@media (max-width: 768px) {
+  .download-header__title {
+    font-size: 2rem;
+  }
+  
+  .download-header__subtitle {
+    font-size: 1rem;
+  }
+  
+  .download-status__card {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .device-instructions {
+    grid-template-columns: 1fr;
+  }
+  
+  .download-benefits__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================
+   TRIAL STATUS PAGE COMPONENTS
+   ======================================== */
+
+.trial-status-header {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.trial-status-header__content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.trial-status-header__title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.trial-status-header__subtitle {
+  font-size: 1.25rem;
+  opacity: 0.9;
+}
+
+.trial-status-card {
+  padding: 2rem 1rem;
+  background: #f8fafc;
+}
+
+.trial-status-card__content {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.trial-status--active {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.trial-status--downloaded {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.trial-status--expired {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.trial-status__icon {
+  font-size: 3rem;
+  flex-shrink: 0;
+}
+
+.trial-status__info {
+  flex: 1;
+}
+
+.trial-status__title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #1f2937;
+}
+
+.trial-status__description {
+  color: #6b7280;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.trial-status__progress {
+  margin-top: 1rem;
+}
+
+.trial-progress-bar {
+  background: #e5e7eb;
+  height: 0.5rem;
+  border-radius: 0.25rem;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.trial-progress-bar__fill {
+  background: #3b82f6;
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.trial-progress-bar__labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.trial-actions {
+  padding: 3rem 1rem;
+}
+
+.trial-actions__content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.trial-actions__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.action-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  border: 1px solid #e5e7eb;
+}
+
+.action-card__icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.action-card__title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #1f2937;
+}
+
+.action-card__description {
+  color: #6b7280;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.action-card__button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.action-card__button--primary {
+  background: #3b82f6;
+  color: white;
+}
+
+.action-card__button--primary:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.action-card__button--secondary {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+
+.action-card__button--secondary:hover {
+  background: #e5e7eb;
+  transform: translateY(-1px);
+}
+
+.trial-info {
+  padding: 3rem 1rem;
+  background: #f8fafc;
+}
+
+.trial-info__content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.trial-info__title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: #1f2937;
+}
+
+.trial-info__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.info-item {
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.info-item__title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #1f2937;
+}
+
+.info-item__list {
+  list-style: none;
+  padding: 0;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.info-item__list li {
+  padding: 0.25rem 0;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.info-item__list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #10b981;
+  font-weight: bold;
+}
+
+/* Mobile responsiveness for trial status page */
+@media (max-width: 768px) {
+  .trial-status-header__title {
+    font-size: 2rem;
+  }
+  
+  .trial-status-header__subtitle {
+    font-size: 1rem;
+  }
+  
+  .trial-status--active,
+  .trial-status--downloaded,
+  .trial-status--expired {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .trial-actions__grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .trial-info__grid {
+    grid-template-columns: 1fr;
   }
 }

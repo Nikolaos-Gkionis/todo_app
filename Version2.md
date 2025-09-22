@@ -1,47 +1,86 @@
-# Version 2.0 - Premium Mobile-First Todo App
+# Version 2.0 - 30-Day Trial + Device Download Todo App
 
 ## Overview
 
-Transform the current web-based todo app into a premium, mobile-first experience with PWA capabilities, native app potential, and enhanced user experience for both free and paid users.
+Transform the current web-based todo app into a hybrid model: 30-day free trial hosted on our servers, then one-time payment to download the app to user's device forever. This creates a premium, offline-first experience with PWA capabilities and true data ownership.
+
+## Recent Progress (Latest Session)
+
+### ✅ **Completed This Session:**
+
+- **Trial Banner Redesign**: Replaced intrusive trial banner with clean flash message system
+- **Smart Display Logic**: Trial messages only show on pages index and settings pages (never on todo pages)
+- **Auto-dismiss**: Messages disappear after 3 seconds like other flash messages
+- **Clean Design**: One line across the top, no X buttons, consistent with existing flash messages
+- **Trial-specific Styling**: Blue gradient background for trial messages to make them stand out
+- **Controller Logic**: Fixed pluralize method error and implemented proper trial status checking
+- **CSS Cleanup**: Removed all trial banner CSS and cleaned up styles
+- **UI Components**: Created download page, trial status page, and PWA installation instructions
 
 ---
 
 ## Phase 1: Foundation & User Experience (Dependencies: None)
 
-### 1.1 Re-Write Marketing Copy
+### 1.1 Update Marketing Copy for New Model
 
-**Priority: High | Effort: Medium | Dependencies: None**
+**Priority: High | Effort: Low | Dependencies: None**
 
 #### Subtasks:
 
-- [ ] **Audit current marketing pages**
+- [x] **Update marketing pages for new model**
 
-  - [ ] Review landing page copy
-  - [ ] Review pricing page copy
-  - [ ] Review how-to page copy
-  - [ ] Identify key value propositions
+  - [x] Update landing page copy (30-day trial + download)
+  - [x] Update pricing page copy (trial vs download)
+  - [x] Update why page copy (new value propositions)
+  - [x] Update how-to page copy (trial + PWA installation)
 
-- [ ] **Create new marketing copy**
+- [x] **Add PWA Installation Instructions**
 
-  - [ ] Write compelling headline and subheadline
-  - [ ] Craft feature benefits (not just features)
-  - [ ] Add social proof and testimonials
-  - [ ] Create urgency and scarcity elements
-  - [ ] Write clear call-to-action buttons
+  - [x] Create mobile PWA installation guide
+  - [x] Create desktop PWA installation guide
+  - [x] Add installation screenshots/videos
+  - [x] Create troubleshooting guide
 
 - [ ] **Optimize for conversion**
 
-  - [ ] A/B test headlines
-  - [ ] Add trust signals (security, privacy)
-  - [ ] Include FAQ section
-  - [ ] Add demo video or screenshots
+  - [ ] A/B test trial vs download messaging
+  - [ ] Add trust signals (data ownership, privacy)
+  - [ ] Update FAQ section for new model
+  - [ ] Add demo video showing trial-to-download flow
 
 - [ ] **SEO optimization**
-  - [ ] Research keywords
-  - [ ] Optimize meta descriptions
-  - [ ] Add structured data markup
+  - [ ] Research keywords for "downloadable todo app"
+  - [ ] Optimize meta descriptions for new model
+  - [ ] Add structured data markup for PWA
 
-### 1.2 Remove In-App Header for Cleaner Interface
+### 1.2 Make All Themes Available to Everyone
+
+**Priority: High | Effort: Low | Dependencies: None**
+
+#### Subtasks:
+
+- [x] **Remove theme restrictions**
+
+  - [x] Remove premium theme checks from controllers
+  - [x] Update theme selection UI to show all themes
+  - [x] Remove theme upgrade prompts
+  - [x] Update theme descriptions
+
+- [ ] **Update theme system**
+
+  - [ ] Ensure all themes work for trial users
+  - [ ] Test theme switching for all users
+  - [ ] Update theme persistence logic
+  - [ ] Add theme preview for all users
+
+- [ ] **Update marketing materials**
+
+  - [ ] Update pricing page to reflect theme availability
+  - [ ] Update feature lists across all pages
+  - [ ] Update trial benefits description
+  - [ ] Update download benefits description
+
+### 1.3 Remove In-App Header for Cleaner Interface
 
 **Priority: High | Effort: Low | Dependencies: None**
 
@@ -75,143 +114,114 @@ Transform the current web-based todo app into a premium, mobile-first experience
 
 ---
 
-## Phase 2: User Segmentation & Settings (Dependencies: Phase 1.2)
+## Phase 2: Trial Management System (Dependencies: Phase 1.2)
 
-### 2.1 Create Dual Settings Pages (Free vs Paid)
+### 2.1 Implement 30-Day Trial System
 
 **Priority: High | Effort: Medium | Dependencies: Phase 1.2**
 
 #### Subtasks:
 
-- [ ] **Design settings architecture**
+- [x] **Database changes for trial management**
 
-  - [ ] Plan free user settings structure
-  - [ ] Plan paid user settings structure
-  - [ ] Define feature differences
-  - [ ] Create user flow diagrams
+  - [x] Add `trial_started_at` timestamp to users table
+  - [x] Add `trial_expires_at` timestamp to users table
+  - [x] Add `device_downloaded` boolean to users table
+  - [x] Add `download_token` string to users table
+  - [x] Add `trial_data_exported` boolean to users table
 
-- [ ] **Build free user settings**
+- [x] **Trial controller and logic**
 
-  - [ ] Basic account information
-  - [ ] Password management
-  - [ ] Account deletion
-  - [ ] Upgrade prompts
-  - [ ] Usage limits display
+  - [x] Create `TrialController` for trial management
+  - [x] Add trial expiration checks to `ApplicationController`
+  - [x] Update `RegistrationsController` to set trial dates
+  - [x] Add trial status methods to `User` model
 
-- [ ] **Build paid user settings**
+- [x] **Trial UI and notifications**
 
-  - [ ] All free user features
-  - [ ] Theme selection (moved from pages)
-  - [ ] Advanced preferences
-  - [ ] Data export/import
-  - [ ] Subscription management
-  - [ ] Offline sync settings
+  - [x] Add trial status banner to app (replaced with flash messages)
+  - [x] Create trial countdown timer (via flash messages)
+  - [x] Add trial expiration warnings (7, 3, 1 days) (via flash messages)
+  - [x] Implement trial upgrade prompts (via flash messages)
+  - [x] Replace intrusive banner with clean flash message system
+  - [x] Show trial status only on pages index and settings pages
+  - [x] Auto-dismiss trial messages after 3 seconds
 
-- [ ] **Implement conditional rendering**
-  - [ ] Add user tier checks
-  - [ ] Create shared components
-  - [ ] Handle upgrade flows
-  - [ ] Test both user types
+- [ ] **Trial data management**
+  - [ ] Create `DataExportService` for trial data
+  - [ ] Add JSON export format for pages and todos
+  - [ ] Create trial data cleanup job (runs daily)
+  - [ ] Add data import functionality for device app
 
-### 2.2 Move Theme Selection to Paid Settings
+### 2.2 Update Settings for New Model
 
 **Priority: Medium | Effort: Low | Dependencies: Phase 2.1**
 
 #### Subtasks:
 
-- [ ] **Remove theme selector from pages**
+- [ ] **Update settings architecture**
 
-  - [ ] Remove theme selector from pages index
-  - [ ] Update layout files
-  - [ ] Clean up unused CSS
+  - [ ] Plan trial user settings structure
+  - [ ] Plan downloaded app settings structure
+  - [ ] Define feature differences
+  - [ ] Create user flow diagrams
 
-- [ ] **Add theme selector to paid settings**
+- [ ] **Build trial user settings**
 
-  - [ ] Create theme selection UI
-  - [ ] Add theme preview functionality
-  - [ ] Implement theme persistence
-  - [ ] Add theme descriptions
+  - [ ] Basic account information
+  - [ ] Password management
+  - [ ] Account deletion
+  - [ ] Download prompts
+  - [ ] Trial status display
 
-- [ ] **Update theme system**
-  - [ ] Ensure theme persistence works
-  - [ ] Test theme switching
-  - [ ] Update theme documentation
-  - [ ] Add theme change animations
+- [ ] **Build downloaded app settings**
+
+  - [ ] All trial user features
+  - [ ] Theme selection (available to all)
+  - [ ] Advanced preferences
+  - [ ] Data export/import
+  - [ ] Offline sync settings
+  - [ ] Device management
+
+- [ ] **Implement conditional rendering**
+  - [ ] Add trial status checks
+  - [ ] Add download status checks
+  - [ ] Create shared components
+  - [ ] Handle download flows
+  - [ ] Test both user types
 
 ---
 
-## Phase 3: Backend Architecture (Dependencies: Phase 2.1)
+## Phase 3: PWA Download System (Dependencies: Phase 2.1)
 
-### 3.1 Restructure for Paid Users (Single Download, Offline Use)
+### 3.1 Build Downloadable PWA
 
 **Priority: High | Effort: High | Dependencies: Phase 2.1**
 
 #### Subtasks:
 
-- [ ] **Design offline-first architecture**
-
-  - [ ] Plan data synchronization strategy
-  - [ ] Design conflict resolution
-  - [ ] Plan offline data storage
-  - [ ] Design sync algorithms
-
-- [ ] **Implement offline capabilities**
-
-  - [ ] Add Service Worker for caching
-  - [ ] Implement IndexedDB for local storage
-  - [ ] Create sync queue system
-  - [ ] Add offline indicators
-
-- [ ] **Build data synchronization**
-
-  - [ ] Create sync API endpoints
-  - [ ] Implement delta sync
-  - [ ] Add conflict detection
-  - [ ] Create merge strategies
-
-- [ ] **Add offline features**
-
-  - [ ] Offline todo creation/editing
-  - [ ] Offline theme switching
-  - [ ] Offline settings management
-  - [ ] Background sync
-
-- [ ] **Implement single download model**
-  - [ ] Create app bundle system
-  - [ ] Add version management
-  - [ ] Implement update mechanisms
-  - [ ] Add rollback capabilities
-
----
-
-## Phase 4: PWA Enhancement (Dependencies: Phase 3.1)
-
-### 4.1 Build Robust PWA Features
-
-**Priority: High | Effort: High | Dependencies: Phase 3.1**
-
-#### Subtasks:
-
-- [ ] **Enhance Service Worker**
+- [ ] **Enhance Service Worker for offline-first**
 
   - [ ] Implement advanced caching strategies
-  - [ ] Add background sync
+  - [ ] Add background sync for trial data
   - [ ] Create push notification system
   - [ ] Add update notifications
 
-- [ ] **Improve PWA manifest**
+- [ ] **Improve PWA manifest for device installation**
 
   - [ ] Add comprehensive app metadata
-  - [ ] Create multiple icon sizes
+  - [ ] Create multiple icon sizes (all device types)
   - [ ] Add splash screens
   - [ ] Implement theme colors
+  - [ ] Add install prompts
 
 - [ ] **Add PWA-specific features**
 
-  - [ ] Install prompts
+  - [ ] Install prompts for mobile and desktop
   - [ ] App shortcuts
   - [ ] Share target API
   - [ ] File handling
+  - [ ] Offline indicators
 
 - [ ] **Optimize performance**
 
@@ -226,49 +236,157 @@ Transform the current web-based todo app into a premium, mobile-first experience
   - [ ] Sync status indicators
   - [ ] Conflict resolution UI
 
----
+### 3.2 Implement Download System
 
-## Phase 5: Native App Preparation (Dependencies: Phase 4.1)
-
-### 5.1 Plan HotWire/Turbo Native for App Stores
-
-**Priority: Medium | Effort: High | Dependencies: Phase 4.1**
+**Priority: High | Effort: Medium | Dependencies: Phase 3.1**
 
 #### Subtasks:
 
-- [ ] **Research Turbo Native**
+- [x] **Download controller and logic**
 
-  - [ ] Study Turbo Native documentation
-  - [ ] Analyze current app structure
-  - [ ] Plan native app architecture
-  - [ ] Identify required changes
+  - [x] Create `DownloadsController` for app downloads
+  - [x] Implement secure download token system
+  - [x] Add download tracking and analytics
+  - [x] Create download success/failure handling
+  - [x] Create download page with installation instructions
+  - [x] Add PWA installation guides for mobile and desktop
+  - [x] Create trial status page with download management
 
-- [ ] **Design native app structure**
+- [ ] **App bundle creation**
 
-  - [ ] Plan iOS app structure
-  - [ ] Plan Android app structure
-  - [ ] Design navigation patterns
-  - [ ] Plan native features integration
+  - [ ] Create app bundling system
+  - [ ] Implement version management
+  - [ ] Add device-specific optimizations
+  - [ ] Create update mechanism
 
-- [ ] **Prepare for native conversion**
+- [ ] **Data export/import system**
 
-  - [ ] Refactor JavaScript for Turbo Native
-  - [ ] Update CSS for native rendering
-  - [ ] Prepare native-specific assets
-  - [ ] Create native app icons
+  - [ ] Create trial data export on download
+  - [ ] Implement data import for device app
+  - [ ] Add data validation and error handling
+  - [ ] Create data migration tools
 
-- [ ] **Set up development environment**
+- [x] **Download flow UI**
+  - [x] Create download preparation page
+  - [x] Add download progress indicators
+  - [x] Implement download success page
+  - [x] Add device installation instructions
 
-  - [ ] Install Turbo Native tools
-  - [ ] Set up iOS development
-  - [ ] Set up Android development
-  - [ ] Create build scripts
+---
 
-- [ ] **Plan App Store deployment**
-  - [ ] Research App Store requirements
-  - [ ] Plan Google Play requirements
-  - [ ] Create app store assets
-  - [ ] Plan release strategy
+## Phase 4: Payment Integration Updates (Dependencies: Phase 3.1)
+
+### 4.1 Update Stripe Integration for New Model
+
+**Priority: High | Effort: Low | Dependencies: Phase 3.1**
+
+#### Subtasks:
+
+- [ ] **Update payment flow**
+
+  - [ ] Update Stripe checkout for "Download to Device"
+  - [ ] Modify success page to provide download link
+  - [ ] Add download token generation on payment success
+  - [ ] Update webhook handling for new model
+
+- [ ] **User experience improvements**
+
+  - [ ] Create payment-to-download flow
+  - [ ] Add download instructions
+  - [ ] Implement download tracking
+  - [ ] Add support for download issues
+
+- [ ] **Trial conversion tracking**
+
+  - [ ] Add trial-to-download conversion analytics
+  - [ ] Track download success rates
+  - [ ] Monitor payment completion rates
+  - [ ] Add conversion optimization tools
+
+### 4.2 Add PWA Installation Instructions
+
+**Priority: High | Effort: Medium | Dependencies: Phase 4.1**
+
+#### Subtasks:
+
+- [ ] **Create installation guides**
+
+  - [ ] Write mobile PWA installation guide (iOS/Android)
+  - [ ] Write desktop PWA installation guide (Chrome/Edge/Safari)
+  - [ ] Create step-by-step screenshots
+  - [ ] Add troubleshooting section
+
+- [ ] **Add installation UI**
+
+  - [ ] Create installation prompt component
+  - [ ] Add device detection logic
+  - [ ] Implement installation success tracking
+  - [ ] Add installation help modal
+
+- [ ] **Update marketing pages**
+
+  - [ ] Add installation section to how-to page
+  - [ ] Update FAQ with installation questions
+  - [ ] Add installation videos/demos
+  - [ ] Create installation troubleshooting page
+
+---
+
+## Phase 5: Data Migration & Cleanup (Dependencies: Phase 4.1)
+
+### 5.1 Migrate Existing Users to New Model
+
+**Priority: Medium | Effort: Low | Dependencies: Phase 4.1**
+
+#### Subtasks:
+
+- [ ] **Create migration strategy**
+
+  - [ ] Create migration script for existing users
+  - [ ] Set appropriate trial dates for current users
+  - [ ] Add migration notifications
+  - [ ] Create rollback plan
+
+- [ ] **Implement migration tools**
+
+  - [ ] Create user migration rake task
+  - [ ] Add migration status tracking
+  - [ ] Implement migration validation
+  - [ ] Add migration monitoring
+
+- [ ] **User communication**
+
+  - [ ] Create migration announcement
+  - [ ] Send migration notifications
+  - [ ] Provide migration support
+  - [ ] Create migration FAQ
+
+### 5.2 Implement Trial Data Cleanup
+
+**Priority: Medium | Effort: Low | Dependencies: Phase 5.1**
+
+#### Subtasks:
+
+- [ ] **Create cleanup jobs**
+
+  - [ ] Create daily trial data cleanup job
+  - [ ] Implement data retention policies
+  - [ ] Add cleanup monitoring
+  - [ ] Create data recovery procedures
+
+- [ ] **Data management tools**
+
+  - [ ] Create data export tools
+  - [ ] Add data backup systems
+  - [ ] Implement data recovery tools
+  - [ ] Add data analytics
+
+- [ ] **Monitoring and alerts**
+
+  - [ ] Set up cleanup monitoring
+  - [ ] Add cleanup failure alerts
+  - [ ] Create cleanup reports
+  - [ ] Add cleanup optimization
 
 ---
 
@@ -280,36 +398,36 @@ Transform the current web-based todo app into a premium, mobile-first experience
 
 #### Subtasks:
 
-- [ ] **Unit testing**
+- [ ] **Trial flow testing**
 
-  - [ ] Test all new features
+  - [ ] Test complete trial-to-download flow
+  - [ ] Test trial expiration handling
+  - [ ] Test data export/import
+  - [ ] Test trial extension scenarios
+
+- [ ] **PWA installation testing**
+
+  - [ ] Test PWA installation on mobile (iOS/Android)
+  - [ ] Test PWA installation on desktop (Chrome/Edge/Safari)
   - [ ] Test offline functionality
-  - [ ] Test sync mechanisms
-  - [ ] Test theme switching
+  - [ ] Test app updates
 
-- [ ] **Integration testing**
+- [ ] **Download system testing**
 
-  - [ ] Test PWA installation
-  - [ ] Test offline/online transitions
-  - [ ] Test data synchronization
-  - [ ] Test user tier switching
-
-- [ ] **User acceptance testing**
-
-  - [ ] Test with free users
-  - [ ] Test with paid users
-  - [ ] Test on mobile devices
-  - [ ] Test on desktop
+  - [ ] Test download token generation
+  - [ ] Test download success/failure handling
+  - [ ] Test data transfer accuracy
+  - [ ] Test multiple device downloads
 
 - [ ] **Performance testing**
-  - [ ] Test app load times
-  - [ ] Test sync performance
+  - [ ] Test app download times
+  - [ ] Test offline app performance
+  - [ ] Test data sync performance
   - [ ] Test memory usage
-  - [ ] Test battery impact
 
 ---
 
-## Phase 7: Launch & Marketing (Dependencies: Phase 6.1)
+## Phase 7: Launch & Monitoring (Dependencies: Phase 6.1)
 
 ### 7.1 Launch Preparation
 
@@ -320,22 +438,22 @@ Transform the current web-based todo app into a premium, mobile-first experience
 - [ ] **Pre-launch activities**
 
   - [ ] Create launch timeline
-  - [ ] Prepare marketing materials
-  - [ ] Set up analytics
-  - [ ] Plan user migration
+  - [ ] Update all marketing materials
+  - [ ] Set up trial conversion analytics
+  - [ ] Plan user migration strategy
 
 - [ ] **Launch execution**
 
   - [ ] Deploy to production
-  - [ ] Monitor system performance
+  - [ ] Monitor trial conversion rates
   - [ ] Handle user feedback
   - [ ] Fix critical issues
 
-- [ ] **Post-launch activities**
-  - [ ] Monitor user adoption
-  - [ ] Collect user feedback
-  - [ ] Plan future updates
-  - [ ] Analyze performance metrics
+- [ ] **Post-launch monitoring**
+  - [ ] Monitor trial-to-download conversion
+  - [ ] Track download success rates
+  - [ ] Monitor offline app usage
+  - [ ] Analyze user satisfaction scores
 
 ---
 
@@ -343,24 +461,24 @@ Transform the current web-based todo app into a premium, mobile-first experience
 
 ### Database Changes
 
-- [ ] Add user tier tracking
-- [ ] Add offline sync tables
-- [ ] Add theme preferences
-- [ ] Add sync metadata
+- [ ] Add trial management columns (trial_started_at, trial_expires_at, device_downloaded, download_token, trial_data_exported)
+- [ ] Add indexes for trial performance
+- [ ] Add trial data cleanup tables
+- [ ] Add download tracking tables
 
 ### API Changes
 
-- [ ] Add sync endpoints
-- [ ] Add offline data endpoints
-- [ ] Add theme management
-- [ ] Add user tier management
+- [ ] Add trial management endpoints
+- [ ] Add download system endpoints
+- [ ] Add data export/import endpoints
+- [ ] Add PWA installation endpoints
 
 ### Security Considerations
 
-- [ ] Implement offline data encryption
-- [ ] Add sync authentication
-- [ ] Secure theme data
-- [ ] Protect user data
+- [ ] Implement trial data encryption
+- [ ] Add download token security
+- [ ] Secure data export/import
+- [ ] Protect user data during trial and after download
 
 ### Performance Considerations
 
@@ -375,38 +493,38 @@ Transform the current web-based todo app into a premium, mobile-first experience
 
 ### User Experience
 
-- [ ] Reduced page load times
-- [ ] Improved mobile experience
-- [ ] Increased user engagement
-- [ ] Better offline functionality
+- [ ] Smooth trial-to-download flow
+- [ ] Easy PWA installation process
+- [ ] Improved offline functionality
+- [ ] Better data ownership experience
 
 ### Business Metrics
 
-- [ ] Increased conversion rates
-- [ ] Higher user retention
-- [ ] More paid subscriptions
-- [ ] Better user satisfaction
+- [ ] Trial signup rate
+- [ ] Trial-to-download conversion rate
+- [ ] Download success rate
+- [ ] User satisfaction scores
 
 ### Technical Metrics
 
-- [ ] Improved PWA scores
-- [ ] Better performance scores
-- [ ] Reduced bounce rates
-- [ ] Higher user ratings
+- [ ] PWA installation success rate
+- [ ] Offline app usage metrics
+- [ ] Download performance metrics
+- [ ] Data transfer accuracy
 
 ---
 
 ## Timeline Estimate
 
-- **Phase 1**: 2-3 weeks
-- **Phase 2**: 2-3 weeks
-- **Phase 3**: 4-6 weeks
-- **Phase 4**: 3-4 weeks
-- **Phase 5**: 4-6 weeks
-- **Phase 6**: 2-3 weeks
-- **Phase 7**: 1-2 weeks
+- **Phase 1**: 1-2 weeks (Foundation & User Experience)
+- **Phase 2**: 2-3 weeks (Trial Management System)
+- **Phase 3**: 3-4 weeks (PWA Download System)
+- **Phase 4**: 1-2 weeks (Payment Integration Updates)
+- **Phase 5**: 1 week (Data Migration & Cleanup)
+- **Phase 6**: 1-2 weeks (Testing & Quality Assurance)
+- **Phase 7**: 1 week (Launch & Monitoring)
 
-**Total Estimated Time**: 18-27 weeks (4.5-6.5 months)
+**Total Estimated Time**: 10-15 weeks (2.5-3.5 months)
 
 ---
 
@@ -414,17 +532,17 @@ Transform the current web-based todo app into a premium, mobile-first experience
 
 ### Technical Risks
 
-- [ ] Offline sync complexity
-- [ ] PWA compatibility issues
-- [ ] Performance degradation
-- [ ] Data loss prevention
+- [ ] PWA installation complexity across devices
+- [ ] Trial data export/import accuracy
+- [ ] Download system reliability
+- [ ] Data loss during trial-to-download transition
 
 ### Business Risks
 
-- [ ] User migration challenges
-- [ ] Feature adoption rates
-- [ ] Competitive pressure
-- [ ] Revenue impact
+- [ ] Low trial-to-download conversion
+- [ ] User confusion about new model
+- [ ] Support load for installation issues
+- [ ] Revenue impact from model change
 
 ### Mitigation Strategies
 

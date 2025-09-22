@@ -1,0 +1,133 @@
+<!-- Download Page Header -->
+<div class="download-header">
+  <div class="download-header__content">
+    <h1 class="download-header__title">Download Todo-it to Your Device</h1>
+    <p class="download-header__subtitle">
+      Get the full offline experience with all your data stored locally on your device.
+    </p>
+  </div>
+</div>
+
+<!-- Download Status -->
+<div class="download-status">
+  <div class="download-status__card">
+    <div class="download-status__icon">📱</div>
+    <div class="download-status__info">
+      <h2 class="download-status__title">Ready to Download</h2>
+      <p class="download-status__description">
+        Your download token has been generated. Click the button below to download the app to your device.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Download Instructions -->
+<div class="download-instructions">
+  <h3 class="download-instructions__title">How to Install</h3>
+  
+  <div class="download-instructions__steps">
+    <!-- Step 1: Download -->
+    <div class="download-step">
+      <div class="download-step__number">1</div>
+      <div class="download-step__content">
+        <h4 class="download-step__title">Download the App</h4>
+        <p class="download-step__description">
+          Click the download button below to get the app bundle for your device.
+        </p>
+        <div class="download-step__action">
+          <%= link_to "Download App", download_app_path(token: @download_token), 
+                class: "download-button download-button--primary" %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Install PWA -->
+    <div class="download-step">
+      <div class="download-step__number">2</div>
+      <div class="download-step__content">
+        <h4 class="download-step__title">Install on Your Device</h4>
+        <p class="download-step__description">
+          Follow the instructions below for your device type:
+        </p>
+        
+        <!-- Mobile Instructions -->
+        <div class="device-instructions">
+          <div class="device-instructions__mobile">
+            <h5 class="device-instructions__title">📱 Mobile (iOS/Android)</h5>
+            <ol class="device-instructions__list">
+              <li>Open the downloaded file in your mobile browser</li>
+              <li>Look for the "Add to Home Screen" option in your browser menu</li>
+              <li>Tap "Add" to install the app on your home screen</li>
+              <li>Launch Todo-it from your home screen</li>
+            </ol>
+          </div>
+          
+          <!-- Desktop Instructions -->
+          <div class="device-instructions__desktop">
+            <h5 class="device-instructions__title">💻 Desktop (Chrome/Edge/Safari)</h5>
+            <ol class="device-instructions__list">
+              <li>Open the downloaded file in your browser</li>
+              <li>Look for the install icon in your browser's address bar</li>
+              <li>Click "Install" when prompted</li>
+              <li>Launch Todo-it from your applications or desktop</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: Enjoy -->
+    <div class="download-step">
+      <div class="download-step__number">3</div>
+      <div class="download-step__content">
+        <h4 class="download-step__title">Enjoy Offline Access</h4>
+        <p class="download-step__description">
+          Your app is now installed and works completely offline. All your data stays on your device.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Benefits Section -->
+<div class="download-benefits">
+  <h3 class="download-benefits__title">What You Get</h3>
+  <div class="download-benefits__grid">
+    <div class="benefit-card">
+      <div class="benefit-card__icon">⚡</div>
+      <h4 class="benefit-card__title">Lightning Fast</h4>
+      <p class="benefit-card__description">Works instantly, no internet required</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-card__icon">🔒</div>
+      <h4 class="benefit-card__title">Private & Secure</h4>
+      <p class="benefit-card__description">Your data stays on your device</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-card__icon">📱</div>
+      <h4 class="benefit-card__title">Native Feel</h4>
+      <p class="benefit-card__description">Works like a native app</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-card__icon">🔄</div>
+      <h4 class="benefit-card__title">Always Updated</h4>
+      <p class="benefit-card__description">Automatic updates when available</p>
+    </div>
+  </div>
+</div>
+
+<!-- Troubleshooting -->
+<div class="download-troubleshooting">
+  <details class="troubleshooting-details">
+    <summary class="troubleshooting-summary">Need Help? Troubleshooting Guide</summary>
+    <div class="troubleshooting-content">
+      <h4>Common Issues:</h4>
+      <ul>
+        <li><strong>Download not starting:</strong> Check your browser's popup blocker settings</li>
+        <li><strong>Install option not showing:</strong> Make sure you're using a modern browser (Chrome, Edge, Safari)</li>
+        <li><strong>App not working offline:</strong> Try refreshing the page and reinstalling</li>
+      </ul>
+      <p>Still having trouble? <a href="mailto:support@todo-it.com">Contact our support team</a></p>
+    </div>
+  </details>
+</div>

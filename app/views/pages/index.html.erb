@@ -2,14 +2,22 @@
   <div class="flex flex--justify-between flex--align-center mb-6">
     <div>
       <h1 class="text-3xl font-bold">My Pages</h1>
-      <% if current_user.free? %>
+      <% if current_user.on_trial? %>
         <p class="text-sm text-gray-600 mt-1">
-          <span class="<%= current_user.remaining_pages == 0 ? 'text-red-600 font-medium' : '' %>">
-            <%= current_user.remaining_pages %> of <%= User::MAX_FREE_PAGES %> pages remaining
+          <span class="text-blue-600 font-medium">
+            Free Trial: <%= pluralize(current_user.trial_days_remaining, 'day') %> remaining
           </span>
-          <% if current_user.remaining_pages == 0 %>
-            • <span class="text-red-600">Page limit reached!</span>
-          <% end %>
+          • <span class="text-gray-500">Unlimited pages during trial</span>
+        </p>
+      <% elsif current_user.device_downloaded? %>
+        <p class="text-sm text-gray-600 mt-1">
+          <span class="text-green-600 font-medium">✓ App Downloaded</span>
+          • <span class="text-gray-500">Unlimited pages</span>
+        </p>
+      <% elsif current_user.trial_expired? %>
+        <p class="text-sm text-gray-600 mt-1">
+          <span class="text-red-600 font-medium">Trial Expired</span>
+          • <span class="text-gray-500">Download app to continue</span>
         </p>
       <% end %>
     </div>
@@ -18,12 +26,13 @@
       <%= link_to "New Page", new_page_path, class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline--blue" %>
     <% else %>
       <div class="text-center">
-        <div class="text-gray-400 text-sm mb-2">Page limit reached</div>
-        <%= button_to "Upgrade",
-              create_checkout_session_path,
-              method: :post,
-              data: { turbo: false },
-              class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline--blue cursor-pointer bg-transparent border-0" %>
+        <% if current_user.trial_expired? && !current_user.device_downloaded? %>
+          <div class="text-gray-400 text-sm mb-2">Trial expired</div>
+          <%= link_to "Download App", download_path, class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline--blue" %>
+        <% else %>
+          <div class="text-gray-400 text-sm mb-2">Page limit reached</div>
+          <%= link_to "Download App", download_path, class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline--blue" %>
+        <% end %>
       </div>
     <% end %>
   </div>

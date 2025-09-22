@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   root "marketing#landing"
   get "/pricing", to: "marketing#pricing"
   get "/how-to", to: "marketing#how_to"
+  get "/why", to: "marketing#why"
 
   # App routes (authenticated)
   get "/app", to: "pages#index", as: "app_root"
@@ -33,6 +34,19 @@ Rails.application.routes.draw do
     patch "/settings", to: "settings#update"
     get "/settings/delete", to: "settings#delete", as: "delete_account"
     delete "/settings", to: "settings#destroy"
+
+    # Trial Management
+    get "/trial/status", to: "trial#status", as: "trial_status"
+    post "/trial/start", to: "trial#start", as: "start_trial"
+    post "/trial/extend", to: "trial#extend", as: "extend_trial"
+    get "/trial/export", to: "trial#export_data", as: "export_trial_data"
+    get "/trial/download", to: "trial#download", as: "trial_download"
+
+    # App Downloads
+    get "/download", to: "downloads#show", as: "download"
+    get "/download/app", to: "downloads#download", as: "download_app"
+    post "/download/token", to: "downloads#generate_token", as: "generate_download_token"
+    post "/download/mark", to: "downloads#mark_downloaded", as: "mark_downloaded"
 
     # Stripe Integration
     post "/stripe/create-checkout-session", to: "stripe#create_checkout_session", as: "create_checkout_session"

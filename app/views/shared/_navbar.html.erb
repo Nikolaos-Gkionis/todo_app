@@ -16,6 +16,7 @@
           <!-- Marketing Navigation -->
           <div class="navbar__nav-list">
             <%= link_to "Home", root_path, class: "navbar__nav-link #{current_page?(root_path) ? 'navbar__nav-link--active' : ''}" %>
+            <%= link_to "Why", why_path, class: "navbar__nav-link #{current_page?(why_path) ? 'navbar__nav-link--active' : ''}" %>
             <%= link_to "Pricing", pricing_path, class: "navbar__nav-link #{current_page?(pricing_path) ? 'navbar__nav-link--active' : ''}" %>
             <%= link_to "How to Use", how_to_path, class: "navbar__nav-link #{current_page?(how_to_path) ? 'navbar__nav-link--active' : ''}" %>
           </div>
@@ -73,6 +74,7 @@
           <!-- Marketing Mobile Navigation -->
           <div class="mobile-menu__nav-list">
             <%= link_to "Home", root_path, class: "mobile-menu__nav-link #{current_page?(root_path) ? 'mobile-menu__nav-link--active' : ''}" %>
+            <%= link_to "Why", why_path, class: "mobile-menu__nav-link #{current_page?(why_path) ? 'mobile-menu__nav-link--active' : ''}" %>
             <%= link_to "Pricing", pricing_path, class: "mobile-menu__nav-link #{current_page?(pricing_path) ? 'mobile-menu__nav-link--active' : ''}" %>
             <%= link_to "How to Use", how_to_path, class: "mobile-menu__nav-link #{current_page?(how_to_path) ? 'mobile-menu__nav-link--active' : ''}" %>
           </div>
