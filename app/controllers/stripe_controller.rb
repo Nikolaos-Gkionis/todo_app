@@ -12,8 +12,8 @@ class StripeController < ApplicationController
           price_data: {
             currency: "usd",
             product_data: {
-              name: "Todo-it Premium",
-              description: "Unlock all themes, unlimited pages, and premium features"
+              name: "Todo-it - Download to Device",
+              description: "Download to your device forever - unlimited pages, offline access, and data ownership"
             },
             unit_amount: 990 # $9.99 in cents
           },

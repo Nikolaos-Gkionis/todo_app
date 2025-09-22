@@ -72,9 +72,9 @@
         window.applyThemeGlobal = applyTheme;
       })();
     </script>
-  <!-- App Navigation Header (only for authenticated app pages) -->
+  <!-- FAB Navigation (only for authenticated app pages) -->
   <% if controller_name != 'marketing' && logged_in? %>
-    <%= render 'shared/navbar' %>
+    <%= render 'shared/fab_navigation' %>
   <% end %>
 
 
