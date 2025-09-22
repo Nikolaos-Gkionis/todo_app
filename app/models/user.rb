@@ -75,7 +75,7 @@ class User < ApplicationRecord
     # Trial management methods
     def start_trial!
       return false if trial_started? || device_downloaded?
-      
+
       now = Time.current
       update!(
         trial_started_at: now,
@@ -108,7 +108,7 @@ class User < ApplicationRecord
     end
 
     def trial_warning_days
-      [7, 3, 1] # Days before expiry to show warnings
+      [ 7, 3, 1 ] # Days before expiry to show warnings
     end
 
     def should_show_trial_warning?

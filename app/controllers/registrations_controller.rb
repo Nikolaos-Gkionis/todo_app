@@ -15,10 +15,10 @@ class RegistrationsController < ApplicationController
     if @user.save
       # Signup successful - automatically log them in
       session[:user_id] = @user.id
-      
+
       # Start trial for new user
       @user.start_trial!
-      
+
       redirect_to app_root_path, notice: "Account created successfully! Your 30-day free trial has started. Welcome!"
     else
       # Signup failed - show errors

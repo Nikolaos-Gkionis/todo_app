@@ -32,7 +32,7 @@ class DownloadsController < ApplicationController
     # Generate app bundle (this will be implemented when we create the PWA system)
     # For now, just redirect to the app with a success message
     @user.mark_as_downloaded!
-    
+
     flash[:success] = "App downloaded successfully! You can now use Todo-it offline on your device."
     redirect_to app_root_path
   end

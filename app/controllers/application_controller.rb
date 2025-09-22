@@ -31,18 +31,18 @@ class ApplicationController < ActionController::Base
 
   def check_trial_status
     return unless logged_in?
-    
+
     # Check if user needs to start trial
     if current_user.needs_trial_start?
       current_user.start_trial!
       flash[:success] = "Your 30-day free trial has started! Enjoy full access to all features."
     end
-    
+
     # Show trial status flash messages only on specific pages
     if should_show_trial_flash?
       if current_user.on_trial?
         days_remaining = current_user.trial_days_remaining
-        day_text = days_remaining == 1 ? 'day' : 'days'
+        day_text = days_remaining == 1 ? "day" : "days"
         flash[:trial] = "⏰ Free Trial Active - #{days_remaining} #{day_text} remaining. Download the app to continue after trial."
       elsif current_user.trial_expired? && !current_user.device_downloaded?
         flash[:trial] = "⚠️ Trial Expired - Download the app to continue using Todo-it."
@@ -54,13 +54,13 @@ class ApplicationController < ActionController::Base
 
   def should_show_trial_flash?
     # Show trial flash messages only on pages index and settings index
-    (controller_name == 'pages' && action_name == 'index') || 
-    (controller_name == 'settings' && action_name == 'index')
+    (controller_name == "pages" && action_name == "index") ||
+    (controller_name == "settings" && action_name == "index")
   end
 
   def trial_status_info
     return nil unless logged_in?
-    
+
     {
       on_trial: current_user.on_trial?,
       trial_expired: current_user.trial_expired?,
