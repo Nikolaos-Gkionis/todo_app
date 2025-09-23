@@ -2737,18 +2737,24 @@ textarea[class*="form-input"] {
     display: none !important;
   }
   
-  .bottom-sheet--mobile {
+  .bottom-sheet.bottom-sheet--mobile {
     display: block !important;
   }
 }
 
 @media (min-width: 769px) {
-  .bottom-sheet--mobile {
+  .bottom-sheet.bottom-sheet--mobile {
     display: none !important;
+    visibility: hidden !important;
+    z-index: -1 !important;
   }
   
-  .desktop-nav {
+  .desktop-nav:not(.hidden) {
     display: block !important;
+  }
+  
+  .desktop-nav.hidden {
+    display: none !important;
   }
 }
 

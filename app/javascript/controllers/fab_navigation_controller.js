@@ -5,12 +5,10 @@ export default class extends Controller {
   static values = { open: Boolean }
 
   connect() {
-    console.log("FAB Navigation Controller connected")
     this.openValue = false
   }
 
   toggle() {
-    console.log("FAB clicked!")
     if (this.openValue) {
       this.close()
     } else {
@@ -24,29 +22,18 @@ export default class extends Controller {
   }
 
   open() {
-    console.log("Opening navigation")
     this.openValue = true
     
     if (this.isDesktop()) {
       // Desktop: Show navigation bar
-      console.log("Opening desktop navigation")
       this.desktopNavTarget.classList.remove("hidden")
     } else {
       // Mobile/Tablet: Show bottom sheet
-      console.log("Opening mobile bottom sheet")
-      console.log("Bottom sheet element:", this.bottomSheetTarget)
-      console.log("Bottom sheet classes before:", this.bottomSheetTarget.className)
-      
       this.bottomSheetTarget.classList.remove("hidden")
       this.overlayTarget.classList.remove("hidden")
       
       // Reset transform to show the bottom sheet
       this.bottomSheetTarget.style.transform = "translateY(0)"
-      
-      console.log("Bottom sheet classes after:", this.bottomSheetTarget.className)
-      console.log("Bottom sheet style display:", window.getComputedStyle(this.bottomSheetTarget).display)
-      console.log("Bottom sheet style visibility:", window.getComputedStyle(this.bottomSheetTarget).visibility)
-      console.log("Bottom sheet style transform:", window.getComputedStyle(this.bottomSheetTarget).transform)
       
       // Prevent body scroll on mobile
       document.body.style.overflow = "hidden"
@@ -63,16 +50,13 @@ export default class extends Controller {
   }
 
   close() {
-    console.log("Closing navigation")
     this.openValue = false
     
     if (this.isDesktop()) {
       // Desktop: Hide navigation bar
-      console.log("Closing desktop navigation")
       this.desktopNavTarget.classList.add("hidden")
     } else {
       // Mobile/Tablet: Hide bottom sheet
-      console.log("Closing mobile bottom sheet")
       this.bottomSheetTarget.classList.add("hidden")
       this.overlayTarget.classList.add("hidden")
       
