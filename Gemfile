@@ -22,7 +22,7 @@ gem "jbuilder"
 gem "bcrypt", "~> 3.1.7"
 
 # For creating ZIP files for PWA downloads
-gem "rubyzip", "~> 2.3"
+gem "rubyzip", "~> 3.1"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
