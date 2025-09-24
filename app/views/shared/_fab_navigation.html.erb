@@ -88,10 +88,9 @@
         </div>
 
         <!-- Logout - Bottom Right -->
-        <a href="<%= logout_path %>" 
-           data-turbo-method="delete" 
+        <a href="#" 
+           onclick="console.log('Logout clicked!'); window.showLogoutModal(); return false;"
            class="bottom-sheet__nav-item bottom-sheet__nav-item--quadrant bottom-sheet__nav-item--logout"
-           onclick="return confirm('Are you sure you want to logout?')"
            style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #fca5a5; border-radius: 16px; text-decoration: none; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px);">
           <div class="bottom-sheet__nav-icon" style="width: 48px; height: 48px; background: linear-gradient(135deg, #ef4444, #dc2626); border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); border: 2px solid #fef3c7;">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px; color: white; stroke-width: 2.5;">
@@ -158,9 +157,8 @@
       </a>
 
       <!-- Logout -->
-      <a href="<%= logout_path %>" 
-         data-turbo-method="delete" 
-         onclick="return confirm('Are you sure you want to logout?')"
+      <a href="#" 
+         onclick="window.showLogoutModal(); return false;"
          style="display: flex; align-items: center; gap: 12px; padding: 12px 20px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #fca5a5; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px);">
         <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #ef4444, #dc2626); border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); border: 2px solid #fef3c7;">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; color: white; stroke-width: 2.5;">

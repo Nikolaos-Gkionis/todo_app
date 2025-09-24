@@ -32,11 +32,30 @@ class TrialController < ApplicationController
 
   # Export trial data for download
   def export_data
+    Rails.logger.info "Export data requested for user #{@user.id}"
+
     if @user.trial_active? || @user.device_downloaded?
-      # This will be implemented when we create the DataExportService
-      flash[:info] = "Data export feature coming soon!"
-      redirect_to app_root_path
+      begin
+        Rails.logger.info "User has active trial or downloaded app, proceeding with export"
+        json_data = DataExportService.export_user_data(@user)
+        Rails.logger.info "Data export successful, JSON size: #{json_data.length} bytes"
+
+        # Mark data as exported (but don't mark as downloaded yet)
+        @user.update!(trial_data_exported: true)
+
+        # Send the JSON file as a download
+        send_data json_data,
+                  filename: "todo-it-data-#{@user.id}-#{Time.current.strftime('%Y%m%d-%H%M%S')}.json",
+                  type: "application/json",
+                  disposition: "attachment"
+      rescue => e
+        Rails.logger.error "Data export failed for user #{@user.id}: #{e.message}"
+        Rails.logger.error e.backtrace.join("\n")
+        flash[:error] = "Data export failed. Please try again or contact support."
+        redirect_to app_root_path
+      end
     else
+      Rails.logger.info "User does not have active trial or downloaded app"
       flash[:error] = "No data available to export."
       redirect_to app_root_path
     end

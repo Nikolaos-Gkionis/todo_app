@@ -9,11 +9,6 @@
           </span>
           • <span class="text-gray-500">Unlimited pages during trial</span>
         </p>
-      <% elsif current_user.device_downloaded? %>
-        <p class="text-sm text-gray-600 mt-1">
-          <span class="text-green-600 font-medium">✓ App Downloaded</span>
-          • <span class="text-gray-500">Unlimited pages</span>
-        </p>
       <% elsif current_user.trial_expired? %>
         <p class="text-sm text-gray-600 mt-1">
           <span class="text-red-600 font-medium">Trial Expired</span>

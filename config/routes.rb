@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
   # App routes (authenticated)
   get "/app", to: "pages#index", as: "app_root"
+  get "/offline", to: "pages#offline"
   scope "/app" do
     resources :pages do
       resources :todos, except: [ :show ] do

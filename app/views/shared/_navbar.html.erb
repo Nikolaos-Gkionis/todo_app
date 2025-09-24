@@ -27,6 +27,23 @@
         <% elsif logged_in? %>
           <!-- Authenticated User Navigation -->
           <div class="navbar__actions space-x-4">
+            <!-- PWA Install Button -->
+            <div data-controller="pwa">
+              <button data-pwa-target="installButton"
+                      data-action="click->pwa#install"
+                      class="hidden btn btn--secondary btn--sm">
+                📱 Install App
+              </button>
+            </div>
+
+            <!-- Offline Indicator -->
+            <div data-controller="pwa">
+              <span data-pwa-target="offlineIndicator"
+                    class="hidden px-2 py-1 text-xs rounded-full bg-orange-100 text-orange-800">
+                Offline
+              </span>
+            </div>
+
             <span class="navbar__user-greeting"><%= random_motivational_message %>, <%= current_user.display_name %>!</span>
             <%= link_to settings_path, class: "navbar__nav-link text-sm" do %>
               <svg class="w-5 h-5 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -34,8 +51,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
               </svg>
             <% end %>
-            <%= link_to "Logout", logout_path, data: { "turbo-method": :delete },
-                  class: "text-red-600 hover:text-red-800 font-medium hand-underline hand-underline--red text-sm" %>
+            <a href="#" onclick="window.showLogoutModal(); return false;" 
+               class="text-red-600 hover:text-red-800 font-medium hand-underline hand-underline--red text-sm">Logout</a>
           </div>
         <% end %>
       </div>
@@ -99,8 +116,8 @@
               </svg>
               Settings
             <% end %>
-            <%= link_to "Logout", logout_path, data: { "turbo-method": :delete },
-                  class: "mobile-menu__nav-link text-red-600 hover:text-red-800 hand-underline hand-underline--red" %>
+            <a href="#" onclick="window.showLogoutModal(); return false;" 
+               class="mobile-menu__nav-link text-red-600 hover:text-red-800 hand-underline hand-underline--red">Logout</a>
           </div>
         <% end %>
       </div>

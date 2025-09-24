@@ -1,16 +1,19 @@
 <!-- Download Page Header -->
 <div class="download-header">
-  <div class="download-header__content">
-    <h1 class="download-header__title">Download Todo-it to Your Device</h1>
-    <p class="download-header__subtitle">
-      Get the full offline experience with all your data stored locally on your device.
-    </p>
+  <div class="container">
+    <div class="download-header__content">
+      <h1 class="download-header__title">Download Todo-it to Your Device</h1>
+      <p class="download-header__subtitle">
+        Get the full offline experience with all your data stored locally on your device.
+      </p>
+    </div>
   </div>
 </div>
 
 <!-- Download Status -->
 <div class="download-status">
-  <div class="download-status__card">
+  <div class="container">
+    <div class="download-status__card">
     <div class="download-status__icon">📱</div>
     <div class="download-status__info">
       <h2 class="download-status__title">Ready to Download</h2>
@@ -23,19 +26,38 @@
 
 <!-- Download Instructions -->
 <div class="download-instructions">
-  <h3 class="download-instructions__title">How to Install</h3>
+  <div class="container">
+    <h3 class="download-instructions__title">How to Install</h3>
   
   <div class="download-instructions__steps">
+    <!-- Step 0: Export Data (Optional) -->
+    <div class="download-step">
+      <div class="download-step__number">0</div>
+      <div class="download-step__content">
+        <h4 class="download-step__title">Export Your Data (Recommended)</h4>
+        <p class="download-step__description">
+          Before downloading, export your pages and todos. This creates a backup file you can use to restore your data on the downloaded app.
+        </p>
+        <div class="download-step__action">
+          <%= link_to "Export My Data", export_trial_data_path,
+                class: "download-button download-button--secondary" %>
+        </div>
+        <p class="download-step__note">
+          <small>💡 <strong>Tip:</strong> Keep this export file safe - you'll need it to restore your data on the downloaded app.</small>
+        </p>
+      </div>
+    </div>
+
     <!-- Step 1: Download -->
     <div class="download-step">
       <div class="download-step__number">1</div>
       <div class="download-step__content">
         <h4 class="download-step__title">Download the App</h4>
         <p class="download-step__description">
-          Click the download button below to get the app bundle for your device.
+          Click the download button below to get the app bundle for your device. If you have an export file, it will be automatically imported.
         </p>
         <div class="download-step__action">
-          <%= link_to "Download App", download_app_path(token: @download_token), 
+          <%= link_to "Download App", download_app_path(token: @download_token),
                 class: "download-button download-button--primary" %>
         </div>
       </div>
@@ -47,7 +69,7 @@
       <div class="download-step__content">
         <h4 class="download-step__title">Install on Your Device</h4>
         <p class="download-step__description">
-          Follow the instructions below for your device type:
+          Follow the instructions below for your device type. If you exported your data, it will be automatically restored during installation.
         </p>
         
         <!-- Mobile Instructions -->
@@ -76,9 +98,20 @@
       </div>
     </div>
 
-    <!-- Step 3: Enjoy -->
+    <!-- Step 3: Restore Data (if exported) -->
     <div class="download-step">
       <div class="download-step__number">3</div>
+      <div class="download-step__content">
+        <h4 class="download-step__title">Restore Your Data</h4>
+        <p class="download-step__description">
+          If you exported your data in Step 0, it will be automatically restored when you first open the downloaded app. Your pages and todos will be exactly as they were.
+        </p>
+      </div>
+    </div>
+
+    <!-- Step 4: Enjoy -->
+    <div class="download-step">
+      <div class="download-step__number">4</div>
       <div class="download-step__content">
         <h4 class="download-step__title">Enjoy Offline Access</h4>
         <p class="download-step__description">
@@ -91,7 +124,8 @@
 
 <!-- Benefits Section -->
 <div class="download-benefits">
-  <h3 class="download-benefits__title">What You Get</h3>
+  <div class="container">
+    <h3 class="download-benefits__title">What You Get</h3>
   <div class="download-benefits__grid">
     <div class="benefit-card">
       <div class="benefit-card__icon">⚡</div>
@@ -118,7 +152,8 @@
 
 <!-- Troubleshooting -->
 <div class="download-troubleshooting">
-  <details class="troubleshooting-details">
+  <div class="container">
+    <details class="troubleshooting-details">
     <summary class="troubleshooting-summary">Need Help? Troubleshooting Guide</summary>
     <div class="troubleshooting-content">
       <h4>Common Issues:</h4>
@@ -127,7 +162,8 @@
         <li><strong>Install option not showing:</strong> Make sure you're using a modern browser (Chrome, Edge, Safari)</li>
         <li><strong>App not working offline:</strong> Try refreshing the page and reinstalling</li>
       </ul>
-      <p>Still having trouble? <a href="mailto:support@todo-it.com">Contact our support team</a></p>
+      <p>Still having trouble? <a href="mailto:support@todo-it.app">Contact our support team</a></p>
     </div>
   </details>
+  </div>
 </div>

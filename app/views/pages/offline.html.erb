@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You're Offline - Todo-it</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .offline-container {
+      text-align: center;
+      max-width: 500px;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .offline-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      opacity: 0.9;
+    }
+
+    .offline-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .offline-message {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    .offline-features {
+      text-align: left;
+      margin-bottom: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    .offline-features h3 {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .feature-item {
+      padding: 8px 0;
+      display: flex;
+      align-items: center;
+      font-size: 0.95rem;
+    }
+
+    .feature-item::before {
+      content: "✓";
+      color: #4ade80;
+      font-weight: bold;
+      margin-right: 12px;
+      font-size: 1.1rem;
+    }
+
+    .retry-button {
+      background: white;
+      color: #667eea;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-bottom: 20px;
+    }
+
+    .retry-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .status-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: #ef4444;
+      border-radius: 50%;
+      margin-right: 8px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .download-link {
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      padding-bottom: 2px;
+      transition: all 0.2s ease;
+    }
+
+    .download-link:hover {
+      color: white;
+      border-bottom-color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="offline-container">
+    <div class="offline-icon">📱</div>
+    <h1 class="offline-title">You're Currently Offline</h1>
+    <p class="offline-message">
+      <span class="status-indicator"></span>
+      No internet connection detected. Don't worry - your Todo-it experience is designed to work offline!
+    </p>
+
+    <div class="offline-features">
+      <h3>Available Offline:</h3>
+      <ul class="feature-list">
+        <li class="feature-item">View all your existing pages and todos</li>
+        <li class="feature-item">Add, edit, and complete todos</li>
+        <li class="feature-item">Create new pages and organize your tasks</li>
+        <li class="feature-item">Changes sync automatically when you're back online</li>
+      </ul>
+    </div>
+
+    <button class="retry-button" onclick="window.location.reload()">
+      🔄 Try Again
+    </button>
+
+    <p>
+      <a href="/download" class="download-link">💡 Want permanent offline access? Download Todo-it to your device</a>
+    </p>
+  </div>
+
+  <script>
+    // Auto-retry connection every 30 seconds
+    setInterval(() => {
+      if (navigator.onLine) {
+        window.location.reload();
+      }
+    }, 30000);
+
+    // Listen for online event
+    window.addEventListener('online', () => {
+      // Small delay to ensure connection is stable
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

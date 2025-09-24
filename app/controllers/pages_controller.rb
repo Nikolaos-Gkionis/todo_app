@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
-  # Require authentication for all actions
-  before_action :require_login
+  # Require authentication for all actions except offline
+  before_action :require_login, except: [ :offline ]
   before_action :set_page, only: [ :show, :edit, :update, :destroy ]
 
   def index
@@ -59,6 +59,11 @@ class PagesController < ApplicationController
     # @page is set by before_action
     @page.destroy
     redirect_to pages_path, notice: "Page was successfully deleted."
+  end
+
+  # Offline page for service worker
+  def offline
+    render layout: false
   end
 
   private

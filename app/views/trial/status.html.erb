@@ -1,16 +1,19 @@
 <!-- Trial Status Header -->
 <div class="trial-status-header">
-  <div class="trial-status-header__content">
-    <h1 class="trial-status-header__title">Your Trial Status</h1>
-    <p class="trial-status-header__subtitle">
-      Manage your 30-day free trial and download options
-    </p>
+  <div class="container">
+    <div class="trial-status-header__content">
+      <h1 class="trial-status-header__title">Your Trial Status</h1>
+      <p class="trial-status-header__subtitle">
+        Manage your 30-day free trial and download options
+      </p>
+    </div>
   </div>
 </div>
 
 <!-- Trial Status Card -->
 <div class="trial-status-card">
-  <div class="trial-status-card__content">
+  <div class="container">
+    <div class="trial-status-card__content">
     <% if current_user.on_trial? %>
       <!-- Active Trial -->
       <div class="trial-status--active">
@@ -59,7 +62,8 @@
 
 <!-- Actions Section -->
 <div class="trial-actions">
-  <div class="trial-actions__content">
+  <div class="container">
+    <div class="trial-actions__content">
     <% if current_user.on_trial? %>
       <!-- Trial Actions -->
       <div class="trial-actions__grid">
@@ -129,7 +133,8 @@
 
 <!-- Trial Information -->
 <div class="trial-info">
-  <div class="trial-info__content">
+  <div class="container">
+    <div class="trial-info__content">
     <h3 class="trial-info__title">About Your Trial</h3>
     <div class="trial-info__grid">
       <div class="info-item">

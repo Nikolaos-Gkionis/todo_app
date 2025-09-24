@@ -42,18 +42,20 @@ class StripeController < ApplicationController
         session = Stripe::Checkout::Session.retrieve(session_id)
 
         if session.payment_status == "paid"
-          # Update user to premium
-          current_user.update(premium: true)
+          # Mark user as having downloaded app and generate download token
+          current_user.mark_as_downloaded!
+          download_token = current_user.generate_download_token!
 
-          redirect_to settings_path, notice: "Welcome to Todo-it Premium! 🎉"
+          redirect_to download_app_path(token: download_token),
+                      notice: "Payment successful! Your app is ready to download. 🎉"
         else
-          redirect_to settings_path, alert: "Payment was not completed successfully."
+          redirect_to pricing_path, alert: "Payment was not completed successfully."
         end
       rescue Stripe::StripeError => e
-        redirect_to settings_path, alert: "Error processing payment: #{e.message}"
+        redirect_to pricing_path, alert: "Error processing payment: #{e.message}"
       end
     else
-      redirect_to settings_path, alert: "Invalid payment session."
+      redirect_to pricing_path, alert: "Invalid payment session."
     end
   end
 
