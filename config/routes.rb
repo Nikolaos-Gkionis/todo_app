@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     patch "/settings", to: "settings#update"
     get "/settings/delete", to: "settings#delete", as: "delete_account"
     delete "/settings", to: "settings#destroy"
+    post "/settings/theme", to: "settings#update_theme"
 
     # Trial Management
     get "/trial/status", to: "trial#status", as: "trial_status"

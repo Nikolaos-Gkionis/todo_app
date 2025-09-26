@@ -51,6 +51,17 @@ class SettingsController < ApplicationController
     @user = current_user
   end
 
+  def update_theme
+    theme = params[:theme]
+    
+    if %w[classic lined graph vintage dark].include?(theme)
+      session[:theme] = theme
+      render json: { status: 'success', theme: theme }
+    else
+      render json: { status: 'error', message: 'Invalid theme' }, status: 400
+    end
+  end
+
   def destroy
     @user = current_user
 

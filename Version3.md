@@ -40,6 +40,11 @@ Transform the current web-based todo app into a hybrid model: 30-day free trial 
 - **User Migration System**: Created comprehensive migration system for existing users with status tracking and rollback capability
 - **Data Cleanup Jobs**: Implemented daily trial data cleanup with archival and token management
 - **Migration Tools**: Built rake tasks for migration management, validation, and monitoring
+- **Accessibility Audit**: Comprehensive accessibility improvements including heading hierarchy, form labels, button accessibility, ARIA attributes, and color contrast fixes
+- **DRY Refactoring**: Extracted common logic into 6 Rails concerns (TrialManageable, FlashMessageable, ResourceAuthorizable, ProgressCalculatable, DueDateManageable, PositionManageable) following Rails naming conventions
+- **Trial Status Hiding**: Hidden trial status sections from settings and pages index for users who have downloaded the app
+- **Theme Integration**: Moved theme selection into FAB navigation with dynamic FAB colors that correspond to the current user theme
+- **Modal Fixes**: Fixed theme modal display issues and close functionality for seamless user experience
 
 ---
 

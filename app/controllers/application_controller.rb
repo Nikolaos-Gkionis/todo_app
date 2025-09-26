@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include FlashMessageable
+
   # Allow all browsers - remove the strict modern browser filter
   # allow_browser versions: :modern
 
@@ -24,7 +26,7 @@ class ApplicationController < ActionController::Base
   def require_login
     # Redirect to login if not authenticated
     unless logged_in?
-      flash[:alert] = "You must be logged in to access this page"
+      flash_login_required
       redirect_to login_path
     end
   end
@@ -35,17 +37,15 @@ class ApplicationController < ActionController::Base
     # Check if user needs to start trial
     if current_user.needs_trial_start?
       current_user.start_trial!
-      flash[:success] = "Your 30-day free trial has started! Enjoy full access to all features."
+      flash_trial_started
     end
 
     # Show trial status flash messages only on specific pages
     if should_show_trial_flash?
       if current_user.on_trial?
-        days_remaining = current_user.trial_days_remaining
-        day_text = days_remaining == 1 ? "day" : "days"
-        flash[:trial] = "⏰ Free Trial Active - #{days_remaining} #{day_text} remaining. Download the app to continue after trial."
+        flash_trial_active(current_user.trial_days_remaining)
       elsif current_user.trial_expired? && !current_user.device_downloaded?
-        flash[:trial] = "⚠️ Trial Expired - Download the app to continue using Todo-it."
+        flash_trial_expired
       end
     end
   end

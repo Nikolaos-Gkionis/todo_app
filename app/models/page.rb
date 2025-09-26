@@ -1,4 +1,6 @@
 class Page < ApplicationRecord
+  include ProgressCalculatable
+
   belongs_to :user
   has_many :todos, dependent: :destroy
 
@@ -24,11 +26,11 @@ class Page < ApplicationRecord
 
   # Todo statistics methods
   def total_todos_count
-    todos.count
+    total_count
   end
 
   def completed_todos_count
-    todos.where(completed: true).count
+    completed_count
   end
 
   def incomplete_todos_count
@@ -36,11 +38,20 @@ class Page < ApplicationRecord
   end
 
   def completion_percentage
-    return 0 if total_todos_count == 0
-    (completed_todos_count.to_f / total_todos_count * 100).round
+    super # Call the concern method
   end
 
   def progress_text
-    "#{completed_todos_count}/#{total_todos_count}"
+    super # Call the concern method
+  end
+
+  private
+
+  def total_count
+    todos.count
+  end
+
+  def completed_count
+    todos.where(completed: true).count
   end
 end

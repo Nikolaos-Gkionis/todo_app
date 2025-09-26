@@ -11,11 +11,11 @@
               data-action="click->fab-navigation#toggle"
               aria-label="Open navigation menu" 
               aria-expanded="false"
-              style="width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+              style="width: 56px; height: 56px; border-radius: 50%; background: <%= theme_fab_colors[:background] %>; border: 2px solid <%= theme_fab_colors[:border] %>; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
         <svg class="fab-icon fab-icon--closed" 
              data-fab-navigation-target="closedIcon"
              fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px;" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<%= theme_fab_icon %>" />
         </svg>
         <svg class="fab-icon fab-icon--open hidden" 
              data-fab-navigation-target="openIcon"
@@ -78,14 +78,20 @@
           </div>
         </a>
 
-        <!-- User Info - Bottom Left -->
-        <div class="bottom-sheet__user-quadrant" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 16px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px);">
-          <div class="bottom-sheet__avatar" style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #1d4ed8); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4); border: 3px solid #fef3c7;">
-            <div class="logo-checkbox" style="width: 24px; height: 24px; filter: brightness(0) invert(1);"></div>
+        <!-- Theme Selection - Bottom Left -->
+        <div class="bottom-sheet__theme-quadrant" 
+             data-action="click->fab-navigation#openThemeModal"
+             style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 16px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px); cursor: pointer; transition: all 0.2s ease;"
+             onmouseover="this.style.transform='scale(1.02)'" 
+             onmouseout="this.style.transform='scale(1)'">
+          <div class="bottom-sheet__theme-icon" style="width: 48px; height: 48px; background: <%= theme_fab_colors[:background] %>; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); border: 2px solid #fef3c7;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px; color: white; stroke-width: 2.5;" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />
+            </svg>
           </div>
-          <div class="bottom-sheet__user-details" style="text-align: center;">
-            <h3 class="bottom-sheet__user-name" style="font-size: 16px; font-weight: 600; color: #92400e; margin: 0 0 4px 0; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);"><%= current_user.display_name %></h3>
-            <p class="bottom-sheet__user-message" style="font-size: 12px; color: #a16207; margin: 0; font-style: italic; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive; line-height: 1.2;"><%= random_motivational_message %></p>
+          <div class="bottom-sheet__theme-details" style="text-align: center;">
+            <h3 class="bottom-sheet__theme-label" style="font-size: 16px; font-weight: 600; color: #92400e; margin: 0 0 4px 0; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">Themes</h3>
+            <p class="bottom-sheet__theme-desc" style="font-size: 12px; color: #a16207; margin: 0; font-style: italic; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive; line-height: 1.2;">Change style</p>
           </div>
         </div>
 
@@ -159,6 +165,18 @@
         <span style="font-size: 14px; font-weight: 600; color: #92400e; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">Settings</span>
       </a>
 
+      <!-- Theme Selection -->
+      <button data-action="click->fab-navigation#openThemeModal"
+              style="display: flex; align-items: center; gap: 12px; padding: 12px 20px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px); cursor: pointer;"
+              aria-label="Change theme">
+        <div style="width: 32px; height: 32px; background: <%= theme_fab_colors[:background] %>; border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); border: 2px solid #fef3c7;">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; color: white; stroke-width: 2.5;" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />
+          </svg>
+        </div>
+        <span style="font-size: 14px; font-weight: 600; color: #92400e; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">Themes</span>
+      </button>
+
       <!-- Logout -->
       <a href="#" 
          onclick="window.showLogoutModal(); return false;"
@@ -171,6 +189,88 @@
         <span style="font-size: 14px; font-weight: 600; color: #92400e; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">Logout</span>
       </a>
     </nav>
+  </div>
+
+  <!-- Theme Selection Modal -->
+  <div data-fab-navigation-target="themeModal" 
+       class="theme-modal hidden" 
+       data-action="click->fab-navigation#closeThemeModalOnBackdrop"
+       style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 2000; display: none !important; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+    <div class="theme-modal__content" 
+         style="background: white; border-radius: 20px; padding: 24px; max-width: 400px; width: 90%; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); border: 2px solid #e5e7eb; position: relative;">
+      
+      <!-- Close Button -->
+      <button data-action="click->fab-navigation#closeThemeModal"
+              style="position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; color: #92400e; stroke-width: 2.5;" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <!-- Modal Header -->
+      <div style="text-align: center; margin-bottom: 24px;">
+        <h2 style="font-size: 20px; font-weight: 600; color: #92400e; margin: 0 0 8px 0; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">Choose Theme</h2>
+        <p style="font-size: 14px; color: #a16207; margin: 0; font-style: italic; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive;">Select your preferred style</p>
+      </div>
+
+      <!-- Theme Options -->
+      <div class="theme-options" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <!-- Classic Theme -->
+        <button class="theme-option <%= 'active' if current_theme == 'classic' %>" 
+                data-theme="classic" 
+                data-action="click->fab-navigation#selectTheme"
+                style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);"
+                onmouseover="this.style.transform='scale(1.02)'" 
+                onmouseout="this.style.transform='scale(1)'">
+          <div class="theme-preview theme-btn--classic" style="width: 40px; height: 40px; border-radius: 8px; border: 2px solid #fef3c7;"></div>
+          <span style="font-size: 12px; font-weight: 600; color: #92400e; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive;">Classic</span>
+        </button>
+
+        <!-- Lined Theme -->
+        <button class="theme-option <%= 'active' if current_theme == 'lined' %>" 
+                data-theme="lined" 
+                data-action="click->fab-navigation#selectTheme"
+                style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);"
+                onmouseover="this.style.transform='scale(1.02)'" 
+                onmouseout="this.style.transform='scale(1)'">
+          <div class="theme-preview theme-btn--lined" style="width: 40px; height: 40px; border-radius: 8px; border: 2px solid #fef3c7;"></div>
+          <span style="font-size: 12px; font-weight: 600; color: #92400e; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive;">Lined</span>
+        </button>
+
+        <!-- Graph Theme -->
+        <button class="theme-option <%= 'active' if current_theme == 'graph' %>" 
+                data-theme="graph" 
+                data-action="click->fab-navigation#selectTheme"
+                style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);"
+                onmouseover="this.style.transform='scale(1.02)'" 
+                onmouseout="this.style.transform='scale(1)'">
+          <div class="theme-preview theme-btn--graph" style="width: 40px; height: 40px; border-radius: 8px; border: 2px solid #fef3c7;"></div>
+          <span style="font-size: 12px; font-weight: 600; color: #92400e; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive;">Graph</span>
+        </button>
+
+        <!-- Vintage Theme -->
+        <button class="theme-option <%= 'active' if current_theme == 'vintage' %>" 
+                data-theme="vintage" 
+                data-action="click->fab-navigation#selectTheme"
+                style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);"
+                onmouseover="this.style.transform='scale(1.02)'" 
+                onmouseout="this.style.transform='scale(1)'">
+          <div class="theme-preview theme-btn--vintage" style="width: 40px; height: 40px; border-radius: 8px; border: 2px solid #fef3c7;"></div>
+          <span style="font-size: 12px; font-weight: 600; color: #92400e; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive;">Vintage</span>
+        </button>
+
+        <!-- Dark Theme -->
+        <button class="theme-option <%= 'active' if current_theme == 'dark' %>" 
+                data-theme="dark" 
+                data-action="click->fab-navigation#selectTheme"
+                style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);"
+                onmouseover="this.style.transform='scale(1.02)'" 
+                onmouseout="this.style.transform='scale(1)'">
+          <div class="theme-preview theme-btn--dark" style="width: 40px; height: 40px; border-radius: 8px; border: 2px solid #fef3c7;"></div>
+          <span style="font-size: 12px; font-weight: 600; color: #92400e; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive;">Dark</span>
+        </button>
+      </div>
+    </div>
   </div>
 
 <% end %>
