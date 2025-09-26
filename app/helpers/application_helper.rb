@@ -35,42 +35,42 @@ module ApplicationHelper
 
   # Get current theme from session or default to classic
   def current_theme
-    session[:theme] || 'classic'
+    session[:theme] || "classic"
   end
 
   # Get theme colors for FAB
   def theme_fab_colors(theme = current_theme)
     case theme
-    when 'classic'
-      { background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)', border: '#fef3c7' }
-    when 'lined'
-      { background: 'linear-gradient(135deg, #ef4444, #dc2626)', border: '#fef3c7' }
-    when 'graph'
-      { background: 'linear-gradient(135deg, #16a34a, #15803d)', border: '#fef3c7' }
-    when 'vintage'
-      { background: 'linear-gradient(135deg, #b8860b, #a16207)', border: '#fef3c7' }
-    when 'dark'
-      { background: 'linear-gradient(135deg, #1f2937, #111827)', border: '#374151' }
+    when "classic"
+      { background: "linear-gradient(135deg, #3b82f6, #1d4ed8)", border: "#fef3c7" }
+    when "lined"
+      { background: "linear-gradient(135deg, #ef4444, #dc2626)", border: "#fef3c7" }
+    when "graph"
+      { background: "linear-gradient(135deg, #16a34a, #15803d)", border: "#fef3c7" }
+    when "vintage"
+      { background: "linear-gradient(135deg, #b8860b, #a16207)", border: "#fef3c7" }
+    when "dark"
+      { background: "linear-gradient(135deg, #1f2937, #111827)", border: "#374151" }
     else
-      { background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)', border: '#fef3c7' }
+      { background: "linear-gradient(135deg, #3b82f6, #1d4ed8)", border: "#fef3c7" }
     end
   end
 
   # Get theme icon for FAB
   def theme_fab_icon(theme = current_theme)
     case theme
-    when 'classic'
-      'M4 6h16M4 12h16M4 18h16' # hamburger
-    when 'lined'
-      'M4 6h16M4 12h16M4 18h16' # hamburger
-    when 'graph'
-      'M4 6h16M4 12h16M4 18h16' # hamburger
-    when 'vintage'
-      'M4 6h16M4 12h16M4 18h16' # hamburger
-    when 'dark'
-      'M4 6h16M4 12h16M4 18h16' # hamburger
+    when "classic"
+      "M4 6h16M4 12h16M4 18h16" # hamburger
+    when "lined"
+      "M4 6h16M4 12h16M4 18h16" # hamburger
+    when "graph"
+      "M4 6h16M4 12h16M4 18h16" # hamburger
+    when "vintage"
+      "M4 6h16M4 12h16M4 18h16" # hamburger
+    when "dark"
+      "M4 6h16M4 12h16M4 18h16" # hamburger
     else
-      'M4 6h16M4 12h16M4 18h16' # hamburger
+      "M4 6h16M4 12h16M4 18h16" # hamburger
     end
   end
 end
