@@ -10,7 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_22_090530) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_26_125123) do
+  create_table "migration_statuses", force: :cascade do |t|
+    t.string "migration_type", null: false
+    t.string "status", default: "pending", null: false
+    t.datetime "started_at"
+    t.datetime "completed_at"
+    t.text "metadata"
+    t.text "results"
+    t.text "error_message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["completed_at"], name: "index_migration_statuses_on_completed_at"
+    t.index ["migration_type"], name: "index_migration_statuses_on_migration_type", unique: true
+    t.index ["started_at"], name: "index_migration_statuses_on_started_at"
+    t.index ["status"], name: "index_migration_statuses_on_status"
+  end
+
   create_table "pages", force: :cascade do |t|
     t.string "name"
     t.text "description"

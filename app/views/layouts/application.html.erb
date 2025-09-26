@@ -83,8 +83,8 @@
     <div class="theme-selector">
       <!-- Mobile Icon Toggle -->
       <div class="theme-toggle--mobile md:hidden">
-        <button class="theme-toggle__btn" id="theme-toggle-mobile" title="Themes">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <button class="theme-toggle__btn" id="theme-toggle-mobile" aria-label="Open theme selector" title="Themes">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"/>
           </svg>
         </button>
@@ -95,12 +95,12 @@
         <div class="text-xs text-gray-600 mb-2 text-center font-medium">
           Themes
         </div>
-        <div class="flex flex-wrap justify-center">
-          <button class="theme-btn--classic active" data-theme="classic" title="Classic Dotted"></button>
-          <button class="theme-btn--lined" data-theme="lined" title="Lined Paper"></button>
-          <button class="theme-btn--graph" data-theme="graph" title="Graph Paper"></button>
-          <button class="theme-btn--vintage" data-theme="vintage" title="Vintage Paper"></button>
-          <button class="theme-btn--dark" data-theme="dark" title="Dark Mode"></button>
+        <div class="flex flex-wrap justify-center" role="group" aria-label="Theme selection">
+          <button class="theme-btn--classic active" data-theme="classic" aria-label="Classic Dotted theme" title="Classic Dotted"></button>
+          <button class="theme-btn--lined" data-theme="lined" aria-label="Lined Paper theme" title="Lined Paper"></button>
+          <button class="theme-btn--graph" data-theme="graph" aria-label="Graph Paper theme" title="Graph Paper"></button>
+          <button class="theme-btn--vintage" data-theme="vintage" aria-label="Vintage Paper theme" title="Vintage Paper"></button>
+          <button class="theme-btn--dark" data-theme="dark" aria-label="Dark Mode theme" title="Dark Mode"></button>
         </div>
       </div>
       
@@ -109,20 +109,20 @@
         <div class="text-xs text-gray-600 mb-2 text-center font-medium">
           Themes
         </div>
-        <div class="grid grid--cols-2 grid--gap-4">
-          <button class="theme-btn--classic active flex items-center justify-center p-2" data-theme="classic" title="Classic Dotted">
+        <div class="grid grid--cols-2 grid--gap-4" role="group" aria-label="Theme selection">
+          <button class="theme-btn--classic active flex items-center justify-center p-2" data-theme="classic" aria-label="Classic Dotted theme" title="Classic Dotted">
             <span class="text-xs">Classic</span>
           </button>
-          <button class="theme-btn--lined flex items-center justify-center p-2" data-theme="lined" title="Lined Paper">
+          <button class="theme-btn--lined flex items-center justify-center p-2" data-theme="lined" aria-label="Lined Paper theme" title="Lined Paper">
             <span class="text-xs">Lined</span>
           </button>
-          <button class="theme-btn--graph flex items-center justify-center p-2" data-theme="graph" title="Graph Paper">
+          <button class="theme-btn--graph flex items-center justify-center p-2" data-theme="graph" aria-label="Graph Paper theme" title="Graph Paper">
             <span class="text-xs">Graph</span>
           </button>
-          <button class="theme-btn--vintage flex items-center justify-center p-2" data-theme="vintage" title="Vintage Paper">
+          <button class="theme-btn--vintage flex items-center justify-center p-2" data-theme="vintage" aria-label="Vintage Paper theme" title="Vintage Paper">
             <span class="text-xs">Vintage</span>
           </button>
-          <button class="theme-btn--dark flex items-center justify-center p-2" data-theme="dark" title="Dark Mode">
+          <button class="theme-btn--dark flex items-center justify-center p-2" data-theme="dark" aria-label="Dark Mode theme" title="Dark Mode">
             <span class="text-xs">Dark</span>
           </button>
         </div>

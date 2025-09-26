@@ -84,6 +84,9 @@ class DownloadsController < ApplicationController
         end
       end
 
+      # Track download success analytics
+      AnalyticsService.track_download_success(@user, params[:token])
+
       # Send the ZIP file
       Rails.logger.info "Sending ZIP file, size: #{zip_data.string.length} bytes"
       send_data zip_data.string,

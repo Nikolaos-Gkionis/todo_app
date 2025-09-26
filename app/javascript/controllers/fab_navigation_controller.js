@@ -24,6 +24,11 @@ export default class extends Controller {
   open() {
     this.openValue = true
     
+    // Update ARIA attributes
+    if (this.hasButtonTarget) {
+      this.buttonTarget.setAttribute("aria-expanded", "true")
+    }
+    
     if (this.isDesktop()) {
       // Desktop: Show navigation bar
       this.desktopNavTarget.classList.remove("hidden")
@@ -51,6 +56,11 @@ export default class extends Controller {
 
   close() {
     this.openValue = false
+    
+    // Update ARIA attributes
+    if (this.hasButtonTarget) {
+      this.buttonTarget.setAttribute("aria-expanded", "false")
+    }
     
     if (this.isDesktop()) {
       // Desktop: Hide navigation bar
@@ -80,6 +90,10 @@ export default class extends Controller {
   closeOnEscape(event) {
     if (event.key === "Escape" && this.openValue) {
       this.close()
+      // Return focus to the FAB button
+      if (this.hasButtonTarget) {
+        this.buttonTarget.focus()
+      }
     }
   }
 

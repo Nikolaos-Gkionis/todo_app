@@ -9,16 +9,17 @@
       <button class="fab-button" 
               data-fab-navigation-target="button"
               data-action="click->fab-navigation#toggle"
-              aria-label="Open menu" 
+              aria-label="Open navigation menu" 
+              aria-expanded="false"
               style="width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer;">
         <svg class="fab-icon fab-icon--closed" 
              data-fab-navigation-target="closedIcon"
-             fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
+             fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px;" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
         <svg class="fab-icon fab-icon--open hidden" 
              data-fab-navigation-target="openIcon"
-             fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
+             fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px;" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
@@ -37,8 +38,9 @@
     <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 24px 0;">
       <div class="bottom-sheet__handle" style="width: 60px; height: 6px; background: linear-gradient(90deg, #d1d5db, #9ca3af, #d1d5db); border-radius: 3px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"></div>
       <button data-action="click->fab-navigation#close"
+              aria-label="Close navigation menu"
               style="width: 32px; height: 32px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; color: #92400e; stroke-width: 2.5;">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; color: #92400e; stroke-width: 2.5;" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
@@ -49,9 +51,9 @@
       <nav class="bottom-sheet__nav bottom-sheet__nav--quadrant" style="padding: 20px 24px 32px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 16px; height: 100%;">
         
         <!-- Pages - Top Left -->
-        <a href="<%= pages_path %>" class="bottom-sheet__nav-item bottom-sheet__nav-item--quadrant" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 16px; text-decoration: none; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px);">
+        <a href="<%= pages_path %>" class="bottom-sheet__nav-item bottom-sheet__nav-item--quadrant" aria-label="View all pages" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 16px; text-decoration: none; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px);">
           <div class="bottom-sheet__nav-icon" style="width: 48px; height: 48px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); border: 2px solid #fef3c7;">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px; color: white; stroke-width: 2.5;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px; color: white; stroke-width: 2.5;" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
               <path stroke-linecap="round" stroke-linejoin="round" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z" />
             </svg>
@@ -63,9 +65,9 @@
         </a>
 
         <!-- Settings - Top Right -->
-        <a href="<%= settings_path %>" class="bottom-sheet__nav-item bottom-sheet__nav-item--quadrant" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 16px; text-decoration: none; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px);">
+        <a href="<%= settings_path %>" class="bottom-sheet__nav-item bottom-sheet__nav-item--quadrant" aria-label="Account settings" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 16px; text-decoration: none; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px);">
           <div class="bottom-sheet__nav-icon" style="width: 48px; height: 48px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); border: 2px solid #fef3c7;">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px; color: white; stroke-width: 2.5;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px; color: white; stroke-width: 2.5;" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
               <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
             </svg>
@@ -93,7 +95,7 @@
            class="bottom-sheet__nav-item bottom-sheet__nav-item--quadrant bottom-sheet__nav-item--logout"
            style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #fca5a5; border-radius: 16px; text-decoration: none; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px);">
           <div class="bottom-sheet__nav-icon" style="width: 48px; height: 48px; background: linear-gradient(135deg, #ef4444, #dc2626); border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); border: 2px solid #fef3c7;">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px; color: white; stroke-width: 2.5;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px; color: white; stroke-width: 2.5;" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
             </svg>
           </div>
@@ -114,8 +116,9 @@
     <!-- Close Button -->
     <div style="position: absolute; top: 8px; right: 16px;">
       <button data-action="click->fab-navigation#close"
+              aria-label="Close navigation menu"
               style="width: 32px; height: 32px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; color: #92400e; stroke-width: 2.5;">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; color: #92400e; stroke-width: 2.5;" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>

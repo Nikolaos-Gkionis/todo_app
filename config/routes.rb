@@ -54,5 +54,6 @@ Rails.application.routes.draw do
     get "/stripe/success", to: "stripe#success", as: "success_stripe"
     get "/stripe/cancel", to: "stripe#cancel", as: "cancel_stripe"
     get "/stripe/customer-portal", to: "stripe#customer_portal", as: "customer_portal"
+    post "/stripe/webhook", to: "stripe#webhook"
   end
 end
