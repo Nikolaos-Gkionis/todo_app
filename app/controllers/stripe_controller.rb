@@ -78,26 +78,26 @@ class StripeController < ApplicationController
   def webhook
     # Handle Stripe webhooks for payment confirmation
     payload = request.body.read
-    sig_header = request.env['HTTP_STRIPE_SIGNATURE']
-    endpoint_secret = ENV['STRIPE_WEBHOOK_SECRET']
+    sig_header = request.env["HTTP_STRIPE_SIGNATURE"]
+    endpoint_secret = ENV["STRIPE_WEBHOOK_SECRET"]
 
     begin
       event = Stripe::Webhook.construct_event(payload, sig_header, endpoint_secret)
     rescue JSON::ParserError => e
       Rails.logger.error "Invalid payload: #{e.message}"
-      render json: { error: 'Invalid payload' }, status: 400
+      render json: { error: "Invalid payload" }, status: 400
       return
     rescue Stripe::SignatureVerificationError => e
       Rails.logger.error "Invalid signature: #{e.message}"
-      render json: { error: 'Invalid signature' }, status: 400
+      render json: { error: "Invalid signature" }, status: 400
       return
     end
 
     # Handle the event
     case event.type
-    when 'checkout.session.completed'
+    when "checkout.session.completed"
       handle_checkout_session_completed(event.data.object)
-    when 'payment_intent.succeeded'
+    when "payment_intent.succeeded"
       handle_payment_intent_succeeded(event.data.object)
     else
       Rails.logger.info "Unhandled event type: #{event.type}"
@@ -109,7 +109,7 @@ class StripeController < ApplicationController
   private
 
   def handle_checkout_session_completed(session)
-    user_id = session.metadata['user_id']
+    user_id = session.metadata["user_id"]
     return unless user_id
 
     user = User.find_by(id: user_id)

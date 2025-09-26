@@ -4,11 +4,11 @@ class TrialCleanupJob < ApplicationJob
   # Run daily to clean up expired trial data
   def perform
     Rails.logger.info "Starting trial cleanup job"
-    
+
     cleanup_expired_trials
     cleanup_old_download_tokens
     cleanup_exported_data
-    
+
     Rails.logger.info "Trial cleanup job completed"
   end
 
@@ -20,19 +20,19 @@ class TrialCleanupJob < ApplicationJob
       trial_expires_at: ..Time.current,
       device_downloaded: false
     )
-    
+
     Rails.logger.info "Found #{expired_users.count} users with expired trials"
-    
+
     expired_users.find_each do |user|
       # Archive their data before cleanup
       archive_user_data(user)
-      
+
       # Mark trial as expired (don't delete user account)
       user.update!(
         trial_data_exported: true, # Mark as exported so they can't re-export
         download_token: nil # Clear any download tokens
       )
-      
+
       Rails.logger.info "Cleaned up expired trial for user #{user.id}"
     end
   end
@@ -44,11 +44,11 @@ class TrialCleanupJob < ApplicationJob
                           .where(updated_at: ..7.days.ago)
                           .select(:download_token)
     )
-    
+
     Rails.logger.info "Found #{old_tokens.count} users with old download tokens"
-    
+
     old_tokens.update_all(download_token: nil)
-    
+
     Rails.logger.info "Cleaned up #{old_tokens.count} old download tokens"
   end
 
@@ -57,9 +57,9 @@ class TrialCleanupJob < ApplicationJob
     # For users who have successfully downloaded, we can clean up some data
     # but keep their account and basic info
     downloaded_users = User.where(device_downloaded: true)
-    
+
     Rails.logger.info "Found #{downloaded_users.count} users with downloaded apps"
-    
+
     # In a real app, you might want to:
     # - Archive their trial data
     # - Clean up old logs
@@ -71,7 +71,7 @@ class TrialCleanupJob < ApplicationJob
   # Archive user data before cleanup
   def archive_user_data(user)
     return unless user.pages.any?
-    
+
     begin
       # Create a backup of their data
       backup_data = {
@@ -100,11 +100,11 @@ class TrialCleanupJob < ApplicationJob
         end,
         archived_at: Time.current
       }
-      
+
       # In a real app, you'd save this to a backup storage
       # For now, we'll just log it
       Rails.logger.info "Archived data for user #{user.id}: #{backup_data.to_json}"
-      
+
     rescue => e
       Rails.logger.error "Failed to archive data for user #{user.id}: #{e.message}"
     end

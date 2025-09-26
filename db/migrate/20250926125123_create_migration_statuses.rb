@@ -11,7 +11,7 @@ class CreateMigrationStatuses < ActiveRecord::Migration[8.0]
 
       t.timestamps
     end
-    
+
     add_index :migration_statuses, :migration_type, unique: true
     add_index :migration_statuses, :status
     add_index :migration_statuses, :started_at
