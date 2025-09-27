@@ -76,10 +76,12 @@
            data-sortable-target="item" 
            data-todo-id="<%= todo.id %>">
         <%= form_with model: [@page, todo], method: :patch, local: true, class: "flex flex--align-center mr-3" do |form| %>
-        <button type="button" class="hand-checkbox <%= todo.completed? ? 'hand-checkbox--checked' : 'hand-checkbox--unchecked' %>" 
-                onclick="this.closest('form').submit()"
-                aria-label="<%= todo.completed? ? 'Mark as incomplete' : 'Mark as complete' %>">
-        </button>
+        <div class="hand-checkbox <%= todo.completed? ? 'hand-checkbox--checked' : 'hand-checkbox--unchecked' %>" 
+             onclick="this.closest('form').submit()"
+             role="button"
+             tabindex="0"
+             aria-label="<%= todo.completed? ? 'Mark as incomplete' : 'Mark as complete' %>">
+        </div>
         <%= form.hidden_field :completed, value: !todo.completed %>
         <% end %>
 
@@ -91,7 +93,7 @@
         </div>
 
         <div class="flex--grow">
-          <h3 class="font-medium <%= 'hand-strike-through text-gray-500' if todo.completed %>"
+          <div class="todo-title font-medium <%= 'hand-strike-through text-gray-500' if todo.completed %>"
               <% if flash[:new_todo_id] == todo.id %>
                 data-controller="typewriter"
                 data-typewriter-text-value="<%= todo.title %>"
@@ -103,7 +105,7 @@
             <% else %>
               <%= todo.title %>
             <% end %>
-          </h4>
+          </div>
           <% if todo.notes.present? %>
           <p class="text-sm text-gray-700 mt-1 <%= 'line-through' if todo.completed %>"><%= todo.notes %></p>
           <% end %>

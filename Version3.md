@@ -45,6 +45,11 @@ Transform the current web-based todo app into a hybrid model: 30-day free trial 
 - **Trial Status Hiding**: Hidden trial status sections from settings and pages index for users who have downloaded the app
 - **Theme Integration**: Moved theme selection into FAB navigation with dynamic FAB colors that correspond to the current user theme
 - **Modal Fixes**: Fixed theme modal display issues and close functionality for seamless user experience
+- **Todo Alignment Fix**: Fixed alignment issues between completed and uncompleted todos by removing browser default h3 margins and using div elements instead
+- **Checkbox Styling**: Updated handwritten checkbox design to use darker grey/almost black stroke color for better visibility
+- **CSS Cleanup**: Removed unused styles.css file and consolidated all styling into application.css
+- **HTML Structure**: Changed todo titles from h3 to div elements to avoid browser default margin conflicts
+- **Visual Consistency**: Ensured perfect alignment between all todo items regardless of completion status
 
 ---
 
