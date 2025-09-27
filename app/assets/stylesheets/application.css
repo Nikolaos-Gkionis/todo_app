@@ -628,6 +628,7 @@ body {
 /* Add todo form components */
 .add-todo--collapsed {
   background-color: transparent;
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif;
   border: none;
   padding: 16px 0;
   text-align: center;
