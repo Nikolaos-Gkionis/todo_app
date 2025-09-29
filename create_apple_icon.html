@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Create Apple Touch Icon</title>
+</head>
+
+<body>
+    <h1>Creating Apple Touch Icon (180x180)</h1>
+    <div id="status"></div>
+
+    <script>
+        const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+          <!-- Green checkmark - hand-drawn style for Apple Touch Icon -->
+          <path d="M34 90l34 34 78-78" 
+                fill="none" 
+                stroke="#32CD32" 
+                stroke-width="17" 
+                stroke-linecap="round" 
+                stroke-linejoin="round"/>
+        </svg>`;
+
+        function createAppleIcon() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 180;
+            canvas.height = 180;
+            const ctx = canvas.getContext('2d');
+
+            const img = new Image();
+            img.onload = function () {
+                ctx.drawImage(img, 0, 0, 180, 180);
+                canvas.toBlob(function (blob) {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'apple-touch-icon.png';
+                    a.click();
+                    URL.revokeObjectURL(url);
+                    document.getElementById('status').innerHTML = 'Apple Touch Icon created! Check your downloads folder.';
+                });
+            };
+            img.src = 'data:image/svg+xml;base64,' + btoa(svgContent);
+        }
+
+        // Start creating the Apple icon
+        createAppleIcon();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Create PWA Icons</title>
+</head>
+
+<body>
+    <h1>Creating PWA Icons from SVG</h1>
+    <div id="status"></div>
+
+    <script>
+        const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+        let completed = 0;
+
+        const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+          <!-- Green checkmark - hand-drawn style -->
+          <path d="M96 256l96 96 224-224" 
+                fill="none" 
+                stroke="#32CD32" 
+                stroke-width="48" 
+                stroke-linecap="round" 
+                stroke-linejoin="round"/>
+        </svg>`;
+
+        function createIcon(size) {
+            return new Promise((resolve) => {
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
+
+                const img = new Image();
+                img.onload = function () {
+                    ctx.drawImage(img, 0, 0, size, size);
+                    canvas.toBlob(function (blob) {
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `icon-${size}.png`;
+                        a.click();
+                        URL.revokeObjectURL(url);
+                        resolve();
+                    });
+                };
+                img.src = 'data:image/svg+xml;base64,' + btoa(svgContent);
+            });
+        }
+
+        async function createAllIcons() {
+            const status = document.getElementById('status');
+            status.innerHTML = 'Creating icons...';
+
+            for (const size of sizes) {
+                await createIcon(size);
+                completed++;
+                status.innerHTML = `Created ${completed}/${sizes.length} icons (${size}px)`;
+            }
+
+            // Create maskable icon
+            await createIcon(512, 'icon-512-maskable.png');
+
+            status.innerHTML = 'All icons created! Check your downloads folder.';
+        }
+
+        // Start creating icons
+        createAllIcons();
+    </script>
+</body>
+
+</html>

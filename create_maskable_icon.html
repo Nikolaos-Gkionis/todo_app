@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Create Maskable Icon</title>
+</head>
+
+<body>
+    <h1>Creating Maskable Icon (512x512)</h1>
+    <div id="status"></div>
+
+    <script>
+        const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+          <!-- Safe area for maskable icon - centered with padding -->
+          <rect x="64" y="64" width="384" height="384" rx="64" ry="64" 
+                fill="#32CD32" 
+                stroke="#32CD32" 
+                stroke-width="8"/>
+          
+          <!-- White checkmark for contrast -->
+          <path d="M160 256l80 80 160-160" 
+                fill="none" 
+                stroke="#ffffff" 
+                stroke-width="32" 
+                stroke-linecap="round" 
+                stroke-linejoin="round"/>
+        </svg>`;
+
+        function createMaskableIcon() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+
+            const img = new Image();
+            img.onload = function () {
+                ctx.drawImage(img, 0, 0, 512, 512);
+                canvas.toBlob(function (blob) {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'icon-512-maskable.png';
+                    a.click();
+                    URL.revokeObjectURL(url);
+                    document.getElementById('status').innerHTML = 'Maskable Icon created! Check your downloads folder.';
+                });
+            };
+            img.src = 'data:image/svg+xml;base64,' + btoa(svgContent);
+        }
+
+        // Start creating the maskable icon
+        createMaskableIcon();
+    </script>
+</body>
+
+</html>

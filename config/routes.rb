@@ -12,6 +12,10 @@ Rails.application.routes.draw do
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, or 500 otherwise.
   get "up" => "rails/health#show", as: :rails_health_check
 
+  # PWA routes (must be before other routes to avoid conflicts)
+  get "/manifest.json", to: "pwa#manifest", as: "pwa_manifest"
+  get "/service-worker.js", to: "pwa#service_worker", as: "pwa_service_worker", defaults: { format: :js }
+
   # Marketing pages (public)
   root "marketing#landing"
   get "/pricing", to: "marketing#pricing"
