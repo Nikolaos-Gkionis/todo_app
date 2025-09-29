@@ -149,7 +149,7 @@ class DownloadsController < ApplicationController
   def create_manifest_json
     <<~JSON
       {
-        "name": "Todo-it - Task Management Done Right",
+        "name": "Todo-it - Nicely Done ",
         "short_name": "Todo-it",
         "description": "Beautiful, offline-first todo app. Your data, your device.",
         "start_url": "./index.html",
