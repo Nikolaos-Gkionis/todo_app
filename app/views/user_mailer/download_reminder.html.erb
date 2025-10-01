@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Reminder - Todo-it</title>
+    <style>
+      /* Reset styles for email clients */
+      body, table, td, p, a, li, blockquote {
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+      }
+      table, td {
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+      }
+      img {
+        -ms-interpolation-mode: bicubic;
+        border: 0;
+        height: auto;
+        line-height: 100%;
+        outline: none;
+        text-decoration: none;
+      }
+      
+      /* Main styles */
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100% !important;
+        min-width: 100%;
+        background-color: #f8f9fa;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: #333333;
+      }
+      
+      .email-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      
+      .header {
+        background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+        padding: 40px 30px;
+        text-align: center;
+        color: white;
+      }
+      
+      .header h1 {
+        margin: 0;
+        font-size: 32px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+      }
+      
+      .header p {
+        margin: 10px 0 0 0;
+        font-size: 18px;
+        opacity: 0.9;
+      }
+      
+      .content {
+        padding: 40px 30px;
+      }
+      
+      .greeting {
+        font-size: 18px;
+        margin-bottom: 20px;
+        color: #333333;
+      }
+      
+      .message {
+        font-size: 16px;
+        line-height: 1.7;
+        margin-bottom: 30px;
+        color: #555555;
+      }
+      
+      .reminder-info {
+        background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+        border: 2px solid #4caf50;
+        border-radius: 8px;
+        padding: 30px;
+        text-align: center;
+        margin: 30px 0;
+      }
+      
+      .reminder-info h2 {
+        margin: 0 0 15px 0;
+        color: #2e7d32;
+        font-size: 24px;
+      }
+      
+      .reminder-info p {
+        margin: 0;
+        color: #2e7d32;
+        font-size: 16px;
+      }
+      
+      .download-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 8px;
+        padding: 30px;
+        text-align: center;
+        margin: 30px 0;
+        color: white;
+      }
+      
+      .download-section h2 {
+        margin: 0 0 15px 0;
+        font-size: 24px;
+      }
+      
+      .download-button {
+        display: inline-block;
+        background-color: white;
+        color: #667eea;
+        text-decoration: none;
+        padding: 16px 32px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 18px;
+        margin: 20px 0;
+        transition: transform 0.2s ease;
+      }
+      
+      .download-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(255, 255, 255, 0.3);
+      }
+      
+      .benefits {
+        margin: 40px 0;
+      }
+      
+      .benefit {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+      
+      .benefit-icon {
+        font-size: 24px;
+        margin-right: 15px;
+        width: 40px;
+        text-align: center;
+      }
+      
+      .benefit-text {
+        flex: 1;
+      }
+      
+      .benefit-title {
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: #333333;
+      }
+      
+      .benefit-description {
+        color: #666666;
+        font-size: 14px;
+      }
+      
+      .footer {
+        background-color: #f8f9fa;
+        padding: 30px;
+        text-align: center;
+        border-top: 1px solid #e9ecef;
+      }
+      
+      .footer p {
+        margin: 0 0 10px 0;
+        color: #666666;
+        font-size: 14px;
+      }
+      
+      .footer a {
+        color: #4caf50;
+        text-decoration: none;
+      }
+      
+      .footer a:hover {
+        text-decoration: underline;
+      }
+      
+      .support-info {
+        background-color: #e3f2fd;
+        border-left: 4px solid #2196f3;
+        padding: 20px;
+        margin: 30px 0;
+        border-radius: 0 8px 8px 0;
+      }
+      
+      .support-info h3 {
+        margin: 0 0 10px 0;
+        color: #1976d2;
+        font-size: 16px;
+      }
+      
+      .support-info p {
+        margin: 0;
+        color: #555555;
+        font-size: 14px;
+      }
+      
+      /* Mobile responsiveness */
+      @media only screen and (max-width: 600px) {
+        .email-container {
+          margin: 0;
+          border-radius: 0;
+        }
+        
+        .header, .content, .footer {
+          padding: 20px;
+        }
+        
+        .header h1 {
+          font-size: 28px;
+        }
+        
+        .download-button {
+          display: block;
+          margin: 20px 0;
+        }
+        
+        .benefit {
+          flex-direction: column;
+          text-align: center;
+        }
+        
+        .benefit-icon {
+          margin-right: 0;
+          margin-bottom: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-container">
+      <!-- Header -->
+      <div class="header">
+        <h1>📱 Download Reminder</h1>
+        <p>Don't forget to download Todo-it to your device!</p>
+      </div>
+      
+      <!-- Main Content -->
+      <div class="content">
+        <div class="greeting">
+          Hi <%= @user.display_name %>,
+        </div>
+        
+        <div class="message">
+          <p>We hope you've been enjoying your <%= @app_name %> experience! Just a friendly reminder that you can download the app to your device for the best experience.</p>
+        </div>
+        
+        <!-- Reminder Info -->
+        <div class="reminder-info">
+          <h2>📱 Ready to Download?</h2>
+          <p>Get the full app experience with offline access and all features included!</p>
+        </div>
+        
+        <!-- Download Section -->
+        <div class="download-section">
+          <h2>Download Your App</h2>
+          <p style="margin: 0 0 20px 0; opacity: 0.9;">One-time purchase • No subscriptions • Your data, your device</p>
+          <a href="<%= @download_url %>" class="download-button">Download <%= @app_name %></a>
+          <p style="margin: 15px 0 0 0; font-size: 14px; opacity: 0.8;">
+            Secure download link personalized for your account
+          </p>
+        </div>
+        
+        <!-- Benefits Section -->
+        <div class="benefits">
+          <h2 style="margin: 0 0 20px 0; color: #333333;">What you get with the download:</h2>
+          
+          <div class="benefit">
+            <div class="benefit-icon">📱</div>
+            <div class="benefit-text">
+              <div class="benefit-title">Offline Access</div>
+              <div class="benefit-description">Use your app anywhere, even without internet connection</div>
+            </div>
+          </div>
+          
+          <div class="benefit">
+            <div class="benefit-icon">💾</div>
+            <div class="benefit-text">
+              <div class="benefit-title">Data Ownership</div>
+              <div class="benefit-description">Your data stays on your device - complete privacy and control</div>
+            </div>
+          </div>
+          
+          <div class="benefit">
+            <div class="benefit-icon">⚡</div>
+            <div class="benefit-text">
+              <div class="benefit-title">Lightning Fast</div>
+              <div class="benefit-description">Native app performance with instant loading and smooth animations</div>
+            </div>
+          </div>
+          
+          <div class="benefit">
+            <div class="benefit-icon">🎨</div>
+            <div class="benefit-text">
+              <div class="benefit-title">All Themes Included</div>
+              <div class="benefit-description">Access to all beautiful themes and customization options</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Support Section -->
+        <div class="support-info">
+          <h3>Need Help?</h3>
+          <p>If you have any questions about the download process or need assistance, please contact us at <a href="mailto:support@todo-it.app">support@todo-it.app</a>. We're here to help!</p>
+        </div>
+        
+        <div class="message">
+          <p>Thank you for using <%= @app_name %>. We hope you continue to enjoy your productivity journey!</p>
+          
+          <p>Best regards,<br>
+          The <%= @app_name %> Team</p>
+        </div>
+      </div>
+      
+      <!-- Footer -->
+      <div class="footer">
+        <p><strong><%= @app_name %></strong> - Your personal productivity companion</p>
+        <p>This download reminder was sent to <%= @user.email_address %>.</p>
+        <p>
+          <a href="mailto:support@todo-it.app">Contact Support</a> | 
+          <a href="https://todo-it.app">Visit Website</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

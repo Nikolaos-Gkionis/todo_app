@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trial Expiring Very Soon - Todo-it</title>
+    <style>
+      /* Reset styles for email clients */
+      body, table, td, p, a, li, blockquote {
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+      }
+      table, td {
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+      }
+      img {
+        -ms-interpolation-mode: bicubic;
+        border: 0;
+        height: auto;
+        line-height: 100%;
+        outline: none;
+        text-decoration: none;
+      }
+      
+      /* Main styles */
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100% !important;
+        min-width: 100%;
+        background-color: #f8f9fa;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: #333333;
+      }
+      
+      .email-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      
+      .header {
+        background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+        padding: 40px 30px;
+        text-align: center;
+        color: white;
+      }
+      
+      .header h1 {
+        margin: 0;
+        font-size: 32px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+      }
+      
+      .header p {
+        margin: 10px 0 0 0;
+        font-size: 18px;
+        opacity: 0.9;
+      }
+      
+      .content {
+        padding: 40px 30px;
+      }
+      
+      .greeting {
+        font-size: 18px;
+        margin-bottom: 20px;
+        color: #333333;
+      }
+      
+      .message {
+        font-size: 16px;
+        line-height: 1.7;
+        margin-bottom: 30px;
+        color: #555555;
+      }
+      
+      .warning-info {
+        background: linear-gradient(135deg, #ffecb3 0%, #ffcc02 100%);
+        border: 2px solid #ff9800;
+        border-radius: 8px;
+        padding: 30px;
+        text-align: center;
+        margin: 30px 0;
+      }
+      
+      .warning-info h2 {
+        margin: 0 0 15px 0;
+        color: #e65100;
+        font-size: 24px;
+      }
+      
+      .trial-countdown {
+        font-size: 48px;
+        font-weight: 700;
+        color: #f57c00;
+        margin: 20px 0;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      
+      .trial-details {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 30px 0;
+        border-left: 4px solid #ff9800;
+      }
+      
+      .trial-details h3 {
+        margin: 0 0 15px 0;
+        color: #333333;
+        font-size: 16px;
+      }
+      
+      .trial-details p {
+        margin: 0 0 10px 0;
+        color: #666666;
+        font-size: 14px;
+      }
+      
+      .download-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 8px;
+        padding: 30px;
+        text-align: center;
+        margin: 30px 0;
+        color: white;
+      }
+      
+      .download-section h2 {
+        margin: 0 0 15px 0;
+        font-size: 24px;
+      }
+      
+      .download-button {
+        display: inline-block;
+        background-color: white;
+        color: #667eea;
+        text-decoration: none;
+        padding: 16px 32px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 18px;
+        margin: 20px 0;
+        transition: transform 0.2s ease;
+      }
+      
+      .download-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(255, 255, 255, 0.3);
+      }
+      
+      .benefits {
+        margin: 40px 0;
+      }
+      
+      .benefit {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+      
+      .benefit-icon {
+        font-size: 24px;
+        margin-right: 15px;
+        width: 40px;
+        text-align: center;
+      }
+      
+      .benefit-text {
+        flex: 1;
+      }
+      
+      .benefit-title {
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: #333333;
+      }
+      
+      .benefit-description {
+        color: #666666;
+        font-size: 14px;
+      }
+      
+      .footer {
+        background-color: #f8f9fa;
+        padding: 30px;
+        text-align: center;
+        border-top: 1px solid #e9ecef;
+      }
+      
+      .footer p {
+        margin: 0 0 10px 0;
+        color: #666666;
+        font-size: 14px;
+      }
+      
+      .footer a {
+        color: #ff9800;
+        text-decoration: none;
+      }
+      
+      .footer a:hover {
+        text-decoration: underline;
+      }
+      
+      .support-info {
+        background-color: #e3f2fd;
+        border-left: 4px solid #2196f3;
+        padding: 20px;
+        margin: 30px 0;
+        border-radius: 0 8px 8px 0;
+      }
+      
+      .support-info h3 {
+        margin: 0 0 10px 0;
+        color: #1976d2;
+        font-size: 16px;
+      }
+      
+      .support-info p {
+        margin: 0;
+        color: #555555;
+        font-size: 14px;
+      }
+      
+      /* Mobile responsiveness */
+      @media only screen and (max-width: 600px) {
+        .email-container {
+          margin: 0;
+          border-radius: 0;
+        }
+        
+        .header, .content, .footer {
+          padding: 20px;
+        }
+        
+        .header h1 {
+          font-size: 28px;
+        }
+        
+        .trial-countdown {
+          font-size: 36px;
+        }
+        
+        .download-button {
+          display: block;
+          margin: 20px 0;
+        }
+        
+        .benefit {
+          flex-direction: column;
+          text-align: center;
+        }
+        
+        .benefit-icon {
+          margin-right: 0;
+          margin-bottom: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-container">
+      <!-- Header -->
+      <div class="header">
+        <h1>⚠️ Trial Expiring Very Soon</h1>
+        <p>Only a few days left to download your app</p>
+      </div>
+      
+      <!-- Main Content -->
+      <div class="content">
+        <div class="greeting">
+          Hi <%= @user.display_name %>,
+        </div>
+        
+        <div class="message">
+          <p>Your <%= @app_name %> trial is running out very soon! We don't want you to lose access to your organized life.</p>
+        </div>
+        
+        <!-- Warning Info -->
+        <div class="warning-info">
+          <h2>⚠️ Urgent: Trial Expiring</h2>
+          <div class="trial-countdown"><%= @days_remaining %></div>
+          <p style="margin: 0; font-size: 18px; color: #e65100;">days remaining</p>
+          <p style="margin: 15px 0 0 0; color: #e65100;">Expires on <%= @trial_expires_at %></p>
+        </div>
+        
+        <!-- Trial Details -->
+        <div class="trial-details">
+          <h3>What happens when your trial ends:</h3>
+          <p>• You'll lose access to your todos and pages</p>
+          <p>• Your data will be safely stored for 30 days</p>
+          <p>• You can download the app anytime before expiration</p>
+          <p>• No automatic charges - you're in complete control</p>
+        </div>
+        
+        <!-- Download Section -->
+        <div class="download-section">
+          <h2>📱 Download Your App Now</h2>
+          <p style="margin: 0 0 20px 0; opacity: 0.9;">Get the full app experience with offline access and all features included!</p>
+          <a href="<%= @download_url %>" class="download-button">Download <%= @app_name %></a>
+          <p style="margin: 15px 0 0 0; font-size: 14px; opacity: 0.8;">
+            One-time purchase • No subscriptions • Your data, your device
+          </p>
+        </div>
+        
+        <!-- Benefits Section -->
+        <div class="benefits">
+          <h2 style="margin: 0 0 20px 0; color: #333333;">Why download the app?</h2>
+          
+          <div class="benefit">
+            <div class="benefit-icon">📱</div>
+            <div class="benefit-text">
+              <div class="benefit-title">Offline Access</div>
+              <div class="benefit-description">Use your app anywhere, even without internet connection</div>
+            </div>
+          </div>
+          
+          <div class="benefit">
+            <div class="benefit-icon">💾</div>
+            <div class="benefit-text">
+              <div class="benefit-title">Data Ownership</div>
+              <div class="benefit-description">Your data stays on your device - complete privacy and control</div>
+            </div>
+          </div>
+          
+          <div class="benefit">
+            <div class="benefit-icon">⚡</div>
+            <div class="benefit-text">
+              <div class="benefit-title">Lightning Fast</div>
+              <div class="benefit-description">Native app performance with instant loading and smooth animations</div>
+            </div>
+          </div>
+          
+          <div class="benefit">
+            <div class="benefit-icon">🎨</div>
+            <div class="benefit-text">
+              <div class="benefit-title">All Themes Included</div>
+              <div class="benefit-description">Access to all beautiful themes and customization options</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Support Section -->
+        <div class="support-info">
+          <h3>Questions About Your Trial?</h3>
+          <p>If you have any questions about your trial or need help with the download process, please contact us at <a href="mailto:support@todo-it.app">support@todo-it.app</a>. We're here to help!</p>
+        </div>
+        
+        <div class="message">
+          <p>Don't wait - download your app today to keep your productivity journey going!</p>
+          
+          <p>Best regards,<br>
+          The <%= @app_name %> Team</p>
+        </div>
+      </div>
+      
+      <!-- Footer -->
+      <div class="footer">
+        <p><strong><%= @app_name %></strong> - Your personal productivity companion</p>
+        <p>This urgent trial reminder was sent to <%= @user.email_address %>.</p>
+        <p>
+          <a href="mailto:support@todo-it.app">Contact Support</a> | 
+          <a href="https://todo-it.app">Visit Website</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

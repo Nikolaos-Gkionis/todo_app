@@ -50,6 +50,10 @@ class StripeController < ApplicationController
           AnalyticsService.track_trial_conversion(current_user)
           AnalyticsService.track_payment_completion(current_user, session_id)
 
+          # Send purchase confirmation email
+          download_url = download_app_url(token: download_token)
+          UserMailer.purchase_confirmation(current_user, download_url).deliver_now
+
           redirect_to download_app_path(token: download_token),
                       notice: "Payment successful! Your app is ready to download. 🎉"
         else
@@ -117,11 +121,15 @@ class StripeController < ApplicationController
 
     # Mark user as having downloaded app and generate download token
     user.mark_as_downloaded!
-    user.generate_download_token!
+    download_token = user.generate_download_token!
 
     # Track conversion analytics
     AnalyticsService.track_trial_conversion(user)
     AnalyticsService.track_payment_completion(user, session.id)
+
+    # Send purchase confirmation email
+    download_url = download_app_url(token: download_token)
+    UserMailer.purchase_confirmation(user, download_url).deliver_now
 
     Rails.logger.info "Payment completed for user #{user_id} via webhook"
   end

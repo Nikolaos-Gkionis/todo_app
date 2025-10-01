@@ -12,6 +12,8 @@ class SettingsController < ApplicationController
     if params[:user][:password].present?
       if @user.authenticate(params[:user][:current_password])
         if @user.update(user_params.except(:current_password))
+          # Send password change notification email
+          UserMailer.password_changed(@user).deliver_now
           redirect_to settings_path, notice: "Account updated successfully!"
         else
           render :index, status: :unprocessable_entity
@@ -27,7 +29,11 @@ class SettingsController < ApplicationController
       if sensitive_changes
         # Require current password for sensitive changes
         if @user.authenticate(params[:user][:current_password])
+          # Store old email for notification
+          old_email = @user.email_address
           if @user.update(user_params.except(:password, :password_confirmation, :current_password))
+            # Send email change notification to old email address
+            UserMailer.email_changed(@user, old_email).deliver_now
             redirect_to settings_path, notice: "Account updated successfully!"
           else
             render :index, status: :unprocessable_entity

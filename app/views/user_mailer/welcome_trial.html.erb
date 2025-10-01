@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Todo-it Trial!</title>
+    <style>
+      /* Reset styles for email clients */
+      body, table, td, p, a, li, blockquote {
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+      }
+      table, td {
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+      }
+      img {
+        -ms-interpolation-mode: bicubic;
+        border: 0;
+        height: auto;
+        line-height: 100%;
+        outline: none;
+        text-decoration: none;
+      }
+      
+      /* Main styles */
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100% !important;
+        min-width: 100%;
+        background-color: #f8f9fa;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: #333333;
+      }
+      
+      .email-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      
+      .header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 40px 30px;
+        text-align: center;
+        color: white;
+      }
+      
+      .header h1 {
+        margin: 0;
+        font-size: 32px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+      }
+      
+      .header p {
+        margin: 10px 0 0 0;
+        font-size: 18px;
+        opacity: 0.9;
+      }
+      
+      .content {
+        padding: 40px 30px;
+      }
+      
+      .greeting {
+        font-size: 18px;
+        margin-bottom: 20px;
+        color: #333333;
+      }
+      
+      .message {
+        font-size: 16px;
+        line-height: 1.7;
+        margin-bottom: 30px;
+        color: #555555;
+      }
+      
+      .trial-info {
+        background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+        border-radius: 8px;
+        padding: 30px;
+        text-align: center;
+        margin: 30px 0;
+        border: 2px solid #e1bee7;
+      }
+      
+      .trial-info h2 {
+        margin: 0 0 15px 0;
+        color: #333333;
+        font-size: 24px;
+      }
+      
+      .trial-countdown {
+        font-size: 48px;
+        font-weight: 700;
+        color: #667eea;
+        margin: 20px 0;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      
+      .trial-details {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 30px 0;
+        border-left: 4px solid #667eea;
+      }
+      
+      .trial-details h3 {
+        margin: 0 0 15px 0;
+        color: #333333;
+        font-size: 16px;
+      }
+      
+      .trial-details p {
+        margin: 0 0 10px 0;
+        color: #666666;
+        font-size: 14px;
+      }
+      
+      .features {
+        margin: 40px 0;
+      }
+      
+      .feature {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+      
+      .feature-icon {
+        font-size: 24px;
+        margin-right: 15px;
+        width: 40px;
+        text-align: center;
+      }
+      
+      .feature-text {
+        flex: 1;
+      }
+      
+      .feature-title {
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: #333333;
+      }
+      
+      .feature-description {
+        color: #666666;
+        font-size: 14px;
+      }
+      
+      .cta-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 8px;
+        padding: 30px;
+        text-align: center;
+        margin: 30px 0;
+        color: white;
+      }
+      
+      .cta-button {
+        display: inline-block;
+        background-color: white;
+        color: #667eea;
+        text-decoration: none;
+        padding: 16px 32px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 18px;
+        margin: 20px 0;
+        transition: transform 0.2s ease;
+      }
+      
+      .cta-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(255, 255, 255, 0.3);
+      }
+      
+      .footer {
+        background-color: #f8f9fa;
+        padding: 30px;
+        text-align: center;
+        border-top: 1px solid #e9ecef;
+      }
+      
+      .footer p {
+        margin: 0 0 10px 0;
+        color: #666666;
+        font-size: 14px;
+      }
+      
+      .footer a {
+        color: #667eea;
+        text-decoration: none;
+      }
+      
+      .footer a:hover {
+        text-decoration: underline;
+      }
+      
+      .support-info {
+        background-color: #e3f2fd;
+        border-left: 4px solid #2196f3;
+        padding: 20px;
+        margin: 30px 0;
+        border-radius: 0 8px 8px 0;
+      }
+      
+      .support-info h3 {
+        margin: 0 0 10px 0;
+        color: #1976d2;
+        font-size: 16px;
+      }
+      
+      .support-info p {
+        margin: 0;
+        color: #555555;
+        font-size: 14px;
+      }
+      
+      /* Mobile responsiveness */
+      @media only screen and (max-width: 600px) {
+        .email-container {
+          margin: 0;
+          border-radius: 0;
+        }
+        
+        .header, .content, .footer {
+          padding: 20px;
+        }
+        
+        .header h1 {
+          font-size: 28px;
+        }
+        
+        .trial-countdown {
+          font-size: 36px;
+        }
+        
+        .cta-button {
+          display: block;
+          margin: 20px 0;
+        }
+        
+        .feature {
+          flex-direction: column;
+          text-align: center;
+        }
+        
+        .feature-icon {
+          margin-right: 0;
+          margin-bottom: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-container">
+      <!-- Header -->
+      <div class="header">
+        <h1>👋 Welcome to <%= @app_name %>!</h1>
+        <p>Your 30-day free trial has started</p>
+      </div>
+      
+      <!-- Main Content -->
+      <div class="content">
+        <div class="greeting">
+          Hi <%= @user.display_name %>,
+        </div>
+        
+        <div class="message">
+          <p>Welcome to <%= @app_name %>! We're thrilled to have you join our community of productive users.</p>
+          
+          <p>Your 30-day free trial is now active, giving you full access to all features so you can experience the power of organized productivity.</p>
+        </div>
+        
+        <!-- Trial Info -->
+        <div class="trial-info">
+          <h2>Your Free Trial</h2>
+          <div class="trial-countdown"><%= @trial_days_remaining %></div>
+          <p style="margin: 0; font-size: 18px; color: #666666;">days remaining</p>
+          <p style="margin: 15px 0 0 0; color: #666666;">Expires on <%= @trial_expires_at %></p>
+        </div>
+        
+        <!-- Trial Details -->
+        <div class="trial-details">
+          <h3>What's included in your trial:</h3>
+          <p>• Full access to all features and themes</p>
+          <p>• Create unlimited pages and todos</p>
+          <p>• Export your data anytime</p>
+          <p>• Download the app to your device after trial</p>
+          <p>• No credit card required to start</p>
+        </div>
+        
+        <!-- Features Section -->
+        <div class="features">
+          <h2 style="margin: 0 0 20px 0; color: #333333;">What you can do with <%= @app_name %>:</h2>
+          
+          <div class="feature">
+            <div class="feature-icon">📝</div>
+            <div class="feature-text">
+              <div class="feature-title">Organize Your Life</div>
+              <div class="feature-description">Create pages for different areas of your life and organize todos within them</div>
+            </div>
+          </div>
+          
+          <div class="feature">
+            <div class="feature-icon">🎨</div>
+            <div class="feature-text">
+              <div class="feature-title">Beautiful Themes</div>
+              <div class="feature-description">Choose from multiple themes to match your style and mood</div>
+            </div>
+          </div>
+          
+          <div class="feature">
+            <div class="feature-icon">📱</div>
+            <div class="feature-text">
+              <div class="feature-title">Download to Device</div>
+              <div class="feature-description">After your trial, download the app to your device for offline access</div>
+            </div>
+          </div>
+          
+          <div class="feature">
+            <div class="feature-icon">⚡</div>
+            <div class="feature-text">
+              <div class="feature-title">Lightning Fast</div>
+              <div class="feature-description">Quick and responsive interface that gets out of your way</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- CTA Section -->
+        <div class="cta-section">
+          <h2 style="margin: 0 0 15px 0;">Ready to get started?</h2>
+          <p style="margin: 0 0 20px 0; opacity: 0.9;">Jump right in and start organizing your life!</p>
+          <a href="https://todo-it.app/app" class="cta-button">Start Using <%= @app_name %></a>
+        </div>
+        
+        <!-- Support Section -->
+        <div class="support-info">
+          <h3>Need Help Getting Started?</h3>
+          <p>If you have any questions or need assistance, please don't hesitate to contact us at <a href="mailto:support@todo-it.app">support@todo-it.app</a>. We're here to help you make the most of your trial!</p>
+        </div>
+        
+        <div class="message">
+          <p>We hope you love using <%= @app_name %> as much as we loved building it for you!</p>
+          
+          <p>Happy organizing!<br>
+          The <%= @app_name %> Team</p>
+        </div>
+      </div>
+      
+      <!-- Footer -->
+      <div class="footer">
+        <p><strong><%= @app_name %></strong> - Your personal productivity companion</p>
+        <p>This welcome email was sent to <%= @user.email_address %> because you started a free trial.</p>
+        <p>
+          <a href="mailto:support@todo-it.app">Contact Support</a> | 
+          <a href="https://todo-it.app">Visit Website</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
