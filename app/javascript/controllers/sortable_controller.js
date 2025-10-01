@@ -6,10 +6,6 @@ export default class extends Controller {
   static values = { url: String }
 
   connect() {
-    console.log('=== SORTABLE CONTROLLER CONNECTED ===')
-    console.log('URL value:', this.urlValue)
-    console.log('Item targets found:', this.itemTargets.length)
-    
     this.draggedElement = null
     this.placeholder = null
     this.setupDragAndDrop()
@@ -17,11 +13,7 @@ export default class extends Controller {
   }
 
   setupDragAndDrop() {
-    console.log('=== SETTING UP DRAG AND DROP ===')
-    console.log('Items to make draggable:', this.itemTargets.length)
-    
     this.itemTargets.forEach((item, index) => {
-      console.log(`Setting up item ${index}:`, item.dataset.todoId)
       item.setAttribute('draggable', 'true')
       item.dataset.position = index + 1
       
@@ -47,16 +39,11 @@ export default class extends Controller {
   }
 
   containerDrop(event) {
-    console.log('=== CONTAINER DROP EVENT ===')
     event.preventDefault()
     this.drop(event)
   }
 
   dragStart(event) {
-    console.log('=== DRAG START ===')
-    console.log('Dragging element:', event.target)
-    console.log('Todo ID:', event.target.dataset.todoId)
-    
     this.draggedElement = event.target
     event.target.style.opacity = '0.5'
     event.target.classList.add('dragging')
@@ -80,7 +67,6 @@ export default class extends Controller {
   dragOver(event) {
     event.preventDefault()
     event.dataTransfer.dropEffect = 'move'
-    // console.log('Drag over:', event.target) // Commented out to avoid spam
     
     if (event.target !== this.draggedElement && event.target.closest('[data-sortable-target="item"]')) {
       const targetItem = event.target.closest('[data-sortable-target="item"]')
@@ -109,12 +95,9 @@ export default class extends Controller {
   }
 
   drop(event) {
-    console.log('=== DROP EVENT ===')
-    console.log('Drop target:', event.target)
     event.preventDefault()
     
     if (this.placeholder && this.placeholder.parentNode) {
-      console.log('Moving dragged element to new position')
       this.placeholder.parentNode.insertBefore(this.draggedElement, this.placeholder)
       this.placeholder.remove()
     }
@@ -124,13 +107,11 @@ export default class extends Controller {
       item.classList.remove('drag-over')
     })
     
-    console.log('Calling updatePositions...')
     // Update positions and send to server
     this.updatePositions()
   }
 
   dragEnd(event) {
-    console.log('=== DRAG END ===')
     event.target.style.opacity = '1'
     event.target.classList.remove('dragging')
     
@@ -149,11 +130,6 @@ export default class extends Controller {
       return item.dataset.todoId
     })
     
-    console.log('=== DRAG DROP DEBUG ===')
-    console.log('URL:', this.urlValue)
-    console.log('Todo IDs:', todoIds)
-    console.log('Item targets:', this.itemTargets)
-    
     // Send AJAX request to update positions
     fetch(this.urlValue, {
       method: 'PATCH',
@@ -165,24 +141,15 @@ export default class extends Controller {
         todo_ids: todoIds
       })
     })
-    .then(response => {
-      console.log('Response status:', response.status)
-      console.log('Response headers:', response.headers)
-      return response.json()
-    })
+    .then(response => response.json())
     .then(data => {
-      console.log('Response data:', data)
-      if (data.success) {
-        // Visual feedback is the reordering itself - no notification needed
-        console.log('Todo order updated successfully')
-      } else {
+      if (!data.success) {
         // Only show error feedback, not success
         this.showFeedback(`❌ Failed to update order: ${data.error}`, 'error')
         location.reload() // Simple fallback - reload to reset order
       }
     })
     .catch(error => {
-      console.error('Error updating todo order:', error)
       this.showFeedback('❌ Network error', 'error')
       location.reload()
     })

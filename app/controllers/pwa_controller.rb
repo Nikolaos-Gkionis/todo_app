@@ -1,6 +1,8 @@
 class PwaController < ApplicationController
   # Skip authentication for PWA files
   skip_before_action :require_login, only: [ :manifest, :service_worker ]
+  # Skip CSRF protection for service worker (it's requested by the browser, not a form submission)
+  skip_before_action :verify_authenticity_token, only: [ :service_worker ]
 
   def manifest
     respond_to do |format|

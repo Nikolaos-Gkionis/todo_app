@@ -94,15 +94,6 @@ module PositionManageable
     end
   end
 
-  # Reorder all items in a page
-  def self.reorder_positions!(page, new_order)
-    page.transaction do
-      new_order.each_with_index do |item_id, index|
-        page.send(association_name).find(item_id).update!(position: index + 1)
-      end
-    end
-  end
-
   private
 
   def shift_items_down(start_position, end_position)

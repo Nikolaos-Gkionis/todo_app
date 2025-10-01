@@ -26,6 +26,15 @@ class Todo < ApplicationRecord
     )
   }
 
+  # Class method for reordering todos
+  def self.reorder_positions!(page, new_order)
+    page.transaction do
+      new_order.each_with_index do |item_id, index|
+        page.todos.find(item_id).update!(position: index + 1)
+      end
+    end
+  end
+
   private
 
   def association_name

@@ -13,10 +13,6 @@ class TodosController < ApplicationController
   end
 
   def create
-    Rails.logger.info "=== TODO CREATE DEBUG ==="
-    Rails.logger.info "Params: #{params.inspect}"
-    Rails.logger.info "todo_params: #{todo_params.inspect}"
-
     # Check if user can add more todos to this page
     unless @page.can_add_todo?
       redirect_to @page, alert: "Free users can only add #{User::MAX_FREE_TODOS_PER_PAGE} todos per page. Upgrade to Premium for unlimited todos!"
@@ -24,16 +20,12 @@ class TodosController < ApplicationController
     end
 
     @todo = @page.todos.build(todo_params)
-    Rails.logger.info "Todo built: #{@todo.inspect}"
-    Rails.logger.info "Todo valid?: #{@todo.valid?}"
-    Rails.logger.info "Todo errors: #{@todo.errors.full_messages}" unless @todo.valid?
 
     if @todo.save
       # Add animation flag for the new todo
       flash[:new_todo_id] = @todo.id
       redirect_to @page, notice: "✨ Todo added to Todo-it!"
     else
-      Rails.logger.error "Todo save failed: #{@todo.errors.full_messages}"
       # Only get saved todos to avoid routing errors
       @todos = @page.todos.ordered.where.not(id: nil)
       @new_todo = @todo
@@ -62,24 +54,15 @@ class TodosController < ApplicationController
 
   # AJAX endpoint for reordering todos
   def reorder
-    Rails.logger.info "=== REORDER DEBUG ==="
-    Rails.logger.info "Params: #{params.inspect}"
-    Rails.logger.info "todo_ids: #{params[:todo_ids].inspect}"
-
     todo_ids = params[:todo_ids]
 
     if todo_ids.present?
-      Rails.logger.info "Reordering todos: #{todo_ids}"
       Todo.reorder_positions!(@page, todo_ids)
-      Rails.logger.info "Reorder completed successfully"
       render json: { success: true, message: "Todos reordered successfully" }
     else
-      Rails.logger.error "No todo IDs provided in reorder request"
       render json: { success: false, error: "No todo IDs provided" }, status: :bad_request
     end
   rescue => e
-    Rails.logger.error "Error in reorder: #{e.message}"
-    Rails.logger.error e.backtrace.join("\n")
     render json: { success: false, error: e.message }, status: :internal_server_error
   end
 
