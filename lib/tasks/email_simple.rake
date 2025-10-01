@@ -2,7 +2,7 @@ namespace :email do
   desc "Send a simple test email"
   task simple: :environment do
     puts "📧 Sending simple test email..."
-    
+
     # Create a test user if one doesn't exist
     test_user = User.find_or_create_by(email_address: "test@example.com") do |user|
       user.name = "Test User"
@@ -10,10 +10,10 @@ namespace :email do
       user.password_confirmation = "password123"
       user.start_trial!
     end
-    
+
     puts "✅ User: #{test_user.email_address}"
     puts "📤 Sending welcome email..."
-    
+
     begin
       UserMailer.welcome_trial(test_user).deliver_now
       puts "✅ Email sent successfully!"

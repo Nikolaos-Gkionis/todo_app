@@ -7,7 +7,7 @@ class UserMailer < ApplicationMailer
     @user = user
     @download_url = download_url
     @app_name = "Todo-it"
-    
+
     mail(
       to: @user.email_address,
       subject: "🎉 Welcome to Todo-it! Your download is ready"
@@ -19,7 +19,7 @@ class UserMailer < ApplicationMailer
     @user = user
     @app_name = "Todo-it"
     @change_time = Time.current.strftime("%B %d, %Y at %I:%M %p")
-    
+
     mail(
       to: @user.email_address,
       subject: "🔒 Your Todo-it password was changed"
@@ -32,7 +32,7 @@ class UserMailer < ApplicationMailer
     @old_email = old_email
     @app_name = "Todo-it"
     @change_time = Time.current.strftime("%B %d, %Y at %I:%M %p")
-    
+
     mail(
       to: @old_email, # Send to old email address
       subject: "📧 Your Todo-it email address was changed"
@@ -45,7 +45,7 @@ class UserMailer < ApplicationMailer
     @app_name = "Todo-it"
     @trial_days_remaining = user.trial_days_remaining
     @trial_expires_at = user.trial_expires_at.strftime("%B %d, %Y")
-    
+
     mail(
       to: @user.email_address,
       subject: "👋 Welcome to your 30-day Todo-it trial!"
@@ -61,7 +61,7 @@ class UserMailer < ApplicationMailer
     @days_remaining = user.trial_days_remaining
     @trial_expires_at = user.trial_expires_at.strftime("%B %d, %Y")
     @download_url = Rails.application.routes.url_helpers.download_url(host: Rails.application.config.action_mailer.default_url_options[:host])
-    
+
     mail(
       to: @user.email_address,
       subject: "⏰ Your Todo-it trial expires in #{@days_remaining} days"
@@ -75,7 +75,7 @@ class UserMailer < ApplicationMailer
     @days_remaining = user.trial_days_remaining
     @trial_expires_at = user.trial_expires_at.strftime("%B %d, %Y")
     @download_url = Rails.application.routes.url_helpers.download_url(host: Rails.application.config.action_mailer.default_url_options[:host])
-    
+
     mail(
       to: @user.email_address,
       subject: "⚠️ Your Todo-it trial expires in #{@days_remaining} days"
@@ -88,7 +88,7 @@ class UserMailer < ApplicationMailer
     @app_name = "Todo-it"
     @trial_expires_at = user.trial_expires_at.strftime("%B %d, %Y")
     @download_url = Rails.application.routes.url_helpers.download_url(host: Rails.application.config.action_mailer.default_url_options[:host])
-    
+
     mail(
       to: @user.email_address,
       subject: "🚨 Your Todo-it trial expires tomorrow!"
@@ -100,7 +100,7 @@ class UserMailer < ApplicationMailer
     @user_email = user_email
     @app_name = "Todo-it"
     @deletion_time = Time.current.strftime("%B %d, %Y at %I:%M %p")
-    
+
     mail(
       to: @user_email,
       subject: "👋 Your Todo-it account has been deleted"
@@ -112,7 +112,7 @@ class UserMailer < ApplicationMailer
     @user = user
     @app_name = "Todo-it"
     @download_url = Rails.application.routes.url_helpers.download_url(host: Rails.application.config.action_mailer.default_url_options[:host])
-    
+
     mail(
       to: @user.email_address,
       subject: "📱 Don't forget to download Todo-it to your device!"
