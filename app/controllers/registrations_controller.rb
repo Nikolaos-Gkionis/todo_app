@@ -22,7 +22,7 @@ class RegistrationsController < ApplicationController
       # Send welcome email
       UserMailer.welcome_trial(@user).deliver_now
 
-      redirect_to app_root_path, notice: "Account created successfully! Your 30-day free trial has started. Welcome!"
+      redirect_to app_root_path, notice: "Account created successfully! Your 7-day free trial has started. Welcome!"
     else
       # Signup failed - show errors
       render :new, status: :unprocessable_entity

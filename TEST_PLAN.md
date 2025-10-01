@@ -1,6 +1,6 @@
 # Todo-it App Test Plan
 
-## Version 3.0 - 30-Day Trial + Device Download
+## Version 3.0 - 7-Day Trial + Device Download
 
 ### Test Environment Setup
 
@@ -20,7 +20,7 @@
 - [ ] **Test**: Fill out registration form with valid email
 - [ ] **Test**: Submit registration
 - [ ] **Expected**: User redirected to `/app` with trial status message
-- [ ] **Expected**: Trial started at current time, expires in 30 days
+- [ ] **Expected**: Trial started at current time, expires in 7 days
 - [ ] **Expected**: User can create pages and todos immediately
 
 ### 1.2 Trial Status Display

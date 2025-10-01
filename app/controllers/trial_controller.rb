@@ -13,7 +13,7 @@ class TrialController < ApplicationController
       # Track trial start analytics
       AnalyticsService.track_trial_start(@user)
 
-      flash[:success] = "Your 30-day free trial has started! Enjoy full access to all features."
+      flash[:success] = "Your 7-day free trial has started! Enjoy full access to all features."
       redirect_to app_root_path
     else
       flash[:error] = "Unable to start trial. You may already have an active trial or downloaded app."

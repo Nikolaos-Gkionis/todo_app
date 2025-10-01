@@ -3,7 +3,7 @@ module TrialManageable
 
   included do
     # Trial and download limits
-    TRIAL_DURATION_DAYS = 30
+    TRIAL_DURATION_DAYS = 7
     MAX_FREE_PAGES = 3
     MAX_FREE_TODOS_PER_PAGE = 20
   end
@@ -100,7 +100,7 @@ module TrialManageable
   end
 
   def trial_warning_days
-    [ 7, 3, 1 ] # Days before expiry to show warnings
+    [ 3, 1 ] # Days before expiry to show warnings
   end
 
   def should_show_trial_warning?

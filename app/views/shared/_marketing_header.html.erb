@@ -1,0 +1,31 @@
+<!-- Marketing Header -->
+<header class="bg-white shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center py-6">
+      <!-- Logo -->
+      <div class="flex items-center">
+        <%= link_to root_path, class: "flex items-center" do %>
+          <div class="logo-checkbox mr-3"></div>
+          <span class="text-2xl font-bold text-gray-900">Todo-it</span>
+        <% end %>
+      </div>
+      
+      <!-- Navigation -->
+      <nav class="hidden md:flex space-x-8">
+        <%= link_to "Why Todo-it", why_path, class: "text-gray-600 hover:text-gray-900 transition-colors" %>
+        <%= link_to "Pricing", pricing_path, class: "text-gray-600 hover:text-gray-900 transition-colors" %>
+        <%= link_to "How to Use", how_to_path, class: "text-gray-600 hover:text-gray-900 transition-colors" %>
+      </nav>
+      
+      <!-- Auth Buttons -->
+      <div class="flex items-center space-x-4">
+        <% if logged_in? %>
+          <%= link_to "Go to App", app_root_path, class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors" %>
+        <% else %>
+          <%= link_to "Sign In", login_path, class: "text-gray-600 hover:text-gray-900 transition-colors" %>
+          <%= link_to "Start Free Trial", signup_path, class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</header>

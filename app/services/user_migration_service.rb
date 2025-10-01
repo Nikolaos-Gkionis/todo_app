@@ -61,7 +61,7 @@ class UserMigrationService
       # Premium users get immediate access (grandfathered)
       migrate_premium_user(user)
     else
-      # Free users get a 30-day trial
+      # Free users get a 7-day trial
       migrate_free_user(user)
     end
   end
@@ -75,7 +75,7 @@ class UserMigrationService
     user.update!(
       device_downloaded: true,
       trial_started_at: user.created_at, # Use account creation as trial start
-      trial_expires_at: user.created_at + 30.days, # 30 days from account creation
+      trial_expires_at: user.created_at + 7.days, # 7 days from account creation
       download_token: SecureRandom.urlsafe_base64(32)
     )
 
@@ -83,15 +83,15 @@ class UserMigrationService
     Rails.logger.info "Premium user #{user.id} migrated to downloaded app status"
   end
 
-  # Migrate free users - they get a 30-day trial
+  # Migrate free users - they get a 7-day trial
   def self.migrate_free_user(user)
     Rails.logger.info "Migrating free user #{user.id} to trial status"
 
-    # Give them a 30-day trial starting now
+    # Give them a 7-day trial starting now
     now = Time.current
     user.update!(
       trial_started_at: now,
-      trial_expires_at: now + 30.days
+      trial_expires_at: now + 7.days
     )
 
     Rails.logger.info "Free user #{user.id} migrated to trial status"

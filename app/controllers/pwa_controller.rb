@@ -20,7 +20,7 @@ class PwaController < ApplicationController
     {
       name: "Todo-it - Nicely Done ",
       short_name: "Todo-it",
-      description: "Beautiful, offline-first todo app. Start with a 30-day free trial, then download forever. Your data, your device.",
+      description: "Beautiful, offline-first todo app. Start with a 7-day free trial, then download forever. Your data, your device.",
       start_url: "/app",
       scope: "/",
       display: "standalone",

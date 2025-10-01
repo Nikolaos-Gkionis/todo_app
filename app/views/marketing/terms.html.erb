@@ -1,0 +1,219 @@
+<%= render 'shared/marketing_header' %>
+
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+  <div class="container mx-auto px-4 py-12 max-w-4xl">
+    <div class="bg-white rounded-lg shadow-lg p-8">
+      <h1 class="text-4xl font-bold text-gray-900 mb-8">Terms of Service</h1>
+      
+      <div class="prose prose-lg max-w-none">
+        <p class="text-gray-600 mb-8">
+          <strong>Last updated:</strong> <%= Date.current.strftime("%B %d, %Y") %>
+        </p>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">Agreement to Terms</h2>
+          <p class="text-gray-700 mb-4">
+            By accessing or using Todo-it, you agree to be bound by these Terms of Service and our Privacy Policy. If you disagree with any part of these terms, you may not access the service.
+          </p>
+        </div>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">1. Service Description</h2>
+          
+          <h3 class="text-xl font-medium text-gray-800 mb-3">1.1 What We Provide</h3>
+          <p class="text-gray-700 mb-4">
+            Todo-it is a self-managed productivity application that allows you to organize your life with pages and todos. Our service includes:
+          </p>
+          <ul class="list-disc pl-6 mb-4 text-gray-700">
+            <li>A 7-day free trial with full access to all features</li>
+            <li>Unlimited pages and todos during your trial</li>
+            <li>Multiple themes and customization options</li>
+            <li>Data export functionality</li>
+            <li>One-time purchase option to download the app to your device</li>
+          </ul>
+
+          <h3 class="text-xl font-medium text-gray-800 mb-3">1.2 Self-Managed Philosophy</h3>
+          <p class="text-gray-700 mb-4">
+            Todo-it is built on the principle of data sovereignty. After purchase, you own your data and can use the app completely offline. We don't track your usage or collect analytics.
+          </p>
+        </div>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">2. Trial Terms</h2>
+          
+          <h3 class="text-xl font-medium text-gray-800 mb-3">2.1 Free Trial</h3>
+          <ul class="list-disc pl-6 mb-4 text-gray-700">
+            <li>7-day free trial begins when you create an account</li>
+            <li>Full access to all features during the trial period</li>
+            <li>No credit card required to start your trial</li>
+            <li>Unlimited pages and todos during trial</li>
+          </ul>
+
+          <h3 class="text-xl font-medium text-gray-800 mb-3">2.2 Trial Expiration</h3>
+          <p class="text-gray-700 mb-4">
+            When your trial expires:
+          </p>
+          <ul class="list-disc pl-6 mb-4 text-gray-700">
+            <li>You will lose access to your account and data</li>
+            <li>Your data will be retained for 7 days to allow purchase</li>
+            <li>After 7 days, your data will be permanently deleted</li>
+            <li>You can purchase the app anytime before data deletion</li>
+          </ul>
+
+          <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+            <p class="text-yellow-800 font-medium">
+              <strong>Important:</strong> We will send you email reminders before your trial expires. It's your responsibility to purchase the app if you want to keep your data.
+            </p>
+          </div>
+        </div>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">3. Purchase and Download</h2>
+          
+          <h3 class="text-xl font-medium text-gray-800 mb-3">3.1 One-Time Purchase</h3>
+          <ul class="list-disc pl-6 mb-4 text-gray-700">
+            <li>One-time payment of $9.99 (no recurring charges)</li>
+            <li>Download the app to your device for offline use</li>
+            <li>Complete ownership of your data</li>
+            <li>No monthly or annual subscriptions</li>
+          </ul>
+
+          <h3 class="text-xl font-medium text-gray-800 mb-3">3.2 Download Rights</h3>
+          <p class="text-gray-700 mb-4">
+            After purchase, you can:
+          </p>
+          <ul class="list-disc pl-6 mb-4 text-gray-700">
+            <li>Download the app to multiple devices</li>
+            <li>Use the app completely offline</li>
+            <li>Export and import your data</li>
+            <li>Customize the app to your preferences</li>
+          </ul>
+
+          <h3 class="text-xl font-medium text-gray-800 mb-3">3.3 Refund Policy</h3>
+          <p class="text-gray-700 mb-4">
+            Due to the nature of our service (immediate download access), we do not offer refunds. Please ensure you understand our service before purchasing.
+          </p>
+        </div>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibal text-gray-900 mb-4">4. User Responsibilities</h2>
+          
+          <h3 class="text-xl font-medium text-gray-800 mb-3">4.1 Account Security</h3>
+          <ul class="list-disc pl-6 mb-4 text-gray-700">
+            <li>Keep your login credentials secure</li>
+            <li>Don't share your account with others</li>
+            <li>Notify us immediately of any security breaches</li>
+            <li>Use a strong, unique password</li>
+          </ul>
+
+          <h3 class="text-xl font-medium text-gray-800 mb-3">4.2 Acceptable Use</h3>
+          <p class="text-gray-700 mb-4">
+            You agree not to:
+          </p>
+          <ul class="list-disc pl-6 mb-4 text-gray-700">
+            <li>Use the service for illegal activities</li>
+            <li>Attempt to hack or compromise our systems</li>
+            <li>Share inappropriate or harmful content</li>
+            <li>Violate any applicable laws or regulations</li>
+          </ul>
+
+          <h3 class="text-xl font-medium text-gray-800 mb-3">4.3 Data Backup</h3>
+          <p class="text-gray-700 mb-4">
+            While we maintain backups of your data, you are responsible for backing up your important information. We provide export functionality for this purpose.
+          </p>
+        </div>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">5. Intellectual Property</h2>
+          
+          <h3 class="text-xl font-medium text-gray-800 mb-3">5.1 Our Rights</h3>
+          <p class="text-gray-700 mb-4">
+            Todo-it and its original content, features, and functionality are owned by us and are protected by international copyright, trademark, and other intellectual property laws.
+          </p>
+
+          <h3 class="text-xl font-medium text-gray-800 mb-3">5.2 Your Content</h3>
+          <p class="text-gray-700 mb-4">
+            You retain ownership of all content you create using Todo-it. We don't claim ownership of your pages, todos, or personal data. You can export and use your data as you see fit.
+          </p>
+        </div>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">6. Service Availability</h2>
+          
+          <h3 class="text-xl font-medium text-gray-800 mb-3">6.1 Uptime</h3>
+          <p class="text-gray-700 mb-4">
+            We strive to maintain high service availability, but we don't guarantee 100% uptime. We may need to perform maintenance or updates that temporarily affect service availability.
+          </p>
+
+          <h3 class="text-xl font-medium text-gray-800 mb-3">6.2 Service Changes</h3>
+          <p class="text-gray-700 mb-4">
+            We reserve the right to modify or discontinue the service at any time. We will provide reasonable notice of any material changes that affect your use of the service.
+          </p>
+        </div>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">7. Limitation of Liability</h2>
+          
+          <h3 class="text-xl font-medium text-gray-800 mb-3">7.1 Service Disclaimer</h3>
+          <p class="text-gray-700 mb-4">
+            The service is provided "as is" without warranties of any kind. We disclaim all warranties, express or implied, including but not limited to merchantability, fitness for a particular purpose, and non-infringement.
+          </p>
+
+          <h3 class="text-xl font-medium text-gray-800 mb-3">7.2 Limitation of Damages</h3>
+          <p class="text-gray-700 mb-4">
+            In no event shall we be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses.
+          </p>
+        </div>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">8. Termination</h2>
+          
+          <h3 class="text-xl font-medium text-gray-800 mb-3">8.1 Account Termination</h3>
+          <p class="text-gray-700 mb-4">
+            You may terminate your account at any time through the settings page. We may terminate or suspend your account if you violate these terms.
+          </p>
+
+          <h3 class="text-xl font-medium text-gray-800 mb-3">8.2 Effect of Termination</h3>
+          <p class="text-gray-700 mb-4">
+            Upon termination, your right to use the service will cease immediately. We will retain your data for 7 days to allow you to export it, after which it will be permanently deleted.
+          </p>
+        </div>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">9. Governing Law</h2>
+          <p class="text-gray-700 mb-4">
+            These terms shall be governed by and construed in accordance with the laws of the United Kingdom, without regard to its conflict of law provisions.
+          </p>
+        </div>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">10. Changes to Terms</h2>
+          <p class="text-gray-700 mb-4">
+            We reserve the right to modify these terms at any time. We will notify you of any material changes by email or through the app. Your continued use of the service after such changes constitutes acceptance of the new terms.
+          </p>
+        </div>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">11. Contact Information</h2>
+          <p class="text-gray-700 mb-4">
+            If you have any questions about these Terms of Service, please contact us at:
+          </p>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <p class="text-gray-700">
+              <strong>Email:</strong> <a href="mailto:legal@todo-it.app" class="text-blue-600 hover:text-blue-800">legal@todo-it.app</a><br>
+              <strong>Subject Line:</strong> Terms of Service Inquiry
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mt-8">
+          <p class="text-blue-800 font-medium">
+            <strong>Fair and Transparent:</strong> These terms are designed to be clear and fair. We believe in transparency and want you to understand exactly what you're agreeing to. If you have any questions, we're here to help.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/footer' %>

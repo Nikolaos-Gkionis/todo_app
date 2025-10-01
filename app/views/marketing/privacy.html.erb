@@ -1,0 +1,184 @@
+<%= render 'shared/marketing_header' %>
+
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+  <div class="container mx-auto px-4 py-12 max-w-4xl">
+    <div class="bg-white rounded-lg shadow-lg p-8">
+      <h1 class="text-4xl font-bold text-gray-900 mb-8">Privacy Policy</h1>
+      
+      <div class="prose prose-lg max-w-none">
+        <p class="text-gray-600 mb-8">
+          <strong>Last updated:</strong> <%= Date.current.strftime("%B %d, %Y") %>
+        </p>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">Our Self-Managed Philosophy</h2>
+          <p class="text-gray-700 mb-4">
+            Todo-it is built on the principle of <strong>data sovereignty</strong>. We believe your personal data belongs to you, not to us. This privacy policy reflects our commitment to minimal data collection, maximum transparency, and your complete control over your information.
+          </p>
+        </div>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">1. Information We Collect</h2>
+          
+          <h3 class="text-xl font-medium text-gray-800 mb-3">1.1 Account Information</h3>
+          <ul class="list-disc pl-6 mb-4 text-gray-700">
+            <li><strong>Email address</strong> - Used for account identification and communication</li>
+            <li><strong>Name</strong> - Optional display name for personalization</li>
+            <li><strong>Password</strong> - Securely hashed and stored (we cannot see your actual password)</li>
+          </ul>
+
+          <h3 class="text-xl font-medium text-gray-800 mb-3">1.2 Trial Information</h3>
+          <ul class="list-disc pl-6 mb-4 text-gray-700">
+            <li><strong>Trial start date</strong> - When your 7-day trial began</li>
+            <li><strong>Trial expiration date</strong> - When your trial ends</li>
+            <li><strong>Download status</strong> - Whether you've downloaded the app to your device</li>
+          </ul>
+
+          <h3 class="text-xl font-medium text-gray-800 mb-3">1.3 Your Content</h3>
+          <ul class="list-disc pl-6 mb-4 text-gray-700">
+            <li><strong>Pages and todos</strong> - Your personal productivity data</li>
+            <li><strong>Theme preferences</strong> - Your visual customization choices</li>
+            <li><strong>Settings</strong> - Your app configuration preferences</li>
+          </ul>
+
+          <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+            <p class="text-blue-800 font-medium">
+              <strong>Important:</strong> We do NOT collect analytics, tracking data, or behavioral information. We don't use cookies for tracking. We don't sell your data to third parties. Ever.
+            </p>
+          </div>
+        </div>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">2. How We Use Your Information</h2>
+          
+          <h3 class="text-xl font-medium text-gray-800 mb-3">2.1 Essential Services</h3>
+          <ul class="list-disc pl-6 mb-4 text-gray-700">
+            <li>Provide access to your account and data</li>
+            <li>Manage your 7-day free trial</li>
+            <li>Enable app download after purchase</li>
+            <li>Send essential account notifications (password changes, trial reminders)</li>
+          </ul>
+
+          <h3 class="text-xl font-medium text-gray-800 mb-3">2.2 Data Processing</h3>
+          <p class="text-gray-700 mb-4">
+            Your data is processed only on our secure servers and is never shared with third parties except as required for payment processing (Stripe) and email delivery (SendGrid). These services are bound by their own privacy policies and data protection agreements.
+          </p>
+        </div>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">3. Your Data Rights (GDPR Compliance)</h2>
+          
+          <h3 class="text-xl font-medium text-gray-800 mb-3">3.1 Right to Access</h3>
+          <p class="text-gray-700 mb-4">
+            You can export all your data at any time through the app's export feature. This includes all your pages, todos, and account information in a machine-readable JSON format.
+          </p>
+
+          <h3 class="text-xl font-medium text-gray-800 mb-3">3.2 Right to Rectification</h3>
+          <p class="text-gray-700 mb-4">
+            You can update your account information at any time through the settings page. You can modify your name, email address, and password as needed.
+          </p>
+
+          <h3 class="text-xl font-medium text-gray-800 mb-3">3.3 Right to Erasure</h3>
+          <p class="text-gray-700 mb-4">
+            You can delete your account and all associated data at any time through the settings page. This action is irreversible and will permanently remove all your data from our servers.
+          </p>
+
+          <h3 class="text-xl font-medium text-gray-800 mb-3">3.4 Right to Data Portability</h3>
+          <p class="text-gray-700 mb-4">
+            Your data is designed to be portable. After purchasing the app, you can download it to your device and have complete control over your data. You can also export your data in a standard JSON format.
+          </p>
+
+          <h3 class="text-xl font-medium text-gray-800 mb-3">3.5 Right to Object</h3>
+          <p class="text-gray-700 mb-4">
+            You can opt out of non-essential communications at any time. We only send essential account-related emails.
+          </p>
+        </div>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">4. Data Security</h2>
+          
+          <h3 class="text-xl font-medium text-gray-800 mb-3">4.1 Technical Safeguards</h3>
+          <ul class="list-disc pl-6 mb-4 text-gray-700">
+            <li>All data is encrypted in transit using HTTPS/TLS</li>
+            <li>Passwords are hashed using bcrypt (industry standard)</li>
+            <li>Database access is restricted and monitored</li>
+            <li>Regular security updates and patches</li>
+          </ul>
+
+          <h3 class="text-xl font-medium text-gray-800 mb-3">4.2 Data Minimization</h3>
+          <p class="text-gray-700 mb-4">
+            We only collect the minimum data necessary to provide our service. We don't collect analytics, tracking pixels, or behavioral data. We don't use third-party analytics services.
+          </p>
+        </div>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">5. Data Retention</h2>
+          
+          <h3 class="text-xl font-medium text-gray-800 mb-3">5.1 Active Accounts</h3>
+          <p class="text-gray-700 mb-4">
+            We retain your data as long as your account is active. This includes both trial and paid accounts.
+          </p>
+
+          <h3 class="text-xl font-medium text-gray-800 mb-3">5.2 Trial Accounts</h3>
+          <p class="text-gray-700 mb-4">
+            If your trial expires and you don't purchase the app, we will retain your data for 7 days to allow you to complete your purchase. After 7 days, your data will be permanently deleted.
+          </p>
+
+          <h3 class="text-xl font-medium text-gray-800 mb-3">5.3 Deleted Accounts</h3>
+          <p class="text-gray-700 mb-4">
+            When you delete your account, all your data is permanently removed from our servers within 7 days. This includes all pages, todos, and account information.
+          </p>
+        </div>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">6. Third-Party Services</h2>
+          
+          <h3 class="text-xl font-medium text-gray-800 mb-3">6.1 Payment Processing</h3>
+          <p class="text-gray-700 mb-4">
+            We use Stripe for payment processing. Stripe handles your payment information according to their privacy policy. We do not store your payment details.
+          </p>
+
+          <h3 class="text-xl font-medium text-gray-800 mb-3">6.2 Email Delivery</h3>
+          <p class="text-gray-700 mb-4">
+            We use SendGrid for email delivery. SendGrid processes your email address for delivery purposes only and is bound by their privacy policy.
+          </p>
+        </div>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">7. Children's Privacy</h2>
+          <p class="text-gray-700 mb-4">
+            Our service is not intended for children under 13. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us.
+          </p>
+        </div>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">8. Changes to This Policy</h2>
+          <p class="text-gray-700 mb-4">
+            We may update this privacy policy from time to time. We will notify you of any material changes by email or through the app. Your continued use of the service after such changes constitutes acceptance of the new policy.
+          </p>
+        </div>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">9. Contact Us</h2>
+          <p class="text-gray-700 mb-4">
+            If you have any questions about this privacy policy or your data rights, please contact us at:
+          </p>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <p class="text-gray-700">
+              <strong>Email:</strong> <a href="mailto:privacy@todo-it.app" class="text-blue-600 hover:text-blue-800">privacy@todo-it.app</a><br>
+              <strong>Subject Line:</strong> Privacy Policy Inquiry
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-green-50 border-l-4 border-green-400 p-4 mt-8">
+          <p class="text-green-800 font-medium">
+            <strong>Your Privacy Matters:</strong> This privacy policy is designed to be transparent and easy to understand. If you have any questions or concerns, we're here to help. Your data sovereignty is our priority.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/footer' %>

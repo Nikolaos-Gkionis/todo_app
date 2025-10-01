@@ -48,7 +48,7 @@ class UserMailer < ApplicationMailer
 
     mail(
       to: @user.email_address,
-      subject: "👋 Welcome to your 30-day Todo-it trial!"
+      subject: "👋 Welcome to your 7-day Todo-it trial!"
     ) do |format|
       format.html
     end

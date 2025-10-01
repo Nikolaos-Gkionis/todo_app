@@ -1,8 +1,8 @@
-# Version 3.0 - 30-Day Trial + Device Download Todo App
+# Version 3.0 - 7-Day Trial + Device Download Todo App
 
 ## Overview
 
-Transform the current web-based todo app into a hybrid model: 30-day free trial hosted on our servers, then one-time payment to download the app to user's device forever. This creates a premium, offline-first experience with PWA capabilities and true data ownership.
+Transform the current web-based todo app into a hybrid model: 7-day free trial hosted on our servers, then one-time payment to download the app to user's device forever. This creates a premium, offline-first experience with PWA capabilities and true data ownership.
 
 ## Recent Progress (Latest Session)
 
@@ -195,7 +195,7 @@ Transform the current web-based todo app into a hybrid model: 30-day free trial 
 
 - [x] **Update marketing pages for new model**
 
-  - [x] Update landing page copy (30-day trial + download)
+  - [x] Update landing page copy (7-day trial + download)
   - [x] Update pricing page copy (trial vs download)
   - [x] Update why page copy (new value propositions)
   - [x] Update how-to page copy (trial + PWA installation)
@@ -283,7 +283,7 @@ Transform the current web-based todo app into a hybrid model: 30-day free trial 
 
 ## Phase 2: Trial Management System (Dependencies: Phase 1.2) ✅ COMPLETED
 
-### 2.1 Implement 30-Day Trial System
+### 2.1 Implement 7-Day Trial System
 
 **Priority: High | Effort: Medium | Dependencies: Phase 1.2**
 
@@ -713,7 +713,7 @@ end
 ### Trial Metrics
 
 - [ ] Trial signup rate
-- [ ] Trial completion rate (30 days)
+- [ ] Trial completion rate (7 days)
 - [ ] Trial-to-download conversion rate
 - [ ] Trial user engagement
 
@@ -790,7 +790,7 @@ end
    - Enhance PWA manifest and service worker
    - Implement offline-first functionality
 
-This implementation plan provides a comprehensive roadmap for transitioning Todo-it to the new 30-day trial + device download model while maintaining a smooth user experience and ensuring data integrity.
+This implementation plan provides a comprehensive roadmap for transitioning Todo-it to the new 7-day trial + device download model while maintaining a smooth user experience and ensuring data integrity.
 
 ---
 

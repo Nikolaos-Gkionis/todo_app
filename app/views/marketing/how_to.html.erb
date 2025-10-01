@@ -6,7 +6,7 @@
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <h1 class="text-5xl font-bold text-gray-900 mb-6">How to Use Todo-it</h1>
     <p class="text-xl text-gray-600 mb-8">
-      Try free for 30 days on our servers, then download to your device forever. 
+      Try free for 7 days on our servers, then download to your device forever. 
       Master the art of beautiful productivity in just a few simple steps.
     </p>
   </div>
@@ -358,7 +358,7 @@
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <h2 class="text-4xl font-bold text-white mb-4">Ready to Get Started?</h2>
     <p class="text-xl text-blue-100 mb-8">
-      Try free for 30 days on our servers, then download to your device forever. 
+      Try free for 7 days on our servers, then download to your device forever. 
       No credit card required.
     </p>
     
@@ -368,41 +368,4 @@
   </div>
 </section>
 
-<!-- Footer -->
-<footer class="bg-gray-900 text-white py-12">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-      <div class="col-span-2">
-        <div class="flex items-center mb-4">
-          <div class="logo-checkbox mr-3" style="filter: brightness(0) invert(1);"></div>
-          <span class="text-2xl font-bold">Todo-it</span>
-        </div>
-        <p class="text-gray-400 mb-4">
-          Beautiful notebook-style todo pages that make productivity feel personal and delightful.
-        </p>
-        <p class="text-gray-500 text-sm">
-          © 2025 Todo-it. Made with ❤️ for productivity enthusiasts.
-        </p>
-      </div>
-      
-      <div>
-        <h3 class="font-semibold mb-4">Product</h3>
-        <ul class="space-y-2 text-gray-400">
-          <li><%= link_to "Home", root_path, class: "hover:text-white transition-colors" %></li>
-          <li><%= link_to "Why Todo-it", why_path, class: "hover:text-white transition-colors" %></li>
-          <li><%= link_to "Pricing", pricing_path, class: "hover:text-white transition-colors" %></li>
-          <li><span class="text-white">How to Use</span></li>
-        </ul>
-      </div>
-      
-      <div>
-        <h3 class="font-semibold mb-4">Support</h3>
-        <ul class="space-y-2 text-gray-400">
-          <li><a href="mailto:support@todo-it.app" class="hover:text-white transition-colors">Contact Support</a></li>
-          <li><%= link_to "Sign In", login_path, class: "hover:text-white transition-colors" %></li>
-          <li><%= link_to "Create Account", signup_path, class: "hover:text-white transition-colors" %></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</footer>
+<%= render 'shared/footer' %>

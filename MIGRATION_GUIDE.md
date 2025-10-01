@@ -2,22 +2,22 @@
 
 ## Overview
 
-This guide explains how to migrate existing users from the old premium model to the new 30-day trial + download model.
+This guide explains how to migrate existing users from the old premium model to the new 7-day trial + download model.
 
 ## Migration Strategy
 
 ### For Premium Users
 
 - **Action**: Grandfathered access - immediately marked as "downloaded app"
-- **Trial Dates**: Set to account creation date + 30 days (for tracking purposes)
+- **Trial Dates**: Set to account creation date + 7 days (for tracking purposes)
 - **Access**: Full access to all features immediately
 - **Rationale**: Reward existing paying customers
 
 ### For Free Users
 
-- **Action**: Start 30-day trial from migration date
-- **Trial Dates**: Set to migration date + 30 days
-- **Access**: Full trial access for 30 days
+- **Action**: Start 7-day trial from migration date
+- **Trial Dates**: Set to migration date + 7 days
+- **Access**: Full trial access for 7 days
 - **Rationale**: Give them a chance to experience the full app
 
 ## Migration Commands
@@ -66,7 +66,7 @@ bin/rails migration:rollback
 1. **Start Migration Tracking**: Creates migration status record
 2. **Identify Users**: Finds users who need migration
 3. **Migrate Premium Users**: Sets device_downloaded = true
-4. **Migrate Free Users**: Starts 30-day trial
+4. **Migrate Free Users**: Starts 7-day trial
 5. **Track Results**: Records success/failure counts
 6. **Complete Tracking**: Marks migration as completed
 
@@ -226,6 +226,6 @@ If you encounter issues during migration:
 
 ### Rollback Window
 
-- Keep rollback capability for 30 days
+- Keep rollback capability for 7 days
 - Monitor user feedback closely
 - Be prepared to rollback if issues arise

@@ -1,6 +1,6 @@
 class MarketingController < ApplicationController
   # Skip authentication for marketing pages
-  skip_before_action :require_login, only: [ :landing, :pricing, :how_to, :why ]
+  skip_before_action :require_login, only: [ :landing, :pricing, :how_to, :why, :privacy, :terms ]
 
   # Set marketing navigation flag for all marketing pages
   before_action :set_marketing_nav
@@ -20,6 +20,14 @@ class MarketingController < ApplicationController
   end
 
   def why
+    # Available to both logged in and anonymous users
+  end
+
+  def privacy
+    # Available to both logged in and anonymous users
+  end
+
+  def terms
     # Available to both logged in and anonymous users
   end
 

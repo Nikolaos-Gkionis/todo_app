@@ -4,7 +4,7 @@
     <div class="trial-status-header__content">
       <h1 class="trial-status-header__title">Your Trial Status</h1>
       <p class="trial-status-header__subtitle">
-        Manage your 30-day free trial and download options
+        Manage your 7-day free trial and download options
       </p>
     </div>
   </div>
@@ -25,11 +25,11 @@
           </p>
           <div class="trial-status__progress">
             <div class="trial-progress-bar">
-              <div class="trial-progress-bar__fill" style="width: <%= (current_user.trial_days_remaining.to_f / 30 * 100).round %>%"></div>
+              <div class="trial-progress-bar__fill" style="width: <%= (current_user.trial_days_remaining.to_f / 7 * 100).round %>%"></div>
             </div>
             <div class="trial-progress-bar__labels">
               <span>Day 1</span>
-              <span>Day 30</span>
+              <span>Day 7</span>
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@
         <div class="trial-status__info">
           <h2 class="trial-status__title">Trial Expired</h2>
           <p class="trial-status__description">
-            Your 30-day free trial has ended. Download the app to continue using Todo-it.
+            Your 7-day free trial has ended. Download the app to continue using Todo-it.
           </p>
         </div>
       </div>
@@ -160,7 +160,7 @@
       <div class="info-item">
         <h4 class="info-item__title">Data Policy</h4>
         <ul class="info-item__list">
-          <li>Trial data expires after 30 days</li>
+          <li>Trial data expires after 7 days</li>
           <li>Download to keep your data forever</li>
           <li>No data collection or tracking</li>
           <li>Complete privacy protection</li>

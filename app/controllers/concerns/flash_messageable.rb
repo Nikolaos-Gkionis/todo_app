@@ -29,7 +29,7 @@ module FlashMessageable
 
   # Trial-specific messages
   def flash_trial_started
-    flash[:success] = "Your 30-day free trial has started! Enjoy full access to all features."
+    flash[:success] = "Your 7-day free trial has started! Enjoy full access to all features."
   end
 
   def flash_trial_active(days_remaining)
