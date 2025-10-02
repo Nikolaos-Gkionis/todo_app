@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_02_091955) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_02_100458) do
   create_table "migration_statuses", force: :cascade do |t|
     t.string "migration_type", null: false
     t.string "status", default: "pending", null: false
@@ -45,7 +45,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_02_091955) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.date "due_date"
     t.index ["page_id"], name: "index_todos_on_page_id"
   end
 

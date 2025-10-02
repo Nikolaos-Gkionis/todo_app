@@ -70,19 +70,8 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
-  # FactoryBot configuration
-  config.include FactoryBot::Syntax::Methods
-
   # Capybara configuration for system tests
   config.before(:each, type: :system) do
-    driven_by :selenium, using: :chrome, screen_size: [ 1400, 1400 ]
-  end
-end
-
-# Shoulda Matchers configuration
-Shoulda::Matchers.configure do |config|
-  config.integrate do |with|
-    with.test_framework :rspec
-    with.library :rails
+    driven_by :selenium, using: :chrome, screen_size: [1400, 1400]
   end
 end

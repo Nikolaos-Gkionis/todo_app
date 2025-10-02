@@ -83,7 +83,6 @@ class DataExportService
         notes: todo.notes,
         completed: todo.completed,
         position: todo.position,
-        due_date: todo.due_date&.iso8601,
         created_at: todo.created_at.iso8601,
         updated_at: todo.updated_at.iso8601
       }
@@ -116,8 +115,7 @@ class DataExportService
         title: todo_data["title"],
         notes: todo_data["notes"] || "",
         completed: todo_data["completed"] || false,
-        position: todo_data["position"] || 1,
-        due_date: todo_data["due_date"] ? Date.parse(todo_data["due_date"]) : nil
+        position: todo_data["position"] || 1
       )
     end
   end

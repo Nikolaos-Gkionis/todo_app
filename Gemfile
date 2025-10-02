@@ -73,6 +73,9 @@ group :development, :test do
 
   # Test coverage
   gem "simplecov", require: false
+  
+  # Database cleaner for tests
+  gem "database_cleaner-active_record"
 end
 
 group :development do

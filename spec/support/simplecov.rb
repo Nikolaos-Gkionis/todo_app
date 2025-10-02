@@ -1,3 +1,4 @@
+# SimpleCov configuration for test coverage reporting
 require 'simplecov'
 
 SimpleCov.start 'rails' do
@@ -9,10 +10,11 @@ SimpleCov.start 'rails' do
 
   add_group 'Models', 'app/models'
   add_group 'Controllers', 'app/controllers'
-  add_group 'Mailers', 'app/mailers'
   add_group 'Services', 'app/services'
+  add_group 'Mailers', 'app/mailers'
   add_group 'Jobs', 'app/jobs'
-  add_group 'Helpers', 'app/helpers'
+  add_group 'Concerns', 'app/models/concerns'
+  add_group 'Controllers Concerns', 'app/controllers/concerns'
 
   minimum_coverage 90
 end

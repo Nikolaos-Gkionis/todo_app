@@ -10,8 +10,8 @@ class PagesController < ApplicationController
 
   def show
     # @page is set by before_action
-    @todos = @page.todos.ordered_by_priority.where.not(id: nil)  # Get saved todos with due date priority
-    @new_todo = @page.todos.build                               # New todo for the form
+    @todos = @page.todos.ordered.where.not(id: nil)  # Get saved todos in position order
+    @new_todo = @page.todos.build                    # New todo for the form
   end
 
   def new

@@ -110,16 +110,6 @@
           <p class="text-sm text-gray-700 mt-1 <%= 'line-through' if todo.completed %>"><%= todo.notes %></p>
           <% end %>
           
-          <% if todo.due_date.present? %>
-          <div class="mt-2">
-            <span class="inline-flex flex--align-center px-2 py-1 rounded-full text-xs font-medium border <%= todo.due_date_color_class %>">
-              <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-              </svg>
-              <%= todo.due_date_display %>
-            </span>
-          </div>
-          <% end %>
         </div>
         
         <!-- Edit/Delete buttons for todos -->
@@ -189,10 +179,6 @@
             <%= form.text_area :notes, class: "form-input w-full pulse-focus", placeholder: "Additional notes (optional)", rows: 2, style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
           </div>
 
-          <div>
-            <%= form.label :due_date, "Due Date (optional)", class: "form-label" %>
-            <%= form.date_field :due_date, class: "form-input w-full pulse-focus", min: Date.current, style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
-          </div>
 
           <div class="flex space-x-3">
             <%= form.submit "Add Todo", class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline--blue cursor-pointer bg-transparent border-0" %>

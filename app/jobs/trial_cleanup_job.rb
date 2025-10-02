@@ -92,7 +92,6 @@ class TrialCleanupJob < ApplicationJob
                 notes: todo.notes,
                 completed: todo.completed,
                 position: todo.position,
-                due_date: todo.due_date,
                 created_at: todo.created_at
               }
             end
