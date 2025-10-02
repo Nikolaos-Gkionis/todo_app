@@ -7,8 +7,8 @@ class SessionsController < ApplicationController
   end
 
   def create
-    # Find user by email and authenticate
-    user = User.find_by(email_address: params[:email_address])
+    # Find user by email and authenticate (case insensitive)
+    user = User.find_by("LOWER(email_address) = ?", params[:email_address]&.downcase)
 
     if user && user.authenticate(params[:password])
       # Login successful - create session

@@ -66,6 +66,7 @@ group :development, :test do
   gem "faker"
   gem "shoulda-matchers"
   gem "timecop"
+  gem "rails-controller-testing"
 
   # System testing
   gem "capybara"
