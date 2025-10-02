@@ -55,7 +55,6 @@ class DownloadsController < ApplicationController
     if @user.on_trial?
       flash[:info] = "Complete your purchase to download the app to your device."
       redirect_to pricing_path
-      nil
     end
   end
 

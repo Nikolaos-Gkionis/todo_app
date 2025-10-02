@@ -9,6 +9,7 @@ FactoryBot.define do
     trial_started_at { nil }
     trial_expires_at { nil }
     download_token { nil }
+    download_count { 0 }
 
     trait :with_trial do
       trial_started_at { 4.days.ago }

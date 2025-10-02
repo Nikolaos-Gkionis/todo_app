@@ -13,13 +13,14 @@ Transform the current web-based todo app into a production-ready application wit
   - User model: 68 tests (validations, trial management, security, remember tokens)
   - Page model: 62 tests (validations, business logic, progress calculation)
   - Todo model: 35 tests (validations, completion logic, position management)
-- **Controller Testing Suite**: 186 comprehensive tests passing
+- **Controller Testing Suite**: 219 comprehensive tests passing
   - SessionsController: 20 tests (login, logout, session management, case-insensitive email)
   - RegistrationsController: 35 tests (signup, validation, trial management, email verification)
   - PagesController: 25 tests (CRUD operations, user isolation, trial expiration handling)
   - TodosController: 38 tests (CRUD operations, position management, reordering, user isolation)
   - SettingsController: 40 tests (user preferences, account management, password/email updates, theme changes, account deletion)
   - StripeController: 28 tests (payment processing, checkout sessions, webhooks, user isolation)
+  - DownloadsController: 33 tests (download page, ZIP bundle creation, token validation, download limits, user isolation)
     - **Due Date Removal**: Complete elimination of all due date functionality
       - Removed DueDateManageable concern and all related code
       - Updated controllers, views, services, and jobs
@@ -114,7 +115,7 @@ Transform the current web-based todo app into a production-ready application wit
     - [ ] **Business Logic Controllers**
 
       - [x] StripeController: payment processing, webhooks (28 tests passing)
-      - [ ] DownloadsController: token generation, file serving
+      - [x] DownloadsController: token generation, file serving (33 tests passing)
       - [ ] TrialController: trial management, expiration handling
 
 - [ ] **Controller Testing**
