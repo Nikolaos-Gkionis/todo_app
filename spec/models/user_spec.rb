@@ -9,7 +9,7 @@ RSpec.describe User, type: :model do
     describe 'email_address' do
       it { should validate_presence_of(:email_address) }
       it { should validate_uniqueness_of(:email_address) }
-      
+
       it 'validates email format' do
         user = build(:user, email_address: 'invalid-email')
         expect(user).not_to be_valid
@@ -22,7 +22,7 @@ RSpec.describe User, type: :model do
           'test.email+tag@domain.co.uk',
           'user123@test-domain.com'
         ]
-        
+
         valid_emails.each do |email|
           user = build(:user, email_address: email)
           expect(user).to be_valid, "Expected #{email} to be valid"
@@ -58,7 +58,7 @@ RSpec.describe User, type: :model do
 
     describe 'password' do
       it { should validate_length_of(:password).is_at_least(6).on(:create) }
-      
+
       it 'requires password on create' do
         user = build(:user, password: nil, password_confirmation: nil)
         expect(user).not_to be_valid
@@ -120,7 +120,7 @@ RSpec.describe User, type: :model do
       it 'generates remember token and sets expiration' do
         user = create(:user)
         user.remember_me!
-        
+
         expect(user.remember_token).to be_present
         expect(user.remember_token_expires_at).to be_present
         expect(user.remember_token_expires_at).to be > 1.year.from_now - 1.minute
@@ -132,7 +132,7 @@ RSpec.describe User, type: :model do
         user = create(:user)
         user.remember_me!
         user.forget_me!
-        
+
         expect(user.remember_token).to be_nil
         expect(user.remember_token_expires_at).to be_nil
       end
@@ -179,9 +179,9 @@ RSpec.describe User, type: :model do
         user = create(:user)
         user.remember_me!
         original_expiry = user.remember_token_expires_at
-        
+
         user.refresh_remember_token!
-        
+
         expect(user.remember_token_expires_at).to be > original_expiry
       end
 
@@ -189,7 +189,7 @@ RSpec.describe User, type: :model do
         user = create(:user)
         user.remember_token = nil
         user.remember_token_expires_at = nil
-        
+
         expect { user.refresh_remember_token! }.not_to change(user, :remember_token_expires_at)
       end
     end

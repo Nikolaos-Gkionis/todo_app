@@ -9,7 +9,7 @@ RSpec.describe Todo, type: :model do
     describe 'title' do
       it { should validate_presence_of(:title) }
       it { should validate_length_of(:title).is_at_least(1).is_at_most(200) }
-      
+
       it 'rejects empty title' do
         todo = build(:todo, title: '')
         expect(todo).not_to be_valid
@@ -40,19 +40,19 @@ RSpec.describe Todo, type: :model do
 
     describe '.ordered' do
       it 'returns todos in position order' do
-        expect(Todo.ordered).to eq([todo1, todo2, todo3])
+        expect(Todo.ordered).to eq([ todo1, todo2, todo3 ])
       end
     end
 
     describe '.completed' do
       it 'returns only completed todos' do
-        expect(Todo.completed).to eq([todo2])
+        expect(Todo.completed).to eq([ todo2 ])
       end
     end
 
     describe '.pending' do
       it 'returns only pending todos' do
-        expect(Todo.pending).to eq([todo1, todo3])
+        expect(Todo.pending).to eq([ todo1, todo3 ])
       end
     end
   end
@@ -65,9 +65,9 @@ RSpec.describe Todo, type: :model do
       let!(:todo3) { create(:todo, page: page, position: 3) }
 
       it 'reorders todos according to new order' do
-        new_order = [todo3.id, todo1.id, todo2.id]
+        new_order = [ todo3.id, todo1.id, todo2.id ]
         Todo.reorder_positions!(page, new_order)
-        
+
         expect(todo3.reload.position).to eq(1)
         expect(todo1.reload.position).to eq(2)
         expect(todo2.reload.position).to eq(3)

@@ -72,6 +72,6 @@ RSpec.configure do |config|
 
   # Capybara configuration for system tests
   config.before(:each, type: :system) do
-    driven_by :selenium, using: :chrome, screen_size: [1400, 1400]
+    driven_by :selenium, using: :chrome, screen_size: [ 1400, 1400 ]
   end
 end
