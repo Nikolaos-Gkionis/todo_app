@@ -4,8 +4,6 @@ module TrialManageable
   included do
     # Trial and download limits
     TRIAL_DURATION_DAYS = 7
-    MAX_FREE_PAGES = 3
-    MAX_FREE_TODOS_PER_PAGE = 20
   end
 
   # Trial status helpers
@@ -47,14 +45,14 @@ module TrialManageable
     !trial_started? && !device_downloaded?
   end
 
-  # Check if user can create more pages
+  # Check if user can create more pages (unlimited for trial and downloaded users)
   def can_create_page?
     return true if downloaded_app?
     return true if on_trial?
     false # No access if trial expired and not downloaded
   end
 
-  # Get remaining page slots for trial users
+  # Get remaining page slots (unlimited for trial and downloaded users)
   def remaining_pages
     return "∞" if downloaded_app?
     return "∞" if on_trial?

@@ -12,12 +12,6 @@ module ResourceAuthorizable
     end
   end
 
-  # Check if user can add todos to a page
-  def ensure_can_add_todo!(page)
-    return if page.can_add_todo?
-
-    redirect_to page, alert: flash_todo_limit_reached
-  end
 
   # Check if user has trial or downloaded app access
   def ensure_trial_or_downloaded!

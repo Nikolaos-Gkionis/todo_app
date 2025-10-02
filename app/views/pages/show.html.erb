@@ -59,8 +59,8 @@
       <h2 class="text-xl font-semibold">Todos (<%= @todos.count %>)</h2>
       <% if current_user.free? %>
         <div class="text-sm text-gray-700">
-          <span class="<%= @page.at_todo_limit? ? 'text-red-700 font-medium' : '' %>">
-            <%= @page.remaining_todos %> of <%= User::MAX_FREE_TODOS_PER_PAGE %> remaining
+          <span class="text-gray-600">
+            Unlimited todos
           </span>
         </div>
       <% end %>
@@ -144,26 +144,10 @@
     
     <!-- Collapsible Add Todo Form -->
     <div class="mt-6">
-      <% if @page.can_add_todo? %>
-        <!-- Collapsed state - click to expand -->
-        <button id="add-todo-trigger" class="add-todo--collapsed w-full text-left" onclick="toggleAddTodo()" aria-label="Add a new todo">
-          <p class="text-gray-700">✏️ Add a new todo...</p>
-        </button>
-      <% else %>
-        <!-- Todo limit reached -->
-        <div class="text-center py-6 border-2 border-dashed border-gray-400 rounded-lg">
-          <div class="text-gray-700 mb-3">
-            <span class="text-lg" aria-hidden="true">📝</span>
-            <div class="font-medium">Todo limit reached!</div>
-            <div class="text-sm">Free users can add up to <%= User::MAX_FREE_TODOS_PER_PAGE %> todos per page</div>
-          </div>
-          <%= button_to "Upgrade",
-                create_checkout_session_path,
-                method: :post,
-                data: { turbo: false },
-                class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline--blue cursor-pointer bg-transparent border-0" %>
-        </div>
-      <% end %>
+      <!-- Collapsed state - click to expand -->
+      <button id="add-todo-trigger" class="add-todo--collapsed w-full text-left" onclick="toggleAddTodo()" aria-label="Add a new todo">
+        <p class="text-gray-700">✏️ Add a new todo...</p>
+      </button>
       
       <!-- Expanded form - hidden by default -->
       <div id="add-todo-form" class="add-todo--expanded hidden form-slide-in">

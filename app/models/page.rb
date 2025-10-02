@@ -8,20 +8,17 @@ class Page < ApplicationRecord
   validates :name, presence: true, length: { minimum: 1, maximum: 100 }
   validates :description, length: { maximum: 500 }, allow_blank: true
 
-  # Todo limit checks for free users
+  # Todo limit checks - all users can add unlimited todos
   def can_add_todo?
-    return true if user.premium?
-    todos.count < User::MAX_FREE_TODOS_PER_PAGE
+    true
   end
 
   def remaining_todos
-    return "∞" if user.premium?
-    [ User::MAX_FREE_TODOS_PER_PAGE - todos.count, 0 ].max
+    "∞"
   end
 
   def at_todo_limit?
-    return false if user.premium?
-    todos.count >= User::MAX_FREE_TODOS_PER_PAGE
+    false
   end
 
   # Todo statistics methods

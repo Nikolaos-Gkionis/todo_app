@@ -13,12 +13,6 @@ class TodosController < ApplicationController
   end
 
   def create
-    # Check if user can add more todos to this page
-    unless @page.can_add_todo?
-      redirect_to @page, alert: "Free users can only add #{User::MAX_FREE_TODOS_PER_PAGE} todos per page. Upgrade to Premium for unlimited todos!"
-      return
-    end
-
     @todo = @page.todos.build(todo_params)
 
     if @todo.save

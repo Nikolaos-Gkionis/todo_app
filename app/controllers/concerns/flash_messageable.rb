@@ -50,9 +50,6 @@ module FlashMessageable
     flash_error("You've reached the page limit. Download the app for unlimited pages!")
   end
 
-  def flash_todo_limit_reached
-    flash_error("Free users can only add #{User::MAX_FREE_TODOS_PER_PAGE} todos per page. Upgrade to Premium for unlimited todos!")
-  end
 
   # Authentication messages
   def flash_login_required

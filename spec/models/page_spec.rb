@@ -50,101 +50,29 @@ RSpec.describe Page, type: :model do
 
   describe 'todo limit methods' do
     describe '#can_add_todo?' do
-      context 'when user is premium' do
-        it 'returns true' do
-          user = create(:user, :downloaded_app)
-          page = create(:page, user: user)
-          expect(page.can_add_todo?).to be true
-        end
-      end
-
-      context 'when user is not premium' do
-        it 'returns true when under limit' do
-          user = create(:user)
-          page = create(:page, user: user)
-          create_list(:todo, 10, page: page) # Under the 20 limit
-          expect(page.can_add_todo?).to be true
-        end
-
-        it 'returns false when at limit' do
-          user = create(:user)
-          page = create(:page, user: user)
-          create_list(:todo, 20, page: page) # At the 20 limit
-          expect(page.can_add_todo?).to be false
-        end
-
-        it 'returns false when over limit' do
-          user = create(:user)
-          page = create(:page, user: user)
-          create_list(:todo, 25, page: page) # Over the 20 limit
-          expect(page.can_add_todo?).to be false
-        end
+      it 'always returns true (unlimited todos)' do
+        user = create(:user)
+        page = create(:page, user: user)
+        create_list(:todo, 100, page: page) # Even with many todos
+        expect(page.can_add_todo?).to be true
       end
     end
 
     describe '#remaining_todos' do
-      context 'when user is premium' do
-        it 'returns infinity' do
-          user = create(:user, :downloaded_app)
-          page = create(:page, user: user)
-          expect(page.remaining_todos).to eq('∞')
-        end
-      end
-
-      context 'when user is not premium' do
-        it 'returns correct count when under limit' do
-          user = create(:user)
-          page = create(:page, user: user)
-          create_list(:todo, 5, page: page)
-          expect(page.remaining_todos).to eq(15) # 20 - 5
-        end
-
-        it 'returns 0 when at limit' do
-          user = create(:user)
-          page = create(:page, user: user)
-          create_list(:todo, 20, page: page)
-          expect(page.remaining_todos).to eq(0)
-        end
-
-        it 'returns 0 when over limit' do
-          user = create(:user)
-          page = create(:page, user: user)
-          create_list(:todo, 25, page: page)
-          expect(page.remaining_todos).to eq(0)
-        end
+      it 'always returns infinity (unlimited todos)' do
+        user = create(:user)
+        page = create(:page, user: user)
+        create_list(:todo, 50, page: page) # Even with many todos
+        expect(page.remaining_todos).to eq('∞')
       end
     end
 
     describe '#at_todo_limit?' do
-      context 'when user is premium' do
-        it 'returns false' do
-          user = create(:user, :downloaded_app)
-          page = create(:page, user: user)
-          expect(page.at_todo_limit?).to be false
-        end
-      end
-
-      context 'when user is not premium' do
-        it 'returns false when under limit' do
-          user = create(:user)
-          page = create(:page, user: user)
-          create_list(:todo, 10, page: page)
-          expect(page.at_todo_limit?).to be false
-        end
-
-        it 'returns true when at limit' do
-          user = create(:user)
-          page = create(:page, user: user)
-          create_list(:todo, 20, page: page)
-          expect(page.at_todo_limit?).to be true
-        end
-
-        it 'returns true when over limit' do
-          user = create(:user)
-          page = create(:page, user: user)
-          create_list(:todo, 25, page: page)
-          expect(page.at_todo_limit?).to be true
-        end
+      it 'always returns false (unlimited todos)' do
+        user = create(:user)
+        page = create(:page, user: user)
+        create_list(:todo, 100, page: page) # Even with many todos
+        expect(page.at_todo_limit?).to be false
       end
     end
   end
