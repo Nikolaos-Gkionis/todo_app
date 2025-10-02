@@ -16,7 +16,7 @@ class User < ApplicationRecord
     MAX_DOWNLOADS = 3
 
     def can_download?
-      download_count < MAX_DOWNLOADS
+      (download_count || 0) < MAX_DOWNLOADS
     end
 
     def increment_download_count!
@@ -24,7 +24,7 @@ class User < ApplicationRecord
     end
 
     def downloads_remaining
-      MAX_DOWNLOADS - download_count
+      MAX_DOWNLOADS - (download_count || 0)
     end
 
     # Remember token functionality for persistent authentication
