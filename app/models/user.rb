@@ -12,6 +12,21 @@ class User < ApplicationRecord
     validates :name, length: { minimum: 2, maximum: 50 }, allow_blank: true, on: :update
     validates :password, length: { minimum: 6 }, on: :create
 
+    # Download tracking
+    MAX_DOWNLOADS = 3
+
+    def can_download?
+      download_count < MAX_DOWNLOADS
+    end
+
+    def increment_download_count!
+      increment!(:download_count)
+    end
+
+    def downloads_remaining
+      MAX_DOWNLOADS - download_count
+    end
+
     # Remember token functionality for persistent authentication
     def remember_me!
       # Generate a secure random token

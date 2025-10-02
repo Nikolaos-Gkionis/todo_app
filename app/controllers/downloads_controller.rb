@@ -25,6 +25,14 @@ class DownloadsController < ApplicationController
       return
     end
 
+    # Check download limit (3 devices max)
+    unless @user.can_download?
+      Rails.logger.info "User has reached download limit: #{@user.download_count}/#{User::MAX_DOWNLOADS}"
+      flash[:error] = "You've reached the maximum of #{User::MAX_DOWNLOADS} downloads. Each device gets its own independent copy."
+      redirect_to download_path
+      return
+    end
+
     # Verify download token
     unless params[:token] == @user.download_token
       Rails.logger.info "Invalid download token. Expected: #{@user.download_token}, Got: #{params[:token]}"
@@ -32,6 +40,10 @@ class DownloadsController < ApplicationController
       redirect_to app_root_path
       return
     end
+
+    # Increment download count
+    @user.increment_download_count!
+    Rails.logger.info "Download count incremented to: #{@user.download_count}"
 
     # If user already has downloaded app, just create the bundle
     if @user.device_downloaded?

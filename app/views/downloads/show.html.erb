@@ -20,6 +20,14 @@
       <p class="download-status__description">
         Your download token has been generated. Click the button below to download the app to your device.
       </p>
+      <div class="download-count-info">
+        <p class="text-sm text-gray-600">
+          📱 Downloads remaining: <strong><%= @user.downloads_remaining %> of <%= User::MAX_DOWNLOADS %></strong>
+        </p>
+        <p class="text-xs text-gray-500 mt-1">
+          Each device gets its own independent copy - no sync, no server storage.
+        </p>
+      </div>
     </div>
   </div>
 </div>
