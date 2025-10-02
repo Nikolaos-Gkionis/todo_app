@@ -13,6 +13,20 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       # Login successful - create session
       session[:user_id] = user.id
+
+      # Handle "Remember Me" functionality
+      if params[:remember_me] == "1"
+        user.remember_me!
+        # Set secure cookie that expires in 1 year (like YouTube, etc.)
+        cookies.signed[:remember_token] = {
+          value: user.remember_token,
+          expires: 1.year.from_now,
+          httponly: true,
+          secure: Rails.env.production?,
+          same_site: :lax
+        }
+      end
+
       redirect_to app_root_path, notice: "Successfully logged in!"
     else
       # Login failed
@@ -22,6 +36,12 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    # Clear remember token if user is logged in
+    if current_user
+      current_user.forget_me!
+      cookies.delete(:remember_token)
+    end
+
     # Logout - clear the session
     session[:user_id] = nil
     redirect_to root_path, notice: "Successfully logged out!"

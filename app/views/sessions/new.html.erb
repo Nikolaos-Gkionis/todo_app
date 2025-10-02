@@ -31,6 +31,22 @@
         </div>
       </div>
 
+      <!-- Remember Me checkbox -->
+      <div class="flex items-center">
+        <%= form.check_box :remember_me, 
+              { class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" }, 
+              "1", "0" %>
+        <%= form.label :remember_me, "Keep me signed in", 
+              class: "ml-2 block text-sm text-gray-900" %>
+      </div>
+      
+      <!-- PWA tip -->
+      <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
+        <p class="text-sm text-blue-800">
+          💡 <strong>PWA Tip:</strong> Check "Keep me signed in" to stay logged in when using the app on your phone or tablet. This works just like YouTube, Spotify, and other apps - you'll stay signed in indefinitely as long as you use the app regularly.
+        </p>
+      </div>
+
       <div>
         <%= form.submit "Sign in", 
               class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline-blue cursor-pointer bg-transparent border-0 w-full flex justify-center" %>

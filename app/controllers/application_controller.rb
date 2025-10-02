@@ -15,7 +15,28 @@ class ApplicationController < ActionController::Base
 
   def current_user
     # Find and cache the current logged-in user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    @current_user ||= find_user_from_session_or_remember_token
+  end
+
+  def find_user_from_session_or_remember_token
+    # First try to find user from session
+    if session[:user_id]
+      User.find_by(id: session[:user_id])
+    # If no session, try to find user from remember token
+    elsif cookies.signed[:remember_token]
+      user = User.find_by(remember_token: cookies.signed[:remember_token])
+      if user&.remember_token_valid?
+        # Auto-login user and create new session
+        session[:user_id] = user.id
+        user
+      else
+        # Invalid or expired token, clear the cookie
+        cookies.delete(:remember_token)
+        # Set a flash message to inform user about expired session
+        flash[:notice] = "Please sign in to continue using Todo-it."
+        nil
+      end
+    end
   end
 
   def logged_in?
@@ -47,6 +68,19 @@ class ApplicationController < ActionController::Base
       elsif current_user.trial_expired? && !current_user.device_downloaded?
         flash_trial_expired
       end
+    end
+
+    # Automatically refresh remember token when user is active (like YouTube, etc.)
+    if current_user.remember_token_expires_soon?
+      current_user.refresh_remember_token!
+      # Update the cookie with new expiration
+      cookies.signed[:remember_token] = {
+        value: current_user.remember_token,
+        expires: 1.year.from_now,
+        httponly: true,
+        secure: Rails.env.production?,
+        same_site: :lax
+      }
     end
   end
 

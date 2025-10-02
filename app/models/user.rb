@@ -12,6 +12,39 @@ class User < ApplicationRecord
     validates :name, length: { minimum: 2, maximum: 50 }, allow_blank: true, on: :update
     validates :password, length: { minimum: 6 }, on: :create
 
+    # Remember token functionality for persistent authentication
+    def remember_me!
+      # Generate a secure random token
+      self.remember_token = SecureRandom.urlsafe_base64
+      # Set expiration to 1 year from now (like YouTube, etc.)
+      self.remember_token_expires_at = 1.year.from_now
+      save!
+    end
+
+    def forget_me!
+      self.remember_token = nil
+      self.remember_token_expires_at = nil
+      save!
+    end
+
+    def remember_token_valid?
+      remember_token.present? &&
+      remember_token_expires_at.present? &&
+      remember_token_expires_at > Time.current
+    end
+
+    def remember_token_expires_soon?
+      remember_token_expires_at.present? &&
+      remember_token_expires_at <= 30.days.from_now &&
+      remember_token_expires_at > Time.current
+    end
+
+    def refresh_remember_token!
+      return unless remember_token_valid?
+      # Extend the token by another year when user is active
+      self.remember_token_expires_at = 1.year.from_now
+      save!
+    end
 
     # Display name for the user (name if available, otherwise email)
     def display_name
