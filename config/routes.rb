@@ -48,7 +48,7 @@ Rails.application.routes.draw do
     # Trial Management
     get "/trial/status", to: "trial#status", as: "trial_status"
     post "/trial/start", to: "trial#start", as: "start_trial"
-    post "/trial/extend", to: "trial#extend", as: "extend_trial"
+    post "/trial/extend", to: "trial#extend_trial", as: "extend_trial"
     get "/trial/export", to: "trial#export_data", as: "export_trial_data"
     get "/trial/download", to: "trial#download", as: "trial_download"
 

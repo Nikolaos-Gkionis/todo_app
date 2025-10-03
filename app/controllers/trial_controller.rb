@@ -22,7 +22,7 @@ class TrialController < ApplicationController
   end
 
   # Extend trial (for special cases)
-  def extend
+  def extend_trial
     if @user.trial_active?
       # Extend trial by 7 days (for special cases)
       @user.update!(trial_expires_at: @user.trial_expires_at + 7.days)
@@ -72,8 +72,8 @@ class TrialController < ApplicationController
       return
     end
 
-    # Generate download token if not exists
-    @download_token = @user.download_token || @user.generate_download_token!
+    # Redirect to downloads controller
+    redirect_to download_path
   end
 
   private

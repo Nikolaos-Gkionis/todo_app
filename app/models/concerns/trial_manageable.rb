@@ -66,6 +66,8 @@ module TrialManageable
 
   # Trial management methods
   def start_trial!
+    return false if trial_started? || device_downloaded?
+    
     now = Time.current
     update!(
       trial_started_at: now,
