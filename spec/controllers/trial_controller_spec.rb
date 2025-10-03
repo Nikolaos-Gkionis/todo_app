@@ -46,18 +46,18 @@ RSpec.describe TrialController, type: :controller do
       it 'starts a new trial' do
         expect(user).to receive(:start_trial!).and_return(true)
         expect(AnalyticsService).to receive(:track_trial_start).with(user)
-        
+
         post :start
-        
+
         expect(response).to redirect_to(app_root_path)
         expect(flash[:success]).to eq('Your 7-day free trial has started! Enjoy full access to all features.')
       end
 
       it 'handles trial start failure' do
         expect(user).to receive(:start_trial!).and_return(false)
-        
+
         post :start
-        
+
         expect(response).to redirect_to(app_root_path)
         expect(flash[:error]).to eq('Unable to start trial. You may already have an active trial or downloaded app.')
       end
@@ -71,9 +71,9 @@ RSpec.describe TrialController, type: :controller do
 
       it 'does not start another trial' do
         expect(trial_user).to receive(:start_trial!).and_return(false)
-        
+
         post :start
-        
+
         expect(response).to redirect_to(app_root_path)
         expect(flash[:error]).to eq('Unable to start trial. You may already have an active trial or downloaded app.')
       end
@@ -87,9 +87,9 @@ RSpec.describe TrialController, type: :controller do
 
       it 'does not start trial for downloaded user' do
         expect(downloaded_user).to receive(:start_trial!).and_return(false)
-        
+
         post :start
-        
+
         expect(response).to redirect_to(app_root_path)
         expect(flash[:error]).to eq('Unable to start trial. You may already have an active trial or downloaded app.')
       end
@@ -112,9 +112,9 @@ RSpec.describe TrialController, type: :controller do
 
       it 'extends the trial by 7 days' do
         original_expiry = trial_user.trial_expires_at
-        
+
         post :extend_trial
-        
+
         expect(response).to redirect_to(app_root_path)
         expect(flash[:success]).to eq('Your trial has been extended by 7 days.')
         expect(trial_user.reload.trial_expires_at).to be > original_expiry
@@ -124,7 +124,7 @@ RSpec.describe TrialController, type: :controller do
     context 'with user who has no active trial' do
       it 'shows error message' do
         post :extend_trial
-        
+
         expect(response).to redirect_to(app_root_path)
         expect(flash[:error]).to eq('No active trial to extend.')
       end
@@ -138,7 +138,7 @@ RSpec.describe TrialController, type: :controller do
 
       it 'shows error message' do
         post :extend_trial
-        
+
         expect(response).to redirect_to(app_root_path)
         expect(flash[:error]).to eq('No active trial to extend.')
       end
@@ -162,9 +162,9 @@ RSpec.describe TrialController, type: :controller do
       it 'exports user data as JSON' do
         expect(DataExportService).to receive(:export_user_data).with(trial_user).and_return('{"pages": []}')
         expect(trial_user).to receive(:update!).with(trial_data_exported: true)
-        
+
         get :export_data
-        
+
         expect(response).to have_http_status(:success)
         expect(response.content_type).to include('application/json')
         expect(response.headers['Content-Disposition']).to include('attachment')
@@ -172,15 +172,15 @@ RSpec.describe TrialController, type: :controller do
 
       it 'marks data as exported' do
         expect(trial_user).to receive(:update!).with(trial_data_exported: true)
-        
+
         get :export_data
       end
 
       it 'handles export errors gracefully' do
         expect(DataExportService).to receive(:export_user_data).and_raise(StandardError.new('Export failed'))
-        
+
         get :export_data
-        
+
         expect(response).to redirect_to(app_root_path)
         expect(flash[:error]).to eq('Data export failed. Please try again or contact support.')
       end
@@ -194,9 +194,9 @@ RSpec.describe TrialController, type: :controller do
 
       it 'exports user data as JSON' do
         expect(DataExportService).to receive(:export_user_data).with(downloaded_user).and_return('{"pages": []}')
-        
+
         get :export_data
-        
+
         expect(response).to have_http_status(:success)
         expect(response.content_type).to include('application/json')
       end
@@ -205,7 +205,7 @@ RSpec.describe TrialController, type: :controller do
     context 'with user who has no trial or download' do
       it 'redirects with error message' do
         get :export_data
-        
+
         expect(response).to redirect_to(app_root_path)
         expect(flash[:error]).to eq('No data available to export.')
       end
@@ -219,7 +219,7 @@ RSpec.describe TrialController, type: :controller do
 
       it 'redirects with error message' do
         get :export_data
-        
+
         expect(response).to redirect_to(app_root_path)
         expect(flash[:error]).to eq('No data available to export.')
       end
@@ -285,7 +285,7 @@ RSpec.describe TrialController, type: :controller do
       other_user = create(:user, :with_trial)
       session[:user_id] = user.id
       allow(controller).to receive(:current_user).and_return(user)
-      
+
       get :status
       expect(assigns(:user)).to eq(user)
       expect(assigns(:user)).not_to eq(other_user)
@@ -295,7 +295,7 @@ RSpec.describe TrialController, type: :controller do
       other_user = create(:user, :with_trial)
       session[:user_id] = user.id
       allow(controller).to receive(:current_user).and_return(user)
-      
+
       # User should only see their own trial status
       get :status
       expect(assigns(:user).id).to eq(user.id)
@@ -306,7 +306,7 @@ RSpec.describe TrialController, type: :controller do
   describe 'trial expiration handling' do
     context 'when trial expires during session' do
       let(:expiring_user) { create(:user, trial_started_at: 8.days.ago, trial_expires_at: 1.day.ago) }
-      
+
       before do
         session[:user_id] = expiring_user.id
         allow(controller).to receive(:current_user).and_return(expiring_user)
@@ -329,14 +329,14 @@ RSpec.describe TrialController, type: :controller do
   describe 'analytics tracking' do
     it 'tracks trial start analytics' do
       expect(AnalyticsService).to receive(:track_trial_start).with(user)
-      
+
       post :start
     end
 
     it 'does not track analytics on trial start failure' do
       allow(user).to receive(:start_trial!).and_return(false)
       expect(AnalyticsService).not_to receive(:track_trial_start)
-      
+
       post :start
     end
   end
@@ -345,7 +345,7 @@ RSpec.describe TrialController, type: :controller do
     it 'logs export data requests' do
       session[:user_id] = trial_user.id
       allow(controller).to receive(:current_user).and_return(trial_user)
-      
+
       # Test that the action works and logs are generated
       get :export_data
       expect(response).to have_http_status(:success)
@@ -355,7 +355,7 @@ RSpec.describe TrialController, type: :controller do
       session[:user_id] = trial_user.id
       allow(controller).to receive(:current_user).and_return(trial_user)
       allow(DataExportService).to receive(:export_user_data).and_raise(StandardError.new('Export failed'))
-      
+
       # Test that the action handles errors properly
       get :export_data
       expect(response).to redirect_to(app_root_path)

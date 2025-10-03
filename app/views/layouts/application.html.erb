@@ -90,6 +90,12 @@
       ⚠️ <%= alert %>
     </div>
   <% end %>
+  
+  <% if flash[:error] %>
+    <div class="flash-message flash-message--error" data-auto-dismiss="true">
+      ⚠️ <%= flash[:error] %>
+    </div>
+  <% end %>
 
   <% if flash[:trial] %>
     <div class="flash-message flash-message--trial" data-auto-dismiss="true">

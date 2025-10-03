@@ -107,7 +107,7 @@ class DownloadsController < ApplicationController
     rescue => e
       Rails.logger.error "PWA bundle creation failed: #{e.message}"
       Rails.logger.error e.backtrace.join("\n")
-      flash[:error] = "Download failed. Please try again or contact support."
+          flash[:error] = "Download failed. Please try again or contact support."
       redirect_to app_root_path
     end
   end
