@@ -60,11 +60,11 @@ class UserMailerPreview < ActionMailer::Preview
       name: "Test User",
       password: "password123"
     )
-    
+
     # Set trial dates manually for preview
     user.trial_started_at = 1.day.ago
     user.trial_expires_at = 3.days.from_now
-    
+
     user
   end
 end
