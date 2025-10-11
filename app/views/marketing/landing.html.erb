@@ -79,7 +79,7 @@
                 <div class="notebook-card p-4">
                   <div class="flex justify-between items-start">
                     <div class="flex-grow">
-                      <h3 class="text-lg font-semibold text-blue-600 mb-2">📝 Daily Tasks</h3>
+                      <h3 class="text-lg font-semibold text-blue-600 mb-2"><%= image_tag "icons/content-paper-edit.svg", alt: "Pen and paper icon", class: "w-6 h-6 ml-2" %> Daily Tasks</h3>
                       <div class="flex items-center space-x-2 text-sm text-gray-600">
                         <span class="bg-gray-100 px-2 py-1 rounded-full">3/5 completed</span>
                         <div class="w-12 h-1.5 bg-gray-200 rounded-full overflow-hidden">
@@ -115,10 +115,10 @@
           
           <!-- Floating elements -->
           <div class="absolute -top-4 -right-4 bg-yellow-200 p-3 rounded-lg shadow-lg transform rotate-12">
-            <span class="text-sm font-medium">✏️ Add new todo...</span>
+            <span class="text-sm font-medium"><%= image_tag "icons/edit-pencil.svg", alt: "Pen and paper icon", class: "w-6 h-6 ml-2" %> Add new todo...</span>
           </div>
           <div class="absolute -bottom-4 -left-4 bg-green-200 p-3 rounded-lg shadow-lg transform -rotate-6">
-            <span class="text-sm font-medium">🎨 5 Beautiful Themes</span>
+            <span class="text-sm font-medium"><%= image_tag "icons/beautiful-themes.svg", alt: "Color palette icon", class: "w-6 h-6 ml-2" %> 5 Beautiful Themes</span>
           </div>
         </div>
       </div>
@@ -162,7 +162,7 @@
       <!-- Feature 3 -->
       <div class="text-center p-6">
         <div class="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-          <span class="text-2xl">📱</span>
+          <span class="text-2xl">W</span>
         </div>
         <h3 class="text-xl font-semibold text-gray-900 mb-3">Works Everywhere</h3>
         <p class="text-gray-600">
@@ -188,7 +188,7 @@
       <!-- Privacy -->
       <div class="text-center p-6 bg-white rounded-lg shadow-sm">
         <div class="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-          <span class="text-2xl">🔒</span>
+          <%= image_tag "icons/lock-circle.svg", alt: "Lock icon", class: "w-8 h-8" %>
         </div>
         <h3 class="text-lg font-semibold text-gray-900 mb-3">Privacy First</h3>
         <p class="text-gray-600 text-sm">
@@ -199,7 +199,7 @@
       <!-- Data Ownership -->
       <div class="text-center p-6 bg-white rounded-lg shadow-sm">
         <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-          <span class="text-2xl">💾</span>
+        <%= image_tag "icons/database-check.svg", alt: "Data icon", class: "w-8 h-8" %>
         </div>
         <h3 class="text-lg font-semibold text-gray-900 mb-3">True Data Ownership</h3>
         <p class="text-gray-600 text-sm">
@@ -210,7 +210,7 @@
       <!-- Offline -->
       <div class="text-center p-6 bg-white rounded-lg shadow-sm">
         <div class="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-          <span class="text-2xl">📱</span>
+          <%= image_tag "icons/mobile-check.svg", alt: "Phone icon", class: "w-8 h-8" %>
         </div>
         <h3 class="text-lg font-semibold text-gray-900 mb-3">Works Offline</h3>
         <p class="text-gray-600 text-sm">
@@ -221,7 +221,7 @@
       <!-- No Ads -->
       <div class="text-center p-6 bg-white rounded-lg shadow-sm">
         <div class="bg-orange-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-          <span class="text-2xl">🚫</span>
+        <%= image_tag "icons/mobilephone-action-lock.svg", alt: "No ads icon", class: "w-8 h-8" %>
         </div>
         <h3 class="text-lg font-semibold text-gray-900 mb-3">No Ads Ever</h3>
         <p class="text-gray-600 text-sm">
@@ -235,9 +235,7 @@
       <div class="inline-flex items-center bg-white rounded-lg px-6 py-4 shadow-sm border border-gray-200">
         <div class="flex items-center space-x-4">
           <div class="text-green-600">
-            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-            </svg>
+            <%= image_tag "icons/gdpr-compliance.svg", alt: "No ads icon", class: "w-8 h-8" %>
           </div>
           <div class="text-left">
             <p class="text-sm font-medium text-gray-900">GDPR Compliant</p>
