@@ -22,6 +22,10 @@ Rails.application.routes.draw do
   get "/how-to", to: "marketing#how_to"
   get "/why", to: "marketing#why"
 
+  # Contact form (public)
+  get "/contact", to: "contact#new", as: "contact"
+  post "/contact", to: "contact#create"
+
   # Legal pages (public)
   get "/privacy", to: "marketing#privacy", as: "privacy_policy"
   get "/terms", to: "marketing#terms", as: "terms_of_service"

@@ -68,12 +68,12 @@ Rails.application.configure do
     protocol: "https"
   }
 
-  # Configure SMTP settings for production email delivery
+  # Configure SMTP settings for production (Gmail by default for contact form)
   config.action_mailer.smtp_settings = {
-    address: ENV.fetch("SMTP_ADDRESS", "smtp.sendgrid.net"),
+    address: ENV.fetch("SMTP_ADDRESS", "smtp.gmail.com"),
     port: ENV.fetch("SMTP_PORT", 587),
     domain: ENV.fetch("SMTP_DOMAIN", "todo-it.app"),
-    user_name: ENV.fetch("SMTP_USERNAME", "apikey"),
+    user_name: ENV.fetch("CONTACT_EMAIL", ""),
     password: ENV.fetch("SMTP_PASSWORD", ""),
     authentication: :plain,
     enable_starttls_auto: true

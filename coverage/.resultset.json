@@ -281,6 +281,64 @@
         ],
         "branches": {}
       },
+      "/Users/laptop/Documents/GitHub/todo_app/app/controllers/contact_controller.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          null,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
       "/Users/laptop/Documents/GitHub/todo_app/app/controllers/downloads_controller.rb": {
         "lines": [
           0,
@@ -1665,6 +1723,33 @@
         ],
         "branches": {}
       },
+      "/Users/laptop/Documents/GitHub/todo_app/app/mailers/contact_mailer.rb": {
+        "lines": [
+          null,
+          null,
+          0,
+          null,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
       "/Users/laptop/Documents/GitHub/todo_app/app/mailers/user_mailer.rb": {
         "lines": [
           0,
@@ -2763,6 +2848,6 @@
         "branches": {}
       }
     },
-    "timestamp": 1772034510
+    "timestamp": 1772060708
   }
 }
