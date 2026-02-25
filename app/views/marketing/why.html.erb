@@ -1,125 +1,98 @@
 <div class="marketing-page">
-<!-- Navigation -->
 <%= render 'shared/navbar' %>
 
-<!-- Hero Section -->
-<section class="py-24 bg-gradient-to-br from-blue-50 to-indigo-100">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <h1 class="text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-      Why we built
-      <span class="text-blue-600">Todo-it</span>
+<!-- Hero -->
+<section class="mkt-hero">
+  <div class="mkt-inner" style="text-align: center;">
+    <span class="mkt-hero__eyebrow" style="margin-bottom: 1.5rem; display: inline-flex;">
+      <span class="mkt-hero__eyebrow-dot"></span>
+      Our thinking behind Todo-it
+    </span>
+    <h1 class="mkt-hero__title" style="font-size: clamp(2.25rem, 5vw, 3.5rem);">
+      Why we built <span style="color: #fbbf24;">Todo-it</span>
     </h1>
-    <p class="text-xl text-gray-600 mb-8 leading-relaxed max-w-3xl mx-auto">
-      Try it free for 7 days on our servers, then download to your device forever. 
-      Works seamlessly as a PWA on all devices. No social logins, no big tech tracking.
+    <p class="mkt-hero__subtitle" style="margin: 0 auto;">
       Because your mind deserves clarity, not clutter.
+      No subscriptions. No gatekeepers. No noise. Just your thoughts, organised beautifully.
     </p>
   </div>
 </section>
 
-<!-- Main Content -->
-<section class="py-24 bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    
-    <!-- Against Lock-In -->
-    <div class="mb-16">
-      <div class="flex items-start space-x-6">
-        <div class="marketing-icon-circle bg-red-100 text-red-600">
+<!-- Manifesto -->
+<section class="mkt-section bg-white">
+  <div class="mkt-inner--narrow">
+
+    <div class="mkt-manifesto">
+      <div>
+        <div class="mkt-manifesto__icon bg-red-100 text-red-600">
           <%= inline_icon "gift" %>
         </div>
-        <div class="flex-grow">
-          <h2 class="text-3xl font-bold text-gray-900 mb-4">Try Before You Own</h2>
-          <p class="text-lg text-gray-600 mb-4">
-            Most todo apps lock you in immediately. We offer a 7-day free trial on our servers, 
-            then you download the full app to your device forever.
-          </p>
-          <p class="text-gray-600">
-            <strong>Simple Lists = No Stress</strong><br>
-            Most apps overwhelm you with complex features and constant notifications. 
-            This one just asks: What needs to be done?
-          </p>
+      </div>
+      <div>
+        <h2 class="mkt-manifesto__title">Try before you own</h2>
+        <div class="mkt-manifesto__body">
+          <p>Most todo apps lock you in immediately - sign up, add your card, hope for the best. We do it differently. Start with a full 7-day trial on our servers, no credit card needed. Use every feature, try every theme, get a genuine feel for whether this is the tool for you.</p>
+          <p>After that, you download the app to your device and keep it forever. <strong>Simple lists, no stress.</strong> Most apps overwhelm you with due dates, priority levels, sub-tasks, and notifications. We just ask: what needs to be done today? Write it down. Tick it off. Move on.</p>
         </div>
       </div>
     </div>
 
-    <!-- Against Subscriptions -->
-    <div class="mb-16">
-      <div class="flex items-start space-x-6">
-        <div class="marketing-icon-circle bg-orange-100 text-orange-600">
+    <div class="mkt-manifesto">
+      <div>
+        <div class="mkt-manifesto__icon bg-orange-100 text-orange-600">
           <%= inline_icon "credit-card" %>
         </div>
-        <div class="flex-grow">
-          <h2 class="text-3xl font-bold text-gray-900 mb-4">Against Subscriptions</h2>
-          <p class="text-lg text-gray-600 mb-4">
-            $5/month adds up to $60/year. In 3 years, you've bought the same app three times. 
-            Here, you pay once and download the app to your device forever.
-          </p>
-          <p class="text-gray-600">
-            <strong>Yours Forever</strong><br>
-            Pay once. Download to your device. It's not another subscription — it's your daily ritual.
-          </p>
+      </div>
+      <div>
+        <h2 class="mkt-manifesto__title">Against subscriptions</h2>
+        <div class="mkt-manifesto__body">
+          <p>$5/month sounds nothing. Until you realise that's $60/year. In three years, you've bought the same app three times. The subscription model is great for software companies. Not so much for you.</p>
+          <p>Here, you pay <strong>once - $9.99</strong> - and download the app to your device forever. No monthly surprises. No price increases. No "we're changing our plans" emails. It's yours. That's how software should work.</p>
         </div>
       </div>
     </div>
 
-    <!-- Against the App Store Tax -->
-    <div class="mb-16">
-      <div class="flex items-start space-x-6">
-        <div class="marketing-icon-circle bg-yellow-100 text-yellow-600">
+    <div class="mkt-manifesto">
+      <div>
+        <div class="mkt-manifesto__icon bg-yellow-100 text-yellow-600">
           <%= inline_icon "building-storefront" %>
         </div>
-        <div class="flex-grow">
-          <h2 class="text-3xl font-bold text-gray-900 mb-4">Against the App Store Tax</h2>
-          <p class="text-lg text-gray-600 mb-4">
-            30% fees, arbitrary bans, endless approvals. 
-            Download directly from us — no app store gatekeepers, no ongoing fees.
-          </p>
-          <p class="text-gray-600">
-            <strong>A Notebook, Reimagined</strong><br>
-            Each day begins with a fresh page. Just like pen and paper. 
-            Clear. Focused. Human.
-          </p>
+      </div>
+      <div>
+        <h2 class="mkt-manifesto__title">Against the app store tax</h2>
+        <div class="mkt-manifesto__body">
+          <p>30% fees. Arbitrary rejections. Months-long approvals. Sudden bans. The app store model keeps developers permanently at someone else's mercy - and that cost always gets passed to you.</p>
+          <p><strong>We go direct.</strong> Download from us. No gatekeepers. No cut taken. Just the app, at a fair price. And unlike the notebook you'd buy at a stationery shop, this one never runs out of pages.</p>
         </div>
       </div>
     </div>
 
-    <!-- For Digital Sovereignty -->
-    <div class="mb-16">
-      <div class="flex items-start space-x-6">
-        <div class="marketing-icon-circle bg-green-100 text-green-600">
+    <div class="mkt-manifesto">
+      <div>
+        <div class="mkt-manifesto__icon bg-green-100 text-green-600">
           <%= inline_icon "shield-check" %>
         </div>
-        <div class="flex-grow">
-          <h2 class="text-3xl font-bold text-gray-900 mb-4">For Digital Sovereignty</h2>
-          <p class="text-lg text-gray-600 mb-4">
-            After the trial, your data lives on your device. Offline-first, encrypted by default, 
-            no servers to depend on.
-          </p>
-          <p class="text-gray-600">
-            <strong>No Noise</strong><br>
-            No ads, no nudges, no streaks. The only thing in front of you: your day.
-          </p>
+      </div>
+      <div>
+        <h2 class="mkt-manifesto__title">For digital sovereignty</h2>
+        <div class="mkt-manifesto__body">
+          <p>After the trial, your data lives on your device. Offline-first, encrypted by default, no servers to depend on. Yours, without condition. If we disappeared tomorrow, you'd lose nothing.</p>
+          <p><strong>No noise.</strong> No ads, no nudges, no streaks designed to keep you hooked. The only thing in front of you: your day. What you've done, what you still need to do. Everything else is a distraction.</p>
         </div>
       </div>
     </div>
 
-    <!-- PWA & Privacy Benefits -->
-    <div class="mb-16">
-      <div class="flex items-start space-x-6">
-        <div class="marketing-icon-circle bg-green-100 text-green-600">
+    <div class="mkt-manifesto">
+      <div>
+        <div class="mkt-manifesto__icon bg-blue-100 text-blue-600">
           <%= inline_icon "device-phone-mobile" %>
         </div>
-        <div class="flex-grow">
-          <h2 class="text-3xl font-bold text-gray-900 mb-4">PWA That Stays Logged In</h2>
-          <p class="text-lg text-gray-600 mb-4">
-            Works seamlessly on your phone, tablet, and desktop as a Progressive Web App. 
-            Stays logged in like YouTube and Spotify - no constant re-authentication.
-          </p>
-          <p class="text-gray-600">
-            <strong>Privacy First Authentication</strong><br>
-            No Google, Facebook, or Apple logins. Your data stays yours, not big tech's. 
-            Simple email/password authentication with secure remember-me functionality.
-          </p>
+      </div>
+      <div>
+        <h2 class="mkt-manifesto__title">A PWA that stays logged in</h2>
+        <div class="mkt-manifesto__body">
+          <p>Works seamlessly on your phone, tablet, and desktop as a Progressive Web App. Stays logged in the way YouTube or Spotify does - open it and you're straight in. No constant re-authentication, no friction.</p>
+          <p><strong>Privacy-first authentication.</strong> No "Sign in with Google". No "Sign in with Apple". No Facebook. Your data stays yours - not big tech's. Simple email and password with a secure remember-me, and you're done.</p>
         </div>
       </div>
     </div>
@@ -127,171 +100,152 @@
   </div>
 </section>
 
-<!-- Philosophy Section -->
-<section class="py-24 bg-gray-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-12">
-      <h2 class="text-4xl font-bold text-gray-900 mb-6">Our Philosophy</h2>
-      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-        We believe in the power of simplicity and the importance of digital independence.
+<!-- Philosophy -->
+<section class="mkt-section mkt-section--cream">
+  <div class="mkt-inner">
+    <div style="text-align: center; margin-bottom: 3.5rem;">
+      <span class="mkt-label">Our philosophy</span>
+      <h2 class="mkt-heading">What we believe</h2>
+      <p class="mkt-subheading" style="margin: 0 auto;">
+        Two things that guide every decision we make building Todo-it.
       </p>
     </div>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <!-- Tech Community Values -->
-      <div class="bg-white rounded-lg p-8 shadow-sm">
-        <h2 class="text-2xl font-bold text-gray-900 mb-4">For the Tech Community</h2>
-        <p class="text-gray-600 mb-4">
+
+    <div class="mkt-grid-2" style="max-width: 56rem; margin: 0 auto;">
+
+      <div class="mkt-philosophy">
+        <div class="mkt-philosophy__quote">
           "Software should feel like owning a notebook, not renting one."
-        </p>
-        <ul class="space-y-2 text-gray-600">
-          <li class="flex items-center">
-            <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
-            <span>7-day free trial on servers</span>
-          </li>
-          <li class="flex items-center">
-            <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
-            <span>Download to your device forever</span>
-          </li>
-          <li class="flex items-center">
-            <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
-            <span>No vendor lock-in</span>
-          </li>
-          <li class="flex items-center">
-            <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
-            <span>One-time payment model</span>
-          </li>
-        </ul>
+        </div>
+        <div style="font-weight: 600; color: #0f172a; margin-bottom: 1rem; font-size: 0.95rem;">For people who value ownership</div>
+        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <div class="flex items-center">
+            <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
+            <span style="font-size: 0.9rem; color: #374151;">7-day free trial, no card required</span>
+          </div>
+          <div class="flex items-center">
+            <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
+            <span style="font-size: 0.9rem; color: #374151;">Download to your device forever</span>
+          </div>
+          <div class="flex items-center">
+            <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
+            <span style="font-size: 0.9rem; color: #374151;">No vendor lock-in</span>
+          </div>
+          <div class="flex items-center">
+            <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
+            <span style="font-size: 0.9rem; color: #374151;">One-time payment</span>
+          </div>
+        </div>
       </div>
-      
-      <!-- Lifestyle Values -->
-      <div class="bg-white rounded-lg p-8 shadow-sm">
-        <h2 class="text-2xl font-bold text-gray-900 mb-4">For Mindful Productivity</h2>
-        <p class="text-gray-600 mb-4">
-          "Because life's too short for complicated todo apps."
+
+      <div class="mkt-philosophy">
+        <div class="mkt-philosophy__quote">
+          "Life's too short for complicated todo apps."
+        </div>
+        <div style="font-weight: 600; color: #0f172a; margin-bottom: 1rem; font-size: 0.95rem;">For mindful productivity</div>
+        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <div class="flex items-center">
+            <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
+            <span style="font-size: 0.9rem; color: #374151;">Minimalist, focused design</span>
+          </div>
+          <div class="flex items-center">
+            <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
+            <span style="font-size: 0.9rem; color: #374151;">Focus on today, not a backlog</span>
+          </div>
+          <div class="flex items-center">
+            <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
+            <span style="font-size: 0.9rem; color: #374151;">No distractions or notifications</span>
+          </div>
+          <div class="flex items-center">
+            <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
+            <span style="font-size: 0.9rem; color: #374151;">Beautiful simplicity</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="mkt-section bg-white">
+  <div class="mkt-inner">
+    <div style="text-align: center; margin-bottom: 3.5rem;">
+      <span class="mkt-label">What people say</span>
+      <h2 class="mkt-heading">Real reactions from real users</h2>
+    </div>
+
+    <div class="mkt-grid-3">
+
+      <div class="mkt-testimonial">
+        <div class="mkt-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="mkt-testimonial__quote">
+          "Finally, a todo app that doesn't overwhelm me. The 7-day trial was perfect - I could really put it through its paces before committing."
         </p>
-        <ul class="space-y-2 text-gray-600">
-          <li class="flex items-center">
-            <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
-            <span>Minimalist design</span>
-          </li>
-          <li class="flex items-center">
-            <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
-            <span>Focus on today</span>
-          </li>
-          <li class="flex items-center">
-            <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
-            <span>No distractions</span>
-          </li>
-          <li class="flex items-center">
-            <div class="hand-checkbox hand-checkbox-checked mr-3 scale-75"></div>
-            <span>Beautiful simplicity</span>
-          </li>
-        </ul>
+        <div class="mkt-testimonial__author">Sarah M.</div>
+        <div class="mkt-testimonial__role">Designer</div>
+      </div>
+
+      <div class="mkt-testimonial">
+        <div class="mkt-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="mkt-testimonial__quote">
+          "Love that I own my data. Downloaded to my phone and it works offline perfectly. No more subscription anxiety - I paid once and that's that."
+        </p>
+        <div class="mkt-testimonial__author">Mike R.</div>
+        <div class="mkt-testimonial__role">Software Developer</div>
+      </div>
+
+      <div class="mkt-testimonial">
+        <div class="mkt-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="mkt-testimonial__quote">
+          "The hand-drawn style makes it feel personal and warm. It's like having a beautiful notebook that never runs out of pages."
+        </p>
+        <div class="mkt-testimonial__author">Emma L.</div>
+        <div class="mkt-testimonial__role">Writer</div>
+      </div>
+
+    </div>
+
+    <!-- Trust indicators -->
+    <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 3rem;">
+      <div style="display: flex; align-items: center; gap: 0.625rem; color: #64748b; font-size: 0.875rem;">
+        <div class="mkt-trust-icon bg-green-100 text-green-600" style="width: 2.25rem; height: 2.25rem; margin: 0; flex-shrink: 0;">
+          <%= inline_icon "check-circle" %>
+        </div>
+        7-day free trial
+      </div>
+      <div style="display: flex; align-items: center; gap: 0.625rem; color: #64748b; font-size: 0.875rem;">
+        <div class="mkt-trust-icon bg-blue-100 text-blue-600" style="width: 2.25rem; height: 2.25rem; margin: 0; flex-shrink: 0;">
+          <%= inline_icon "check-circle" %>
+        </div>
+        Money-back guarantee
+      </div>
+      <div style="display: flex; align-items: center; gap: 0.625rem; color: #64748b; font-size: 0.875rem;">
+        <div class="mkt-trust-icon bg-purple-100 text-purple-600" style="width: 2.25rem; height: 2.25rem; margin: 0; flex-shrink: 0;">
+          <%= inline_icon "check-circle" %>
+        </div>
+        No credit card to start
       </div>
     </div>
   </div>
 </section>
 
-<!-- Social Proof Section -->
-<section class="py-24 bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-12">
-      <h2 class="text-3xl font-bold text-gray-900 mb-4">What Our Users Say</h2>
-      <p class="text-lg text-gray-600">
-        Join thousands who've chosen simplicity over complexity
-      </p>
-    </div>
-    
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <!-- Testimonial 1 -->
-      <div class="bg-gray-50 rounded-lg p-6">
-        <div class="flex items-center gap-0.5 mb-4 text-yellow-500">
-          <%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %>
-        </div>
-        <p class="text-gray-600 mb-4">
-          "Finally, a todo app that doesn't overwhelm me. The 7-day trial was perfect - I could really test it out before committing."
-        </p>
-        <div class="text-sm text-gray-500">
-          <strong>Sarah M.</strong> - Designer
-        </div>
-      </div>
-      
-      <!-- Testimonial 2 -->
-      <div class="bg-gray-50 rounded-lg p-6">
-        <div class="flex items-center gap-0.5 mb-4 text-yellow-500">
-          <%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %>
-        </div>
-        <p class="text-gray-600 mb-4">
-          "Love that I own my data. Downloaded to my device and it works offline perfectly. No more subscription anxiety!"
-        </p>
-        <div class="text-sm text-gray-500">
-          <strong>Mike R.</strong> - Developer
-        </div>
-      </div>
-      
-      <!-- Testimonial 3 -->
-      <div class="bg-gray-50 rounded-lg p-6">
-        <div class="flex items-center gap-0.5 mb-4 text-yellow-500">
-          <%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %>
-        </div>
-        <p class="text-gray-600 mb-4">
-          "The hand-drawn style makes it feel personal. It's like having a beautiful notebook that never runs out of pages."
-        </p>
-        <div class="text-sm text-gray-500">
-          <strong>Emma L.</strong> - Writer
-        </div>
-      </div>
-    </div>
-    
-    <!-- Trust Indicators -->
-    <div class="mt-12 text-center">
-      <div class="inline-flex items-center space-x-8 text-gray-500">
-        <div class="flex items-center space-x-2">
-          <div class="marketing-icon-circle bg-green-100 text-green-600 w-10 h-10">
-            <%= inline_icon "check-circle" %>
-          </div>
-          <span class="text-sm">7-day free trial</span>
-        </div>
-        <div class="flex items-center space-x-2">
-          <div class="marketing-icon-circle bg-blue-100 text-blue-600 w-10 h-10">
-            <%= inline_icon "check-circle" %>
-          </div>
-          <span class="text-sm">Money-back guarantee</span>
-        </div>
-        <div class="flex items-center space-x-2">
-          <div class="marketing-icon-circle bg-purple-100 text-purple-600 w-10 h-10">
-            <%= inline_icon "check-circle" %>
-          </div>
-          <span class="text-sm">No credit card required</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Closing CTA -->
-<section class="py-24 bg-blue-600">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <h2 class="text-4xl font-bold text-white mb-4">
-      Ready to experience the difference?
-    </h2>
-    <p class="text-xl text-blue-100 mb-8">
-      Try Todo-it free for 7 days on our servers, then download to your device forever.
+<!-- CTA -->
+<section class="mkt-cta">
+  <div class="mkt-inner">
+    <h2 class="mkt-cta__title">Ready to experience the difference?</h2>
+    <p class="mkt-cta__subtitle">
+      Try Todo-it free for 7 days on our servers. No credit card. Download forever for $9.99 when you're ready.
     </p>
-    
-    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <%= link_to signup_path, class: "bg-white hover:bg-gray-100 text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold transition-colors" do %>
-        Start Your Free Trial
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+      <%= link_to signup_path, class: "mkt-btn mkt-btn--white" do %>
+        Start your free trial
       <% end %>
-      <%= link_to pricing_path, class: "border-2 border-white hover:bg-white hover:text-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors" do %>
-        View Pricing
+      <%= link_to pricing_path, class: "mkt-btn mkt-btn--ghost" do %>
+        View pricing
       <% end %>
     </div>
-    
-    <p class="text-blue-200 mt-6 text-sm">
-      Join thousands who've chosen simplicity over complexity
-    </p>
+    <p class="mkt-cta__trust">Join thousands who've chosen simplicity over complexity</p>
   </div>
 </section>
 

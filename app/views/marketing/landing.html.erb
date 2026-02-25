@@ -1,351 +1,355 @@
 <div class="marketing-landing">
-<!-- Hero Section -->
-<div class="min-h-screen flex flex-col">
-  <!-- Navigation -->
-  <%= render 'shared/navbar' %>
+<%= render 'shared/navbar' %>
 
-  <!-- Hero Content -->
-  <div class="flex-1 bg-gradient-to-br from-blue-50 to-indigo-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        
-        <!-- Left Column - Content -->
-        <div>
-          <h1 class="text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-            Beautiful
-            <span class="text-blue-600">Notebook-Style</span>
-            Todo Pages
-          </h1>
-          
-          <p class="text-xl text-gray-600 mb-8 leading-relaxed">
-            Try Todo-it free for 7 days, then download to your device forever. 
-            Works seamlessly as a PWA on your phone, tablet, or desktop. 
-            No social logins, no big tech tracking - just your data, your device.
-          </p>
-          
-          <div class="flex flex-col sm:flex-row gap-4 mb-12">
-            <%= link_to signup_path, class: "bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors text-center" do %>
-              Start Free Trial
-            <% end %>
-            <%= link_to pricing_path, class: "border-2 border-gray-300 hover:border-blue-600 text-gray-700 hover:text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold transition-colors text-center" do %>
-              View Pricing
-            <% end %>
-          </div>
-          
-          <!-- Features List -->
-          <div class="space-y-4">
-            <div class="flex items-center">
-              <div class="hand-checkbox hand-checkbox-checked mr-4"></div>
-              <span class="text-gray-700 font-medium">Works as PWA on phone, tablet, desktop</span>
-            </div>
-            <div class="flex items-center">
-              <div class="hand-checkbox hand-checkbox-checked mr-4"></div>
-              <span class="text-gray-700 font-medium">Stays logged in like YouTube, Spotify</span>
-            </div>
-            <div class="flex items-center">
-              <div class="hand-checkbox hand-checkbox-checked mr-4"></div>
-              <span class="text-gray-700 font-medium">No social logins - privacy first</span>
-            </div>
-            <div class="flex items-center">
-              <div class="hand-checkbox hand-checkbox-checked mr-4"></div>
-              <span class="text-gray-700 font-medium">Hand-drawn notebook aesthetics</span>
-            </div>
-            <div class="flex items-center">
-              <div class="hand-checkbox hand-checkbox-checked mr-4"></div>
-              <span class="text-gray-700 font-medium">Drag-and-drop reordering</span>
-            </div>
-            <div class="flex items-center">
-              <div class="hand-checkbox hand-checkbox-checked mr-4"></div>
-              <span class="text-gray-700 font-medium">No due dates - no stress, just simple lists</span>
-            </div>
-            <div class="flex items-center">
-              <div class="hand-checkbox hand-checkbox-checked mr-4"></div>
-              <span class="text-gray-700 font-medium">100% data ownership - download to your device</span>
-            </div>
-            <div class="flex items-center">
-              <div class="hand-checkbox hand-checkbox-checked mr-4"></div>
-              <span class="text-gray-700 font-medium">Works offline - no internet required</span>
-            </div>
-          </div>
+<!-- Hero -->
+<section class="mkt-hero">
+  <div class="mkt-inner">
+    <div class="mkt-hero__grid">
+
+      <!-- Left: Copy -->
+      <div>
+        <div class="mkt-hero__eyebrow">
+          <span class="mkt-hero__eyebrow-dot"></span>
+          Try free for 7 days - no credit card required
         </div>
-        
-        <!-- Right Column - App Preview -->
-        <div class="relative">
-          <div class="app-preview bg-white rounded-2xl shadow-2xl p-8 notebook-background">
-            <!-- Mock App Interface -->
-            <div class="mb-6">
-              <h2 class="text-2xl font-bold text-gray-900 mb-4">My Pages</h2>
-              <div class="space-y-3">
-                <!-- Sample Page -->
-                <div class="notebook-card p-4">
-                  <div class="flex justify-between items-start">
-                    <div class="flex-grow">
-                      <h3 class="text-lg font-semibold text-blue-600 mb-2"><%= image_tag "icons/content-paper-edit.svg", alt: "Pen and paper icon", class: "w-6 h-6 ml-2" %> Daily Tasks</h3>
-                      <div class="flex items-center space-x-2 text-sm text-gray-600">
-                        <span class="bg-gray-100 px-2 py-1 rounded-full">3/5 completed</span>
-                        <div class="w-12 h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                          <div class="h-full bg-green-500" style="width: 60%"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- Sample Todos -->
-                <div class="space-y-2 ml-4">
-                  <div class="flex items-center">
-                    <div class="hand-checkbox hand-checkbox-checked mr-3"></div>
-                    <span class="text-gray-500 line-through">Review marketing copy</span>
-                  </div>
-                  <div class="flex items-center">
-                    <div class="hand-checkbox hand-checkbox-checked mr-3"></div>
-                    <span class="text-gray-500 line-through">Update website design</span>
-                  </div>
-                  <div class="flex items-center">
-                    <div class="hand-checkbox hand-checkbox-unchecked mr-3"></div>
-                    <span class="text-gray-700">Plan team meeting</span>
-                  </div>
-                  <div class="flex items-center">
-                    <div class="hand-checkbox hand-checkbox-unchecked mr-3"></div>
-                    <span class="text-gray-700">Prepare presentation</span>
-                  </div>
+
+        <h1 class="mkt-hero__title">
+          Todo pages that feel
+          <span class="mkt-hero__title-handwritten">hand&#8209;crafted.</span>
+        </h1>
+
+        <p class="mkt-hero__subtitle">
+          Beautiful notebook-style pages for the things that matter.
+          Try on our servers free for 7 days, then download to your device forever.
+          Private by design. Yours to keep.
+        </p>
+
+        <div class="mkt-hero__cta-group">
+          <%= link_to signup_path, class: "mkt-btn mkt-btn--primary" do %>
+            Start free trial &rarr;
+          <% end %>
+          <%= link_to pricing_path, class: "mkt-btn mkt-btn--ghost" do %>
+            See pricing
+          <% end %>
+        </div>
+
+        <div class="mkt-hero__trust-strip">
+          <span class="mkt-hero__trust-item">7-day free trial</span>
+          <span class="mkt-hero__trust-item">Works offline</span>
+          <span class="mkt-hero__trust-item">One-time payment</span>
+          <span class="mkt-hero__trust-item">No tracking</span>
+        </div>
+      </div>
+
+      <!-- Right: App mockup -->
+      <div>
+        <div class="mkt-mockup app-preview">
+          <div class="mkt-mockup__chrome">
+            <span class="mkt-mockup__dot mkt-mockup__dot--red"></span>
+            <span class="mkt-mockup__dot mkt-mockup__dot--yellow"></span>
+            <span class="mkt-mockup__dot mkt-mockup__dot--green"></span>
+            <span class="mkt-mockup__url">todo-it.app</span>
+          </div>
+          <div class="mkt-mockup__body notebook-background">
+            <div style="margin-bottom: 1rem;">
+              <div style="font-size: 1.05rem; margin-bottom: 0.875rem; color: #1e293b;">My Pages</div>
+              <div class="notebook-card" style="padding: 0.75rem 1rem; margin-bottom: 1rem;">
+                <div style="color: #2563eb; font-weight: 600; font-size: 0.875rem; margin-bottom: 0.25rem;">&#9998; Daily Tasks</div>
+                <div style="color: #94a3b8; font-size: 0.75rem;">3 of 5 completed &nbsp;&bull;&nbsp;
+                  <span style="display: inline-block; width: 3rem; height: 0.375rem; background: #e2e8f0; border-radius: 9999px; vertical-align: middle; position: relative; overflow: hidden;"><span style="position: absolute; left: 0; top: 0; height: 100%; width: 60%; background: #22c55e;"></span></span>
                 </div>
               </div>
             </div>
-          </div>
-          
-          <!-- Floating elements -->
-          <div class="app-preview absolute -top-4 -right-4 bg-yellow-200 p-3 rounded-lg shadow-lg transform rotate-12">
-            <span class="text-sm font-medium"><%= image_tag "icons/edit-pencil.svg", alt: "Pen and paper icon", class: "w-6 h-6 ml-2" %> Add new todo...</span>
-          </div>
-          <div class="app-preview absolute -bottom-4 -left-4 bg-green-200 p-3 rounded-lg shadow-lg transform -rotate-6">
-            <span class="text-sm font-medium"><%= image_tag "icons/beautiful-themes.svg", alt: "Color palette icon", class: "w-6 h-6 ml-2" %> 5 Beautiful Themes</span>
+            <div style="padding-left: 0.25rem;">
+              <div class="flex items-center" style="margin-bottom: 0.625rem;">
+                <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.85); flex-shrink: 0;"></div>
+                <span style="color: #94a3b8; text-decoration: line-through; font-size: 0.825rem;">Review marketing copy</span>
+              </div>
+              <div class="flex items-center" style="margin-bottom: 0.625rem;">
+                <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.85); flex-shrink: 0;"></div>
+                <span style="color: #94a3b8; text-decoration: line-through; font-size: 0.825rem;">Update website design</span>
+              </div>
+              <div class="flex items-center" style="margin-bottom: 0.625rem;">
+                <div class="hand-checkbox hand-checkbox-unchecked mr-3" style="transform: scale(0.85); flex-shrink: 0;"></div>
+                <span style="color: #374151; font-size: 0.825rem;">Plan team meeting</span>
+              </div>
+              <div class="flex items-center" style="margin-bottom: 0.625rem;">
+                <div class="hand-checkbox hand-checkbox-unchecked mr-3" style="transform: scale(0.85); flex-shrink: 0;"></div>
+                <span style="color: #374151; font-size: 0.825rem;">Prepare presentation</span>
+              </div>
+              <div class="flex items-center">
+                <div class="hand-checkbox hand-checkbox-unchecked mr-3" style="transform: scale(0.85); flex-shrink: 0;"></div>
+                <span style="color: #374151; font-size: 0.825rem;">Write project notes</span>
+              </div>
+            </div>
+            <div style="margin-top: 1.125rem; padding: 0.625rem 0.75rem; border: 1.5px dashed #cbd5e1; border-radius: 0.375rem; color: #9ca3af; font-size: 0.78rem; text-align: center;">
+              + Add a new todo&hellip;
+            </div>
           </div>
         </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Feature strip -->
+<div class="mkt-strip">
+  <div class="mkt-inner">
+    <div class="mkt-strip__grid">
+      <div class="mkt-strip__item">
+        <span class="mkt-strip__dot"></span>
+        Hand-drawn notebook design
+      </div>
+      <div class="mkt-strip__item">
+        <span class="mkt-strip__dot"></span>
+        5 beautiful themes, all included
+      </div>
+      <div class="mkt-strip__item">
+        <span class="mkt-strip__dot"></span>
+        Your data lives on your device
       </div>
     </div>
   </div>
 </div>
 
-<!-- Features Section -->
-<section id="features" class="py-24 bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-16">
-      <h2 class="text-4xl font-bold text-gray-900 mb-4">Why Todo-it is Different</h2>
-      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-        Move beyond boring todo apps. Todo-it brings the warmth and creativity of handwritten notebooks to your digital workflow.
+<!-- Features -->
+<section id="features" class="mkt-section bg-white">
+  <div class="mkt-inner">
+    <div style="text-align: center; margin-bottom: 3.5rem;">
+      <span class="mkt-label">Features</span>
+      <h2 class="mkt-heading">Designed with intention</h2>
+      <p class="mkt-subheading" style="margin: 0 auto;">
+        Move beyond boring todo apps. Todo-it brings the warmth and creativity of handwritten notebooks to your digital life - without the clutter.
       </p>
     </div>
-    
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <!-- Feature 1 -->
-      <div class="text-center p-6">
-        <div class="marketing-icon-circle bg-blue-100 text-blue-600 mx-auto mb-4">
+
+    <div class="mkt-grid-3">
+
+      <div class="mkt-card">
+        <div class="mkt-card__icon bg-blue-100 text-blue-600">
           <%= inline_icon "pencil-square" %>
         </div>
-        <h3 class="text-xl font-semibold text-gray-900 mb-3">Authentic Hand-Drawn Design</h3>
-        <p class="text-gray-600">
-          Every element feels hand-crafted. From checkboxes to underlines, experience the warmth of analog design in a digital world.
+        <div class="mkt-card__title">Authentic Hand-Drawn Design</div>
+        <p class="mkt-card__text">
+          Every element feels hand-crafted. Checkboxes, underlines, and notebook backgrounds bring the warmth of analog stationery to your screen.
         </p>
       </div>
-      
-      <!-- Feature 2 -->
-      <div class="text-center p-6">
-        <div class="marketing-icon-circle bg-green-100 text-green-600 mx-auto mb-4">
+
+      <div class="mkt-card">
+        <div class="mkt-card__icon bg-green-100 text-green-600">
           <%= inline_icon "sparkles" %>
         </div>
-        <h3 class="text-xl font-semibold text-gray-900 mb-3">Magical Interactions</h3>
-        <p class="text-gray-600">
-          Drag-and-drop reordering, typewriter animations, and smooth checkbox transitions make every action delightful.
+        <div class="mkt-card__title">Delightful Interactions</div>
+        <p class="mkt-card__text">
+          Typewriter animations, smooth checkbox transitions, satisfying drag-and-drop reordering. Every action feels like it was designed to be noticed.
         </p>
       </div>
-      
-      <!-- Feature 3 -->
-      <div class="text-center p-6">
-        <div class="marketing-icon-circle bg-purple-100 text-purple-600 mx-auto mb-4">
-          <%= inline_icon "globe-alt" %>
-        </div>
-        <h3 class="text-xl font-semibold text-gray-900 mb-3">Works Everywhere</h3>
-        <p class="text-gray-600">
-          Try free on our servers, then download to your device. Works offline, no app store required. Your pages, everywhere.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- Trust Signals Section -->
-<section class="py-24 bg-gray-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-16">
-      <h2 class="text-4xl font-bold text-gray-900 mb-4">Your Data, Your Control</h2>
-      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-        Unlike other todo apps, Todo-it puts you in complete control of your data. 
-        No tracking, no ads, no data mining. Just your thoughts, organized beautifully.
-      </p>
-    </div>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-      <!-- Privacy -->
-      <div class="text-center p-6 bg-white rounded-lg shadow-sm">
-        <div class="marketing-icon-circle bg-green-100 text-green-600 mx-auto mb-4">
-          <%= inline_icon "lock-closed" %>
-        </div>
-        <h3 class="text-lg font-semibold text-gray-900 mb-3">Privacy First</h3>
-        <p class="text-gray-600 text-sm">
-          No social logins, no big tech tracking. Your data stays yours, not Google's or Facebook's.
-        </p>
-      </div>
-      
-      <!-- Data Ownership -->
-      <div class="text-center p-6 bg-white rounded-lg shadow-sm">
-        <div class="marketing-icon-circle bg-blue-100 text-blue-600 mx-auto mb-4">
-          <%= inline_icon "circle-stack" %>
-        </div>
-        <h3 class="text-lg font-semibold text-gray-900 mb-3">True Data Ownership</h3>
-        <p class="text-gray-600 text-sm">
-          Download to your device and own your data forever. No subscriptions, no lock-ins.
-        </p>
-      </div>
-      
-      <!-- Offline -->
-      <div class="text-center p-6 bg-white rounded-lg shadow-sm">
-        <div class="marketing-icon-circle bg-purple-100 text-purple-600 mx-auto mb-4">
+      <div class="mkt-card">
+        <div class="mkt-card__icon bg-purple-100 text-purple-600">
           <%= inline_icon "device-phone-mobile" %>
         </div>
-        <h3 class="text-lg font-semibold text-gray-900 mb-3">Works Offline</h3>
-        <p class="text-gray-600 text-sm">
-          Once downloaded, works completely offline. No internet required for your productivity.
+        <div class="mkt-card__title">Works Everywhere, Forever</div>
+        <p class="mkt-card__text">
+          Try on our servers for 7 days, then download as a PWA to your phone, tablet, or desktop. Works offline. No app store needed.
         </p>
       </div>
-      
-      <!-- No Ads -->
-      <div class="text-center p-6 bg-white rounded-lg shadow-sm">
-        <div class="marketing-icon-circle bg-orange-100 text-orange-600 mx-auto mb-4">
+
+      <div class="mkt-card">
+        <div class="mkt-card__icon bg-orange-100 text-orange-600">
           <%= inline_icon "shield-check" %>
         </div>
-        <h3 class="text-lg font-semibold text-gray-900 mb-3">No Ads Ever</h3>
-        <p class="text-gray-600 text-sm">
-          Clean, distraction-free experience. No ads, no upsells, no interruptions.
+        <div class="mkt-card__title">Privacy First</div>
+        <p class="mkt-card__text">
+          No social logins. No Google, no Facebook, no Apple tracking. Your todos are yours - never mined for advertising data.
         </p>
       </div>
-    </div>
-    
-    <!-- Trust Badge -->
-    <div class="mt-8 text-center">
-      <div class="inline-flex items-center bg-white rounded-lg px-6 py-4 shadow-sm border border-gray-200">
-        <div class="flex items-center space-x-4">
-          <div class="marketing-icon-circle bg-green-100 text-green-600">
-            <%= inline_icon "shield-check" %>
-          </div>
-          <div class="text-left">
-            <p class="text-sm font-medium text-gray-900">GDPR Compliant</p>
-            <p class="text-xs text-gray-500">Your data is protected</p>
-          </div>
+
+      <div class="mkt-card">
+        <div class="mkt-card__icon bg-yellow-100 text-yellow-600">
+          <%= inline_icon "circle-stack" %>
         </div>
+        <div class="mkt-card__title">You Own Your Data</div>
+        <p class="mkt-card__text">
+          Download once and your data lives on your device. Export anytime. Delete anytime. No lock-in, no servers to depend on.
+        </p>
       </div>
+
+      <div class="mkt-card">
+        <div class="mkt-card__icon bg-indigo-100 text-indigo-600">
+          <%= inline_icon "paint-brush" %>
+        </div>
+        <div class="mkt-card__title">5 Beautiful Themes</div>
+        <p class="mkt-card__text">
+          Classic Dotted, Lined Paper, Graph, Vintage, and Dark Mode. All themes included - switch instantly with the FAB button, any time.
+        </p>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- Themes Preview Section -->
-<section class="py-24 bg-gray-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-16">
-      <h2 class="text-4xl font-bold text-gray-900 mb-4">Beautiful Themes for Every Mood</h2>
-      <p class="text-xl text-gray-600">
-        Choose from our curated collection of notebook styles - all themes included free
+<!-- Themes Showcase -->
+<section class="mkt-section mkt-section--cream">
+  <div class="mkt-inner">
+    <div style="text-align: center; margin-bottom: 3.5rem;">
+      <span class="mkt-label">Themes</span>
+      <h2 class="mkt-heading">A style for every mood</h2>
+      <p class="mkt-subheading" style="margin: 0 auto;">
+        All five themes included with your download - switch instantly, anytime.
       </p>
     </div>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Classic Theme -->
-      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-        <div class="app-preview h-48 bg-gradient-to-br from-amber-50 to-orange-100 p-6 relative notebook-background">
-          <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle, #d4b896 1px, transparent 1px); background-size: 20px 20px;"></div>
-          <h3 class="font-semibold text-gray-800 mb-2">Classic Dotted</h3>
-          <div class="space-y-2">
-            <div class="flex items-center">
-              <div class="hand-checkbox hand-checkbox-checked mr-2 scale-75"></div>
-              <span class="text-sm text-gray-700">Morning coffee</span>
+
+    <div class="mkt-grid-3">
+
+      <!-- Classic -->
+      <div class="mkt-theme-card">
+        <div class="mkt-theme-preview app-preview" style="background: linear-gradient(135deg, #fffbeb, #fef3c7);">
+          <div style="position: absolute; inset: 0; background-image: radial-gradient(circle, #d4b896 1px, transparent 1px); background-size: 18px 18px; opacity: 0.3;"></div>
+          <div style="position: relative;">
+            <div style="font-weight: 600; color: #78350f; margin-bottom: 0.75rem; font-size: 0.875rem;">Morning Routine</div>
+            <div class="flex items-center" style="margin-bottom: 0.5rem;">
+              <div class="hand-checkbox hand-checkbox-checked mr-2" style="transform: scale(0.75); flex-shrink: 0;"></div>
+              <span style="font-size: 0.78rem; color: #92400e; text-decoration: line-through;">Morning coffee</span>
             </div>
             <div class="flex items-center">
-              <div class="hand-checkbox hand-checkbox-unchecked mr-2 scale-75"></div>
-              <span class="text-sm text-gray-700">Read chapter 3</span>
+              <div class="hand-checkbox hand-checkbox-unchecked mr-2" style="transform: scale(0.75); flex-shrink: 0;"></div>
+              <span style="font-size: 0.78rem; color: #78350f;">Read chapter 3</span>
             </div>
           </div>
         </div>
-        <div class="p-4">
-          <p class="text-gray-600 text-sm">The warm, familiar feel of a traditional notebook</p>
+        <div class="mkt-theme-label">
+          <div class="mkt-theme-name">Classic Dotted</div>
+          <div class="mkt-theme-desc">Warm moleskin with a timeless feel</div>
         </div>
       </div>
-      
-      <!-- Lined Theme -->
-      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-        <div class="app-preview h-48 bg-gradient-to-br from-blue-50 to-cyan-100 p-6 relative">
-          <div class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(transparent, transparent 19px, #94a3b8 19px, #94a3b8 20px); background-size: 100% 20px;"></div>
-          <h3 class="font-semibold text-gray-800 mb-2">Lined Paper</h3>
-          <div class="space-y-2">
-            <div class="flex items-center">
-              <div class="hand-checkbox hand-checkbox-checked mr-2 scale-75"></div>
-              <span class="text-sm text-gray-700">Team standup</span>
+
+      <!-- Lined -->
+      <div class="mkt-theme-card">
+        <div class="mkt-theme-preview app-preview" style="background: #fafcff; position: relative;">
+          <div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(transparent, transparent 23px, #bfdbfe 23px, #bfdbfe 24px); opacity: 0.7;"></div>
+          <div style="position: absolute; top: 0; bottom: 0; left: 2.75rem; width: 2px; background: #fca5a5; opacity: 0.55;"></div>
+          <div style="position: relative;">
+            <div style="font-weight: 600; color: #1e3a5f; margin-bottom: 0.75rem; font-size: 0.875rem; margin-left: 1.5rem;">Work Tasks</div>
+            <div class="flex items-center" style="margin-bottom: 0.5rem; margin-left: 1.5rem;">
+              <div class="hand-checkbox hand-checkbox-checked mr-2" style="transform: scale(0.75); flex-shrink: 0;"></div>
+              <span style="font-size: 0.78rem; color: #475569; text-decoration: line-through;">Team standup</span>
             </div>
-            <div class="flex items-center">
-              <div class="hand-checkbox hand-checkbox-unchecked mr-2 scale-75"></div>
-              <span class="text-sm text-gray-700">Code review</span>
+            <div class="flex items-center" style="margin-left: 1.5rem;">
+              <div class="hand-checkbox hand-checkbox-unchecked mr-2" style="transform: scale(0.75); flex-shrink: 0;"></div>
+              <span style="font-size: 0.78rem; color: #1e3a5f;">Code review</span>
             </div>
           </div>
         </div>
-        <div class="p-4">
-          <p class="text-gray-600 text-sm">Clean lines for structured thinking</p>
+        <div class="mkt-theme-label">
+          <div class="mkt-theme-name">Lined Paper</div>
+          <div class="mkt-theme-desc">Clean lines for structured thinking</div>
         </div>
       </div>
-      
-      <!-- Dark Theme -->
-      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-        <div class="app-preview h-48 bg-gradient-to-br from-slate-800 to-slate-900 p-6 relative">
-          <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle, #64748b 1px, transparent 1px); background-size: 20px 20px;"></div>
-          <h3 class="font-semibold text-slate-100 mb-2">Dark Mode</h3>
-          <div class="space-y-2">
-            <div class="flex items-center">
-              <div class="hand-checkbox hand-checkbox-checked mr-2 scale-75" style="filter: brightness(0) invert(1);"></div>
-              <span class="text-sm text-slate-200">Night coding</span>
+
+      <!-- Dark -->
+      <div class="mkt-theme-card">
+        <div class="mkt-theme-preview app-preview" style="background: linear-gradient(135deg, #1e293b, #0f172a);">
+          <div style="position: absolute; inset: 0; background-image: radial-gradient(circle, #334155 1px, transparent 1px); background-size: 18px 18px; opacity: 0.35;"></div>
+          <div style="position: relative;">
+            <div style="font-weight: 600; color: #e2e8f0; margin-bottom: 0.75rem; font-size: 0.875rem;">Night Coding</div>
+            <div class="flex items-center" style="margin-bottom: 0.5rem;">
+              <div class="hand-checkbox hand-checkbox-checked mr-2" style="transform: scale(0.75); filter: brightness(0) invert(1); flex-shrink: 0;"></div>
+              <span style="font-size: 0.78rem; color: #64748b; text-decoration: line-through;">Deploy updates</span>
             </div>
             <div class="flex items-center">
-              <div class="hand-checkbox hand-checkbox-unchecked mr-2 scale-75" style="filter: brightness(0) invert(1);"></div>
-              <span class="text-sm text-slate-200">Deploy updates</span>
+              <div class="hand-checkbox hand-checkbox-unchecked mr-2" style="transform: scale(0.75); filter: brightness(0) invert(1); flex-shrink: 0;"></div>
+              <span style="font-size: 0.78rem; color: #e2e8f0;">Write unit tests</span>
             </div>
           </div>
         </div>
-        <div class="p-4">
-          <p class="text-gray-600 text-sm">Easy on the eyes for late-night productivity</p>
+        <div class="mkt-theme-label">
+          <div class="mkt-theme-name">Dark Mode</div>
+          <div class="mkt-theme-desc">Easy on the eyes for late-night work</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Privacy & Trust -->
+<section class="mkt-section bg-white">
+  <div class="mkt-inner">
+    <div style="text-align: center; margin-bottom: 3.5rem;">
+      <span class="mkt-label mkt-label--green">Privacy</span>
+      <h2 class="mkt-heading">Your data, your control</h2>
+      <p class="mkt-subheading" style="margin: 0 auto;">
+        Unlike other todo apps, we don't mine your data, show ads, or lock you in. We built something you can actually own.
+      </p>
+    </div>
+
+    <div class="mkt-trust-grid">
+      <div class="mkt-trust-item">
+        <div class="mkt-trust-icon bg-green-100 text-green-600">
+          <%= inline_icon "lock-closed" %>
+        </div>
+        <div class="mkt-trust-title">Privacy First</div>
+        <p class="mkt-trust-text">No social logins, no big tech tracking. Your notes belong to you - not Google, not Facebook.</p>
+      </div>
+
+      <div class="mkt-trust-item">
+        <div class="mkt-trust-icon bg-blue-100 text-blue-600">
+          <%= inline_icon "circle-stack" %>
+        </div>
+        <div class="mkt-trust-title">True Ownership</div>
+        <p class="mkt-trust-text">Download once and your data lives on your device. No subscriptions, no lock-in, no server dependency.</p>
+      </div>
+
+      <div class="mkt-trust-item">
+        <div class="mkt-trust-icon bg-purple-100 text-purple-600">
+          <%= inline_icon "bolt" %>
+        </div>
+        <div class="mkt-trust-title">Works Offline</div>
+        <p class="mkt-trust-text">Once downloaded, works completely offline. On a plane, underground, anywhere - your todos are always there.</p>
+      </div>
+
+      <div class="mkt-trust-item">
+        <div class="mkt-trust-icon bg-orange-100 text-orange-600">
+          <%= inline_icon "shield-check" %>
+        </div>
+        <div class="mkt-trust-title">No Ads. Ever.</div>
+        <p class="mkt-trust-text">Clean, distraction-free experience. No ads, no upsells, no push notifications. Just your list.</p>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 3rem;">
+      <div style="display: inline-flex; align-items: center; gap: 1rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 0.875rem; padding: 1rem 1.75rem;">
+        <div class="mkt-trust-icon bg-green-100 text-green-600" style="margin: 0; flex-shrink: 0;">
+          <%= inline_icon "shield-check" %>
+        </div>
+        <div style="text-align: left;">
+          <div style="font-weight: 600; color: #15803d; font-size: 0.9rem;">GDPR Compliant</div>
+          <div style="font-size: 0.825rem; color: #16a34a;">Full data rights - export or permanently delete at any time</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA Section -->
-<section class="py-24 bg-blue-600">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <h2 class="text-4xl font-bold text-white mb-4">Ready to Transform Your Productivity?</h2>
-    <p class="text-xl text-blue-100 mb-8">
-      Try Todo-it free for 7 days on our servers, then download to your device forever. 
-      No credit card required.
+<!-- CTA -->
+<section class="mkt-cta">
+  <div class="mkt-inner">
+    <h2 class="mkt-cta__title">Ready to get organised, beautifully?</h2>
+    <p class="mkt-cta__subtitle">
+      Try Todo-it free for 7 days. No credit card. No commitment.<br>
+      Download forever for just $9.99 when you're ready.
     </p>
-    
-    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <%= link_to signup_path, class: "bg-white hover:bg-gray-100 text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold transition-colors" do %>
-        Start Free Trial
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+      <%= link_to signup_path, class: "mkt-btn mkt-btn--white" do %>
+        Start free trial
       <% end %>
-      <%= link_to pricing_path, class: "border-2 border-white hover:bg-white hover:text-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors" do %>
-        View Pricing
+      <%= link_to pricing_path, class: "mkt-btn mkt-btn--ghost" do %>
+        View pricing
       <% end %>
     </div>
-    
-    <p class="text-blue-200 mt-6 text-sm">
-      No credit card required • 7-day free trial • Download to your device forever
-    </p>
+    <p class="mkt-cta__trust">No credit card required &nbsp;&middot;&nbsp; 7-day free trial &nbsp;&middot;&nbsp; Download forever for $9.99</p>
   </div>
 </section>
 

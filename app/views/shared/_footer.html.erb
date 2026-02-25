@@ -1,49 +1,55 @@
-<!-- Footer -->
-<footer class="bg-gray-900 text-white py-12">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <!-- Link Sections - 3 columns above -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-      <!-- Product Links -->
+<footer class="mkt-footer">
+  <div class="mkt-inner">
+    <div class="mkt-footer__grid">
+
+      <!-- Brand -->
       <div>
-        <h3 class="font-semibold mb-4">Product</h3>
-        <ul class="space-y-2 text-gray-400">
-          <li><%= link_to "Features", "#features", class: "hover:text-white transition-colors" %></li>
-          <li><%= link_to "Why Todo-it", why_path, class: "hover:text-white transition-colors" %></li>
-          <li><%= link_to "Pricing", pricing_path, class: "hover:text-white transition-colors" %></li>
-          <li><%= link_to "How to Use", how_to_path, class: "hover:text-white transition-colors" %></li>
-        </ul>
-      </div>
-      
-      <!-- Support Links -->
-      <div>
-        <h3 class="font-semibold mb-4">Support</h3>
-        <ul class="space-y-2 text-gray-400">
-          <li><a href="mailto:support@todo-it.app" class="hover:text-white transition-colors">Contact Support</a></li>
-          <li><%= link_to "Sign In", login_path, class: "hover:text-white transition-colors" %></li>
-          <li><%= link_to "Create Account", signup_path, class: "hover:text-white transition-colors" %></li>
-        </ul>
-      </div>
-      
-      <!-- Legal Links -->
-      <div>
-        <h3 class="font-semibold mb-4">Legal</h3>
-        <ul class="space-y-2 text-gray-400">
-          <li><%= link_to "Privacy Policy", privacy_policy_path, class: "hover:text-white transition-colors" %></li>
-          <li><%= link_to "Terms of Service", terms_of_service_path, class: "hover:text-white transition-colors" %></li>
-        </ul>
-      </div>
-    </div>
-    
-    <!-- Brand Section - Full width at bottom -->
-    <div class="border-t border-gray-700 pt-8">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center">
-          <div class="logo-checkbox mr-3" style="filter: brightness(0) invert(1);"></div>
-          <span class="text-2xl font-bold mr-3">Todo-it</span>
+        <div class="mkt-footer__brand-name">
+          <div class="logo-checkbox" style="filter: brightness(0) invert(1);"></div>
+          Todo-it
         </div>
-        <p class="text-gray-400 text-sm">
-          Beautiful notebook-style todo pages that make productivity feel personal and delightful. • © 2025 Todo-it. Made with ❤️ in Bolton, UK.
+        <p class="mkt-footer__brand-desc">
+          Beautiful notebook-style todo pages. Private by design.
+          Try free for 7 days, download forever for $9.99.
         </p>
+        <p style="color: #334155; font-size: 0.8rem;">Made with care in Bolton, UK.</p>
       </div>
+
+      <!-- Product -->
+      <div>
+        <div class="mkt-footer__col-title">Product</div>
+        <ul class="mkt-footer__links">
+          <li><%= link_to "Features", "#features", class: "mkt-footer__link" %></li>
+          <li><%= link_to "Why Todo-it", why_path, class: "mkt-footer__link" %></li>
+          <li><%= link_to "Pricing", pricing_path, class: "mkt-footer__link" %></li>
+          <li><%= link_to "How to Use", how_to_path, class: "mkt-footer__link" %></li>
+        </ul>
+      </div>
+
+      <!-- Account -->
+      <div>
+        <div class="mkt-footer__col-title">Account</div>
+        <ul class="mkt-footer__links">
+          <li><%= link_to "Sign In", login_path, class: "mkt-footer__link" %></li>
+          <li><%= link_to "Create Account", signup_path, class: "mkt-footer__link" %></li>
+          <li><a href="mailto:support@todo-it.app" class="mkt-footer__link">Contact Support</a></li>
+        </ul>
+      </div>
+
+      <!-- Legal -->
+      <div>
+        <div class="mkt-footer__col-title">Legal</div>
+        <ul class="mkt-footer__links">
+          <li><%= link_to "Privacy Policy", privacy_policy_path, class: "mkt-footer__link" %></li>
+          <li><%= link_to "Terms of Service", terms_of_service_path, class: "mkt-footer__link" %></li>
+        </ul>
+      </div>
+
     </div>
+
+    <div class="mkt-footer__bottom">
+      <p class="mkt-footer__copyright">&copy; 2025 Todo-it. All rights reserved.</p>
+      <p class="mkt-footer__copyright">Beautiful notebook-style todo pages &middot; Private by design</p>
+    </div>
+  </div>
 </footer>

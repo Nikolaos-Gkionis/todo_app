@@ -1,6 +1,6 @@
 # Making Todo-it More TeuxDeux-like
 
-An opinion on how to improve the Todo-it app to align with [TeuxDeux](https://teuxdeux.com/)'s calm, minimal workflow and user control—while keeping the handwritten notebook style and templates.
+An opinion on how to improve the Todo-it app to align with [TeuxDeux](https://teuxdeux.com/)'s calm, minimal workflow and user control - while keeping the handwritten notebook style and templates.
 
 ## UI and Layout
 

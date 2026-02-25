@@ -1,31 +1,155 @@
 <!-- Marketing Header -->
-<header class="bg-white shadow-sm">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center py-6">
+<nav class="navbar">
+  <div class="navbar__container">
+    <div class="navbar__content">
       <!-- Logo -->
-      <div class="flex items-center">
+      <div class="navbar__logo">
         <%= link_to root_path, class: "flex items-center" do %>
           <div class="logo-checkbox mr-3"></div>
-          <span class="text-2xl font-bold text-gray-900">Todo-it</span>
+          <span class="navbar__logo-text">Todo-it</span>
         <% end %>
       </div>
-      
-      <!-- Navigation -->
-      <nav class="hidden md:flex space-x-8">
-        <%= link_to "Why Todo-it", why_path, class: "text-gray-600 hover:text-gray-900 transition-colors" %>
-        <%= link_to "Pricing", pricing_path, class: "text-gray-600 hover:text-gray-900 transition-colors" %>
-        <%= link_to "How to Use", how_to_path, class: "text-gray-600 hover:text-gray-900 transition-colors" %>
-      </nav>
-      
-      <!-- Auth Buttons -->
-      <div class="flex items-center space-x-4">
+
+      <!-- Desktop Navigation -->
+      <div class="navbar__nav--desktop space-x-8">
+        <div class="navbar__nav-list">
+          <%= link_to "Home", root_path, class: "navbar__nav-link #{current_page?(root_path) ? 'navbar__nav-link--active' : ''}" %>
+          <%= link_to "Why", why_path, class: "navbar__nav-link #{current_page?(why_path) ? 'navbar__nav-link--active' : ''}" %>
+          <%= link_to "Pricing", pricing_path, class: "navbar__nav-link #{current_page?(pricing_path) ? 'navbar__nav-link--active' : ''}" %>
+          <%= link_to "How to Use", how_to_path, class: "navbar__nav-link #{current_page?(how_to_path) ? 'navbar__nav-link--active' : ''}" %>
+        </div>
+        <div class="navbar__actions space-x-4">
+          <% if logged_in? %>
+            <%= link_to "Go to App", app_root_path, class: "btn btn--primary" %>
+          <% else %>
+            <%= link_to "Sign In", login_path, class: "navbar__nav-link" %>
+            <%= link_to "Get Started", signup_path, class: "btn btn--primary" %>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="block sm:hidden">
+        <button type="button" class="navbar__menu-btn mobile-menu-button" aria-controls="mobile-menu" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Full-Screen Menu -->
+  <div class="mobile-menu hidden" id="mobile-menu">
+    <div class="mobile-menu__header">
+      <%= link_to root_path, class: "flex items-center" do %>
+        <div class="logo-checkbox mr-3"></div>
+        <span class="navbar__logo-text">Todo-it</span>
+      <% end %>
+      <button type="button" class="mobile-menu__close-btn mobile-menu-close">
+        <span class="sr-only">Close menu</span>
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="mobile-menu__content">
+      <div class="mobile-menu__nav-list">
+        <%= link_to "Home", root_path, class: "mobile-menu__nav-link #{current_page?(root_path) ? 'mobile-menu__nav-link--active' : ''}" %>
+        <%= link_to "Why", why_path, class: "mobile-menu__nav-link #{current_page?(why_path) ? 'mobile-menu__nav-link--active' : ''}" %>
+        <%= link_to "Pricing", pricing_path, class: "mobile-menu__nav-link #{current_page?(pricing_path) ? 'mobile-menu__nav-link--active' : ''}" %>
+        <%= link_to "How to Use", how_to_path, class: "mobile-menu__nav-link #{current_page?(how_to_path) ? 'mobile-menu__nav-link--active' : ''}" %>
+      </div>
+      <div class="mobile-menu__actions">
         <% if logged_in? %>
-          <%= link_to "Go to App", app_root_path, class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors" %>
+          <div class="mobile-menu__action-item">
+            <%= link_to "Go to App", app_root_path, class: "mobile-menu__action-btn" %>
+          </div>
         <% else %>
-          <%= link_to "Sign In", login_path, class: "text-gray-600 hover:text-gray-900 transition-colors" %>
-          <%= link_to "Start Free Trial", signup_path, class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors" %>
+          <div class="mobile-menu__action-item">
+            <%= link_to "Sign In", login_path, class: "mobile-menu__action-link" %>
+          </div>
+          <div class="mobile-menu__action-item">
+            <%= link_to "Get Started", signup_path, class: "mobile-menu__action-btn" %>
+          </div>
         <% end %>
       </div>
     </div>
   </div>
-</header>
+</nav>
+
+<!-- Mobile Menu JavaScript -->
+<script>
+function initializeMobileMenu() {
+  const mobileMenuButton = document.querySelector('.mobile-menu-button');
+  const mobileMenu = document.querySelector('.mobile-menu');
+  const mobileMenuClose = document.querySelector('.mobile-menu-close');
+
+  if (mobileMenuButton && mobileMenu && mobileMenuClose) {
+    mobileMenuButton.removeEventListener('click', handleMobileMenuToggle);
+    mobileMenuClose.removeEventListener('click', handleMobileMenuClose);
+    mobileMenuButton.addEventListener('click', handleMobileMenuToggle);
+    mobileMenuClose.addEventListener('click', handleMobileMenuClose);
+  }
+}
+
+function handleMobileMenuToggle(e) {
+  e.preventDefault();
+  const mobileMenu = document.querySelector('.mobile-menu');
+  const mobileMenuButton = document.querySelector('.mobile-menu-button');
+  if (mobileMenu && mobileMenuButton) {
+    const isHidden = mobileMenu.classList.contains('hidden');
+    if (isHidden) {
+      mobileMenu.classList.remove('hidden');
+      mobileMenuButton.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    } else {
+      mobileMenu.classList.add('hidden');
+      mobileMenuButton.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+  }
+}
+
+function handleMobileMenuClose(e) {
+  e.preventDefault();
+  const mobileMenu = document.querySelector('.mobile-menu');
+  const mobileMenuButton = document.querySelector('.mobile-menu-button');
+  if (mobileMenu && mobileMenuButton) {
+    mobileMenu.classList.add('hidden');
+    mobileMenuButton.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+}
+
+document.addEventListener('click', function(e) {
+  const mobileMenuButton = document.querySelector('.mobile-menu-button');
+  const mobileMenu = document.querySelector('.mobile-menu');
+  if (mobileMenuButton && mobileMenu &&
+      !mobileMenuButton.contains(e.target) &&
+      !mobileMenu.contains(e.target) &&
+      !mobileMenu.classList.contains('hidden')) {
+    mobileMenu.classList.add('hidden');
+    mobileMenuButton.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const mobileMenuButton = document.querySelector('.mobile-menu-button');
+    if (mobileMenu && mobileMenuButton && !mobileMenu.classList.contains('hidden')) {
+      mobileMenu.classList.add('hidden');
+      mobileMenuButton.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+  }
+});
+
+document.addEventListener('DOMContentLoaded', initializeMobileMenu);
+document.addEventListener('turbo:load', initializeMobileMenu);
+document.addEventListener('turbo:render', initializeMobileMenu);
+</script>
