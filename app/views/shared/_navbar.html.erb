@@ -1,5 +1,5 @@
 <!-- Responsive Navigation Bar -->
-<nav class="navbar">
+<nav class="navbar" aria-label="Main navigation">
   <div class="navbar__container">
     <div class="navbar__content">
       <!-- Logo -->
@@ -71,7 +71,7 @@
   </div>
   
     <!-- Mobile/Tablet Full-Screen Menu (Hidden by default) -->
-    <div class="mobile-menu hidden" id="mobile-menu">
+    <div class="mobile-menu hidden" id="mobile-menu" aria-hidden="true">
       <div class="mobile-menu__header">
         <%= link_to (defined?(root_path) ? root_path : pages_path), class: "flex items-center" do %>
           <div class="logo-checkbox mr-3"></div>
@@ -154,10 +154,12 @@ function handleMobileMenuToggle(e) {
     if (isHidden) {
       mobileMenu.classList.remove('hidden');
       mobileMenuButton.setAttribute('aria-expanded', 'true');
+      mobileMenu.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
     } else {
       mobileMenu.classList.add('hidden');
       mobileMenuButton.setAttribute('aria-expanded', 'false');
+      mobileMenu.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
     }
   }
@@ -172,6 +174,7 @@ function handleMobileMenuClose(e) {
   if (mobileMenu && mobileMenuButton) {
     mobileMenu.classList.add('hidden');
     mobileMenuButton.setAttribute('aria-expanded', 'false');
+    mobileMenu.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
   }
 }
@@ -187,6 +190,7 @@ document.addEventListener('click', function(e) {
       !mobileMenu.classList.contains('hidden')) {
     mobileMenu.classList.add('hidden');
     mobileMenuButton.setAttribute('aria-expanded', 'false');
+    mobileMenu.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
   }
 });
@@ -200,6 +204,7 @@ document.addEventListener('keydown', function(e) {
     if (mobileMenu && mobileMenuButton && !mobileMenu.classList.contains('hidden')) {
       mobileMenu.classList.add('hidden');
       mobileMenuButton.setAttribute('aria-expanded', 'false');
+      mobileMenu.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
     }
   }

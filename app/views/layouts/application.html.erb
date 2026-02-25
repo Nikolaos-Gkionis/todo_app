@@ -31,6 +31,8 @@
   </head>
 
   <body class="notebook-background handwritten" id="app-body">
+    <!-- Skip to main content - first focusable for keyboard/screen reader users -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <!-- Load theme immediately to prevent flash -->
     <script>
       (function() {
@@ -80,38 +82,40 @@
 
   <!-- Flash Messages -->
   <% if notice %>
-    <div class="flash-message flash-message--success" data-auto-dismiss="true">
+    <div class="flash-message flash-message--success" role="alert" aria-live="polite" data-auto-dismiss="true">
       ✅ <%= notice %>
     </div>
   <% end %>
   
   <% if alert %>
-    <div class="flash-message flash-message--error" data-auto-dismiss="true">
+    <div class="flash-message flash-message--error" role="alert" aria-live="assertive" data-auto-dismiss="true">
       ⚠️ <%= alert %>
     </div>
   <% end %>
   
   <% if flash[:error] %>
-    <div class="flash-message flash-message--error" data-auto-dismiss="true">
+    <div class="flash-message flash-message--error" role="alert" aria-live="assertive" data-auto-dismiss="true">
       ⚠️ <%= flash[:error] %>
     </div>
   <% end %>
 
   <% if flash[:trial] %>
-    <div class="flash-message flash-message--trial" data-auto-dismiss="true">
+    <div class="flash-message flash-message--trial" role="alert" aria-live="polite" data-auto-dismiss="true">
       <%= flash[:trial] %>
     </div>
   <% end %>
 
-    <%= yield %>
+    <main id="main-content">
+      <%= yield %>
+    </main>
 
     <!-- Logout Confirmation Modal -->
-    <div data-logout-target="modal" class="logout-modal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true" onclick="if(event.target === this) window.hideLogoutModal()">
+    <div data-logout-target="modal" class="logout-modal" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="logoutModalLabel" aria-hidden="true" onclick="if(event.target === this) window.hideLogoutModal()">
       <div class="logout-modal__backdrop">
         <div class="logout-modal__dialog">
           <div class="logout-modal__content">
             <div class="logout-modal__header">
-              <h5 class="logout-modal__title" id="logoutModalLabel">Confirm Logout</h5>
+              <h2 class="logout-modal__title" id="logoutModalLabel">Confirm Logout</h2>
               <button type="button" class="logout-modal__close" onclick="window.hideLogoutModal()" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -139,13 +143,26 @@
       window.showLogoutModal = function() {
         const modal = document.querySelector('[data-logout-target="modal"]');
         if (modal) {
+          window._logoutModalPreviousFocus = document.activeElement;
           modal.classList.add("show");
           modal.setAttribute("aria-hidden", "false");
           document.body.style.overflow = "hidden";
-          modal.focus();
-        } else {
-          console.error("Logout modal not found!");
-        }
+          const closeBtn = modal.querySelector('.logout-modal__close');
+          if (closeBtn) closeBtn.focus();
+          else modal.focus();
+          window._logoutModalFocusTrap = function(e) {
+            if (e.key !== 'Tab') return;
+            var focusables = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            focusables = [].slice.call(focusables).filter(function(el) { return el.offsetParent !== null; });
+            var first = focusables[0], last = focusables[focusables.length - 1];
+            if (e.shiftKey) {
+              if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+            } else {
+              if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+            }
+          };
+          document.addEventListener('keydown', window._logoutModalFocusTrap);
+        } else { console.error("Logout modal not found!"); }
       };
 
       window.hideLogoutModal = function() {
@@ -154,6 +171,13 @@
           modal.classList.remove("show");
           modal.setAttribute("aria-hidden", "true");
           document.body.style.overflow = "";
+          if (window._logoutModalFocusTrap) {
+            document.removeEventListener('keydown', window._logoutModalFocusTrap);
+            window._logoutModalFocusTrap = null;
+          }
+          if (window._logoutModalPreviousFocus && window._logoutModalPreviousFocus.focus) {
+            window._logoutModalPreviousFocus.focus();
+          }
         }
       };
 

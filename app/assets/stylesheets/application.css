@@ -445,8 +445,9 @@ body {
 .hover\:bg-gray-100:hover { background-color: #f3f4f6; }
 .hover\:bg-white:hover { background-color: #ffffff; }
 
-/* Focus states */
+/* Focus states - use :focus-visible for visible keyboard focus (WCAG 2.4.7) */
 .focus\:outline-none:focus { outline: none; }
+.focus\:outline-none:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
 .focus\:text-gray-800:focus { color: #1f2937; }
 
 /* Opacity */
@@ -1161,10 +1162,14 @@ input:-webkit-autofill:active {
   transition: color 0.15s ease-in-out;
 }
 
-.navbar__menu-btn:hover,
-.navbar__menu-btn:focus {
+.navbar__menu-btn:hover {
   color: #1f2937;
-  outline: none;
+}
+
+.navbar__menu-btn:focus-visible {
+  color: #1f2937;
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
 }
 
 @media (min-width: 768px) {
@@ -1214,10 +1219,14 @@ input:-webkit-autofill:active {
   transition: color 0.15s ease-in-out;
 }
 
-.mobile-menu__close-btn:hover,
-.mobile-menu__close-btn:focus {
+.mobile-menu__close-btn:hover {
   color: #1f2937;
-  outline: none;
+}
+
+.mobile-menu__close-btn:focus-visible {
+  color: #1f2937;
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
 }
 
 .mobile-menu__content {
@@ -2354,6 +2363,25 @@ footer a:hover {
   border: 0;
 }
 
+/* Skip link - visible on focus for keyboard/screen reader users (WCAG 2.4.1) */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0.5rem;
+  z-index: 9999;
+  padding: 0.75rem 1.25rem;
+  background: #0f172a;
+  color: #f8fafc;
+  font-weight: 600;
+  border-radius: 4px;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 0.5rem;
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
 .line-through {
   text-decoration: line-through;
 }
@@ -2565,6 +2593,13 @@ footer a:hover {
 .logout-modal__btn--primary:hover {
   background: #dc2626;
   border-color: #dc2626;
+}
+
+/* Keyboard focus - visible outline for modal buttons (WCAG 2.4.7) */
+.logout-modal__btn:focus-visible,
+.logout-modal__close:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
 }
 
 /* Dark mode styles for logout modal */
@@ -3484,6 +3519,25 @@ footer a:hover {
   margin-bottom: 3.5rem;
 }
 
+.mkt-footer__grid--compact {
+  grid-template-columns: 1fr auto;
+  gap: 3rem;
+}
+
+/* Pricing card labels - accessible contrast (4.5:1) on white */
+.mkt-pricing-card__label {
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #475569;
+  margin-bottom: 0.75rem;
+}
+
+.mkt-pricing-card__label--blue {
+  color: #1d4ed8;
+}
+
 .mkt-footer__brand-name {
   font-size: 1.375rem;
   font-weight: 700;
@@ -3668,7 +3722,8 @@ footer a:hover {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .mkt-footer__grid {
+  .mkt-footer__grid,
+  .mkt-footer__grid--compact {
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
   }
@@ -3704,7 +3759,8 @@ footer a:hover {
     grid-template-columns: 1fr;
   }
 
-  .mkt-footer__grid {
+  .mkt-footer__grid,
+  .mkt-footer__grid--compact {
     grid-template-columns: 1fr;
   }
 

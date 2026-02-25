@@ -97,7 +97,7 @@
 
         <!-- Logout - Bottom Right -->
         <a href="#" 
-           onclick="console.log('Logout clicked!'); window.showLogoutModal(); return false;"
+           onclick="window.showLogoutModal(); return false;"
            class="bottom-sheet__nav-item bottom-sheet__nav-item--quadrant bottom-sheet__nav-item--logout"
            style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #fca5a5; border-radius: 16px; text-decoration: none; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px);">
           <div class="bottom-sheet__nav-icon" style="width: 48px; height: 48px; background: linear-gradient(135deg, #ef4444, #dc2626); border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); border: 2px solid #fef3c7;">
@@ -201,6 +201,7 @@
       
       <!-- Close Button -->
       <button data-action="click->fab-navigation#closeThemeModal"
+              aria-label="Close theme selector"
               style="position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; color: #92400e; stroke-width: 2.5;" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -219,6 +220,7 @@
         <button class="theme-option <%= 'active' if current_theme == 'classic' %>" 
                 data-theme="classic" 
                 data-action="click->fab-navigation#selectTheme"
+                aria-label="Select Classic theme"
                 style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);"
                 onmouseover="this.style.transform='scale(1.02)'" 
                 onmouseout="this.style.transform='scale(1)'">
@@ -230,6 +232,7 @@
         <button class="theme-option <%= 'active' if current_theme == 'lined' %>" 
                 data-theme="lined" 
                 data-action="click->fab-navigation#selectTheme"
+                aria-label="Select Lined theme"
                 style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);"
                 onmouseover="this.style.transform='scale(1.02)'" 
                 onmouseout="this.style.transform='scale(1)'">
@@ -241,6 +244,7 @@
         <button class="theme-option <%= 'active' if current_theme == 'graph' %>" 
                 data-theme="graph" 
                 data-action="click->fab-navigation#selectTheme"
+                aria-label="Select Graph theme"
                 style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);"
                 onmouseover="this.style.transform='scale(1.02)'" 
                 onmouseout="this.style.transform='scale(1)'">
@@ -252,6 +256,7 @@
         <button class="theme-option <%= 'active' if current_theme == 'vintage' %>" 
                 data-theme="vintage" 
                 data-action="click->fab-navigation#selectTheme"
+                aria-label="Select Vintage theme"
                 style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);"
                 onmouseover="this.style.transform='scale(1.02)'" 
                 onmouseout="this.style.transform='scale(1)'">
@@ -263,6 +268,7 @@
         <button class="theme-option <%= 'active' if current_theme == 'dark' %>" 
                 data-theme="dark" 
                 data-action="click->fab-navigation#selectTheme"
+                aria-label="Select Dark theme"
                 style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);"
                 onmouseover="this.style.transform='scale(1.02)'" 
                 onmouseout="this.style.transform='scale(1)'">
