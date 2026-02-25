@@ -1,0 +1,4 @@
+# Mise configuration for todo_app
+# Run `mise install` to install the tools specified below
+[tools]
+ruby = "4.0.1"

@@ -1,3 +1,4 @@
+<div class="marketing-landing">
 <!-- Hero Section -->
 <div class="min-h-screen flex flex-col">
   <!-- Navigation -->
@@ -5,7 +6,7 @@
 
   <!-- Hero Content -->
   <div class="flex-1 bg-gradient-to-br from-blue-50 to-indigo-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         
         <!-- Left Column - Content -->
@@ -70,7 +71,7 @@
         
         <!-- Right Column - App Preview -->
         <div class="relative">
-          <div class="bg-white rounded-2xl shadow-2xl p-8 notebook-background">
+          <div class="app-preview bg-white rounded-2xl shadow-2xl p-8 notebook-background">
             <!-- Mock App Interface -->
             <div class="mb-6">
               <h2 class="text-2xl font-bold text-gray-900 mb-4">My Pages</h2>
@@ -114,10 +115,10 @@
           </div>
           
           <!-- Floating elements -->
-          <div class="absolute -top-4 -right-4 bg-yellow-200 p-3 rounded-lg shadow-lg transform rotate-12">
+          <div class="app-preview absolute -top-4 -right-4 bg-yellow-200 p-3 rounded-lg shadow-lg transform rotate-12">
             <span class="text-sm font-medium"><%= image_tag "icons/edit-pencil.svg", alt: "Pen and paper icon", class: "w-6 h-6 ml-2" %> Add new todo...</span>
           </div>
-          <div class="absolute -bottom-4 -left-4 bg-green-200 p-3 rounded-lg shadow-lg transform -rotate-6">
+          <div class="app-preview absolute -bottom-4 -left-4 bg-green-200 p-3 rounded-lg shadow-lg transform -rotate-6">
             <span class="text-sm font-medium"><%= image_tag "icons/beautiful-themes.svg", alt: "Color palette icon", class: "w-6 h-6 ml-2" %> 5 Beautiful Themes</span>
           </div>
         </div>
@@ -127,7 +128,7 @@
 </div>
 
 <!-- Features Section -->
-<section id="features" class="py-20 bg-white">
+<section id="features" class="py-24 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-16">
       <h2 class="text-4xl font-bold text-gray-900 mb-4">Why Todo-it is Different</h2>
@@ -139,8 +140,8 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <!-- Feature 1 -->
       <div class="text-center p-6">
-        <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-          <span class="text-2xl font-bold text-blue-600">A</span>
+        <div class="marketing-icon-circle bg-blue-100 text-blue-600 mx-auto mb-4">
+          <%= inline_icon "pencil-square" %>
         </div>
         <h3 class="text-xl font-semibold text-gray-900 mb-3">Authentic Hand-Drawn Design</h3>
         <p class="text-gray-600">
@@ -150,8 +151,8 @@
       
       <!-- Feature 2 -->
       <div class="text-center p-6">
-        <div class="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-          <span class="text-2xl font-bold text-green-600">M</span>
+        <div class="marketing-icon-circle bg-green-100 text-green-600 mx-auto mb-4">
+          <%= inline_icon "sparkles" %>
         </div>
         <h3 class="text-xl font-semibold text-gray-900 mb-3">Magical Interactions</h3>
         <p class="text-gray-600">
@@ -161,8 +162,8 @@
       
       <!-- Feature 3 -->
       <div class="text-center p-6">
-        <div class="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-          <span class="text-2xl">W</span>
+        <div class="marketing-icon-circle bg-purple-100 text-purple-600 mx-auto mb-4">
+          <%= inline_icon "globe-alt" %>
         </div>
         <h3 class="text-xl font-semibold text-gray-900 mb-3">Works Everywhere</h3>
         <p class="text-gray-600">
@@ -174,7 +175,7 @@
 </section>
 
 <!-- Trust Signals Section -->
-<section class="py-20 bg-gray-50">
+<section class="py-24 bg-gray-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-16">
       <h2 class="text-4xl font-bold text-gray-900 mb-4">Your Data, Your Control</h2>
@@ -187,8 +188,8 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
       <!-- Privacy -->
       <div class="text-center p-6 bg-white rounded-lg shadow-sm">
-        <div class="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-          <%= image_tag "icons/lock-circle.svg", alt: "Lock icon", class: "w-8 h-8" %>
+        <div class="marketing-icon-circle bg-green-100 text-green-600 mx-auto mb-4">
+          <%= inline_icon "lock-closed" %>
         </div>
         <h3 class="text-lg font-semibold text-gray-900 mb-3">Privacy First</h3>
         <p class="text-gray-600 text-sm">
@@ -198,8 +199,8 @@
       
       <!-- Data Ownership -->
       <div class="text-center p-6 bg-white rounded-lg shadow-sm">
-        <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-        <%= image_tag "icons/database-check.svg", alt: "Data icon", class: "w-8 h-8" %>
+        <div class="marketing-icon-circle bg-blue-100 text-blue-600 mx-auto mb-4">
+          <%= inline_icon "circle-stack" %>
         </div>
         <h3 class="text-lg font-semibold text-gray-900 mb-3">True Data Ownership</h3>
         <p class="text-gray-600 text-sm">
@@ -209,8 +210,8 @@
       
       <!-- Offline -->
       <div class="text-center p-6 bg-white rounded-lg shadow-sm">
-        <div class="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-          <%= image_tag "icons/mobile-check.svg", alt: "Phone icon", class: "w-8 h-8" %>
+        <div class="marketing-icon-circle bg-purple-100 text-purple-600 mx-auto mb-4">
+          <%= inline_icon "device-phone-mobile" %>
         </div>
         <h3 class="text-lg font-semibold text-gray-900 mb-3">Works Offline</h3>
         <p class="text-gray-600 text-sm">
@@ -220,8 +221,8 @@
       
       <!-- No Ads -->
       <div class="text-center p-6 bg-white rounded-lg shadow-sm">
-        <div class="bg-orange-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-        <%= image_tag "icons/mobilephone-action-lock.svg", alt: "No ads icon", class: "w-8 h-8" %>
+        <div class="marketing-icon-circle bg-orange-100 text-orange-600 mx-auto mb-4">
+          <%= inline_icon "shield-check" %>
         </div>
         <h3 class="text-lg font-semibold text-gray-900 mb-3">No Ads Ever</h3>
         <p class="text-gray-600 text-sm">
@@ -234,8 +235,8 @@
     <div class="mt-8 text-center">
       <div class="inline-flex items-center bg-white rounded-lg px-6 py-4 shadow-sm border border-gray-200">
         <div class="flex items-center space-x-4">
-          <div class="text-green-600">
-            <%= image_tag "icons/gdpr-compliance.svg", alt: "No ads icon", class: "w-8 h-8" %>
+          <div class="marketing-icon-circle bg-green-100 text-green-600">
+            <%= inline_icon "shield-check" %>
           </div>
           <div class="text-left">
             <p class="text-sm font-medium text-gray-900">GDPR Compliant</p>
@@ -248,7 +249,7 @@
 </section>
 
 <!-- Themes Preview Section -->
-<section class="py-20 bg-gray-50">
+<section class="py-24 bg-gray-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-16">
       <h2 class="text-4xl font-bold text-gray-900 mb-4">Beautiful Themes for Every Mood</h2>
@@ -260,7 +261,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <!-- Classic Theme -->
       <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-        <div class="h-48 bg-gradient-to-br from-amber-50 to-orange-100 p-6 relative notebook-background">
+        <div class="app-preview h-48 bg-gradient-to-br from-amber-50 to-orange-100 p-6 relative notebook-background">
           <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle, #d4b896 1px, transparent 1px); background-size: 20px 20px;"></div>
           <h3 class="font-semibold text-gray-800 mb-2">Classic Dotted</h3>
           <div class="space-y-2">
@@ -281,9 +282,9 @@
       
       <!-- Lined Theme -->
       <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-        <div class="h-48 bg-gradient-to-br from-blue-50 to-cyan-100 p-6 relative">
+        <div class="app-preview h-48 bg-gradient-to-br from-blue-50 to-cyan-100 p-6 relative">
           <div class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(transparent, transparent 19px, #94a3b8 19px, #94a3b8 20px); background-size: 100% 20px;"></div>
-          <h3 class="font-semibold text-gray-800 mb-2">📏 Lined Paper</h3>
+          <h3 class="font-semibold text-gray-800 mb-2">Lined Paper</h3>
           <div class="space-y-2">
             <div class="flex items-center">
               <div class="hand-checkbox hand-checkbox-checked mr-2 scale-75"></div>
@@ -302,9 +303,9 @@
       
       <!-- Dark Theme -->
       <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-        <div class="h-48 bg-gradient-to-br from-slate-800 to-slate-900 p-6 relative">
+        <div class="app-preview h-48 bg-gradient-to-br from-slate-800 to-slate-900 p-6 relative">
           <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle, #64748b 1px, transparent 1px); background-size: 20px 20px;"></div>
-          <h3 class="font-semibold text-slate-100 mb-2">🌙 Dark Mode</h3>
+          <h3 class="font-semibold text-slate-100 mb-2">Dark Mode</h3>
           <div class="space-y-2">
             <div class="flex items-center">
               <div class="hand-checkbox hand-checkbox-checked mr-2 scale-75" style="filter: brightness(0) invert(1);"></div>
@@ -325,8 +326,8 @@
 </section>
 
 <!-- CTA Section -->
-<section class="py-20 bg-blue-600">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+<section class="py-24 bg-blue-600">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <h2 class="text-4xl font-bold text-white mb-4">Ready to Transform Your Productivity?</h2>
     <p class="text-xl text-blue-100 mb-8">
       Try Todo-it free for 7 days on our servers, then download to your device forever. 
@@ -349,3 +350,4 @@
 </section>
 
 <%= render 'shared/footer' %>
+</div>

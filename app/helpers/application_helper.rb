@@ -1,4 +1,17 @@
 module ApplicationHelper
+  # Renders an inline SVG icon so it inherits color via currentColor.
+  # Use in marketing-icon-circle divs for icons that match the parent text color.
+  # Options: :class - additional CSS classes (e.g. "w-5 h-5" for smaller icons)
+  def inline_icon(name, options = {})
+    path = Rails.root.join("app/assets/images/icons/#{name}.svg")
+    return "" unless File.exist?(path)
+    svg = File.read(path)
+    # Inject width/height so SVG fills the wrapper and scales properly
+    svg = svg.sub(/<svg /, '<svg width="100%" height="100%" ')
+    size_class = options[:class] || "w-8 h-8"
+    # Wrap in span so SVG inherits color from parent (e.g. text-blue-600)
+    content_tag(:span, svg.html_safe, class: "inline-flex items-center justify-center #{size_class} flex-shrink-0")
+  end
   # Collection of motivational 2-word phrases
   MOTIVATIONAL_PHRASES = [
     "Keep Going",

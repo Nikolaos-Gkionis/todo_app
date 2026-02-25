@@ -1,9 +1,10 @@
+<div class="marketing-page">
 <!-- Navigation -->
 <%= render 'shared/navbar' %>
 
 <!-- Hero -->
-<section class="py-20 bg-gradient-to-br from-blue-50 to-indigo-100">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+<section class="py-24 bg-gradient-to-br from-blue-50 to-indigo-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <h1 class="text-5xl font-bold text-gray-900 mb-6">How to Use Todo-it</h1>
     <p class="text-xl text-gray-600 mb-8">
       Try free for 7 days on our servers, then download to your device forever. 
@@ -13,16 +14,16 @@
 </section>
 
 <!-- Getting Started -->
-<section class="py-20 bg-white">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Getting Started</h2>
     
     <div class="space-y-12">
       <!-- Step 1 -->
       <div class="flex flex-col md:flex-row items-center gap-8">
         <div class="md:w-1/2">
-          <div class="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-            <span class="text-xl font-bold text-blue-600">1</span>
+          <div class="marketing-icon-circle bg-blue-100 text-blue-600 mb-4" style="width: 3rem; height: 3rem; font-size: 1.25rem;">
+            1
           </div>
           <h2 class="text-2xl font-semibold text-gray-900 mb-4">Create Your First Page</h2>
           <p class="text-gray-600 mb-4">
@@ -57,8 +58,8 @@
       <!-- Step 2 -->
       <div class="flex flex-col md:flex-row-reverse items-center gap-8">
         <div class="md:w-1/2">
-          <div class="bg-green-100 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-            <span class="text-xl font-bold text-green-600">2</span>
+          <div class="marketing-icon-circle bg-green-100 text-green-600 mb-4" style="width: 3rem; height: 3rem; font-size: 1.25rem;">
+            2
           </div>
           <h2 class="text-2xl font-semibold text-gray-900 mb-4">Add Beautiful Todos</h2>
           <p class="text-gray-600 mb-4">
@@ -99,8 +100,8 @@
       <!-- Step 3 -->
       <div class="flex flex-col md:flex-row items-center gap-8">
         <div class="md:w-1/2">
-          <div class="bg-purple-100 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-            <span class="text-xl font-bold text-purple-600">3</span>
+          <div class="marketing-icon-circle bg-purple-100 text-purple-600 mb-4" style="width: 3rem; height: 3rem; font-size: 1.25rem;">
+            3
           </div>
           <h2 class="text-2xl font-semibold text-gray-900 mb-4">Organize & Arrange</h2>
           <p class="text-gray-600 mb-4">
@@ -149,14 +150,14 @@
 </section>
 
 <!-- Pro Tips -->
-<section class="py-20 bg-gray-50">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="py-24 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Pro Tips</h2>
     
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       <div class="bg-white rounded-lg p-6 shadow-sm">
-        <div class="bg-yellow-100 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-          <span class="text-2xl font-bold text-yellow-600">T</span>
+        <div class="marketing-icon-circle bg-yellow-100 text-yellow-600 mb-4" style="width: 3rem; height: 3rem;">
+          <%= inline_icon "paint-brush" %>
         </div>
         <h2 class="text-xl font-semibold text-gray-900 mb-3">Choose Your Theme</h2>
         <p class="text-gray-600">
@@ -166,8 +167,8 @@
       </div>
       
       <div class="bg-white rounded-lg p-6 shadow-sm">
-        <div class="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-          <span class="text-2xl font-bold text-blue-600">M</span>
+        <div class="marketing-icon-circle bg-blue-100 text-blue-600 mb-4" style="width: 3rem; height: 3rem;">
+          <%= inline_icon "device-phone-mobile" %>
         </div>
         <h2 class="text-xl font-semibold text-gray-900 mb-3">Works on Mobile</h2>
         <p class="text-gray-600">
@@ -177,8 +178,8 @@
       </div>
       
       <div class="bg-white rounded-lg p-6 shadow-sm">
-        <div class="bg-green-100 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-          <span class="text-2xl font-bold text-green-600">A</span>
+        <div class="marketing-icon-circle bg-green-100 text-green-600 mb-4" style="width: 3rem; height: 3rem;">
+          <%= inline_icon "sparkles" %>
         </div>
         <h2 class="text-xl font-semibold text-gray-900 mb-3">Magical Animations</h2>
         <p class="text-gray-600">
@@ -188,8 +189,8 @@
       </div>
       
       <div class="bg-white rounded-lg p-6 shadow-sm">
-        <div class="bg-purple-100 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-          <span class="text-2xl font-bold text-purple-600">O</span>
+        <div class="marketing-icon-circle bg-purple-100 text-purple-600 mb-4" style="width: 3rem; height: 3rem;">
+          <%= inline_icon "folder" %>
         </div>
         <h2 class="text-xl font-semibold text-gray-900 mb-3">Stay Organized</h2>
         <p class="text-gray-600">
@@ -202,8 +203,8 @@
 </section>
 
 <!-- PWA Installation Instructions -->
-<section class="py-20 bg-gray-50">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="py-24 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-16">
       <h2 class="text-4xl font-bold text-gray-900 mb-4">Install as a PWA</h2>
       <p class="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -216,7 +217,9 @@
       <!-- Mobile Installation -->
       <div class="bg-white rounded-2xl p-8 shadow-lg">
         <div class="text-center mb-8">
-          <div class="text-6xl mb-4 font-bold text-blue-600">M</div>
+          <div class="marketing-icon-circle bg-blue-100 text-blue-600 mx-auto mb-4">
+            <%= inline_icon "device-phone-mobile" %>
+          </div>
           <h2 class="text-2xl font-bold text-gray-900 mb-2">Mobile Installation</h2>
           <p class="text-gray-600">Works on iOS and Android devices</p>
         </div>
@@ -270,7 +273,9 @@
       <!-- Desktop Installation -->
       <div class="bg-white rounded-2xl p-8 shadow-lg">
         <div class="text-center mb-8">
-          <div class="text-6xl mb-4 font-bold text-green-600">D</div>
+          <div class="marketing-icon-circle bg-green-100 text-green-600 mx-auto mb-4">
+            <%= inline_icon "laptop" %>
+          </div>
           <h3 class="text-2xl font-bold text-gray-900 mb-2">Desktop Installation</h3>
           <p class="text-gray-600">Works on Windows, Mac, and Linux</p>
         </div>
@@ -327,17 +332,23 @@
       <h3 class="text-2xl font-bold text-gray-900 mb-8">Why Install as a PWA?</h3>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div class="text-center">
-          <div class="text-4xl mb-4 font-bold text-blue-600">F</div>
+          <div class="marketing-icon-circle bg-blue-100 text-blue-600 mx-auto mb-4">
+            <%= inline_icon "bolt" %>
+          </div>
           <h3 class="font-semibold text-gray-900 mb-2">Lightning Fast</h3>
           <p class="text-gray-600 text-sm">Works instantly, no internet required after installation</p>
         </div>
         <div class="text-center">
-          <div class="text-4xl mb-4 font-bold text-green-600">S</div>
+          <div class="marketing-icon-circle bg-green-100 text-green-600 mx-auto mb-4">
+            <%= inline_icon "shield-check" %>
+          </div>
           <h3 class="font-semibold text-gray-900 mb-2">Private & Secure</h3>
           <p class="text-gray-600 text-sm">Your data stays on your device, completely private</p>
         </div>
         <div class="text-center">
-          <div class="text-4xl mb-4 font-bold text-purple-600">N</div>
+          <div class="marketing-icon-circle bg-purple-100 text-purple-600 mx-auto mb-4">
+            <%= inline_icon "device-phone-mobile" %>
+          </div>
           <h3 class="font-semibold text-gray-900 mb-2">Native Feel</h3>
           <p class="text-gray-600 text-sm">Works like a native app with full screen and notifications</p>
         </div>
@@ -347,8 +358,8 @@
 </section>
 
 <!-- CTA -->
-<section class="py-20 bg-blue-600">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+<section class="py-24 bg-blue-600">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <h2 class="text-4xl font-bold text-white mb-4">Ready to Get Started?</h2>
     <p class="text-xl text-blue-100 mb-8">
       Try free for 7 days on our servers, then download to your device forever. 
@@ -362,3 +373,4 @@
 </section>
 
 <%= render 'shared/footer' %>
+</div>

@@ -1,9 +1,10 @@
+<div class="marketing-page">
 <!-- Navigation -->
 <%= render 'shared/navbar' %>
 
 <!-- Pricing Hero -->
-<section class="py-20 bg-gradient-to-br from-blue-50 to-indigo-100">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+<section class="py-24 bg-gradient-to-br from-blue-50 to-indigo-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <h1 class="text-5xl font-bold text-gray-900 mb-6">Simple, Honest Pricing</h1>
     <p class="text-xl text-gray-600 mb-8">
       Try free for 7 days on our servers, then pay once to download to your device forever. 
@@ -13,9 +14,9 @@
 </section>
 
 <!-- Pricing Cards -->
-<section class="py-20 bg-white">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+<section class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
       
       <!-- Free Plan -->
       <div class="bg-white border-2 border-gray-200 rounded-2xl p-8 relative">
@@ -139,17 +140,23 @@
     <!-- Trust Signals -->
     <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
       <div class="text-center p-4 bg-green-50 rounded-lg">
-        <div class="text-green-600 text-2xl mb-2 font-bold">P</div>
+        <div class="marketing-icon-circle bg-green-100 text-green-600 mx-auto mb-2">
+          <%= inline_icon "lock-closed" %>
+        </div>
         <h3 class="font-semibold text-gray-900 mb-1">Privacy First</h3>
         <p class="text-sm text-gray-600">No tracking, no ads, no data mining</p>
       </div>
       <div class="text-center p-4 bg-blue-50 rounded-lg">
-        <div class="text-blue-600 text-2xl mb-2 font-bold">D</div>
+        <div class="marketing-icon-circle bg-blue-100 text-blue-600 mx-auto mb-2">
+          <%= inline_icon "circle-stack" %>
+        </div>
         <h3 class="font-semibold text-gray-900 mb-1">Data Ownership</h3>
         <p class="text-sm text-gray-600">Your data lives on your device</p>
       </div>
       <div class="text-center p-4 bg-purple-50 rounded-lg">
-        <div class="text-purple-600 text-2xl mb-2 font-bold">O</div>
+        <div class="marketing-icon-circle bg-purple-100 text-purple-600 mx-auto mb-2">
+          <%= inline_icon "device-phone-mobile" %>
+        </div>
         <h3 class="font-semibold text-gray-900 mb-1">Works Offline</h3>
         <p class="text-sm text-gray-600">No internet required after download</p>
       </div>
@@ -158,8 +165,8 @@
 </section>
 
 <!-- FAQ Section -->
-<section class="py-20 bg-gray-50">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="py-24 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Frequently Asked Questions</h2>
     
     <div class="space-y-8">
@@ -183,7 +190,7 @@
         <h3 class="text-lg font-semibold text-gray-900 mb-2">Do you offer refunds?</h3>
         <p class="text-gray-600">
           Yes! We offer a 7-day money-back guarantee. If Todo-it isn't right for you, 
-          contact us at <a href="mailto:support@todo-it.app" class="text-blue-600 hover:text-blue-800 underline">support@todo-it.app</a> within 7 days for a full refund, no questions asked.
+          contact us at <a href="mailto:support@todo-it.app" class="text-blue-600 hover:text-blue-800">support@todo-it.app</a> within 7 days for a full refund, no questions asked.
         </p>
       </div>
       
@@ -206,7 +213,7 @@
       <div class="bg-white rounded-lg p-6 shadow-sm">
         <h3 class="text-lg font-semibold text-gray-900 mb-2">What if I don't like it?</h3>
         <p class="text-gray-600">
-          We offer a 7-day money-back guarantee. If Todo-it isn't right for you, contact us at <a href="mailto:support@todo-it.app" class="text-blue-600 hover:text-blue-800 underline">support@todo-it.app</a> within 7 days 
+          We offer a 7-day money-back guarantee. If Todo-it isn't right for you, contact us at <a href="mailto:support@todo-it.app" class="text-blue-600 hover:text-blue-800">support@todo-it.app</a> within 7 days 
           for a full refund, no questions asked. We want you to be completely satisfied.
         </p>
       </div>
@@ -232,8 +239,8 @@
 </section>
 
 <!-- Final CTA -->
-<section class="py-20 bg-blue-600">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+<section class="py-24 bg-blue-600">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <h2 class="text-4xl font-bold text-white mb-4">Start Your Beautiful Todo Journey</h2>
     <p class="text-xl text-blue-100 mb-8">
       Try Todo-it free for 7 days on our servers, then download to your device forever.
@@ -246,3 +253,4 @@
 </section>
 
 <%= render 'shared/footer' %>
+</div>

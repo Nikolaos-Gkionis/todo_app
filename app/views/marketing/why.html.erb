@@ -1,9 +1,10 @@
+<div class="marketing-page">
 <!-- Navigation -->
 <%= render 'shared/navbar' %>
 
 <!-- Hero Section -->
-<section class="py-20 bg-gradient-to-br from-blue-50 to-indigo-100">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+<section class="py-24 bg-gradient-to-br from-blue-50 to-indigo-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <h1 class="text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
       Why we built
       <span class="text-blue-600">Todo-it</span>
@@ -17,16 +18,14 @@
 </section>
 
 <!-- Main Content -->
-<section class="py-20 bg-white">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <!-- Against Lock-In -->
     <div class="mb-16">
       <div class="flex items-start space-x-6">
-        <div class="flex-shrink-0">
-          <div class="bg-red-100 rounded-full w-16 h-16 flex items-center justify-center">
-            <span class="text-2xl font-bold text-red-600">T</span>
-          </div>
+        <div class="marketing-icon-circle bg-red-100 text-red-600">
+          <%= inline_icon "gift" %>
         </div>
         <div class="flex-grow">
           <h2 class="text-3xl font-bold text-gray-900 mb-4">Try Before You Own</h2>
@@ -46,10 +45,8 @@
     <!-- Against Subscriptions -->
     <div class="mb-16">
       <div class="flex items-start space-x-6">
-        <div class="flex-shrink-0">
-          <div class="bg-orange-100 rounded-full w-16 h-16 flex items-center justify-center">
-            <span class="text-2xl">💳</span>
-          </div>
+        <div class="marketing-icon-circle bg-orange-100 text-orange-600">
+          <%= inline_icon "credit-card" %>
         </div>
         <div class="flex-grow">
           <h2 class="text-3xl font-bold text-gray-900 mb-4">Against Subscriptions</h2>
@@ -68,10 +65,8 @@
     <!-- Against the App Store Tax -->
     <div class="mb-16">
       <div class="flex items-start space-x-6">
-        <div class="flex-shrink-0">
-          <div class="bg-yellow-100 rounded-full w-16 h-16 flex items-center justify-center">
-            <span class="text-2xl">🏪</span>
-          </div>
+        <div class="marketing-icon-circle bg-yellow-100 text-yellow-600">
+          <%= inline_icon "building-storefront" %>
         </div>
         <div class="flex-grow">
           <h2 class="text-3xl font-bold text-gray-900 mb-4">Against the App Store Tax</h2>
@@ -91,10 +86,8 @@
     <!-- For Digital Sovereignty -->
     <div class="mb-16">
       <div class="flex items-start space-x-6">
-        <div class="flex-shrink-0">
-          <div class="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center">
-            <span class="text-2xl">🛡️</span>
-          </div>
+        <div class="marketing-icon-circle bg-green-100 text-green-600">
+          <%= inline_icon "shield-check" %>
         </div>
         <div class="flex-grow">
           <h2 class="text-3xl font-bold text-gray-900 mb-4">For Digital Sovereignty</h2>
@@ -113,10 +106,8 @@
     <!-- PWA & Privacy Benefits -->
     <div class="mb-16">
       <div class="flex items-start space-x-6">
-        <div class="flex-shrink-0">
-          <div class="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center">
-            <span class="text-2xl">📱</span>
-          </div>
+        <div class="marketing-icon-circle bg-green-100 text-green-600">
+          <%= inline_icon "device-phone-mobile" %>
         </div>
         <div class="flex-grow">
           <h2 class="text-3xl font-bold text-gray-900 mb-4">PWA That Stays Logged In</h2>
@@ -137,8 +128,8 @@
 </section>
 
 <!-- Philosophy Section -->
-<section class="py-20 bg-gray-50">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="py-24 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-12">
       <h2 class="text-4xl font-bold text-gray-900 mb-6">Our Philosophy</h2>
       <p class="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -203,8 +194,8 @@
 </section>
 
 <!-- Social Proof Section -->
-<section class="py-20 bg-white">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-12">
       <h2 class="text-3xl font-bold text-gray-900 mb-4">What Our Users Say</h2>
       <p class="text-lg text-gray-600">
@@ -215,14 +206,8 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <!-- Testimonial 1 -->
       <div class="bg-gray-50 rounded-lg p-6">
-        <div class="flex items-center mb-4">
-          <div class="flex text-yellow-400">
-            <span>⭐</span>
-            <span>⭐</span>
-            <span>⭐</span>
-            <span>⭐</span>
-            <span>⭐</span>
-          </div>
+        <div class="flex items-center gap-0.5 mb-4 text-yellow-500">
+          <%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %>
         </div>
         <p class="text-gray-600 mb-4">
           "Finally, a todo app that doesn't overwhelm me. The 7-day trial was perfect - I could really test it out before committing."
@@ -234,14 +219,8 @@
       
       <!-- Testimonial 2 -->
       <div class="bg-gray-50 rounded-lg p-6">
-        <div class="flex items-center mb-4">
-          <div class="flex text-yellow-400">
-            <span>⭐</span>
-            <span>⭐</span>
-            <span>⭐</span>
-            <span>⭐</span>
-            <span>⭐</span>
-          </div>
+        <div class="flex items-center gap-0.5 mb-4 text-yellow-500">
+          <%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %>
         </div>
         <p class="text-gray-600 mb-4">
           "Love that I own my data. Downloaded to my device and it works offline perfectly. No more subscription anxiety!"
@@ -253,14 +232,8 @@
       
       <!-- Testimonial 3 -->
       <div class="bg-gray-50 rounded-lg p-6">
-        <div class="flex items-center mb-4">
-          <div class="flex text-yellow-400">
-            <span>⭐</span>
-            <span>⭐</span>
-            <span>⭐</span>
-            <span>⭐</span>
-            <span>⭐</span>
-          </div>
+        <div class="flex items-center gap-0.5 mb-4 text-yellow-500">
+          <%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %><%= inline_icon "star", class: "w-5 h-5" %>
         </div>
         <p class="text-gray-600 mb-4">
           "The hand-drawn style makes it feel personal. It's like having a beautiful notebook that never runs out of pages."
@@ -275,20 +248,20 @@
     <div class="mt-12 text-center">
       <div class="inline-flex items-center space-x-8 text-gray-500">
         <div class="flex items-center space-x-2">
-          <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-            <span class="text-green-600 text-sm">✓</span>
+          <div class="marketing-icon-circle bg-green-100 text-green-600 w-10 h-10">
+            <%= inline_icon "check-circle" %>
           </div>
           <span class="text-sm">7-day free trial</span>
         </div>
         <div class="flex items-center space-x-2">
-          <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-            <span class="text-blue-600 text-sm">✓</span>
+          <div class="marketing-icon-circle bg-blue-100 text-blue-600 w-10 h-10">
+            <%= inline_icon "check-circle" %>
           </div>
           <span class="text-sm">Money-back guarantee</span>
         </div>
         <div class="flex items-center space-x-2">
-          <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
-            <span class="text-purple-600 text-sm">✓</span>
+          <div class="marketing-icon-circle bg-purple-100 text-purple-600 w-10 h-10">
+            <%= inline_icon "check-circle" %>
           </div>
           <span class="text-sm">No credit card required</span>
         </div>
@@ -298,8 +271,8 @@
 </section>
 
 <!-- Closing CTA -->
-<section class="py-20 bg-blue-600">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+<section class="py-24 bg-blue-600">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <h2 class="text-4xl font-bold text-white mb-4">
       Ready to experience the difference?
     </h2>
@@ -309,7 +282,7 @@
     
     <div class="flex flex-col sm:flex-row gap-4 justify-center">
       <%= link_to signup_path, class: "bg-white hover:bg-gray-100 text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold transition-colors" do %>
-        ✨ Start Your Free Trial
+        Start Your Free Trial
       <% end %>
       <%= link_to pricing_path, class: "border-2 border-white hover:bg-white hover:text-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors" do %>
         View Pricing
@@ -323,3 +296,4 @@
 </section>
 
 <%= render 'shared/footer' %>
+</div>
