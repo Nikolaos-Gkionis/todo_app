@@ -117,12 +117,19 @@
         </ul>
 
         <% if logged_in? %>
-          <%= button_to "Download to Device",
-                create_checkout_session_path,
-                method: :post,
-                data: { turbo: false },
-                class: "mkt-btn mkt-btn--primary",
-                style: "width: 100%; justify-content: center; border: none;" %>
+          <% if current_user.device_downloaded? %>
+            <%= link_to "Download App",
+                  download_path,
+                  class: "mkt-btn mkt-btn--primary",
+                  style: "width: 100%; justify-content: center; display: inline-flex;" %>
+          <% else %>
+            <%= button_to "Download to Device",
+                  create_checkout_session_path,
+                  method: :post,
+                  data: { turbo: false },
+                  class: "mkt-btn mkt-btn--primary",
+                  style: "width: 100%; justify-content: center; border: none;" %>
+          <% end %>
         <% else %>
           <%= link_to signup_path, class: "mkt-btn mkt-btn--primary", style: "width: 100%; justify-content: center;" do %>
             Start free trial &rarr;
