@@ -34,36 +34,53 @@ class StripeController < ApplicationController
   end
 
   def success
-    # Handle successful payment
+    # Handle successful payment (idempotent: safe to refresh)
     session_id = params[:session_id]
 
-    if session_id
-      begin
-        session = Stripe::Checkout::Session.retrieve(session_id)
-
-        if session.payment_status == "paid"
-          # Mark user as having downloaded app and generate download token
-          current_user.mark_as_downloaded!
-          download_token = current_user.generate_download_token!
-
-          # Track conversion analytics
-          AnalyticsService.track_trial_conversion(current_user)
-          AnalyticsService.track_payment_completion(current_user, session_id)
-
-          # Send purchase confirmation email
-          download_url = download_app_url(token: download_token)
-          UserMailer.purchase_confirmation(current_user, download_url).deliver_now
-
-          redirect_to download_app_path(token: download_token),
-                      notice: "Payment successful! Your app is ready to download. 🎉"
-        else
-          redirect_to pricing_path, alert: "Payment was not completed successfully."
-        end
-      rescue Stripe::StripeError => e
-        redirect_to pricing_path, alert: "Error processing payment: #{e.message}"
-      end
-    else
+    if session_id.blank?
       redirect_to pricing_path, alert: "Invalid payment session."
+      return
+    end
+
+    begin
+      session = Stripe::Checkout::Session.retrieve(session_id)
+
+      # Verify this session belongs to the current user (prevents session hijacking)
+      session_user_id = session.metadata&.dig("user_id")&.to_s
+      if session_user_id != current_user.id.to_s
+        Rails.logger.warn "Stripe success: session user #{session_user_id} != current user #{current_user.id}"
+        redirect_to pricing_path, alert: "This payment session doesn't belong to your account."
+        return
+      end
+
+      if session.payment_status != "paid"
+        redirect_to pricing_path, alert: "Payment was not completed successfully."
+        return
+      end
+
+      # If user already purchased (e.g. page refresh), skip processing and redirect to download
+      if current_user.device_downloaded?
+        download_token = current_user.download_token || current_user.generate_download_token!
+        redirect_to download_app_path(token: download_token),
+                    notice: "Your app is ready to download. 🎉"
+        return
+      end
+
+      # First-time processing: mark purchased, generate token, send email
+      current_user.mark_as_downloaded!
+      download_token = current_user.generate_download_token!
+
+      AnalyticsService.track_trial_conversion(current_user)
+      AnalyticsService.track_payment_completion(current_user, session.id)
+
+      download_url = download_app_url(token: download_token)
+      UserMailer.purchase_confirmation(current_user, download_url).deliver_now
+
+      redirect_to download_app_path(token: download_token),
+                  notice: "Payment successful! Your app is ready to download. 🎉"
+    rescue Stripe::StripeError => e
+      Rails.logger.error "Stripe success error: #{e.message}"
+      redirect_to pricing_path, alert: "Something went wrong processing your payment. Please contact support if the charge appears on your card."
     end
   end
 
