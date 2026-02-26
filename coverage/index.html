@@ -13,7 +13,7 @@
       <img src="./assets/0.13.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2026-02-25T23:05:08+00:00">2026-02-25T23:05:08+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2026-02-26T13:36:10+00:00">2026-02-26T13:36:10+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -42,9 +42,9 @@
   </div>
 
   <div class="t-line-summary">
-    <b>1964</b> relevant lines,
+    <b>1961</b> relevant lines,
     <span class="green"><b>0</b> lines covered</span> and
-    <span class="red"><b>1964</b> lines missed. </span>
+    <span class="red"><b>1961</b> lines missed. </span>
     (<span class="red">
   0.0%
 </span>
@@ -105,10 +105,10 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#8f8ab4d95aa72a56c70f7948cc28219ab7a8ca54" class="src_link" title="app/controllers/contact_controller.rb">app/controllers/contact_controller.rb</a></td>
             <td class="red strong cell--number t-file__coverage">0.00 %</td>
-            <td class="cell--number">53</td>
-            <td class="cell--number">38</td>
+            <td class="cell--number">47</td>
+            <td class="cell--number">32</td>
             <td class="cell--number">0</td>
-            <td class="cell--number">38</td>
+            <td class="cell--number">32</td>
             <td class="cell--number">0.00</td>
             
           </tr>
@@ -347,10 +347,10 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#f4070da84c7e6fc7e07249c6a6ec573a0278675d" class="src_link" title="app/mailers/contact_mailer.rb">app/mailers/contact_mailer.rb</a></td>
             <td class="red strong cell--number t-file__coverage">0.00 %</td>
-            <td class="cell--number">22</td>
-            <td class="cell--number">15</td>
+            <td class="cell--number">26</td>
+            <td class="cell--number">18</td>
             <td class="cell--number">0</td>
-            <td class="cell--number">15</td>
+            <td class="cell--number">18</td>
             <td class="cell--number">0.00</td>
             
           </tr>
@@ -519,9 +519,9 @@
   </div>
 
   <div class="t-line-summary">
-    <b>1022</b> relevant lines,
+    <b>1016</b> relevant lines,
     <span class="green"><b>0</b> lines covered</span> and
-    <span class="red"><b>1022</b> lines missed. </span>
+    <span class="red"><b>1016</b> lines missed. </span>
     (<span class="red">
   0.0%
 </span>
@@ -582,10 +582,10 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#8f8ab4d95aa72a56c70f7948cc28219ab7a8ca54" class="src_link" title="app/controllers/contact_controller.rb">app/controllers/contact_controller.rb</a></td>
             <td class="red strong cell--number t-file__coverage">0.00 %</td>
-            <td class="cell--number">53</td>
-            <td class="cell--number">38</td>
+            <td class="cell--number">47</td>
+            <td class="cell--number">32</td>
             <td class="cell--number">0</td>
-            <td class="cell--number">38</td>
+            <td class="cell--number">32</td>
             <td class="cell--number">0.00</td>
             
           </tr>
@@ -935,9 +935,9 @@
   </div>
 
   <div class="t-line-summary">
-    <b>118</b> relevant lines,
+    <b>121</b> relevant lines,
     <span class="green"><b>0</b> lines covered</span> and
-    <span class="red"><b>118</b> lines missed. </span>
+    <span class="red"><b>121</b> lines missed. </span>
     (<span class="red">
   0.0%
 </span>
@@ -976,10 +976,10 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#f4070da84c7e6fc7e07249c6a6ec573a0278675d" class="src_link" title="app/mailers/contact_mailer.rb">app/mailers/contact_mailer.rb</a></td>
             <td class="red strong cell--number t-file__coverage">0.00 %</td>
-            <td class="cell--number">22</td>
-            <td class="cell--number">15</td>
+            <td class="cell--number">26</td>
+            <td class="cell--number">18</td>
             <td class="cell--number">0</td>
-            <td class="cell--number">15</td>
+            <td class="cell--number">18</td>
             <td class="cell--number">0.00</td>
             
           </tr>
@@ -4314,9 +4314,9 @@
     
 
     <div class="t-line-summary">
-      <b>38</b> relevant lines.
+      <b>32</b> relevant lines.
       <span class="green"><b>0</b> lines covered</span> and
-      <span class="red"><b>38</b> lines missed.</span>
+      <span class="red"><b>32</b> lines missed.</span>
     </div>
 
     
@@ -4692,7 +4692,7 @@
 
             
 
-            <code class="ruby">    # Send email</code>
+            <code class="ruby">    # Send email in background via Solid Queue (avoids request timeout, retries on failure)</code>
           </li>
         </div>
       
@@ -4702,7 +4702,7 @@
 
             
 
-            <code class="ruby">    begin</code>
+            <code class="ruby">    ContactMailer.contact_form(name: name, email: email, message: message).deliver_later</code>
           </li>
         </div>
       
@@ -4712,7 +4712,7 @@
 
             
 
-            <code class="ruby">      ContactMailer.contact_form(name: name, email: email, message: message).deliver_now</code>
+            <code class="ruby">    redirect_to contact_path, notice: &quot;Thanks! We&#39;ll get back to you soon.&quot;</code>
           </li>
         </div>
       
@@ -4722,17 +4722,17 @@
 
             
 
-            <code class="ruby">      redirect_to contact_path, notice: &quot;Thanks! We&#39;ll get back to you soon.&quot;</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="41">
+          <li class="never" data-hits="" data-linenumber="41">
             
 
             
 
-            <code class="ruby">    rescue StandardError =&gt; e</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -4742,17 +4742,17 @@
 
             
 
-            <code class="ruby">      Rails.logger.error &quot;Contact form delivery failed: #{e.message}&quot;</code>
+            <code class="ruby">  private</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="43">
+          <li class="never" data-hits="" data-linenumber="43">
             
 
             
 
-            <code class="ruby">      flash.now[:alert] = &quot;Sorry, we couldn&#39;t send your message. Please try again later.&quot;</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -4762,7 +4762,7 @@
 
             
 
-            <code class="ruby">      render :new, status: :unprocessable_entity</code>
+            <code class="ruby">  def set_marketing_nav</code>
           </li>
         </div>
       
@@ -4772,7 +4772,7 @@
 
             
 
-            <code class="ruby">    end</code>
+            <code class="ruby">    @marketing_nav = true</code>
           </li>
         </div>
       
@@ -4787,67 +4787,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="47">
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="48">
-            
-
-            
-
-            <code class="ruby">  private</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="49">
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="50">
-            
-
-            
-
-            <code class="ruby">  def set_marketing_nav</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="51">
-            
-
-            
-
-            <code class="ruby">    @marketing_nav = true</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="52">
-            
-
-            
-
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="53">
+          <li class="missed" data-hits="0" data-linenumber="47">
             
 
             
@@ -18316,9 +18256,9 @@
     
 
     <div class="t-line-summary">
-      <b>15</b> relevant lines.
+      <b>18</b> relevant lines.
       <span class="green"><b>0</b> lines covered</span> and
-      <span class="red"><b>15</b> lines missed.</span>
+      <span class="red"><b>18</b> lines missed.</span>
     </div>
 
     
@@ -18364,37 +18304,37 @@
 
             
 
-            <code class="ruby">  # Use Gmail address as sender (must match SMTP auth user for Gmail)</code>
+            <code class="ruby">  # From address - must be verified in SendGrid (Single Sender Verification)</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="5">
+          <li class="never" data-hits="" data-linenumber="5">
             
 
             
 
-            <code class="ruby">  default from: -&gt; { ENV[&quot;CONTACT_EMAIL&quot;].presence || &quot;noreply@todo-it.app&quot; }</code>
+            <code class="ruby">  # CONTACT_EMAIL is used as both sender and recipient for contact form</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="6">
+          <li class="missed" data-hits="0" data-linenumber="6">
             
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">  default from: -&gt; {</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="7">
+          <li class="missed" data-hits="0" data-linenumber="7">
             
 
             
 
-            <code class="ruby">  # Send contact form submission to your email</code>
+            <code class="ruby">    email = ENV[&quot;CONTACT_EMAIL&quot;].presence</code>
           </li>
         </div>
       
@@ -18404,7 +18344,7 @@
 
             
 
-            <code class="ruby">  def contact_form(params)</code>
+            <code class="ruby">    email ? &quot;Todo-it Contact &lt;#{email}&gt;&quot; : &quot;noreply@todo-it.app&quot;</code>
           </li>
         </div>
       
@@ -18414,27 +18354,27 @@
 
             
 
-            <code class="ruby">    @name = params[:name]</code>
+            <code class="ruby">  }</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="10">
+          <li class="never" data-hits="" data-linenumber="10">
             
 
             
 
-            <code class="ruby">    @email = params[:email]</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="11">
+          <li class="never" data-hits="" data-linenumber="11">
             
 
             
 
-            <code class="ruby">    @message = params[:message]</code>
+            <code class="ruby">  # Send contact form submission to your email</code>
           </li>
         </div>
       
@@ -18444,17 +18384,17 @@
 
             
 
-            <code class="ruby">    @recipient = ENV[&quot;CONTACT_EMAIL&quot;].presence || &quot;support@todo-it.app&quot;</code>
+            <code class="ruby">  def contact_form(params)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="13">
+          <li class="missed" data-hits="0" data-linenumber="13">
             
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">    @name = params[:name]</code>
           </li>
         </div>
       
@@ -18464,7 +18404,7 @@
 
             
 
-            <code class="ruby">    subject = @message.present? ? @message.truncate(50) : &quot;Contact from Todo-it&quot;</code>
+            <code class="ruby">    @email = params[:email]</code>
           </li>
         </div>
       
@@ -18474,12 +18414,22 @@
 
             
 
-            <code class="ruby">    subject = &quot;Contact from Todo-it: #{subject}&quot; unless subject.start_with?(&quot;Contact from Todo-it&quot;)</code>
+            <code class="ruby">    @message = params[:message]</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="16">
+          <li class="missed" data-hits="0" data-linenumber="16">
+            
+
+            
+
+            <code class="ruby">    @recipient = ENV[&quot;CONTACT_EMAIL&quot;].presence || &quot;support@todo-it.app&quot;</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="17">
             
 
             
@@ -18489,22 +18439,12 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="17">
-            
-
-            
-
-            <code class="ruby">    mail(</code>
-          </li>
-        </div>
-      
-        <div>
           <li class="missed" data-hits="0" data-linenumber="18">
             
 
             
 
-            <code class="ruby">      to: @recipient,</code>
+            <code class="ruby">    subject = @message.present? ? @message.truncate(50) : &quot;Contact from Todo-it&quot;</code>
           </li>
         </div>
       
@@ -18514,17 +18454,17 @@
 
             
 
-            <code class="ruby">      subject: subject</code>
+            <code class="ruby">    subject = &quot;Contact from Todo-it: #{subject}&quot; unless subject.start_with?(&quot;Contact from Todo-it&quot;)</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="20">
+          <li class="never" data-hits="" data-linenumber="20">
             
 
             
 
-            <code class="ruby">    )</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -18534,12 +18474,52 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">    mail(</code>
           </li>
         </div>
       
         <div>
           <li class="missed" data-hits="0" data-linenumber="22">
+            
+
+            
+
+            <code class="ruby">      to: @recipient,</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="23">
+            
+
+            
+
+            <code class="ruby">      subject: subject</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="24">
+            
+
+            
+
+            <code class="ruby">    )</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="25">
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="26">
             
 
             

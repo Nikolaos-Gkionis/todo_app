@@ -39,7 +39,7 @@ RSpec.describe ContactController, type: :controller do
 
     context "with valid params" do
       before do
-        allow(ContactMailer).to receive(:contact_form).and_return(double(deliver_now: true))
+        allow(ContactMailer).to receive(:contact_form).and_return(double(deliver_later: true))
       end
 
       it "sends the contact email and redirects" do

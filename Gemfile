@@ -47,6 +47,9 @@ gem "thruster", require: false
 # Stripe payment processing
 gem "stripe"
 
+# Brevo API for email (avoids blocked SMTP ports on DigitalOcean)
+gem "brevo-rails"
+
 # Environment variable management
 gem "dotenv-rails"
 

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class ContactMailer < ApplicationMailer
-  # Use Gmail address as sender (must match SMTP auth user for Gmail)
-  # Format "Display Name <email>" so Gmail accepts it
+  # From address - must be verified in SendGrid (Single Sender Verification)
+  # CONTACT_EMAIL is used as both sender and recipient for contact form
   default from: -> {
     email = ENV["CONTACT_EMAIL"].presence
     email ? "Todo-it Contact <#{email}>" : "noreply@todo-it.app"

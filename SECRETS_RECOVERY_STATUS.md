@@ -40,14 +40,15 @@
 
 ### 3. Add contact form email (for Contact page)
 
-To receive contact form submissions via Gmail:
+**DigitalOcean blocks outbound SMTP**, so we use Brevo's API (HTTPS) instead.
 
-1. [Google Account → Security](https://myaccount.google.com/security) → **App passwords** (requires 2-Step Verification)
-2. Create app password for "Mail" / "Other" (e.g. "Todo-it contact")
-3. Add to `.kamal/secrets`:
+1. Sign up at [Brevo](https://www.brevo.com) (free: 300 emails/day)
+2. **SMTP & API** → **API Keys** → Create key → copy it
+3. **Senders & IP** → Add and verify your sender email (e.g. `elefsinian@gmail.com`)
+4. Add to `.kamal/secrets`:
    ```
-   CONTACT_EMAIL=your@gmail.com
-   SMTP_PASSWORD=<16-char app password>
+   CONTACT_EMAIL=elefsinian@gmail.com
+   BREVO_API_KEY=xkeysib-xxxxxxxxxxxx
    ```
 
 ### 4. Deploy

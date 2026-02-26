@@ -34,15 +34,9 @@ class ContactController < ApplicationController
       return
     end
 
-    # Send email
-    begin
-      ContactMailer.contact_form(name: name, email: email, message: message).deliver_now
-      redirect_to contact_path, notice: "Thanks! We'll get back to you soon."
-    rescue StandardError => e
-      Rails.logger.error "Contact form delivery failed: #{e.message}"
-      flash.now[:alert] = "Sorry, we couldn't send your message. Please try again later."
-      render :new, status: :unprocessable_entity
-    end
+    # Send email in background via Solid Queue (avoids request timeout, retries on failure)
+    ContactMailer.contact_form(name: name, email: email, message: message).deliver_later
+    redirect_to contact_path, notice: "Thanks! We'll get back to you soon."
   end
 
   private

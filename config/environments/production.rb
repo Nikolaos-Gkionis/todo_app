@@ -58,25 +58,34 @@ Rails.application.configure do
   config.solid_queue.connects_to = { database: { writing: :queue } }
 
   # Email configuration for production
+  # DigitalOcean blocks outbound SMTP (ports 25/465/587), so we use Brevo API (HTTPS) instead
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.delivery_method = :smtp
+
+  if ENV["BREVO_API_KEY"].present?
+    config.action_mailer.delivery_method = :brevo
+    config.action_mailer.brevo_settings = {
+      api_key: ENV["BREVO_API_KEY"],
+      timeout: 30
+    }
+  else
+    # Fallback to SMTP (only works if SMTP ports are not blocked, e.g. not on DigitalOcean)
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address: ENV.fetch("SMTP_ADDRESS", "smtp.gmail.com"),
+      port: ENV.fetch("SMTP_PORT", 587),
+      domain: ENV.fetch("SMTP_DOMAIN", "todo-it.app"),
+      user_name: ENV.fetch("CONTACT_EMAIL", ""),
+      password: ENV.fetch("SMTP_PASSWORD", ""),
+      authentication: :plain,
+      enable_starttls_auto: true
+    }
+  end
 
   # Set host to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = {
     host: ENV.fetch("MAILER_HOST", "todo-it.app"),
     protocol: "https"
-  }
-
-  # Configure SMTP settings for production (Gmail by default for contact form)
-  config.action_mailer.smtp_settings = {
-    address: ENV.fetch("SMTP_ADDRESS", "smtp.gmail.com"),
-    port: ENV.fetch("SMTP_PORT", 587),
-    domain: ENV.fetch("SMTP_DOMAIN", "todo-it.app"),
-    user_name: ENV.fetch("CONTACT_EMAIL", ""),
-    password: ENV.fetch("SMTP_PASSWORD", ""),
-    authentication: :plain,
-    enable_starttls_auto: true
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
