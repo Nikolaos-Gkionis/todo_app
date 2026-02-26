@@ -2,7 +2,11 @@
 
 class ContactMailer < ApplicationMailer
   # Use Gmail address as sender (must match SMTP auth user for Gmail)
-  default from: -> { ENV["CONTACT_EMAIL"].presence || "noreply@todo-it.app" }
+  # Format "Display Name <email>" so Gmail accepts it
+  default from: -> {
+    email = ENV["CONTACT_EMAIL"].presence
+    email ? "Todo-it Contact <#{email}>" : "noreply@todo-it.app"
+  }
 
   # Send contact form submission to your email
   def contact_form(params)
