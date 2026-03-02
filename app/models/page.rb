@@ -4,8 +4,12 @@ class Page < ApplicationRecord
   belongs_to :user
   has_many :todos, dependent: :destroy
 
+  # Template options: minimal (simple list) or calendar (weekly view)
+  TEMPLATES = %w[minimal calendar].freeze
+
   # Validations
   validates :name, presence: true, length: { minimum: 1, maximum: 100 }
+  validates :template, inclusion: { in: TEMPLATES }
   validates :description, length: { maximum: 500 }, allow_blank: true
 
   # Todo limit checks - all users can add unlimited todos

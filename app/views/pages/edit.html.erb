@@ -25,6 +25,22 @@
       <%= form.label :description, class: "block text-sm font-medium mb-1" %>
       <%= form.text_area :description, class: "w-full form-input", rows: 3, placeholder: "Add some notes or details...", style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
     </div>
+
+    <div>
+      <%= form.label :template, "Page style", class: "block text-sm font-medium mb-2" %>
+      <div class="flex gap-4 flex-wrap">
+        <label class="flex items-center gap-2 cursor-pointer">
+          <%= form.radio_button :template, "minimal", class: "form-radio" %>
+          <span>Minimal</span>
+          <span class="text-sm text-gray-500">— Simple list</span>
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer">
+          <%= form.radio_button :template, "calendar", class: "form-radio" %>
+          <span>Calendar</span>
+          <span class="text-sm text-gray-500">— Weekly view</span>
+        </label>
+      </div>
+    </div>
     
     <div class="flex space-x-3">
       <%= form.submit "Save changes", class: "text-green-600 hover:text-green-800 font-medium hand-underline hand-underline-green cursor-pointer bg-transparent border-0" %>

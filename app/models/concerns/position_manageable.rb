@@ -14,8 +14,7 @@ module PositionManageable
 
   # Get the next position for a new record
   def next_position
-    return 1 unless association(:page).loaded? && page.present?
-    page.send(association_name).count + 1
+    position_scope.count + 1
   end
 
   # Move to a specific position
@@ -42,7 +41,7 @@ module PositionManageable
 
   # Move to the bottom
   def move_to_bottom!
-    max_position = page.send(association_name).count
+    max_position = position_scope.count
     move_to_position!(max_position)
   end
 
@@ -54,7 +53,7 @@ module PositionManageable
 
   # Move down one position
   def move_down!
-    max_position = page.send(association_name).count
+    max_position = position_scope.count
     return if position >= max_position
     move_to_position!(position + 1)
   end
@@ -66,19 +65,19 @@ module PositionManageable
 
   # Check if item is at the bottom
   def at_bottom?
-    position == page.send(association_name).count
+    position == position_scope.count
   end
 
   # Get the item above this one
   def above_item
     return nil if at_top?
-    page.send(association_name).find_by(position: position - 1)
+    position_scope.find_by(position: position - 1)
   end
 
   # Get the item below this one
   def below_item
     return nil if at_bottom?
-    page.send(association_name).find_by(position: position + 1)
+    position_scope.find_by(position: position + 1)
   end
 
   # Swap positions with another item
@@ -97,20 +96,18 @@ module PositionManageable
   private
 
   def shift_items_down(start_position, end_position)
-    page.send(association_name)
+    position_scope
          .where(position: start_position..end_position)
          .update_all("position = position + 1")
   end
 
   def shift_items_up(start_position, end_position)
-    page.send(association_name)
+    position_scope
          .where(position: start_position..end_position)
          .update_all("position = position - 1")
   end
 
-  def association_name
-    # This should be overridden by the including class
-    # For example: :todos, :pages, etc.
-    raise NotImplementedError, "Classes including PositionManagement must define association_name"
+  def position_scope
+    raise NotImplementedError, "Classes including PositionManageable must define position_scope"
   end
 end

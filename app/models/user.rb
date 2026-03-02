@@ -11,6 +11,7 @@ class User < ApplicationRecord
     validates :name, presence: true, length: { minimum: 2, maximum: 50 }, on: :create
     validates :name, length: { minimum: 2, maximum: 50 }, allow_blank: true, on: :update
     validates :password, length: { minimum: 6 }, on: :create
+    validates :font_family, inclusion: { in: %w[default serif sans_serif] }
 
     # Download tracking
     MAX_DOWNLOADS = 3

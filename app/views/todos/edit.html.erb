@@ -18,6 +18,12 @@
                          style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
       </div>
 
+      <!-- Due date (for calendar pages) -->
+      <div class="form-group">
+        <%= f.label :due_date, "Due date (optional)", class: "form-label" %>
+        <%= f.date_field :due_date, class: "form-input w-full" %>
+      </div>
+
       <!-- Notes -->
       <div class="form-group">
         <%= f.label :notes, "Additional notes", class: "form-label" %>

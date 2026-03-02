@@ -27,10 +27,23 @@
 
     <%# Custom BEM-based CSS system - no Tailwind needed! %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%# User accent & font (Advanced Settings) - only when logged in %>
+    <% if logged_in? && current_user %>
+      <style>
+        :root {
+          --user-accent: <%= current_user.accent_color.presence || '#3b82f6' %>;
+          <% if (stack = font_stack_for(current_user)) %>
+          --user-font: <%= raw stack %>;
+          <% else %>
+          --user-font: inherit;
+          <% end %>
+        }
+      </style>
+    <% end %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="notebook-background handwritten" id="app-body">
+  <body class="notebook-background handwritten" id="app-body" style="<%= 'font-family: var(--user-font);' if logged_in? && current_user && font_stack_for(current_user) %>">
     <!-- Skip to main content - first focusable for keyboard/screen reader users -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <!-- Load theme immediately to prevent flash -->

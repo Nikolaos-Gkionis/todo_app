@@ -8,6 +8,8 @@ class SettingsController < ApplicationController
   def update
     @user = current_user
 
+    return redirect_to settings_path, alert: "Invalid request." unless params[:user].present?
+
     # Handle password update separately
     if params[:user][:password].present?
       if @user.authenticate(params[:user][:current_password])
@@ -23,8 +25,8 @@ class SettingsController < ApplicationController
         render :index, status: :unprocessable_entity
       end
     else
-      # Check if sensitive fields (email) are being updated
-      sensitive_changes = params[:user][:email_address] != @user.email_address
+      # Check if sensitive fields (email) are being updated (only when email param is present)
+      sensitive_changes = params[:user][:email_address].present? && params[:user][:email_address] != @user.email_address
 
       if sensitive_changes
         # Require current password for sensitive changes
@@ -43,9 +45,10 @@ class SettingsController < ApplicationController
           render :index, status: :unprocessable_entity
         end
       else
-        # Update non-sensitive fields (like name) without password
+        # Update non-sensitive fields (name, accent_color, font_family) without password
         if @user.update(user_params.except(:password, :password_confirmation, :current_password))
-          redirect_to settings_path, notice: "Account updated successfully!"
+          notice = appearance_only_update? ? "Appearance updated!" : "Account updated successfully!"
+          redirect_to settings_path, notice: notice
         else
           render :index, status: :unprocessable_entity
         end
@@ -88,6 +91,11 @@ class SettingsController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email_address, :password, :password_confirmation, :current_password)
+    params.require(:user).permit(:name, :email_address, :password, :password_confirmation, :current_password, :accent_color, :font_family)
+  end
+
+  def appearance_only_update?
+    p = params[:user] || {}
+    p[:accent_color].present? || p[:font_family].present?
   end
 end

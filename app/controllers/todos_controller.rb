@@ -20,8 +20,7 @@ class TodosController < ApplicationController
       flash[:new_todo_id] = @todo.id
       redirect_to @page, notice: "✨ Todo added to Todo-it!"
     else
-      # Only get saved todos to avoid routing errors
-      @todos = @page.todos.ordered.where.not(id: nil)
+      prepare_page_show_vars
       @new_todo = @todo
       render "pages/show", status: :unprocessable_entity
     end
@@ -34,8 +33,7 @@ class TodosController < ApplicationController
     if @todo.update(todo_params)
       redirect_to @page, notice: "Todo was successfully updated."
     else
-      # Only get saved todos to avoid routing errors
-      @todos = @page.todos.ordered.where.not(id: nil)
+      prepare_page_show_vars
       @new_todo = @page.todos.build
       render "pages/show", status: :unprocessable_entity
     end
@@ -72,6 +70,20 @@ class TodosController < ApplicationController
   end
 
   def todo_params
-    params.require(:todo).permit(:title, :notes, :completed, :position)
+    params.require(:todo).permit(:title, :notes, :completed, :position, :due_date)
+  end
+
+  # When re-rendering pages/show from create/update failures, prepare same vars as PagesController#show
+  def prepare_page_show_vars
+    @todos = @page.todos.ordered.where.not(id: nil)
+    return unless @page.template == "calendar"
+
+    today = Time.current.to_date
+    @week_start = today.beginning_of_week(:monday)
+    @week_end = @week_start + 6.days
+    @week_dates = (@week_start..@week_end).to_a
+    @todos_by_date = @todos.select { |t| t.due_date.present? }.group_by(&:due_date)
+    @unscheduled_todos = @todos.reject(&:due_date)
+    @today_index = @week_dates.index(today) || 0
   end
 end

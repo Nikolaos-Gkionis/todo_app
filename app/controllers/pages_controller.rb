@@ -12,11 +12,24 @@ class PagesController < ApplicationController
     # @page is set by before_action
     @todos = @page.todos.ordered.where.not(id: nil)  # Get saved todos in position order
     @new_todo = @page.todos.build                    # New todo for the form
+
+    # Calendar template: prepare week dates and grouped todos
+    if @page.template == "calendar"
+      today = Time.current.to_date
+      @week_start = today.beginning_of_week(:monday)
+      @week_end = @week_start + 6.days
+      @week_dates = (@week_start..@week_end).to_a
+      # Todos with due_date in this week, grouped by date
+      @todos_by_date = @todos.select { |t| t.due_date.present? }.group_by(&:due_date)
+      @unscheduled_todos = @todos.reject(&:due_date)
+      # Index of today for mobile scroll (0=Monday)
+      @today_index = @week_dates.index(today) || 0
+    end
   end
 
   def new
-    # Create new page for current user
-    @page = current_user.pages.build
+    # Create new page for current user (template defaults to minimal)
+    @page = current_user.pages.build(template: "minimal")
   end
 
   def create
@@ -74,6 +87,6 @@ class PagesController < ApplicationController
   end
 
   def page_params
-    params.require(:page).permit(:name, :description, :cover_color)
+    params.require(:page).permit(:name, :description, :cover_color, :template)
   end
 end
