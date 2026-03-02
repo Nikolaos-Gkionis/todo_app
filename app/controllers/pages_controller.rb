@@ -4,8 +4,7 @@ class PagesController < ApplicationController
   before_action :set_page, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    # Only show current user's pages, ordered by newest first
-    @pages = current_user.pages.order(created_at: :desc)
+    redirect_to app_root_path
   end
 
   def show
@@ -36,9 +35,9 @@ class PagesController < ApplicationController
     # Check if user can create more pages
     unless current_user.can_create_page?
       if current_user.trial_expired? && !current_user.device_downloaded?
-        redirect_to pages_path, alert: "Your trial has expired. Please download the app to continue creating pages."
+        redirect_to app_root_path, alert: "Your trial has expired. Please download the app to continue creating pages."
       else
-        redirect_to pages_path, alert: "You've reached the page limit. Download the app for unlimited pages!"
+        redirect_to app_root_path, alert: "You've reached the page limit. Download the app for unlimited pages!"
       end
       return
     end
@@ -47,7 +46,7 @@ class PagesController < ApplicationController
     @page = current_user.pages.build(page_params)
 
     if @page.save
-      redirect_to pages_path, notice: "Page was successfully created."
+      redirect_to app_root_path, notice: "Page was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -71,7 +70,7 @@ class PagesController < ApplicationController
   def destroy
     # @page is set by before_action
     @page.destroy
-    redirect_to pages_path, notice: "Page was successfully deleted."
+    redirect_to app_root_path, notice: "Page was successfully deleted."
   end
 
   # Offline page for service worker

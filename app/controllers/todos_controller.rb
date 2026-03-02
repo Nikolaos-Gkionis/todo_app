@@ -1,56 +1,59 @@
 class TodosController < ApplicationController
-  # Require authentication for all actions
   before_action :require_login
-  before_action :set_page
-  before_action :set_todo, only: [ :edit, :update, :destroy ]
-
-  def index
-    redirect_to @page
-  end
-
-  def new
-    @todo = @page.todos.build
-  end
+  before_action :set_todo, only: [ :update, :destroy ]
 
   def create
-    @todo = @page.todos.build(todo_params)
+    @todo = current_user.todos.build(todo_params)
 
     if @todo.save
-      # Add animation flag for the new todo
-      flash[:new_todo_id] = @todo.id
-      redirect_to @page, notice: "✨ Todo added to Todo-it!"
+      respond_to do |format|
+        format.html { redirect_back fallback_location: app_root_path, notice: "Todo added!" }
+        format.turbo_stream
+      end
     else
-      prepare_page_show_vars
-      @new_todo = @todo
-      render "pages/show", status: :unprocessable_entity
+      # If validation fails, we should ideally handle it, but for inline forms, redirecting back works best
+      redirect_back fallback_location: app_root_path, alert: "Failed to create todo."
     end
   end
 
-  def edit
-  end
-
   def update
-    if @todo.update(todo_params)
-      redirect_to @page, notice: "Todo was successfully updated."
+    # Support reassignment via assign_to_page or assign_to_date
+    if params[:todo][:page_id] == "null"
+      @todo.assign_to_date(params[:todo][:due_date])
+    elsif params[:todo][:page_id].present?
+      @todo.assign_to_page(params[:todo][:page_id])
+    end
+
+    if @todo.update(todo_params.except(:page_id, :due_date))
+      respond_to do |format|
+        format.html { redirect_back fallback_location: app_root_path, notice: "Todo updated." }
+        format.turbo_stream
+      end
     else
-      prepare_page_show_vars
-      @new_todo = @page.todos.build
-      render "pages/show", status: :unprocessable_entity
+      redirect_back fallback_location: app_root_path, alert: "Failed to update todo."
     end
   end
 
   def destroy
     @todo.destroy
-    redirect_to @page, notice: "Todo was successfully deleted."
+    respond_to do |format|
+      format.html { redirect_back fallback_location: app_root_path, notice: "Todo deleted." }
+      format.turbo_stream
+    end
   end
 
-  # AJAX endpoint for reordering todos
   def reorder
     todo_ids = params[:todo_ids]
 
     if todo_ids.present?
-      Todo.reorder_positions!(@page, todo_ids)
-      render json: { success: true, message: "Todos reordered successfully" }
+      # Ensure all todos belong to user
+      valid_todos = current_user.todos.where(id: todo_ids).pluck(:id).map(&:to_s)
+
+      # Filter incoming order to only what the user owns
+      safe_todo_ids = todo_ids.select { |id| valid_todos.include?(id.to_s) }
+      Todo.reorder_positions!(safe_todo_ids)
+
+      render json: { success: true }
     else
       render json: { success: false, error: "No todo IDs provided" }, status: :bad_request
     end
@@ -60,30 +63,11 @@ class TodosController < ApplicationController
 
   private
 
-  def set_page
-    # Only allow access to current user's pages
-    @page = current_user.pages.find(params[:page_id])
-  end
-
   def set_todo
-    @todo = @page.todos.find(params[:id])
+    @todo = current_user.todos.find(params[:id])
   end
 
   def todo_params
-    params.require(:todo).permit(:title, :notes, :completed, :position, :due_date)
-  end
-
-  # When re-rendering pages/show from create/update failures, prepare same vars as PagesController#show
-  def prepare_page_show_vars
-    @todos = @page.todos.ordered.where.not(id: nil)
-    return unless @page.template == "calendar"
-
-    today = Time.current.to_date
-    @week_start = today.beginning_of_week(:monday)
-    @week_end = @week_start + 6.days
-    @week_dates = (@week_start..@week_end).to_a
-    @todos_by_date = @todos.select { |t| t.due_date.present? }.group_by(&:due_date)
-    @unscheduled_todos = @todos.reject(&:due_date)
-    @today_index = @week_dates.index(today) || 0
+    params.require(:todo).permit(:title, :notes, :completed, :position, :due_date, :page_id)
   end
 end

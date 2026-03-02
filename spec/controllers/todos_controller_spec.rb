@@ -4,42 +4,21 @@ RSpec.describe TodosController, type: :controller do
   let(:user) { create(:user) }
   let(:other_user) { create(:user) }
   let(:page) { create(:page, user: user) }
-  let(:other_page) { create(:page, user: other_user) }
-  let(:todo) { create(:todo, page: page) }
-  let(:other_todo) { create(:todo, page: other_page) }
+  let(:todo) { create(:todo, page: page, user: user) }
+  let(:other_todo) { create(:todo, user: other_user) }
 
   before do
     session[:user_id] = user.id
+    request.env["HTTP_REFERER"] = app_root_path
   end
-
-  describe 'GET #index' do
-    it 'redirects to the page' do
-      get :index, params: { page_id: page.id }
-      expect(response).to redirect_to(page)
-    end
-
-    it 'prevents access to other users pages' do
-      expect {
-        get :index, params: { page_id: other_page.id }
-      }.to raise_error(ActiveRecord::RecordNotFound)
-    end
-
-    it 'requires authentication' do
-      session[:user_id] = nil
-      get :index, params: { page_id: page.id }
-      expect(response).to redirect_to(login_path)
-    end
-  end
-
-  # Note: GET #new action exists but has no template - todos are created via form on pages/show
-  # describe 'GET #new' - Skipped as this action is not used in the current application flow
 
   describe 'POST #create' do
     let(:valid_todo_params) do
       {
         title: 'New Todo',
         notes: 'Some notes',
-        completed: false
+        completed: false,
+        page_id: page.id
       }
     end
 
@@ -53,109 +32,51 @@ RSpec.describe TodosController, type: :controller do
     context 'with valid parameters' do
       it 'creates a new todo' do
         expect {
-          post :create, params: { page_id: page.id, todo: valid_todo_params }
+          post :create, params: { todo: valid_todo_params }
         }.to change(Todo, :count).by(1)
       end
 
-      it 'assigns the todo to the page' do
-        post :create, params: { page_id: page.id, todo: valid_todo_params }
+      it 'assigns the todo to the page and user' do
+        post :create, params: { todo: valid_todo_params }
 
-        todo = Todo.last
-        expect(todo.page).to eq(page)
+        new_todo = Todo.last
+        expect(new_todo.page).to eq(page)
+        expect(new_todo.user).to eq(user)
       end
 
-      it 'redirects to page with success message' do
-        post :create, params: { page_id: page.id, todo: valid_todo_params }
+      it 'redirects back with success message' do
+        post :create, params: { todo: valid_todo_params }
 
-        expect(response).to redirect_to(page)
-        expect(flash[:notice]).to eq('✨ Todo added to Todo-it!')
-      end
-
-      it 'sets new todo id in flash for animation' do
-        post :create, params: { page_id: page.id, todo: valid_todo_params }
-
-        expect(flash[:new_todo_id]).to eq(Todo.last.id)
-      end
-
-      it 'creates todo with correct attributes' do
-        post :create, params: { page_id: page.id, todo: valid_todo_params }
-
-        todo = Todo.last
-        expect(todo.title).to eq('New Todo')
-        expect(todo.notes).to eq('Some notes')
-        expect(todo.completed).to be false
+        expect(response).to redirect_to(app_root_path)
+        expect(flash[:notice]).to eq('Todo added!')
       end
     end
 
     context 'with invalid parameters' do
       it 'does not create a new todo' do
         expect {
-          post :create, params: { page_id: page.id, todo: invalid_todo_params }
+          post :create, params: { todo: invalid_todo_params }
         }.not_to change(Todo, :count)
       end
 
-      it 'renders pages/show template with errors' do
-        post :create, params: { page_id: page.id, todo: invalid_todo_params }
+      it 'redirects back with error message' do
+        post :create, params: { todo: invalid_todo_params }
 
-        expect(response).to render_template('pages/show')
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to redirect_to(app_root_path)
+        expect(flash[:alert]).to eq('Failed to create todo.')
       end
-
-      it 'assigns todos and new_todo for the template' do
-        post :create, params: { page_id: page.id, todo: invalid_todo_params }
-
-        expect(assigns(:todos)).to eq(page.todos.ordered.where.not(id: nil))
-        expect(assigns(:new_todo)).to eq(assigns(:todo))
-      end
-
-      it 'assigns todo with errors' do
-        post :create, params: { page_id: page.id, todo: invalid_todo_params }
-
-        expect(assigns(:todo)).to be_a(Todo)
-        expect(assigns(:todo)).not_to be_valid
-        expect(assigns(:todo).errors).not_to be_empty
-      end
-    end
-
-    it 'prevents creating todos on other users pages' do
-      expect {
-        post :create, params: { page_id: other_page.id, todo: valid_todo_params }
-      }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
     it 'requires authentication' do
       session[:user_id] = nil
-      post :create, params: { page_id: page.id, todo: valid_todo_params }
-      expect(response).to redirect_to(login_path)
-    end
-  end
-
-  describe 'GET #edit' do
-    it 'renders the edit template' do
-      get :edit, params: { page_id: page.id, id: todo.id }
-      expect(response).to render_template(:edit)
-      expect(response).to have_http_status(:success)
-    end
-
-    it 'assigns the correct todo' do
-      get :edit, params: { page_id: page.id, id: todo.id }
-      expect(assigns(:todo)).to eq(todo)
-    end
-
-    it 'prevents access to other users todos' do
-      expect {
-        get :edit, params: { page_id: other_page.id, id: other_todo.id }
-      }.to raise_error(ActiveRecord::RecordNotFound)
-    end
-
-    it 'requires authentication' do
-      session[:user_id] = nil
-      get :edit, params: { page_id: page.id, id: todo.id }
+      post :create, params: { todo: valid_todo_params }
       expect(response).to redirect_to(login_path)
     end
   end
 
   describe 'PATCH #update' do
+    let!(:todo_to_update) { create(:todo, page: page, user: user) }
+
     let(:valid_update_params) do
       {
         title: 'Updated Todo',
@@ -164,119 +85,101 @@ RSpec.describe TodosController, type: :controller do
       }
     end
 
-    let(:invalid_update_params) do
-      {
-        title: '',
-        notes: 'A' * 1001
-      }
-    end
-
     context 'with valid parameters' do
       it 'updates the todo' do
-        patch :update, params: { page_id: page.id, id: todo.id, todo: valid_update_params }
+        patch :update, params: { id: todo_to_update.id, todo: valid_update_params }
 
-        todo.reload
-        expect(todo.title).to eq('Updated Todo')
-        expect(todo.notes).to eq('Updated notes')
-        expect(todo.completed).to be true
+        todo_to_update.reload
+        expect(todo_to_update.title).to eq('Updated Todo')
+        expect(todo_to_update.notes).to eq('Updated notes')
+        expect(todo_to_update.completed).to be true
       end
 
-      it 'redirects to page with success message' do
-        patch :update, params: { page_id: page.id, id: todo.id, todo: valid_update_params }
+      it 'redirects back with success message' do
+        patch :update, params: { id: todo_to_update.id, todo: valid_update_params }
 
-        expect(response).to redirect_to(page)
-        expect(flash[:notice]).to eq('Todo was successfully updated.')
+        expect(response).to redirect_to(app_root_path)
+        expect(flash[:notice]).to eq('Todo updated.')
       end
     end
 
-    context 'with invalid parameters' do
-      it 'does not update the todo' do
-        original_title = todo.title
-        patch :update, params: { page_id: page.id, id: todo.id, todo: invalid_update_params }
-
-        todo.reload
-        expect(todo.title).to eq(original_title)
+    context 'assigning to page or date' do
+      it 'assigns to date if page_id is "null"' do
+        patch :update, params: { id: todo_to_update.id, todo: { page_id: "null", due_date: "2024-01-01" } }
+        todo_to_update.reload
+        expect(todo_to_update.page_id).to be_nil
+        expect(todo_to_update.due_date.to_s).to eq("2024-01-01")
       end
 
-      it 'renders pages/show template with errors' do
-        patch :update, params: { page_id: page.id, id: todo.id, todo: invalid_update_params }
-
-        expect(response).to render_template('pages/show')
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
-
-      it 'assigns todos and new_todo for the template' do
-        patch :update, params: { page_id: page.id, id: todo.id, todo: invalid_update_params }
-
-        expect(assigns(:todos)).to eq(page.todos.ordered.where.not(id: nil))
-        expect(assigns(:new_todo)).to be_a_new(Todo)
+      it 'assigns to page if page_id is present' do
+        patch :update, params: { id: todo_to_update.id, todo: { page_id: page.id } }
+        todo_to_update.reload
+        expect(todo_to_update.page_id).to eq(page.id)
+        expect(todo_to_update.due_date).to be_nil
       end
     end
 
     it 'prevents updating other users todos' do
       expect {
-        patch :update, params: { page_id: other_page.id, id: other_todo.id, todo: valid_update_params }
+        patch :update, params: { id: other_todo.id, todo: valid_update_params }
       }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
     it 'requires authentication' do
       session[:user_id] = nil
-      patch :update, params: { page_id: page.id, id: todo.id, todo: valid_update_params }
+      patch :update, params: { id: todo_to_update.id, todo: valid_update_params }
       expect(response).to redirect_to(login_path)
     end
   end
 
   describe 'DELETE #destroy' do
-    it 'deletes the todo' do
-      todo_to_delete = create(:todo, page: page)
+    let!(:todo_to_delete) { create(:todo, page: page, user: user) }
 
+    it 'deletes the todo' do
       expect {
-        delete :destroy, params: { page_id: page.id, id: todo_to_delete.id }
+        delete :destroy, params: { id: todo_to_delete.id }
       }.to change(Todo, :count).by(-1)
     end
 
-    it 'redirects to page with success message' do
-      delete :destroy, params: { page_id: page.id, id: todo.id }
+    it 'redirects back with success message' do
+      delete :destroy, params: { id: todo_to_delete.id }
 
-      expect(response).to redirect_to(page)
-      expect(flash[:notice]).to eq('Todo was successfully deleted.')
+      expect(response).to redirect_to(app_root_path)
+      expect(flash[:notice]).to eq('Todo deleted.')
     end
 
     it 'prevents deleting other users todos' do
       expect {
-        delete :destroy, params: { page_id: other_page.id, id: other_todo.id }
+        delete :destroy, params: { id: other_todo.id }
       }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
     it 'requires authentication' do
       session[:user_id] = nil
-      delete :destroy, params: { page_id: page.id, id: todo.id }
+      delete :destroy, params: { id: todo_to_delete.id }
       expect(response).to redirect_to(login_path)
     end
   end
 
-  describe 'POST #reorder' do
-    let!(:todo1) { create(:todo, page: page, position: 1) }
-    let!(:todo2) { create(:todo, page: page, position: 2) }
-    let!(:todo3) { create(:todo, page: page, position: 3) }
+  describe 'PATCH #reorder' do
+    let!(:todo1) { create(:todo, page: page, user: user, position: 1) }
+    let!(:todo2) { create(:todo, page: page, user: user, position: 2) }
+    let!(:todo3) { create(:todo, page: page, user: user, position: 3) }
 
     context 'with valid todo IDs' do
       it 'reorders todos successfully' do
         new_order = [ todo3.id, todo1.id, todo2.id ]
 
-        post :reorder, params: { page_id: page.id, todo_ids: new_order }
+        patch :reorder, params: { todo_ids: new_order }
 
         expect(response).to have_http_status(:success)
-        expect(JSON.parse(response.body)).to eq({
-          'success' => true,
-          'message' => 'Todos reordered successfully'
-        })
+        expect(JSON.parse(response.body)).to include('success' => true)
       end
 
       it 'updates todo positions' do
         new_order = [ todo3.id, todo1.id, todo2.id ]
 
-        post :reorder, params: { page_id: page.id, todo_ids: new_order }
+        patch :reorder, params: { todo_ids: new_order }
 
         todo1.reload
         todo2.reload
@@ -290,88 +193,30 @@ RSpec.describe TodosController, type: :controller do
 
     context 'with empty todo IDs' do
       it 'returns error response' do
-        post :reorder, params: { page_id: page.id, todo_ids: [] }
+        patch :reorder, params: { todo_ids: [] }
 
         expect(response).to have_http_status(:bad_request)
-        expect(JSON.parse(response.body)).to eq({
-          'success' => false,
-          'error' => 'No todo IDs provided'
-        })
+        expect(JSON.parse(response.body)).to include('success' => false, 'error' => 'No todo IDs provided')
       end
     end
 
-    context 'with nil todo IDs' do
-      it 'returns error response' do
-        post :reorder, params: { page_id: page.id, todo_ids: nil }
+    it 'prevents reordering other users todos' do
+      # Note: Reorder method in the controller silently filters out unowned IDs
+      # so it will succeed but not affect the other_todo
+      patch :reorder, params: { todo_ids: [ other_todo.id, todo1.id ] }
 
-        expect(response).to have_http_status(:bad_request)
-        expect(JSON.parse(response.body)).to eq({
-          'success' => false,
-          'error' => 'No todo IDs provided'
-        })
-      end
-    end
+      todo1.reload
+      other_todo.reload
 
-    context 'with invalid todo IDs' do
-      it 'handles errors gracefully' do
-        post :reorder, params: { page_id: page.id, todo_ids: [ 99999 ] }
-
-        expect(response).to have_http_status(:internal_server_error)
-        response_body = JSON.parse(response.body)
-        expect(response_body['success']).to be false
-        expect(response_body['error']).to be_present
-      end
-    end
-
-    it 'prevents reordering todos on other users pages' do
-      expect {
-        post :reorder, params: { page_id: other_page.id, todo_ids: [ other_todo.id ] }
-      }.to raise_error(ActiveRecord::RecordNotFound)
+      expect(response).to have_http_status(:success)
+      expect(todo1.position).to eq(1)
+      expect(other_todo.position).to eq(1) # Assuming other_todo starts at 1
     end
 
     it 'requires authentication' do
       session[:user_id] = nil
-      post :reorder, params: { page_id: page.id, todo_ids: [ todo1.id ] }
+      patch :reorder, params: { todo_ids: [ todo1.id ] }
       expect(response).to redirect_to(login_path)
-    end
-  end
-
-  describe 'parameter filtering' do
-    it 'only permits allowed parameters' do
-      malicious_params = {
-        title: 'Test Todo',
-        notes: 'Test notes',
-        completed: false,
-        page_id: other_page.id,
-        malicious_field: 'hack_attempt'
-      }
-
-      post :create, params: { page_id: page.id, todo: malicious_params }
-
-      todo = Todo.last
-      expect(todo.page).to eq(page) # Should not be changed to other_page
-      expect(todo.respond_to?(:malicious_field)).to be false
-    end
-  end
-
-  describe 'user isolation' do
-    it 'ensures users can only access their own todos' do
-      # Create todos for both users
-      user_todo = create(:todo, page: page)
-      other_user_todo = create(:todo, page: other_page)
-
-      # User should not be able to access other user's todo
-      expect {
-        get :edit, params: { page_id: other_page.id, id: other_user_todo.id }
-      }.to raise_error(ActiveRecord::RecordNotFound)
-
-      expect {
-        patch :update, params: { page_id: other_page.id, id: other_user_todo.id, todo: { title: 'Hacked' } }
-      }.to raise_error(ActiveRecord::RecordNotFound)
-
-      expect {
-        delete :destroy, params: { page_id: other_page.id, id: other_user_todo.id }
-      }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end

@@ -1,7 +1,9 @@
 class Todo < ApplicationRecord
   include PositionManageable
-
+  belongs_to :user
   belongs_to :page, optional: true
+
+  before_validation :set_user_from_page, on: :create, if: -> { user_id.nil? && page_id.present? }
 
   validates :title, presence: true, length: { minimum: 1, maximum: 200 }
 
@@ -30,6 +32,10 @@ class Todo < ApplicationRecord
   end
 
   private
+
+  def set_user_from_page
+    self.user = page.user if page
+  end
 
   def position_scope
     if page_id.present?

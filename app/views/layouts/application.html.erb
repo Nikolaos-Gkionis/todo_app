@@ -19,10 +19,10 @@
     <meta name="theme-color" content="#4a5568">
     
     <!-- App Meta Tags -->
-    <meta name="description" content="Todo-it - Beautiful notebook-style todo app with hand-drawn aesthetics">
+    <meta name="description" content="Todo-it - The simplest calendar-based todo app. 100% Yours.">
     <meta name="author" content="Todo-it App">
     <meta property="og:title" content="Todo-it - Beautiful Todo App">
-    <meta property="og:description" content="Organize your tasks in a beautiful notebook-style interface">
+    <meta property="og:description" content="Reduced mental clutter. Offline-first. Zero-Cloud. Private by design.">
     <meta property="og:type" content="website">
 
     <%# Custom BEM-based CSS system - no Tailwind needed! %>
@@ -43,7 +43,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="notebook-background handwritten" id="app-body" style="<%= 'font-family: var(--user-font);' if logged_in? && current_user && font_stack_for(current_user) %>">
+  <body class="notebook-background <%= 'body--font-handwritten' if logged_in? && current_user&.font_family == 'handwritten' %>" id="app-body" style="<%= 'font-family: var(--user-font);' if logged_in? && current_user && font_stack_for(current_user) && current_user.font_family != 'handwritten' %>">
     <!-- Skip to main content - first focusable for keyboard/screen reader users -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <!-- Load theme immediately to prevent flash -->

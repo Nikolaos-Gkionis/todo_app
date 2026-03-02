@@ -31,14 +31,15 @@ Rails.application.routes.draw do
   get "/terms", to: "marketing#terms", as: "terms_of_service"
 
   # App routes (authenticated)
-  get "/app", to: "pages#index", as: "app_root"
+  get "/app", to: "dashboard#index", as: "app_root"
   get "/offline", to: "pages#offline"
+
   scope "/app" do
-    resources :pages do
-      resources :todos, except: [ :show ] do
-        collection do
-          patch :reorder
-        end
+    resources :pages
+
+    resources :todos, only: [ :create, :update, :destroy ] do
+      collection do
+        patch :reorder
       end
     end
 
