@@ -8,7 +8,6 @@ class TodosController < ApplicationController
     if @todo.save
       respond_to do |format|
         format.html { redirect_back fallback_location: app_root_path, notice: "Todo added!" }
-        format.turbo_stream
       end
     else
       # If validation fails, we should ideally handle it, but for inline forms, redirecting back works best
@@ -27,7 +26,6 @@ class TodosController < ApplicationController
     if @todo.update(todo_params.except(:page_id, :due_date))
       respond_to do |format|
         format.html { redirect_back fallback_location: app_root_path, notice: "Todo updated." }
-        format.turbo_stream
       end
     else
       redirect_back fallback_location: app_root_path, alert: "Failed to update todo."
@@ -38,7 +36,6 @@ class TodosController < ApplicationController
     @todo.destroy
     respond_to do |format|
       format.html { redirect_back fallback_location: app_root_path, notice: "Todo deleted." }
-      format.turbo_stream
     end
   end
 

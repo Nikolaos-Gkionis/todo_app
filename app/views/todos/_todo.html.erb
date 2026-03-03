@@ -1,27 +1,22 @@
-<div id="todo_<%= todo.id %>" data-id="<%= todo.id %>" class="calendar-todo-item flex flex--align-start p-2 rounded hover:bg-gray-50 bg-white border border-gray-100 shadow-sm mb-2 cursor-grab active:cursor-grabbing">
-  <%= form_with model: todo, method: :patch, local: false, class: "flex flex--align-center mr-2 flex-shrink-0" do |form| %>
-    <div class="hand-checkbox <%= todo.completed? ? 'hand-checkbox--checked' : 'hand-checkbox--unchecked' %>"
-         onclick="this.closest('form').requestSubmit()"
-         role="button"
-         tabindex="0"
-         aria-label="<%= todo.completed? ? 'Mark as incomplete' : 'Mark as complete' %>">
-    </div>
+<div id="todo_<%= todo.id %>" data-id="<%= todo.id %>" class="todo-item<%= ' todo-item--done' if todo.completed? %>">
+  <%= form_with model: todo, method: :patch, local: false, class: "todo-item__form" do |form| %>
     <%= form.hidden_field :completed, value: !todo.completed %>
+    <% is_recurring = todo.title.to_s.downcase.match?(/\bevery\s+(day|other day|weekday|week|other week|month|year)\b/) %>
+    <button type="submit" class="todo-item__title<%= ' todo-item__title--done' if todo.completed? %>" aria-label="<%= todo.completed? ? 'Mark as incomplete' : 'Mark as complete' %>">
+      <%= todo.title %>
+      <% if is_recurring %>
+        <svg aria-label="Recurring task" style="display:inline-block; margin-left:4px; vertical-align:middle;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2"><path d="M17 1l4 4-4 4"></path><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><path d="M7 23l-4-4 4-4"></path><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+      <% end %>
+    </button>
   <% end %>
 
-  <div class="flex--grow min-w-0">
-    <div class="todo-title text-sm font-medium truncate <%= 'hand-strike-through text-gray-500' if todo.completed %>">
-      <%= todo.title %>
-    </div>
-  </div>
-
-  <div class="flex space-x-1 ml-1 flex-shrink-0 opacity-50 hover:opacity-100 transition-opacity">
+  <span class="todo-item__actions">
     <%= link_to todo_path(todo),
-          data: { "turbo-method": :delete, confirm: "Delete this todo?" },
-          class: "text-red-600 hover:text-red-800 p-1",
-          title: "Delete todo",
-          "aria-label" => "Delete todo: #{todo.title}" do %>
-      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+          data: { "turbo-method": :delete, confirm: "Delete?" },
+          class: "todo-item__delete",
+          title: "Delete",
+          "aria-label" => "Delete: #{todo.title}" do %>
+      ×
     <% end %>
-  </div>
+  </span>
 </div>

@@ -28,7 +28,7 @@ RSpec.describe 'User Registration Flow', type: :request do
 
       # Step 4: Should be on the app root page (pages index)
       expect(response).to have_http_status(:success)
-      expect(response.body).to include('My Pages')
+      expect(response.body).to include('Lists')
 
       # Step 5: User should be automatically logged in
       user = User.find_by(email_address: 'test@example.com')
@@ -111,7 +111,7 @@ RSpec.describe 'User Registration Flow', type: :request do
 
       # Step 4: Should be on the app root page
       expect(response).to have_http_status(:success)
-      expect(response.body).to include('My Pages')
+      expect(response.body).to include('Lists')
 
       # Step 5: User should be logged in
       expect(session[:user_id]).to eq(user.id)
