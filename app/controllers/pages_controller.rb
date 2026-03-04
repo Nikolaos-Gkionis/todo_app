@@ -7,6 +7,18 @@ class PagesController < ApplicationController
     redirect_to app_root_path
   end
 
+  def reorder
+    page_ids = params[:page_ids]
+    if page_ids.present?
+      page_ids.each_with_index do |id, index|
+        current_user.pages.where(id: id).update_all(position: index + 1)
+      end
+      render json: { success: true }
+    else
+      render json: { success: false }, status: :bad_request
+    end
+  end
+
   def show
     # @page is set by before_action
     @todos = @page.todos.ordered.where.not(id: nil)  # Get saved todos in position order

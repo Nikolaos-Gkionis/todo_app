@@ -46,8 +46,7 @@ module ApplicationHelper
     MOTIVATIONAL_PHRASES.sample
   end
 
-  # Font stack for advanced settings (default / serif / sans_serif)
-  # Serif: Lora with OS fallbacks; Sans Serif: Inter with OS fallbacks
+  # Font stack for preferences (default / serif / sans_serif / system_ui / georgia / menlo)
   def font_stack_for(user)
     return nil unless user
 
@@ -56,6 +55,12 @@ module ApplicationHelper
       "'Lora', Georgia, 'Times New Roman', serif"
     when "sans_serif"
       "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+    when "system_ui"
+      "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    when "georgia"
+      "Georgia, 'Times New Roman', serif"
+    when "menlo"
+      "'Menlo', 'Courier New', Courier, monospace"
     else
       nil # default = use body's handwritten font
     end

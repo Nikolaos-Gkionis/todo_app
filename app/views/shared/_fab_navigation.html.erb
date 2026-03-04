@@ -2,115 +2,194 @@
 <% if logged_in? %>
   <div data-controller="fab-navigation"
        data-fab-navigation-current-days-value="<%= @view_days || 7 %>"
-       data-action="keydown@document->fab-navigation#closeOnEscape click@document->fab-navigation#closeOnOverlay open-theme-drawer@window->fab-navigation#openThemeDrawer open-view-drawer@window->fab-navigation#openViewDrawer">
+       data-action="keydown@document->fab-navigation#closeOnEscape click@document->fab-navigation#closeOnOverlay open-theme-drawer@window->fab-navigation#openThemeDrawer open-view-drawer@window->fab-navigation#openViewDrawer open-preferences@window->fab-navigation#openPreferences open-settings-panel@window->fab-navigation#openSettingsPanel">
 
-
-
-    <%# ── FAB Button (bottom-right, no background) ── %>
+    <%# ── FAB Button (top-left, no background) ── %>
     <button class="fab"
             data-fab-navigation-target="button"
-            data-action="click->fab-navigation#toggle"
-            aria-label="Open navigation menu"
+            data-action="click->fab-navigation#openPreferences"
+            aria-label="Open Preferences menu"
             aria-expanded="false">
-      <svg data-fab-navigation-target="closedIcon" class="fab__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <svg class="fab__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-      <svg data-fab-navigation-target="openIcon" class="fab__icon fab__icon--hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
       </svg>
     </button>
 
-    <%# ── Overlay ── %>
-    <div class="bottom-sheet-overlay hidden" data-fab-navigation-target="overlay"></div>
 
-    <%# ── Mobile Bottom Sheet ── %>
-    <div class="bottom-sheet hidden"
-         data-fab-navigation-target="bottomSheet"
-         data-action="touchstart->fab-navigation#touchStart touchmove->fab-navigation#touchMove touchend->fab-navigation#touchEnd">
-      <div class="bottom-sheet__handle-bar"><div class="bottom-sheet__handle"></div></div>
-
-      <div class="bottom-sheet__content">
-        <div class="bottom-sheet__user">
-          <span class="bottom-sheet__username"><%= current_user.display_name %></span>
+    <%# ── Preferences Side Drawer (slides from left) ── %>
+    <div data-fab-navigation-target="preferencesOverlay" class="side-drawer__overlay" style="display:none;"></div>
+    <div data-fab-navigation-target="preferencesDrawer" class="side-drawer preferences-drawer">
+      <div class="side-drawer__header" style="justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 12px; margin-bottom: 16px;">
+        <div style="display: flex; gap: 16px;">
+          <button data-action="click->fab-navigation#showPreferencesTab" data-fab-navigation-target="prefTabBtn" title="App Settings" aria-label="App Settings" style="background:none; border:none; cursor:pointer; color: #333; padding: 4px;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </button>
+          <button data-action="click->fab-navigation#showAccountTab" data-fab-navigation-target="accTabBtn" title="Account Details" aria-label="Account Details" style="background:none; border:none; cursor:pointer; color: #a0a0a0; padding: 4px;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </button>
         </div>
-
-        <nav class="bottom-sheet__nav">
-          <a href="<%= app_root_path %>" class="bottom-sheet__link">Dashboard</a>
-          <a href="<%= pages_path %>" class="bottom-sheet__link">Lists</a>
-          <a href="<%= settings_path %>" class="bottom-sheet__link">Settings</a>
-          <div class="bottom-sheet__divider"></div>
-          <button class="bottom-sheet__link" data-action="click->fab-navigation#openViewDrawer">View</button>
-          <button class="bottom-sheet__link" data-action="click->fab-navigation#openThemeDrawer">Themes</button>
-          <div class="bottom-sheet__divider"></div>
-          <a href="#" onclick="window.showLogoutModal(); return false;" class="bottom-sheet__link bottom-sheet__link--danger">Log out</a>
-        </nav>
-      </div>
-    </div>
-
-    <%# ── Desktop Bottom Bar ── %>
-    <div class="desktop-nav hidden" data-fab-navigation-target="desktopNav">
-      <div class="desktop-nav__inner">
-        <span class="desktop-nav__user"><%= current_user.display_name %></span>
-        <nav class="desktop-nav__links">
-          <a href="<%= app_root_path %>" class="desktop-nav__link">Dashboard</a>
-          <a href="<%= pages_path %>" class="desktop-nav__link">Lists</a>
-          <a href="<%= settings_path %>" class="desktop-nav__link">Settings</a>
-          <button class="desktop-nav__link" data-action="click->fab-navigation#openViewDrawer">View</button>
-          <button class="desktop-nav__link" data-action="click->fab-navigation#openThemeDrawer">Themes</button>
-          <a href="#" onclick="window.showLogoutModal(); return false;" class="desktop-nav__link desktop-nav__link--danger">Log out</a>
-        </nav>
-        <button data-action="click->fab-navigation#close" class="desktop-nav__close" aria-label="Close">&times;</button>
-      </div>
-    </div>
-
-    <%# ── View Side Drawer (slides from left) ── %>
-    <div data-fab-navigation-target="viewDrawerOverlay" class="side-drawer__overlay" style="display:none;"></div>
-    <div data-fab-navigation-target="viewDrawer" class="side-drawer">
-      <div class="side-drawer__header">
-        <h2 class="side-drawer__title">View</h2>
-        <button data-action="click->fab-navigation#closeViewDrawer" class="side-drawer__close" aria-label="Close">&times;</button>
+        <button data-action="click->fab-navigation#closePreferences" class="side-drawer__close" aria-label="Close" style="top: 0;">&times;</button>
       </div>
       <div class="side-drawer__body">
-        <div class="view-options">
-          <% [ [1, "Day", "Single day view"],
-               [2, "2 Days", "Today & tomorrow"],
-               [3, "3 Days", "Three day view"],
-               [5, "Work Week", "Monday to Friday"],
-               [7, "Full Week", "All seven days"] ].each do |days, label, desc| %>
-            <a href="<%= app_root_path(days: days) %>"
-               class="view-option<%= ' view-option--active' if (@view_days || 7) == days %>"
-               data-turbo-action="replace">
-              <span class="view-option__number"><%= days %></span>
-              <span class="view-option__info">
-                <span class="view-option__label"><%= label %></span>
-                <span class="view-option__desc"><%= desc %></span>
-              </span>
-            </a>
-          <% end %>
-        </div>
-      </div>
-    </div>
 
-    <%# ── Theme Side Drawer (slides from left) ── %>
-    <div data-fab-navigation-target="themeDrawerOverlay" class="side-drawer__overlay" style="display:none;"></div>
-    <div data-fab-navigation-target="themeDrawer" class="side-drawer">
-      <div class="side-drawer__header">
-        <h2 class="side-drawer__title">Themes</h2>
-        <button data-action="click->fab-navigation#closeThemeDrawer" class="side-drawer__close" aria-label="Close">&times;</button>
-      </div>
-      <div class="side-drawer__body">
-        <div class="theme-modal__grid">
-          <% %w[classic lined graph vintage dark].each do |t| %>
-            <button class="theme-option<%= ' theme-option--active' if current_theme == t %>"
-                    data-theme="<%= t %>"
-                    data-action="click->fab-navigation#selectTheme"
-                    aria-label="Select <%= t.capitalize %> theme">
-              <div class="theme-preview theme-btn--<%= t %>"></div>
-              <span class="theme-option__label"><%= t.capitalize %></span>
-            </button>
-          <% end %>
+        <%# ========== PREFERENCES TAB ========== %>
+        <div data-fab-navigation-target="prefTabContent" style="display: block;">
+        <%# Theme selection %>
+        <div class="pref-section">
+          <div class="pref-section__label">Theme</div>
+          <div class="theme-modal__grid">
+            <% %w[classic lined graph vintage dark].each do |t| %>
+              <button class="theme-option<%= ' theme-option--active' if current_theme == t %>"
+                      data-theme="<%= t %>"
+                      data-action="click->fab-navigation#selectTheme"
+                      aria-label="Select <%= t.capitalize %> theme">
+                <div class="theme-preview theme-btn--<%= t %>"></div>
+                <span class="theme-option__label"><%= t.capitalize %></span>
+              </button>
+            <% end %>
+          </div>
         </div>
+
+        <%# Accent colour %>
+        <div class="pref-section">
+          <div class="pref-section__label">Accent Colour</div>
+          <div class="pref-color-swatches" id="pref-color-swatches">
+            <% swatches = ['#7c6cc4', '#e53935', '#f97316', '#eab308', '#22c55e', '#14b8a6', '#3b82f6', '#8b5cf6', '#ec4899', '#6b7280'] %>
+            <% swatches.each do |color| %>
+              <button class="pref-color-swatch<%= ' pref-color-swatch--active' if (current_user.accent_color.presence || '#7c6cc4') == color %>"
+                      style="background: <%= color %>;"
+                      data-color="<%= color %>"
+                      onclick="applyAccentColor('<%= color %>'); document.querySelectorAll('.pref-color-swatch').forEach(s => s.classList.remove('pref-color-swatch--active')); this.classList.add('pref-color-swatch--active');"
+                      aria-label="Accent colour <%= color %>"></button>
+            <% end %>
+            <label class="pref-color-swatch pref-color-swatch--custom" title="Custom colour">
+              <input type="color" id="pref-custom-color" value="<%= current_user.accent_color.presence || '#7c6cc4' %>" style="opacity:0;position:absolute;width:1px;height:1px;" onchange="applyAccentColor(this.value);">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+            </label>
+          </div>
+        </div>
+
+        <%# Font family — system fonts + fallbacks %>
+        <div class="pref-section">
+          <div class="pref-section__label">Font</div>
+          <div class="pref-font-list" id="pref-font-list">
+            <% font_options = [
+                 ['system_ui', 'System UI', "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"],
+                 ['serif', 'Serif', "Georgia, 'Times New Roman', Times, serif"],
+                 ['monospace', 'Monospace', "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Courier New', monospace"]
+               ] %>
+            <% font_options.each do |value, label, stack| %>
+              <button class="pref-font-btn<%= ' pref-font-btn--active' if (current_user.font_family || 'default') == value %>"
+                      data-font-value="<%= value %>"
+                      style="font-family: <%= stack %>;"
+                      onclick="applyFontFamily('<%= value %>', '<%= stack %>');">
+                <%= label %>
+              </button>
+            <% end %>
+          </div>
+        </div>
+
+        <%# View Options %>
+        <div class="pref-section">
+          <div class="pref-section__label">View Days</div>
+          <div class="pref-toggle-group">
+            <% [1, 2, 3, 5, 7].each do |n| %>
+              <a href="<%= app_root_path(days: n) %>"
+                 class="pref-toggle-btn<%= ' pref-toggle-btn--active' if (@view_days || 7) == n %>"
+                 data-turbo-action="replace"><%= n %></a>
+            <% end %>
+          </div>
+        </div>
+
+        <%# Show completed %>
+        <div class="pref-section">
+          <div class="pref-section__label">Completed to-dos</div>
+          <div class="pref-toggle-group">
+            <button class="pref-toggle-btn pref-toggle-btn--active" id="pref-show-completed" onclick="toggleCompletedTodos(true); this.classList.add('pref-toggle-btn--active'); document.getElementById('pref-hide-completed').classList.remove('pref-toggle-btn--active');">Show</button>
+            <button class="pref-toggle-btn" id="pref-hide-completed" onclick="toggleCompletedTodos(false); this.classList.add('pref-toggle-btn--active'); document.getElementById('pref-show-completed').classList.remove('pref-toggle-btn--active');">Hide</button>
+          </div>
+        </div>
+
+        </div> <%# End PREFERENCES TAB %>
+
+        <%# ========== ACCOUNT TAB ========== %>
+        <div data-fab-navigation-target="accTabContent" style="display: none;">
+          <div class="pref-section">
+            <h3 class="side-drawer__title" style="margin-bottom: 1.5rem; font-size: 1.1rem; color: #333;">Account Settings</h3>
+            <%= form_with model: current_user, url: "/app/settings/account", method: :patch, local: true, class: "space-y-4" do |form| %>
+              <div class="pref-section">
+                <div class="pref-section__label">Display Name</div>
+                <%= form.text_field :display_name, class: "pref-input" %>
+              </div>
+              <div class="pref-section">
+                <div class="pref-section__label">Email</div>
+                <%= form.email_field :email_address, class: "pref-input" %>
+              </div>
+              <div class="pref-section">
+                <div class="pref-section__label">New Password</div>
+                <%= form.password_field :password, class: "pref-input", placeholder: "Leave blank to keep current" %>
+              </div>
+              <div class="pref-section">
+                <div class="pref-section__label">Confirm Password</div>
+                <%= form.password_field :password_confirmation, class: "pref-input", placeholder: "Confirm new password" %>
+              </div>
+              <div class="pref-section" style="margin-top: 24px;">
+                <%= form.submit "Save Account", class: "pref-save-btn" %>
+              </div>
+            <% end %>
+            <div class="pref-section pref-section--danger" style="margin-top: 32px; border-top: 1px solid #ffebee; padding-top: 16px;">
+              <%= link_to "Delete Account", delete_account_path, class: "pref-danger-link" %>
+            </div>
+          </div>
+        </div> <%# End ACCOUNT TAB %>
+
       </div>
     </div>
   </div>
+
+  <script>
+  // ── Accent colour ──
+  function applyAccentColor(color) {
+    document.documentElement.style.setProperty('--user-accent', color);
+    // Also update all elements that use the accent color
+    document.documentElement.style.setProperty('--accent', color);
+    const csrf = document.querySelector('meta[name="csrf-token"]').content;
+    fetch('/app/settings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrf, 'X-HTTP-Method-Override': 'PATCH' },
+      body: JSON.stringify({ user: { accent_color: color } })
+    }).catch(() => {});
+  }
+
+  // ── Font family ──
+  function applyFontFamily(value, stack) {
+    if (stack) {
+      document.documentElement.style.setProperty('--user-font', stack);
+    }
+    document.querySelectorAll('.pref-font-btn').forEach(b => b.classList.remove('pref-font-btn--active'));
+    const active = document.querySelector(`.pref-font-btn[data-font-value="${value}"]`);
+    if (active) active.classList.add('pref-font-btn--active');
+    const csrf = document.querySelector('meta[name="csrf-token"]').content;
+    fetch('/app/settings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrf, 'X-HTTP-Method-Override': 'PATCH' },
+      body: JSON.stringify({ user: { font_family: value } })
+    }).catch(() => {});
+  }
+
+  // ── Show/Hide completed ──
+  function toggleCompletedTodos(show) {
+    document.querySelectorAll('.todo-item--done').forEach(el => { el.style.display = show ? '' : 'none'; });
+    localStorage.setItem('showCompleted', show);
+  }
+
+  // Apply saved preference on page load
+  document.addEventListener('turbo:load', function() {
+    const show = localStorage.getItem('showCompleted') !== 'false';
+    if (!show) document.querySelectorAll('.todo-item--done').forEach(el => { el.style.display = 'none'; });
+    const celebEl = document.getElementById('pref-celebrations');
+    if (celebEl) celebEl.checked = localStorage.getItem('celebrations') !== 'false';
+  });
+  </script>
+
 <% end %>

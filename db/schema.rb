@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_02_124333) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_03_111622) do
   create_table "migration_statuses", force: :cascade do |t|
     t.string "migration_type", null: false
     t.string "status", default: "pending", null: false
@@ -35,6 +35,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_02_124333) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "template", default: "minimal", null: false
+    t.integer "position"
     t.index ["user_id"], name: "index_pages_on_user_id"
   end
 
@@ -48,6 +49,9 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_02_124333) do
     t.datetime "updated_at", null: false
     t.date "due_date"
     t.integer "user_id", null: false
+    t.boolean "bold"
+    t.string "highlight_color"
+    t.string "recurrence_rule"
     t.index ["page_id"], name: "index_todos_on_page_id"
     t.index ["user_id"], name: "index_todos_on_user_id"
   end

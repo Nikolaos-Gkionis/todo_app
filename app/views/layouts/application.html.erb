@@ -43,7 +43,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="<%= 'body--font-handwritten' if logged_in? && current_user&.font_family == 'handwritten' %>" id="app-body" style="<%= 'font-family: var(--user-font);' if logged_in? && current_user && font_stack_for(current_user) && current_user.font_family != 'handwritten' %>">
+  <body class="<%= 'body--font-handwritten' if logged_in? && current_user&.font_family == 'handwritten' %>" id="app-body" style="<%= "height: 100vh; overflow: hidden; height: 100dvh;" if logged_in? %><%= 'font-family: var(--user-font);' if logged_in? && current_user && font_stack_for(current_user) && current_user.font_family != 'handwritten' %>">
     <!-- Skip to main content - first focusable for keyboard/screen reader users -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <!-- Load theme immediately to prevent flash -->
@@ -93,30 +93,7 @@
 
 
 
-  <!-- Flash Messages -->
-  <% if notice %>
-    <div class="flash-message flash-message--success" role="alert" aria-live="polite" data-auto-dismiss="true">
-      ✅ <%= notice %>
-    </div>
-  <% end %>
-  
-  <% if alert %>
-    <div class="flash-message flash-message--error" role="alert" aria-live="assertive" data-auto-dismiss="true">
-      ⚠️ <%= alert %>
-    </div>
-  <% end %>
-  
-  <% if flash[:error] %>
-    <div class="flash-message flash-message--error" role="alert" aria-live="assertive" data-auto-dismiss="true">
-      ⚠️ <%= flash[:error] %>
-    </div>
-  <% end %>
-
-  <% if flash[:trial] %>
-    <div class="flash-message flash-message--trial" role="alert" aria-live="polite" data-auto-dismiss="true">
-      <%= flash[:trial] %>
-    </div>
-  <% end %>
+  <!-- Flash Messages Removed per User Request -->
 
     <main id="main-content">
       <%= yield %>
@@ -316,20 +293,7 @@
       }
       
       function setupFlashMessages() {
-        const flashMessages = document.querySelectorAll('.flash-message[data-auto-dismiss="true"]:not([data-timeout-set])');
-        flashMessages.forEach(function(message) {
-          message.setAttribute('data-timeout-set', 'true'); // Prevent multiple timeouts
-          setTimeout(function() {
-            if (message && message.parentNode) {
-              message.style.opacity = '0';
-              setTimeout(function() {
-                if (message && message.parentNode) {
-                  message.parentNode.removeChild(message);
-                }
-              }, 500); // Wait for fade animation to complete
-            }
-          }, 3000); // Show for 3 seconds
-        });
+        // Flash messages removed
       }
       
       // Initialize on DOM ready

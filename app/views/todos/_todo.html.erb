@@ -1,7 +1,12 @@
-<div id="todo_<%= todo.id %>" data-id="<%= todo.id %>" class="todo-item<%= ' todo-item--done' if todo.completed? %>">
+<div id="todo_<%= todo.id %>"
+     data-id="<%= todo.id %>"
+     class="todo-item<%= ' todo-item--done' if todo.completed? %><%= ' todo-item--bold' if todo.bold? %>"
+     <% if todo.highlight_color.present? %>style="background: <%= todo.highlight_color %>22; border-right: 3px solid <%= todo.highlight_color %>;"<% end %>>
+
+  <%# Completion / title form %>
   <%= form_with model: todo, method: :patch, local: false, class: "todo-item__form" do |form| %>
     <%= form.hidden_field :completed, value: !todo.completed %>
-    <% is_recurring = todo.title.to_s.downcase.match?(/\bevery\s+(day|other day|weekday|week|other week|month|year)\b/) %>
+    <% is_recurring = todo.recurrence_rule.present? || todo.title.to_s.downcase.match?(/\bevery\s+(day|other day|weekday|week|other week|month|year)\b/) %>
     <button type="submit" class="todo-item__title<%= ' todo-item__title--done' if todo.completed? %>" aria-label="<%= todo.completed? ? 'Mark as incomplete' : 'Mark as complete' %>">
       <%= todo.title %>
       <% if is_recurring %>
@@ -10,13 +15,66 @@
     </button>
   <% end %>
 
+  <%# Actions + style toolbar %>
   <span class="todo-item__actions">
-    <%= link_to todo_path(todo),
-          data: { "turbo-method": :delete, confirm: "Delete?" },
-          class: "todo-item__delete",
-          title: "Delete",
-          "aria-label" => "Delete: #{todo.title}" do %>
-      ×
-    <% end %>
+    <%# Style mini-toolbar — shown on hover %>
+    <span class="todo-item__toolbar" role="toolbar" aria-label="Style options">
+      <%# Bold %>
+      <%= form_with model: todo, method: :patch, local: false, class: "todo-toolbar__form" do |f| %>
+        <%= f.hidden_field :bold, value: !todo.bold %>
+        <button type="submit" class="todo-toolbar__btn<%= ' todo-toolbar__btn--active' if todo.bold? %>" title="Bold" aria-label="Toggle bold">
+          <strong>B</strong>
+        </button>
+      <% end %>
+
+      <%# Highlight colour picker %>
+      <span class="todo-toolbar__highlight-wrap" title="Highlight">
+        <button type="button" class="todo-toolbar__btn todo-toolbar__btn--highlight" onclick="this.nextElementSibling.classList.toggle('todo-highlight-picker--open')" aria-label="Highlight colour">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="<%= todo.highlight_color.presence || 'none' %>" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </button>
+        <div class="todo-highlight-picker" role="listbox">
+          <% [nil, '#ef4444', '#f97316', '#eab308', '#22c55e', '#3b82f6', '#8b5cf6'].each do |color| %>
+            <%= form_with model: todo, method: :patch, local: false do |f| %>
+              <%= f.hidden_field :highlight_color, value: color.to_s %>
+              <button type="submit"
+                      class="todo-highlight-color<%= ' todo-highlight-color--active' if todo.highlight_color == color.to_s %>"
+                      style="background: <%= color || '#ffffff' %>; border: 1px solid #ccc;"
+                      title="<%= color.nil? ? 'No highlight' : color %>"
+                      aria-label="<%= color.nil? ? 'Remove highlight' : "Highlight #{color}" %>">
+                <%= '✕' if color.nil? %>
+              </button>
+            <% end %>
+          <% end %>
+        </div>
+      </span>
+
+      <%# Recurrence %>
+      <span class="todo-toolbar__recur-wrap" title="Recurrence">
+        <button type="button" class="todo-toolbar__btn<%= ' todo-toolbar__btn--active' if todo.recurrence_rule.present? %>" onclick="this.nextElementSibling.classList.toggle('todo-recur-picker--open')" aria-label="Set recurrence">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        </button>
+        <div class="todo-recur-picker" role="listbox">
+          <% [nil, 'every day', 'every weekday', 'every week', 'every month', 'every year'].each do |rule| %>
+            <%= form_with model: todo, method: :patch, local: false do |f| %>
+              <%= f.hidden_field :recurrence_rule, value: rule.to_s %>
+              <button type="submit"
+                      class="todo-recur-option<%= ' todo-recur-option--active' if todo.recurrence_rule == rule.to_s %>"
+                      aria-label="<%= rule.nil? ? 'No recurrence' : rule.capitalize %>">
+                <%= rule.nil? ? 'None' : rule.capitalize %>
+              </button>
+            <% end %>
+          <% end %>
+        </div>
+      </span>
+
+      <%# Delete %>
+      <%= link_to todo_path(todo),
+            data: { "turbo-method": :delete, confirm: "Delete?" },
+            class: "todo-item__delete",
+            title: "Delete",
+            "aria-label" => "Delete: #{todo.title}" do %>
+        ×
+      <% end %>
+    </span>
   </span>
 </div>

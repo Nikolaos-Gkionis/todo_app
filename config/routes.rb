@@ -35,7 +35,11 @@ Rails.application.routes.draw do
   get "/offline", to: "pages#offline"
 
   scope "/app" do
-    resources :pages
+    resources :pages do
+      collection do
+        patch :reorder
+      end
+    end
 
     resources :todos, only: [ :create, :update, :destroy ] do
       collection do

@@ -2,7 +2,7 @@
   <%# ── Header ── %>
   <header class="dashboard__header" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; margin-bottom: 20px;">
     <div class="dashboard__header-left" style="display: flex; gap: 15px; align-items: center;">
-      <button aria-label="Search" style="background:none; border:none; cursor:pointer;" onclick="document.getElementById('search-dialog').showModal()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+      <!-- Search functionality removed per user request -->
     </div>
     <div class="dashboard__header-center" style="font-size: 1.5rem; font-weight: 800; letter-spacing: 0.1em; color: #7c6cc4;">
       TODO-IT
@@ -15,7 +15,6 @@
         <%= link_to "&rsaquo;".html_safe, app_root_path(start_date: @start_date + 1.day), style: "background:none; border:none; cursor:pointer; color:inherit; text-decoration:none;" %>
         <%= link_to "&raquo;".html_safe, app_root_path(start_date: @start_date + @view_days.days), style: "background:none; border:none; cursor:pointer; color:inherit; text-decoration:none;" %>
       </div>
-      <button aria-label="Calendar" style="background:none; border:none; cursor:pointer;" onclick="window.dispatchEvent(new Event('open-view-drawer'))"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></button>
     </div>
   </header>
 
@@ -51,70 +50,104 @@
     <% end %>
   </div>
 
-  <%# ── Custom Lists (40% height) ── %>
-  <div class="dashboard__lists">
-    <div class="lists__tabs">
-      <% @pages.each_with_index do |page, i| %>
-        <a href="#todos_page_<%= page.id %>" class="lists__tab<%= ' lists__tab--active' if i == 0 %>" onclick="document.querySelectorAll('.lists__tab').forEach(t => t.classList.remove('lists__tab--active')); this.classList.add('lists__tab--active');">
-          <span class="lists__tab-name"><%= page.name.upcase %></span>
-          <span class="lists__tab-count"><%= page.todos.count %></span>
-        </a>
-      <% end %>
-      <%= link_to new_page_path, class: "lists__tab lists__tab--add", title: "New list" do %>
-        +
-      <% end %>
-    </div>
-
+  <%# ── Custom Lists (fill remaining height) ── %>
+  <div class="dashboard__lists" data-controller="collapsible-list">
     <% if @pages.any? %>
-      <div class="lists__columns">
-        <% @pages.each do |page| %>
-          <div class="lists__column"
-               data-controller="drag"
-               data-drag-page-id="<%= page.id %>"
-               id="todos_page_<%= page.id %>">
-            <h3 class="lists__column-title" style="display:flex; justify-content:space-between; align-items:center;">
-              <%= page.name.upcase %>
-              <button aria-label="List options" style="background:none; border:none; cursor:pointer; font-size: 1.2rem; color: #aaa;">⋮</button>
-            </h3>
-            <% page.todos.ordered.each do |todo| %>
-              <%= render "todos/todo", todo: todo %>
-            <% end %>
-            <div class="lists__column-add">
-              <%= form_with model: Todo.new, url: todos_path, local: false, class: "todo-form" do |form| %>
-                <%= form.hidden_field :page_id, value: page.id %>
-                <%= form.text_field :title, class: "todo-input", placeholder: "Add task...", autocomplete: "off" %>
+
+      <%# Scrollable column bodies (task lists) — flex:1 to fill space above the title bar %>
+      <div class="lists__body" data-collapsible-list-target="content">
+        <div class="lists__columns" data-controller="drag" data-drag-lists="true">
+          <% @pages.each do |page| %>
+            <div class="lists__column"
+                 data-page-id="<%= page.id %>"
+                 data-controller="drag"
+                 data-drag-page-id="<%= page.id %>"
+                 id="todos_page_<%= page.id %>">
+              <% page.todos.ordered.each do |todo| %>
+                <%= render "todos/todo", todo: todo %>
               <% end %>
+              <div class="lists__column-add">
+                <%= form_with model: Todo.new, url: todos_path, local: false, class: "todo-form" do |form| %>
+                  <%= form.hidden_field :page_id, value: page.id %>
+                  <%= form.text_field :title, class: "todo-input", placeholder: "Add task...", autocomplete: "off" %>
+                <% end %>
+              </div>
             </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       </div>
+
+      <%# Sticky bottom bar: chevron | list title strip (scrollable) | + button %>
+      <div class="lists__titlebar">
+        <%# Left: global collapse toggle %>
+        <button data-action="click->collapsible-list#toggle" data-collapsible-list-target="chevronBtn" title="Toggle lists" aria-label="Toggle lists" class="lists__titlebar-chevron">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" class="collapsible-list__chevron" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+
+        <%# Middle: scrollable list-title headers (draggable to reorder) %>
+        <div class="lists__titlebar-names" data-controller="drag" data-drag-lists="true">
+          <% @pages.each do |page| %>
+            <div class="lists__titlebar-col" data-page-id="<%= page.id %>" style="flex: 0 0 280px;">
+              <h3 class="lists__column-title" style="display:flex; justify-content:space-between; align-items:center; cursor:grab; margin:0;">
+                <span style="display:flex; align-items:center; gap:6px;">
+                  <span class="drag-handle" style="color:#ccc; cursor:grab; font-size:1.1rem; user-select:none;">&#8942;&#8942;</span>
+                  <%= page.name.upcase %>
+                </span>
+                <div style="position:relative;">
+                  <button aria-label="List options" style="background:none; border:none; cursor:pointer; font-size:1.1rem; color:#888; padding:0 4px;" onclick="document.getElementById('options-dialog-<%= page.id %>').showModal()">⋮</button>
+                  <dialog id="options-dialog-<%= page.id %>" style="padding:16px; border-radius:8px; border:1px solid #eee; box-shadow:0 4px 12px rgba(0,0,0,0.15); width:220px; z-index:100;">
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <span style="font-size:0.85rem; font-weight:600; color:#888;">LIST OPTIONS</span>
+                        <form method="dialog"><button style="background:none; border:none; cursor:pointer; font-size:1.2rem; line-height:1;">&times;</button></form>
+                      </div>
+                      <%= form_with model: page, url: page_path(page), method: :patch, local: true, style: "display:flex; flex-direction:column; gap:8px;" do |f| %>
+                        <%= f.text_field :name, class: "todo-input", placeholder: "Rename list...", style: "padding:8px; background:#fafafa; border-radius:4px;" %>
+                        <%= f.submit "Rename", style: "background:#7c6cc4; color:white; border:none; border-radius:4px; padding:6px; cursor:pointer; font-size:0.85rem;" %>
+                      <% end %>
+                      <hr style="border:none; border-top:1px solid #eee; margin:4px 0;">
+                      <%= form_with url: page_path(page), method: :delete, local: true do |f| %>
+                        <%= f.submit "Delete List", data: { turbo_confirm: "Are you sure?" }, style: "background:transparent; color:#e74c3c; border:1px solid #e74c3c; border-radius:4px; padding:6px; width:100%; cursor:pointer; font-size:0.85rem;" %>
+                      <% end %>
+                    </div>
+                  </dialog>
+                </div>
+              </h3>
+            </div>
+          <% end %>
+        </div>
+
+        <%# Right: add new list %>
+        <button onclick="document.getElementById('new-list-dialog').showModal()" title="New list" aria-label="New list" class="lists__titlebar-add">+</button>
+      </div>
+
     <% else %>
-      <div class="dashboard__empty-lists">
-        <p class="dashboard__empty-text">No lists yet. Tap + to create one.</p>
+      <div class="dashboard__empty-lists" style="display: flex; align-items: center; justify-content: flex-start; gap: 16px; padding: 24px 10px;">
+        <button onclick="document.getElementById('new-list-dialog').showModal()" title="New list" aria-label="New list" style="background: #f8e1c6; border:none; cursor:pointer; font-size: 1.8rem; color: #333; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">+</button>
+        <p class="dashboard__empty-text" style="color: #666; font-size: 1rem; margin: 0; font-weight: 500;">No lists yet. Create your first list.</p>
       </div>
     <% end %>
   </div>
 </div>
-
-<dialog id="search-dialog" style="padding: 20px; border-radius: 8px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15); width: 100%; max-width: 400px; margin-top: 100px;">
-  <form method="dialog" style="display: flex; flex-direction: column; gap: 10px;">
-    <h3 style="margin: 0; font-size: 1.1rem; color: #333;">Search Tasks</h3>
-    <input type="text" id="search-input" placeholder="Find lost tasks..." style="padding: 10px; border: 1px solid #ddd; border-radius: 4px; width: 100%; font-size: 1rem;" onkeyup="
-      const q = this.value.toLowerCase();
-      document.querySelectorAll('.todo-item').forEach(el => {
-        const text = el.querySelector('.todo-item__title').innerText.toLowerCase();
-        if (text.includes(q)) {
-          el.style.display = 'flex';
-        } else {
-          el.style.display = 'none';
-        }
-      });
-    ">
-    <div style="display: flex; justify-content: flex-end;">
-      <button style="padding: 8px 16px; background: #eee; border: none; border-radius: 4px; cursor: pointer;" onclick="
-        document.getElementById('search-input').value = '';
-        document.querySelectorAll('.todo-item, .week-col, .lists__column').forEach(el => el.style.display = '');
-      ">Close</button>
+<dialog id="new-list-dialog" style="padding: 24px; border-radius: 12px; border: none; box-shadow: 0 10px 25px rgba(0,0,0,0.2); width: 100%; max-width: 450px; margin: auto;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h3 style="margin: 0; font-size: 1.25rem; font-weight: 600; color: #333;">Create New List</h3>
+    <form method="dialog">
+      <button style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #888;">&times;</button>
+    </form>
+  </div>
+  
+  <%= form_with model: Page.new, local: true, class: "space-y-4" do |form| %>
+    <div>
+      <%= form.text_field :name, class: "w-full form-input", placeholder: "What's this list about?", required: true, autofocus: true, style: "padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
     </div>
-  </form>
+    
+    <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+      <form method="dialog" style="display: inline;">
+        <button type="submit" style="padding: 10px 16px; background: #f3f4f6; color: #4b5563; border: none; border-radius: 6px; font-weight: 500; cursor: pointer;">Cancel</button>
+      </form>
+      <%= form.submit "Create", style: "padding: 10px 20px; background: #7c6cc4; color: white; border: none; border-radius: 6px; font-weight: 500; cursor: pointer;" %>
+    </div>
+  <% end %>
 </dialog>
+
