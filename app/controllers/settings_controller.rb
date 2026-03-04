@@ -47,10 +47,18 @@ class SettingsController < ApplicationController
       else
         # Update non-sensitive fields (name, accent_color, font_family) without password
         if @user.update(user_params.except(:password, :password_confirmation, :current_password))
-          notice = appearance_only_update? ? "Appearance updated!" : "Account updated successfully!"
-          redirect_to settings_path, notice: notice
+          respond_to do |format|
+            format.html do
+              notice = appearance_only_update? ? "Appearance updated!" : "Account updated successfully!"
+              redirect_to settings_path, notice: notice
+            end
+            format.json { render json: { status: "success" } }
+          end
         else
-          render :index, status: :unprocessable_entity
+          respond_to do |format|
+            format.html { render :index, status: :unprocessable_entity }
+            format.json { render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity }
+          end
         end
       end
     end

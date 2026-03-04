@@ -21,10 +21,10 @@
     <div data-fab-navigation-target="preferencesDrawer" class="side-drawer preferences-drawer">
       <div class="side-drawer__header" style="justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 12px; margin-bottom: 16px;">
         <div style="display: flex; gap: 16px;">
-          <button data-action="click->fab-navigation#showPreferencesTab" data-fab-navigation-target="prefTabBtn" title="App Settings" aria-label="App Settings" style="background:none; border:none; cursor:pointer; color: #333; padding: 4px;">
+          <button data-action="click->fab-navigation#showPreferencesTab" data-fab-navigation-target="prefTabBtn" title="App Settings" aria-label="App Settings" class="pref-tab-btn pref-tab-btn--active">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
           </button>
-          <button data-action="click->fab-navigation#showAccountTab" data-fab-navigation-target="accTabBtn" title="Account Details" aria-label="Account Details" style="background:none; border:none; cursor:pointer; color: #a0a0a0; padding: 4px;">
+          <button data-action="click->fab-navigation#showAccountTab" data-fab-navigation-target="accTabBtn" title="Account Details" aria-label="Account Details" class="pref-tab-btn">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           </button>
         </div>
@@ -76,13 +76,14 @@
             <% font_options = [
                  ['system_ui', 'System UI', "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"],
                  ['serif', 'Serif', "Georgia, 'Times New Roman', Times, serif"],
-                 ['monospace', 'Monospace', "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Courier New', monospace"]
+                 ['monospace', 'Monospace', "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Courier New', monospace"],
+                 ['handwritten', 'Handwritten', "'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif"]
                ] %>
             <% font_options.each do |value, label, stack| %>
               <button class="pref-font-btn<%= ' pref-font-btn--active' if (current_user.font_family || 'default') == value %>"
                       data-font-value="<%= value %>"
                       style="font-family: <%= stack %>;"
-                      onclick="applyFontFamily('<%= value %>', '<%= stack %>');">
+                      onclick="applyFontFamily('<%= j value %>', '<%= j stack %>');">
                 <%= label %>
               </button>
             <% end %>
@@ -156,7 +157,7 @@
     const csrf = document.querySelector('meta[name="csrf-token"]').content;
     fetch('/app/settings', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrf, 'X-HTTP-Method-Override': 'PATCH' },
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-Token': csrf, 'X-HTTP-Method-Override': 'PATCH' },
       body: JSON.stringify({ user: { accent_color: color } })
     }).catch(() => {});
   }
@@ -166,13 +167,18 @@
     if (stack) {
       document.documentElement.style.setProperty('--user-font', stack);
     }
+    if (value === 'handwritten') {
+      document.body.classList.add('body--font-handwritten');
+    } else {
+      document.body.classList.remove('body--font-handwritten');
+    }
     document.querySelectorAll('.pref-font-btn').forEach(b => b.classList.remove('pref-font-btn--active'));
     const active = document.querySelector(`.pref-font-btn[data-font-value="${value}"]`);
     if (active) active.classList.add('pref-font-btn--active');
     const csrf = document.querySelector('meta[name="csrf-token"]').content;
     fetch('/app/settings', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrf, 'X-HTTP-Method-Override': 'PATCH' },
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-Token': csrf, 'X-HTTP-Method-Override': 'PATCH' },
       body: JSON.stringify({ user: { font_family: value } })
     }).catch(() => {});
   }

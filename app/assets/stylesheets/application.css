@@ -1391,33 +1391,48 @@ input:-webkit-autofill:active {
   color: #4a3728 !important;
 }
 
-/* Theme 5: Dark Mode */
+/* Theme 5: Dark Mode — Dracula palette
+   ── Colour reference ────────────────────────────────────────
+   Background:    #282a36   base canvas
+   Current Line:  #44475a   panel / hover surface
+   Selection:     #44475a   (same)
+   Foreground:    #f8f8f2   primary text
+   Comment:       #6272a4   muted / secondary text
+   Purple:        #bd93f9   accent (links, focus, active)
+   Pink:          #ff79c6   secondary accent
+   Cyan:          #8be9fd   info / placeholder focus
+   Green:         #50fa7b   success
+   Yellow:        #f1fa8c   warning
+   Orange:        #ffb86c   highlight
+   Red:           #ff5555   danger / delete
+   ─────────────────────────────────────────────────────────── */
 .theme-dark {
-  background-color: #121212;
-  color: #f5f5f5;
+  background-color: #282a36;
+  color: #f8f8f2;
 }
 
+/* ── Generic text colour overrides ── */
 .theme-dark .text-gray-600 {
-  color: #9ca3af !important;
+  color: #6272a4 !important;
 }
 
 .theme-dark .text-gray-700 {
-  color: #d1d5db !important;
+  color: #c1c8e6 !important;
 }
 
 .theme-dark .text-gray-800 {
-  color: #f5f5f5 !important;
+  color: #f8f8f2 !important;
 }
 
 .theme-dark .text-gray-900 {
-  color: #f5f5f5 !important;
+  color: #f8f8f2 !important;
 }
 
 .theme-dark .text-black {
-  color: #f5f5f5 !important;
+  color: #f8f8f2 !important;
 }
 
-/* Fix headings and bold text in dark mode */
+/* ── Headings ── */
 .theme-dark h1,
 .theme-dark h2,
 .theme-dark h3,
@@ -1426,38 +1441,33 @@ input:-webkit-autofill:active {
 .theme-dark h6,
 .theme-dark .font-bold,
 .theme-dark .font-semibold {
-  color: #f5f5f5 !important;
+  color: #f8f8f2 !important;
 }
 
-/* Fix all form elements in dark mode */
+/* ── Form labels & inputs ── */
 .theme-dark input,
 .theme-dark textarea,
 .theme-dark label,
-.theme-dark .form-label,
-.theme-dark .block,
-.theme-dark .text-sm,
-.theme-dark .font-medium,
-.theme-dark .placeholder-gray-500,
-.theme-dark ::placeholder {
-  color: #f5f5f5 !important;
-  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
+.theme-dark .form-label {
+  color: #f8f8f2 !important;
 }
 
 .theme-dark input::placeholder,
-.theme-dark textarea::placeholder {
-  color: #9ca3af !important;
-  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;
+.theme-dark textarea::placeholder,
+.theme-dark ::placeholder {
+  color: #6272a4 !important;
 }
 
-/* Fix form input backgrounds in dark mode */
+/* ── Form input backgrounds — clean, no decorative lines ── */
 .theme-dark input[type="text"],
 .theme-dark input[type="email"],
 .theme-dark input[type="password"],
 .theme-dark input[type="date"],
 .theme-dark textarea {
   background-color: transparent !important;
-  color: #f5f5f5 !important;
-  background-image: url("data:image/svg+xml,%3csvg width='100' height='2' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3e%3cpath d='M0,1 Q10,0.5 20,1.2 T40,0.8 T60,1.3 T80,0.9 T100,1.1' stroke='%23374151' stroke-width='1.2' fill='none' stroke-linecap='round'/%3e%3c/svg%3e") !important;
+  background-image: none !important;
+  color: #f8f8f2 !important;
+  border-color: #44475a !important;
 }
 
 .theme-dark input[type="text"]:focus,
@@ -1465,48 +1475,306 @@ input:-webkit-autofill:active {
 .theme-dark input[type="password"]:focus,
 .theme-dark input[type="date"]:focus,
 .theme-dark textarea:focus {
-  background-image: url("data:image/svg+xml,%3csvg width='100' height='3' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3e%3cpath d='M0,1.5 Q10,0.8 20,1.8 T40,1.2 T60,1.9 T80,1.3 T100,1.6' stroke='%237dd3fc' stroke-width='1.8' fill='none' stroke-linecap='round'/%3e%3c/svg%3e") !important;
+  background-image: none !important;
+  border-color: #bd93f9 !important;
+  outline: none !important;
+}
+
+/* ── Background overrides ── */
+.theme-dark .bg-white {
+  background-color: #383a4e !important;
+  color: #f8f8f2 !important;
+}
+
+.theme-dark .bg-gray-50 {
+  background-color: #2f3146 !important;
 }
 
 .theme-dark .bg-gray-100 {
-  background-color: #374151 !important;
-  color: #f3f4f6 !important;
+  background-color: #383a4e !important;
+  color: #f8f8f2 !important;
 }
 
 .theme-dark .bg-gray-200 {
-  background-color: #4b5563 !important;
+  background-color: #44475a !important;
 }
 
+/* ── Semantic colour overrides ── */
 .theme-dark .text-blue-600 {
-  color: #7dd3fc !important;
+  color: #8be9fd !important;
 }
 
 .theme-dark .text-blue-800 {
-  color: #a5f3fc !important;
+  color: #bd93f9 !important;
 }
 
 .theme-dark .text-green-600 {
-  color: #34d399 !important;
+  color: #50fa7b !important;
 }
 
 .theme-dark .text-green-700 {
-  color: #34d399 !important;
+  color: #50fa7b !important;
 }
 
 .theme-dark .text-green-800 {
-  color: #6ee7b7 !important;
+  color: #50fa7b !important;
 }
 
 .theme-dark .text-red-600 {
-  color: #f87171 !important;
+  color: #ff5555 !important;
 }
 
 .theme-dark .text-red-700 {
-  color: #f87171 !important;
+  color: #ff5555 !important;
 }
 
 .theme-dark .text-red-800 {
-  color: #fca5a5 !important;
+  color: #ff6e6e !important;
+}
+
+/* ── Dashboard: week view columns ── */
+.theme-dark .dashboard__week-view {
+  border-bottom-color: #44475a;
+}
+
+.theme-dark .week-col+.week-col {
+  border-left-color: #383a4e;
+}
+
+.theme-dark .week-col--today {
+  background-color: #2e3046;
+}
+
+.theme-dark .week-col__date {
+  color: #6272a4;
+}
+
+.theme-dark .week-col__day {
+  color: #f8f8f2;
+}
+
+/* ── Todo items ── */
+.theme-dark .todo-item {
+  border-bottom-color: #383a4e;
+}
+
+.theme-dark .todo-item__title {
+  color: #f8f8f2;
+}
+
+.theme-dark .todo-item__title--done {
+  color: #6272a4;
+}
+
+.theme-dark .todo-item__delete {
+  color: #44475a;
+}
+
+.theme-dark .todo-item__delete:hover {
+  color: #ff5555;
+}
+
+/* ── Todo input (add task) — no underline decoration ── */
+.theme-dark .todo-input {
+  color: #f8f8f2;
+  background-image: none !important;
+  border-bottom: 1px solid #44475a;
+}
+
+.theme-dark .todo-input::placeholder {
+  color: #6272a4;
+}
+
+.theme-dark .todo-input:focus {
+  background-image: none !important;
+  border-bottom-color: #bd93f9;
+}
+
+/* ── Toolbar (hover style popup) ── */
+.theme-dark .todo-item__toolbar {
+  background: #383a4e;
+  border-color: #44475a;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+.theme-dark .todo-toolbar__btn {
+  color: #6272a4;
+}
+
+.theme-dark .todo-toolbar__btn:hover {
+  background: #44475a;
+  color: #f8f8f2;
+}
+
+/* ── Highlight colour picker ── */
+.theme-dark .todo-highlight-picker {
+  background: #383a4e;
+  border-color: #44475a;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* ── Bottom list section ── */
+.theme-dark .lists__titlebar {
+  border-top-color: #44475a;
+  background-color: #282a36;
+}
+
+.theme-dark .lists__titlebar-chevron {
+  color: #6272a4;
+}
+
+.theme-dark .lists__titlebar-add {
+  color: #6272a4;
+}
+
+.theme-dark .lists__tabs {
+  border-bottom-color: #383a4e;
+}
+
+.theme-dark .lists__tab {
+  color: #6272a4;
+}
+
+.theme-dark .lists__tab:hover {
+  color: #c1c8e6;
+}
+
+.theme-dark .lists__column-title {
+  color: #c1c8e6;
+}
+
+/* ── Desktop nav bar ── */
+.theme-dark .desktop-nav {
+  background: #282a36;
+  border-bottom-color: #383a4e;
+}
+
+.theme-dark .desktop-nav__user {
+  color: #f8f8f2;
+}
+
+.theme-dark .desktop-nav__link {
+  color: #6272a4;
+}
+
+.theme-dark .desktop-nav__link:hover {
+  background: #383a4e;
+  color: #f8f8f2;
+}
+
+.theme-dark .desktop-nav__close {
+  color: #6272a4;
+}
+
+/* ── Side drawer ── */
+.theme-dark .side-drawer {
+  background: #21222c;
+  box-shadow: 4px 0 32px rgba(0, 0, 0, 0.7);
+}
+
+.theme-dark .side-drawer__header {
+  border-bottom-color: #383a4e;
+}
+
+.theme-dark .side-drawer__title {
+  color: #f8f8f2;
+}
+
+.theme-dark .side-drawer__close {
+  color: #6272a4;
+}
+
+.theme-dark .side-drawer__close:hover {
+  color: #c1c8e6;
+}
+
+/* ── Theme option cards inside drawer ── */
+.theme-dark .theme-option {
+  background: #383a4e;
+  border-color: #44475a;
+}
+
+.theme-dark .theme-option:hover {
+  border-color: #6272a4;
+}
+
+.theme-dark .theme-option__label {
+  color: #c1c8e6;
+}
+
+.theme-dark .theme-preview {
+  border-color: #44475a;
+}
+
+/* ── View option cards inside drawer ── */
+.theme-dark .view-option {
+  border-color: #44475a;
+  color: #c1c8e6;
+}
+
+.theme-dark .view-option:hover {
+  background: #383a4e;
+  border-color: #6272a4;
+}
+
+.theme-dark .view-option--active {
+  background: #383a4e;
+}
+
+.theme-dark .view-option__label {
+  color: #f8f8f2;
+}
+
+.theme-dark .view-option__desc {
+  color: #6272a4;
+}
+
+/* ── Bottom sheet (mobile) ── */
+.theme-dark .bottom-sheet {
+  background: #21222c;
+  box-shadow: 0 -4px 32px rgba(0, 0, 0, 0.7);
+}
+
+.theme-dark .bottom-sheet__handle {
+  background: #44475a;
+}
+
+.theme-dark .bottom-sheet__user {
+  border-bottom-color: #383a4e;
+}
+
+.theme-dark .bottom-sheet__username {
+  color: #f8f8f2;
+}
+
+.theme-dark .bottom-sheet__link {
+  color: #c1c8e6;
+}
+
+.theme-dark .bottom-sheet__link:hover {
+  color: #f8f8f2;
+}
+
+.theme-dark .bottom-sheet__divider {
+  background: #383a4e;
+}
+
+/* ── FAB / hamburger icon ── */
+.theme-dark .fab {
+  color: #6272a4;
+}
+
+/* ── Empty state text ── */
+.theme-dark .dashboard__empty-text {
+  color: #6272a4;
+}
+
+.theme-dark .lists__new-btn {
+  color: #6272a4;
+}
+
+.theme-dark .lists__new-btn:hover {
+  color: #f8f8f2;
 }
 
 /* Theme selector components */
@@ -4669,12 +4937,13 @@ a.text-blue-800:hover {
   /* titlebar anchors at bottom; body clips away when collapsed */
   flex: 1;
   min-height: 0;
-  transition: flex 0.4s ease, max-height 0.4s ease;
+  max-height: 100vh;
+  transition: flex 0.4s ease, max-height 0.4s ease, min-height 0.4s ease;
 }
 
 .dashboard.lists-collapsed .dashboard__week-view {
   flex: 1;
-  max-height: none;
+  max-height: 100vh;
   /* remove the 60vh cap so it fills all remaining space */
   min-height: 0;
 }
@@ -5643,6 +5912,138 @@ a.text-blue-800:hover {
 .pref-danger-link:hover {
   color: #991b1b;
 }
+
+/* Preferences drawer tab icon buttons */
+.pref-tab-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #999;
+  transition: color 0.15s;
+  display: flex;
+  align-items: center;
+}
+
+.pref-tab-btn:hover {
+  color: #b2b2b2;
+}
+
+.pref-tab-btn--active {
+  border-color: var(--user-accent);
+  color: var(--user-accent);
+  font-weight: 700;
+  background: #f8f5ff;
+}
+
+/* =================================
+   DARK THEME - PREFERENCES PANEL
+   ================================= */
+
+/* Section dividers */
+.theme-dark .pref-section {
+  border-bottom-color: #383a4e;
+}
+
+.theme-dark .pref-section__label {
+  color: #6272a4;
+}
+
+/* Tab icon buttons - raise contrast in dark mode */
+.theme-dark .pref-tab-btn {
+  color: #6272a4;
+}
+
+.theme-dark .pref-tab-btn:hover {
+  color: #f8f8f2;
+}
+
+.theme-dark .pref-tab-btn--active {
+  color: #f8f8f2;
+}
+
+/* Active colour swatch ring */
+.theme-dark .pref-color-swatch--active {
+  border-color: #f8f8f2 !important;
+}
+
+/* Font picker buttons - quiet surface */
+.theme-dark .pref-font-btn {
+  background: transparent;
+  border-color: #383a4e;
+  color: #c1c8e6;
+}
+
+.theme-dark .pref-font-btn:hover {
+  background: #383a4e;
+  border-color: #6272a4;
+  color: #f8f8f2;
+}
+
+.theme-dark .pref-font-btn--active {
+  background: #383a4e;
+  border-color: var(--user-accent);
+  color: var(--user-accent);
+}
+
+/* Toggle buttons (view days, show/hide completed) */
+.theme-dark .pref-toggle-btn {
+  background: transparent;
+  border-color: #383a4e;
+  color: #c1c8e6;
+}
+
+.theme-dark .pref-toggle-btn:hover {
+  background: #383a4e;
+  border-color: #6272a4;
+  color: #f8f8f2;
+}
+
+.theme-dark .pref-toggle-btn--active {
+  background: var(--user-accent) !important;
+  border-color: var(--user-accent) !important;
+  color: #fff !important;
+}
+
+/* Toggle switch track */
+.theme-dark .pref-toggle-track {
+  background: #383a4e;
+}
+
+/* Account inputs */
+.theme-dark .pref-input {
+  background: #383a4e;
+  border-color: #44475a;
+  color: #f8f8f2;
+}
+
+.theme-dark .pref-input:focus {
+  background: #44475a;
+  border-color: var(--user-accent);
+}
+
+.theme-dark .pref-input::placeholder {
+  color: #6272a4;
+}
+
+/* Account section title */
+.theme-dark .pref-section h3 {
+  color: #f8f8f2 !important;
+}
+
+/* Danger section border */
+.theme-dark .pref-section--danger {
+  border-top-color: #44475a !important;
+}
+
+.theme-dark .pref-danger-link {
+  color: #ff5555;
+}
+
+.theme-dark .pref-danger-link:hover {
+  color: #ff6e6e;
+}
+
 
 /* =================================
    CALENDAR PICKER MODAL

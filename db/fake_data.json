@@ -1,0 +1,117 @@
+{
+  "user": {
+    "name": "Jane Example",
+    "email_address": "jane.example@example.com",
+    "password": "password123"
+  },
+  "pages": [
+    {
+      "name": "GROCERY LIST",
+      "position": 1,
+      "todos": [
+        { "title": "Avocados", "completed": false, "position": 1 },
+        { "title": "Limes", "completed": false, "position": 2 },
+        { "title": "Cilantro", "completed": true, "position": 3 },
+        { "title": "Red onion", "completed": true, "position": 4 },
+        { "title": "Jalapeños", "completed": false, "position": 5 }
+      ]
+    },
+    {
+      "name": "RESTAURANTS",
+      "position": 2,
+      "todos": [
+        { "title": "Sailor", "completed": false, "position": 1 },
+        { "title": "Café Paulette", "completed": false, "position": 2 },
+        { "title": "Rucola", "completed": false, "position": 3 },
+        { "title": "Franks Wine Bar", "completed": false, "position": 4 }
+      ]
+    },
+    {
+      "name": "BOOKS TO READ",
+      "position": 3,
+      "todos": [
+        { "title": "Atomic Habits", "completed": false, "position": 1 },
+        { "title": "The Checklist Manifesto", "completed": true, "position": 2 },
+        { "title": "Deep Work", "completed": true, "position": 3 },
+        { "title": "The Power of Habit", "completed": true, "position": 4 },
+        { "title": "Eat That Frog", "completed": false, "position": 5 },
+        { "title": "168 Hours", "completed": false, "position": 6 }
+      ]
+    },
+    {
+      "name": "THINGS TO BUY",
+      "position": 4,
+      "todos": [
+        { "title": "Espresso machine", "completed": false, "position": 1 },
+        { "title": "Vacuum that works", "completed": false, "position": 2 },
+        { "title": "Kitchen runner", "completed": false, "position": 3 }
+      ]
+    },
+    {
+      "name": "PERSONAL",
+      "position": 5,
+      "todos": []
+    },
+    {
+      "name": "SOMEDAY",
+      "position": 6,
+      "todos": []
+    },
+    {
+      "name": "INTERIOR DESIGN",
+      "position": 7,
+      "todos": []
+    }
+  ],
+  "date_todos": [
+    {
+      "due_date": "2026-03-04",
+      "todos": [
+        { "title": "Run @ 7 AM", "completed": false, "position": 1 },
+        { "title": "Update roadmap", "completed": false, "highlight_color": "purple", "position": 2 },
+        { "title": "Buy a birthday gift for Xavier", "completed": false, "position": 3 },
+        { "title": "Catch up on newsletter copy", "completed": false, "position": 4 },
+        { "title": "AFTERNOON", "completed": false, "bold": true, "highlight_color": "gray", "position": 5 },
+        { "title": "Pick up CSA 4:30-7:30", "completed": false, "position": 6 },
+        { "title": "Drop-off dry cleaning", "completed": false, "position": 7 }
+      ]
+    },
+    {
+      "due_date": "2026-03-05",
+      "todos": [
+        { "title": "Run @ 7 AM", "completed": false, "position": 1 },
+        { "title": "Update roadmap", "completed": false, "position": 2 },
+        { "title": "Team Weekly Meeting @ 11", "completed": false, "position": 3 },
+        { "title": "Ben's soccer practice 5:30-7:00", "completed": false, "highlight_color": "blue", "position": 4 }
+      ]
+    },
+    {
+      "due_date": "2026-03-06",
+      "todos": [
+        { "title": "Yoga @ 9 AM", "completed": false, "position": 1 },
+        { "title": "Update roadmap", "completed": false, "position": 2 },
+        { "title": "Schedule newsletter for Monday", "completed": false, "position": 3 },
+        { "title": "Order cupcakes", "completed": false, "position": 4 },
+        { "title": "EVENING", "completed": false, "bold": true, "highlight_color": "gray", "position": 5 },
+        { "title": "Dinner with Rob & Sarah", "completed": false, "position": 6 }
+      ]
+    },
+    {
+      "due_date": "2026-03-07",
+      "todos": [
+        { "title": "Farmers market at the park", "completed": false, "position": 1 },
+        { "title": "Dry cleaning", "completed": false, "position": 2 },
+        { "title": "CAR STUFF", "completed": false, "bold": true, "highlight_color": "gray", "position": 3 },
+        { "title": "Drop off at 4", "completed": false, "position": 4 },
+        { "title": "Ask about oil change", "completed": false, "position": 5 }
+      ]
+    },
+    {
+      "due_date": "2026-03-08",
+      "todos": [
+        { "title": "Pick up cupcakes", "completed": false, "position": 1 },
+        { "title": "Xavier's birthday bbq @ 3 PM", "completed": false, "position": 2 }
+      ]
+    }
+  ]
+}

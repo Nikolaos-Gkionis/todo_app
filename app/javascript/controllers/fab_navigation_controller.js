@@ -79,16 +79,28 @@ export default class extends Controller {
     if (this.hasPrefTabContentTarget) this.prefTabContentTarget.style.display = "block"
     if (this.hasAccTabContentTarget) this.accTabContentTarget.style.display = "none"
 
-    if (this.hasPrefTabBtnTarget) this.prefTabBtnTarget.style.color = "#333"
-    if (this.hasAccTabBtnTarget) this.accTabBtnTarget.style.color = "#a0a0a0"
+    if (this.hasPrefTabBtnTarget) {
+      this.prefTabBtnTarget.classList.add("pref-tab-btn--active")
+      this.prefTabBtnTarget.style.color = ""
+    }
+    if (this.hasAccTabBtnTarget) {
+      this.accTabBtnTarget.classList.remove("pref-tab-btn--active")
+      this.accTabBtnTarget.style.color = ""
+    }
   }
 
   showAccountTab() {
     if (this.hasPrefTabContentTarget) this.prefTabContentTarget.style.display = "none"
     if (this.hasAccTabContentTarget) this.accTabContentTarget.style.display = "block"
 
-    if (this.hasPrefTabBtnTarget) this.prefTabBtnTarget.style.color = "#a0a0a0"
-    if (this.hasAccTabBtnTarget) this.accTabBtnTarget.style.color = "#333"
+    if (this.hasPrefTabBtnTarget) {
+      this.prefTabBtnTarget.classList.remove("pref-tab-btn--active")
+      this.prefTabBtnTarget.style.color = ""
+    }
+    if (this.hasAccTabBtnTarget) {
+      this.accTabBtnTarget.classList.add("pref-tab-btn--active")
+      this.accTabBtnTarget.style.color = ""
+    }
   }
 
   // ── Settings Panel (Legacy or secondary config) ──
