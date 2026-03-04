@@ -4798,7 +4798,6 @@ a.text-blue-800:hover {
   min-height: 55vh;
   max-height: 60vh;
   overflow-y: auto;
-  transition: min-height 0.4s ease, max-height 0.4s ease, flex 0.4s ease;
 }
 
 .week-col {
@@ -4938,7 +4937,6 @@ a.text-blue-800:hover {
   flex: 1;
   min-height: 0;
   max-height: 100vh;
-  transition: flex 0.4s ease, max-height 0.4s ease, min-height 0.4s ease;
 }
 
 .dashboard.lists-collapsed .dashboard__week-view {
