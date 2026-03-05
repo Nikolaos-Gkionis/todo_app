@@ -265,9 +265,18 @@
 
     <!-- Account Actions Section -->
     <div class="notebook-card">
-      <h2 class="text-xl font-semibold mb-6 text-red-700">Danger Zone</h2>
+      <h2 class="text-xl font-semibold mb-6">Account Actions</h2>
 
-      <div class="border-t border-red-200 pt-4">
+      <div class="mb-6">
+        <p class="text-sm text-gray-600 mb-3">Sign out of your account on this device.</p>
+        <button type="button" class="text-gray-600 hover:text-gray-800 font-medium hand-underline inline-block bg-transparent border-0 cursor-pointer text-base p-0" onclick="window.showLogoutModal()">
+          Sign Out
+        </button>
+      </div>
+
+      <h2 class="text-xl font-semibold mb-6 text-red-700 mt-8 border-t border-gray-200 pt-6">Danger Zone</h2>
+
+      <div>
         <p class="text-sm text-gray-600 mb-3">Once you delete your account, there is no going back. Please be certain.</p>
         <%= link_to "Delete Account",
               delete_account_path,

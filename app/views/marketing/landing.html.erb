@@ -42,62 +42,8 @@
       </div>
 
       <!-- Right: App mockup -->
-      <div>
-        <div class="mkt-mockup app-preview">
-          <div class="mkt-mockup__chrome">
-            <span class="mkt-mockup__dot mkt-mockup__dot--red"></span>
-            <span class="mkt-mockup__dot mkt-mockup__dot--yellow"></span>
-            <span class="mkt-mockup__dot mkt-mockup__dot--green"></span>
-            <span class="mkt-mockup__url">todo-it.app</span>
-          </div>
-          <div class="mkt-mockup__body" style="background: #f9fafb; padding: 1.5rem; display: flex; gap: 1rem; overflow: hidden;">
-            <!-- Column 1 -->
-            <div style="flex: 1; min-width: 140px; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 0.75rem; padding: 0.75rem; display: flex; flex-direction: column;">
-              <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.5rem; margin-bottom: 0.75rem;">
-                <span style="font-size: 0.75rem; color: #6b7280; font-weight: 600; text-transform: uppercase;">Mon</span>
-                <span style="font-size: 1.25rem; font-weight: 700; color: #111827;">12</span>
-              </div>
-              <div class="flex items-center" style="margin-bottom: 0.625rem; padding: 0.5rem; background: #ffffff; border: 1px solid #f3f4f6; border-radius: 0.25rem;">
-                <div class="hand-checkbox hand-checkbox-checked mr-2" style="transform: scale(0.75); flex-shrink: 0; margin-top: 0;"></div>
-                <span style="color: #9ca3af; text-decoration: line-through; font-size: 0.8rem;">Review marketing copy</span>
-              </div>
-              <div class="flex items-center" style="margin-bottom: 0.625rem; padding: 0.5rem; background: #ffffff; border: 1px solid #f3f4f6; border-radius: 0.25rem;">
-                <div class="hand-checkbox hand-checkbox-checked mr-2" style="transform: scale(0.75); flex-shrink: 0; margin-top: 0;"></div>
-                <span style="color: #9ca3af; text-decoration: line-through; font-size: 0.8rem;">Update website design</span>
-              </div>
-              <div style="margin-top: auto; padding-top: 0.5rem;">
-                <div style="border: 1px solid #e5e7eb; border-radius: 0.25rem; padding: 0.4rem; color: #9ca3af; font-size: 0.75rem;">Add task...</div>
-              </div>
-            </div>
-
-            <!-- Column 2 -->
-            <div style="flex: 1; min-width: 140px; background: #ffffff; border: 1px solid #111827; box-shadow: 0 1px 2px rgba(0,0,0,0.05); border-radius: 0.75rem; padding: 0.75rem; display: flex; flex-direction: column;">
-              <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.5rem; margin-bottom: 0.75rem;">
-                <span style="font-size: 0.75rem; color: #6b7280; font-weight: 600; text-transform: uppercase;">Tue</span>
-                <span style="font-size: 1.25rem; font-weight: 700; color: #111827;">13</span>
-              </div>
-              <div class="flex items-center" style="margin-bottom: 0.625rem; padding: 0.5rem; background: #ffffff; border: 1px solid #f3f4f6; border-radius: 0.25rem;">
-                <div class="hand-checkbox hand-checkbox-unchecked mr-2" style="transform: scale(0.75); flex-shrink: 0; margin-top: 0;"></div>
-                <span style="color: #374151; font-size: 0.8rem; font-weight: 500;">Plan team meeting</span>
-              </div>
-              <div class="flex items-center" style="margin-bottom: 0.625rem; padding: 0.5rem; background: #ffffff; border: 1px solid #f3f4f6; border-radius: 0.25rem;">
-                <div class="hand-checkbox hand-checkbox-unchecked mr-2" style="transform: scale(0.75); flex-shrink: 0; margin-top: 0;"></div>
-                <span style="color: #374151; font-size: 0.8rem; font-weight: 500;">Prepare presentation</span>
-              </div>
-              <div style="margin-top: auto; padding-top: 0.5rem;">
-                <div style="border: 1px solid #e5e7eb; border-radius: 0.25rem; padding: 0.4rem; color: #9ca3af; font-size: 0.75rem;">Add task...</div>
-              </div>
-            </div>
-
-            <!-- Column 3 (partial) -->
-            <div style="flex: 1; min-width: 140px; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 0.75rem; padding: 0.75rem; display: flex; flex-direction: column; opacity: 0.5;">
-              <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.5rem; margin-bottom: 0.75rem;">
-                <span style="font-size: 0.75rem; color: #6b7280; font-weight: 600; text-transform: uppercase;">Wed</span>
-                <span style="font-size: 1.25rem; font-weight: 700; color: #111827;">14</span>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="mkt-hero__visual mockup-wrapper">
+        <%= image_tag "screenshots/three-day-view.png", alt: "Todo-it Natural Week Flow", class: "w-full rounded-xl shadow-2xl border border-gray-200" %>
       </div>
 
     </div>
@@ -216,20 +162,7 @@
 
       <!-- Classic -->
       <div class="mkt-theme-card">
-        <div class="mkt-theme-preview app-preview" style="background: linear-gradient(135deg, #fffbeb, #fef3c7);">
-          <div style="position: absolute; inset: 0; background-image: radial-gradient(circle, #d4b896 1px, transparent 1px); background-size: 18px 18px; opacity: 0.3;"></div>
-          <div style="position: relative;">
-            <div style="font-weight: 600; color: #78350f; margin-bottom: 0.75rem; font-size: 0.875rem;">Morning Routine</div>
-            <div class="flex items-center" style="margin-bottom: 0.5rem;">
-              <div class="hand-checkbox hand-checkbox-checked mr-2" style="transform: scale(0.75); flex-shrink: 0;"></div>
-              <span style="font-size: 0.78rem; color: #92400e; text-decoration: line-through;">Morning coffee</span>
-            </div>
-            <div class="flex items-center">
-              <div class="hand-checkbox hand-checkbox-unchecked mr-2" style="transform: scale(0.75); flex-shrink: 0;"></div>
-              <span style="font-size: 0.78rem; color: #78350f;">Read chapter 3</span>
-            </div>
-          </div>
-        </div>
+        <%= image_tag "screenshots/seven-day-dotted.png", alt: "Classic Dotted Theme", class: "w-full rounded-xl shadow-md border border-gray-200 mkt-theme-img" %>
         <div class="mkt-theme-label">
           <div class="mkt-theme-name">Classic Dotted</div>
           <div class="mkt-theme-desc">Warm moleskin with a timeless feel</div>
@@ -238,21 +171,7 @@
 
       <!-- Lined -->
       <div class="mkt-theme-card">
-        <div class="mkt-theme-preview app-preview" style="background: #fafcff; position: relative;">
-          <div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(transparent, transparent 23px, #bfdbfe 23px, #bfdbfe 24px); opacity: 0.7;"></div>
-          <div style="position: absolute; top: 0; bottom: 0; left: 2.75rem; width: 2px; background: #fca5a5; opacity: 0.55;"></div>
-          <div style="position: relative;">
-            <div style="font-weight: 600; color: #1e3a5f; margin-bottom: 0.75rem; font-size: 0.875rem; margin-left: 1.5rem;">Work Tasks</div>
-            <div class="flex items-center" style="margin-bottom: 0.5rem; margin-left: 1.5rem;">
-              <div class="hand-checkbox hand-checkbox-checked mr-2" style="transform: scale(0.75); flex-shrink: 0;"></div>
-              <span style="font-size: 0.78rem; color: #475569; text-decoration: line-through;">Team standup</span>
-            </div>
-            <div class="flex items-center" style="margin-left: 1.5rem;">
-              <div class="hand-checkbox hand-checkbox-unchecked mr-2" style="transform: scale(0.75); flex-shrink: 0;"></div>
-              <span style="font-size: 0.78rem; color: #1e3a5f;">Code review</span>
-            </div>
-          </div>
-        </div>
+        <%= image_tag "screenshots/theme-accent.png", alt: "Lined Paper Theme", class: "w-full rounded-xl shadow-md border border-gray-200 mkt-theme-img" %>
         <div class="mkt-theme-label">
           <div class="mkt-theme-name">Lined Paper</div>
           <div class="mkt-theme-desc">Clean lines for structured thinking</div>
@@ -261,20 +180,7 @@
 
       <!-- Dark -->
       <div class="mkt-theme-card">
-        <div class="mkt-theme-preview app-preview" style="background: linear-gradient(135deg, #1e293b, #0f172a);">
-          <div style="position: absolute; inset: 0; background-image: radial-gradient(circle, #334155 1px, transparent 1px); background-size: 18px 18px; opacity: 0.35;"></div>
-          <div style="position: relative;">
-            <div style="font-weight: 600; color: #e2e8f0; margin-bottom: 0.75rem; font-size: 0.875rem;">Night Coding</div>
-            <div class="flex items-center" style="margin-bottom: 0.5rem;">
-              <div class="hand-checkbox hand-checkbox-checked mr-2" style="transform: scale(0.75); filter: brightness(0) invert(1); flex-shrink: 0;"></div>
-              <span style="font-size: 0.78rem; color: #64748b; text-decoration: line-through;">Deploy updates</span>
-            </div>
-            <div class="flex items-center">
-              <div class="hand-checkbox hand-checkbox-unchecked mr-2" style="transform: scale(0.75); filter: brightness(0) invert(1); flex-shrink: 0;"></div>
-              <span style="font-size: 0.78rem; color: #e2e8f0;">Write unit tests</span>
-            </div>
-          </div>
-        </div>
+        <%= image_tag "screenshots/dark-mode.png", alt: "Dark Mode Theme", class: "w-full rounded-xl shadow-md border border-gray-700 mkt-theme-img" %>
         <div class="mkt-theme-label">
           <div class="mkt-theme-name">Dark Mode</div>
           <div class="mkt-theme-desc">Easy on the eyes for late-night work</div>

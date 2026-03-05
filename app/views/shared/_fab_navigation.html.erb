@@ -138,6 +138,9 @@
                 <%= form.submit "Save Account", class: "pref-save-btn" %>
               </div>
             <% end %>
+            <div class="pref-section" style="margin-top: 16px;">
+              <button type="button" class="pref-save-btn" style="background-color: transparent; color: #4b5563; border: 1px solid #d1d5db;" onclick="window.showLogoutModal()">Sign Out</button>
+            </div>
             <div class="pref-section pref-section--danger" style="margin-top: 32px; border-top: 1px solid #ffebee; padding-top: 16px;">
               <%= link_to "Delete Account", delete_account_path, class: "pref-danger-link" %>
             </div>
