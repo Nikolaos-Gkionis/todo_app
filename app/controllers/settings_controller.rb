@@ -99,11 +99,11 @@ class SettingsController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email_address, :password, :password_confirmation, :current_password, :accent_color, :font_family, :app_title)
+    params.require(:user).permit(:name, :email_address, :password, :password_confirmation, :current_password, :accent_color, :font_family, :app_title, :roll_over)
   end
 
   def appearance_only_update?
     p = params[:user] || {}
-    p[:accent_color].present? || p[:font_family].present? || p[:app_title].present?
+    p[:accent_color].present? || p[:font_family].present? || p[:app_title].present? || p.key?(:roll_over)
   end
 end

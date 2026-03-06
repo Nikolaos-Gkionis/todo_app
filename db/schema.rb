@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_06_162150) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_06_163400) do
   create_table "migration_statuses", force: :cascade do |t|
     t.string "migration_type", null: false
     t.string "status", default: "pending", null: false
@@ -75,6 +75,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_06_162150) do
     t.string "font_family", default: "default", null: false
     t.string "app_name"
     t.string "app_title", default: "TODO-IT", null: false
+    t.boolean "roll_over", default: true, null: false
     t.index ["device_downloaded"], name: "idx_users_device_downloaded"
     t.index ["download_token"], name: "idx_users_download_token"
     t.index ["trial_expires_at"], name: "idx_users_trial_expires"
