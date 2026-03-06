@@ -31,9 +31,13 @@ class TodosController < ApplicationController
       end
       respond_to do |format|
         format.html { redirect_back fallback_location: app_root_path, notice: "Todo updated." }
+        format.json { render json: { status: "success", id: @todo.id } }
       end
     else
-      redirect_back fallback_location: app_root_path, alert: "Failed to update todo."
+      respond_to do |format|
+        format.html { redirect_back fallback_location: app_root_path, alert: "Failed to update todo." }
+        format.json { render json: { status: "error", errors: @todo.errors.full_messages }, status: :unprocessable_entity }
+      end
     end
   end
 

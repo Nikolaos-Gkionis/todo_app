@@ -165,6 +165,81 @@
     </div>
   </div>
 
+  <%# ── Notes Side Panel (slides from left, wider than preferences) ── %>
+  <div data-controller="notes-panel"
+       data-action="open-notes-panel@window->notes-panel#open keydown@document->notes-panel#closeOnEscape click@document->notes-panel#closeOnOverlay">
+
+    <%# Overlay %>
+    <div data-notes-panel-target="overlay" class="side-drawer__overlay" style="display:none;"></div>
+
+    <%# Drawer %>
+    <div data-notes-panel-target="drawer" class="side-drawer notes-drawer">
+
+      <%# Header: todo title + close button %>
+      <div class="notes-drawer__header">
+        <div class="notes-drawer__title-row">
+          <span class="notes-drawer__color-dot"></span>
+          <h2 class="notes-drawer__title" data-notes-panel-target="title">Add a note to this task</h2>
+        </div>
+        <button data-action="click->notes-panel#close" class="side-drawer__close" aria-label="Close notes">&times;</button>
+      </div>
+
+      <%# Toolbar: formatting + date %>
+      <div class="notes-drawer__toolbar">
+        <div class="notes-drawer__format-btns">
+          <button type="button" class="notes-fmt-btn" data-action="click->notes-panel#bold" title="Bold" aria-label="Bold"><strong>B</strong></button>
+          <button type="button" class="notes-fmt-btn notes-fmt-btn--italic" data-action="click->notes-panel#italic" title="Italic" aria-label="Italic"><em>I</em></button>
+          <button type="button" class="notes-fmt-btn" data-action="click->notes-panel#insertLink" title="Insert link" aria-label="Insert link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          </button>
+          <button type="button" class="notes-fmt-btn" data-action="click->notes-panel#addSubtask" title="Add subtask" aria-label="Add subtask">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </button>
+          <button type="button" class="notes-fmt-btn" data-action="click->notes-panel#insertBullet" title="Bullet list" aria-label="Bullet list">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          </button>
+        </div>
+        <span class="notes-drawer__date" data-notes-panel-target="date"></span>
+      </div>
+
+      <%# Editor body %>
+      <div class="notes-drawer__body">
+        <div class="notes-drawer__editor"
+             data-notes-panel-target="editor"
+             data-action="input->notes-panel#onEditorInput"
+             contenteditable="true"
+             data-placeholder="Add notes"></div>
+
+        <%# Subtask list %>
+        <div class="notes-drawer__subtasks" data-notes-panel-target="subtaskList"></div>
+      </div>
+
+      <%# Save indicator %>
+      <div class="notes-drawer__footer">
+        <span class="notes-drawer__saved" data-notes-panel-target="savedIndicator"></span>
+      </div>
+
+      <%# Link insertion modal %>
+      <div class="notes-link-modal" data-notes-panel-target="linkModal" style="display:none;">
+        <div class="notes-link-modal__card">
+          <div class="notes-link-modal__header">
+            <h3 class="notes-link-modal__title">Insert Link</h3>
+            <button type="button" class="notes-link-modal__close" data-action="click->notes-panel#closeLinkModal" aria-label="Close">&times;</button>
+          </div>
+          <input type="url"
+                 class="notes-link-modal__input"
+                 data-notes-panel-target="linkInput"
+                 placeholder="https://example.com"
+                 data-action="keydown->notes-panel#linkInputKeydown">
+          <div class="notes-link-modal__actions">
+            <button type="button" class="notes-link-modal__btn notes-link-modal__btn--cancel" data-action="click->notes-panel#closeLinkModal">Cancel</button>
+            <button type="button" class="notes-link-modal__btn notes-link-modal__btn--insert" data-action="click->notes-panel#confirmLink">Insert</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
   // ── Accent colour ──
   function applyAccentColor(color) {
