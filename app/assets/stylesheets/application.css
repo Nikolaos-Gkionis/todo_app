@@ -7063,6 +7063,24 @@ a.text-blue-800:hover {
   text-decoration: underline;
 }
 
+.notes-drawer__editor img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  display: block;
+  margin: 8px 0;
+}
+
+/* Hidden file input for image picker — visually hidden but programmatically clickable */
+.notes-image-file-input {
+  position: absolute;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
 .notes-drawer__editor ul {
   margin: 8px 0;
   padding-left: 20px;
@@ -7163,7 +7181,7 @@ a.text-blue-800:hover {
   transition: opacity 0.3s;
 }
 
-/* ── Persistent notes icon on todo items ── */
+/* ── Notes icon: on its own when todo has notes, right of toolbar ── */
 .todo-item__notes-btn {
   background: none;
   border: none;
@@ -7178,6 +7196,7 @@ a.text-blue-800:hover {
   flex-shrink: 0;
   opacity: 0;
   transition: opacity 0.15s, color 0.15s;
+  margin-left: 8px;
 }
 
 .todo-item:hover .todo-item__notes-btn {
@@ -7188,10 +7207,11 @@ a.text-blue-800:hover {
   color: #888;
 }
 
-/* Always visible when the todo has notes */
+/* When todo has notes: always visible, clearly on its own */
 .todo-item__notes-btn--active {
   opacity: 1;
   color: var(--user-accent, #7c6cc4);
+  margin-left: 12px;
 }
 
 .todo-item__notes-btn--active:hover {

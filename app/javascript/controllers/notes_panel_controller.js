@@ -5,7 +5,8 @@ export default class extends Controller {
   static targets = [
     "drawer", "overlay", "title", "date",
     "editor", "subtaskList", "savedIndicator",
-    "linkModal", "linkInput"
+    "linkModal", "linkInput",
+    "imageFileInput"
   ]
 
   connect() {
@@ -129,6 +130,46 @@ export default class extends Controller {
     document.execCommand("insertUnorderedList", false, null)
     this.editorTarget.focus()
     this.scheduleSave()
+  }
+
+  insertImage() {
+    // Save selection so we can restore it after picking a file
+    const sel = window.getSelection()
+    this.savedRange = sel.rangeCount > 0 ? sel.getRangeAt(0) : null
+
+    // Fire the native file picker (desktop: file explorer, mobile: camera/gallery)
+    if (this.hasImageFileInputTarget) {
+      this.imageFileInputTarget.value = ""
+      this.imageFileInputTarget.click()
+    }
+  }
+
+  onImageFileSelected(event) {
+    const file = event.target.files?.[0]
+    if (!file || !file.type.startsWith("image/")) return
+
+    // Cap at ~2MB to avoid huge base64 in notes
+    if (file.size > 2 * 1024 * 1024) {
+      alert("Image too large. Please choose an image under 2MB.")
+      return
+    }
+
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      const dataUrl = e.target?.result
+      if (!dataUrl) return
+
+      if (this.savedRange && this.hasEditorTarget) {
+        const sel = window.getSelection()
+        sel.removeAllRanges()
+        sel.addRange(this.savedRange)
+      }
+
+      document.execCommand("insertImage", false, dataUrl)
+      this.editorTarget.focus()
+      this.scheduleSave()
+    }
+    reader.readAsDataURL(file)
   }
 
   // ── Subtasks (checklists) ──
