@@ -3379,7 +3379,8 @@ footer a:hover {
   font-weight: 600;
   color: #1f2937;
   margin: 0;
-  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive;
+  /* Inherit the user's chosen font from preferences */
+  font-family: var(--user-font, inherit);
 }
 
 .logout-modal__close {
@@ -3407,12 +3408,14 @@ footer a:hover {
   color: #374151;
   font-size: 16px;
   line-height: 1.5;
+  font-family: var(--user-font, inherit);
 }
 
 .logout-modal__subtext {
   color: #6b7280;
   font-size: 14px;
   font-style: italic;
+  font-family: var(--user-font, inherit);
 }
 
 .logout-modal__footer {
@@ -3430,7 +3433,8 @@ footer a:hover {
   cursor: pointer;
   transition: all 0.2s ease;
   border: 1px solid transparent;
-  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive;
+  /* Inherit the user's chosen font from preferences */
+  font-family: var(--user-font, inherit);
 }
 
 .logout-modal__btn--secondary {
@@ -3498,6 +3502,252 @@ footer a:hover {
 .theme-dark .logout-modal__btn--secondary:hover {
   background: #4b5563;
   border-color: #6b7280;
+}
+
+/* Lined theme styles for logout modal */
+.theme-lined .logout-modal__dialog {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(229, 231, 235, 0.3);
+}
+
+/* Graph theme styles for logout modal */
+.theme-graph .logout-modal__dialog {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(229, 231, 235, 0.3);
+}
+
+/* Vintage theme styles for logout modal */
+.theme-vintage .logout-modal__dialog {
+  background: rgba(254, 249, 231, 0.98);
+  border: 1px solid rgba(180, 83, 9, 0.2);
+}
+
+.theme-vintage .logout-modal__title {
+  color: #78350f;
+}
+
+.theme-vintage .logout-modal__body p {
+  color: #92400e;
+}
+
+.theme-vintage .logout-modal__subtext {
+  color: #a16207;
+}
+
+.theme-vintage .logout-modal__header {
+  border-bottom-color: rgba(180, 83, 9, 0.15);
+}
+
+.theme-vintage .logout-modal__btn--secondary {
+  background: rgba(254, 243, 199, 0.6);
+  color: #78350f;
+  border-color: rgba(180, 83, 9, 0.2);
+}
+
+.theme-vintage .logout-modal__btn--secondary:hover {
+  background: rgba(254, 243, 199, 0.9);
+  border-color: rgba(180, 83, 9, 0.3);
+}
+
+/* =================================
+   CONFIRMATION / WARNING MODAL
+   ================================= */
+
+.confirm-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.confirm-modal.show {
+  display: flex;
+  opacity: 1;
+}
+
+.confirm-modal__backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.confirm-modal__dialog {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  max-width: 380px;
+  width: 100%;
+  overflow: hidden;
+  transform: scale(0.9);
+  transition: transform 0.25s ease;
+}
+
+.confirm-modal.show .confirm-modal__dialog {
+  transform: scale(1);
+}
+
+.confirm-modal__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 28px 24px 24px;
+}
+
+.confirm-modal__icon {
+  margin-bottom: 16px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #fef3c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.confirm-modal__title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 8px 0;
+  font-family: var(--user-font, inherit);
+}
+
+.confirm-modal__message {
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 24px 0;
+  font-family: var(--user-font, inherit);
+}
+
+.confirm-modal__footer {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.confirm-modal__btn {
+  flex: 1;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  font-family: var(--user-font, inherit);
+}
+
+.confirm-modal__btn--no {
+  background: #f9fafb;
+  color: #374151;
+  border-color: #d1d5db;
+}
+
+.confirm-modal__btn--no:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.confirm-modal__btn--yes {
+  background: #ef4444;
+  color: white;
+  border-color: #ef4444;
+}
+
+.confirm-modal__btn--yes:hover {
+  background: #dc2626;
+  border-color: #dc2626;
+}
+
+/* Focus styles (WCAG 2.4.7) */
+.confirm-modal__btn:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Dark theme */
+.theme-dark .confirm-modal__dialog {
+  background: #1f2937;
+  border: 1px solid #374151;
+}
+
+.theme-dark .confirm-modal__icon {
+  background: rgba(245, 158, 11, 0.15);
+}
+
+.theme-dark .confirm-modal__title {
+  color: #f9fafb;
+}
+
+.theme-dark .confirm-modal__message {
+  color: #9ca3af;
+}
+
+.theme-dark .confirm-modal__btn--no {
+  background: #374151;
+  color: #d1d5db;
+  border-color: #4b5563;
+}
+
+.theme-dark .confirm-modal__btn--no:hover {
+  background: #4b5563;
+  border-color: #6b7280;
+}
+
+/* Lined theme */
+.theme-lined .confirm-modal__dialog {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(229, 231, 235, 0.3);
+}
+
+/* Graph theme */
+.theme-graph .confirm-modal__dialog {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(229, 231, 235, 0.3);
+}
+
+/* Vintage theme */
+.theme-vintage .confirm-modal__dialog {
+  background: rgba(254, 249, 231, 0.98);
+  border: 1px solid rgba(180, 83, 9, 0.2);
+}
+
+.theme-vintage .confirm-modal__icon {
+  background: rgba(180, 83, 9, 0.1);
+}
+
+.theme-vintage .confirm-modal__title {
+  color: #78350f;
+}
+
+.theme-vintage .confirm-modal__message {
+  color: #a16207;
+}
+
+.theme-vintage .confirm-modal__btn--no {
+  background: rgba(254, 243, 199, 0.6);
+  color: #78350f;
+  border-color: rgba(180, 83, 9, 0.2);
+}
+
+.theme-vintage .confirm-modal__btn--no:hover {
+  background: rgba(254, 243, 199, 0.9);
+  border-color: rgba(180, 83, 9, 0.3);
 }
 
 @keyframes pulseDark {

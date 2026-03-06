@@ -127,6 +127,34 @@
       </div>
     </div>
 
+    <!-- Warning / Confirmation Modal (reusable for delete actions) -->
+    <div id="confirm-modal" class="confirm-modal" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="confirmModalLabel" aria-hidden="true" onclick="if(event.target === this) window.hideConfirmModal()">
+      <div class="confirm-modal__backdrop">
+        <div class="confirm-modal__dialog">
+          <div class="confirm-modal__content">
+            <div class="confirm-modal__icon" aria-hidden="true">
+              <!-- Warning triangle icon -->
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+            </div>
+            <h2 class="confirm-modal__title" id="confirmModalLabel">Are you sure?</h2>
+            <p class="confirm-modal__message" id="confirmModalMessage">This action cannot be undone.</p>
+            <div class="confirm-modal__footer">
+              <button type="button" class="confirm-modal__btn confirm-modal__btn--no" onclick="window.hideConfirmModal()">
+                No
+              </button>
+              <button type="button" class="confirm-modal__btn confirm-modal__btn--yes" id="confirmModalYes">
+                Yes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Theme Switching JavaScript -->
     <script>
       // Global logout modal function
@@ -194,6 +222,48 @@
         form.appendChild(methodInput);
         document.body.appendChild(form);
         form.submit();
+      };
+
+      // Global confirm modal functions
+      window.showConfirmModal = function(options) {
+        // options: { message, onConfirm }
+        var modal = document.getElementById('confirm-modal');
+        if (!modal) return;
+
+        // Set custom message if provided
+        var msgEl = document.getElementById('confirmModalMessage');
+        if (msgEl && options && options.message) {
+          msgEl.textContent = options.message;
+        }
+
+        // Wire up the "Yes" button to run the confirm callback
+        var yesBtn = document.getElementById('confirmModalYes');
+        var newYes = yesBtn.cloneNode(true);
+        yesBtn.parentNode.replaceChild(newYes, yesBtn);
+        newYes.addEventListener('click', function() {
+          window.hideConfirmModal();
+          if (options && typeof options.onConfirm === 'function') {
+            options.onConfirm();
+          }
+        });
+
+        // Show modal
+        window._confirmModalPreviousFocus = document.activeElement;
+        modal.classList.add('show');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        newYes.focus();
+      };
+
+      window.hideConfirmModal = function() {
+        var modal = document.getElementById('confirm-modal');
+        if (!modal) return;
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        if (window._confirmModalPreviousFocus && window._confirmModalPreviousFocus.focus) {
+          window._confirmModalPreviousFocus.focus();
+        }
       };
 
       // Theme management functions
