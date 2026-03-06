@@ -1,4 +1,4 @@
-<div class="marketing-landing">
+<div class="marketing-landing" data-controller="scroll-reveal">
 <%= render 'shared/navbar' %>
 
 <!-- Hero -->
@@ -41,9 +41,11 @@
         </div>
       </div>
 
-      <!-- Right: App mockup -->
-      <div class="mkt-hero__visual mockup-wrapper">
-        <%= image_tag "screenshots/three-day-view.png", alt: "Todo-it Natural Week Flow", class: "w-full rounded-xl shadow-2xl border border-gray-200" %>
+      <!-- Right: App mockup (floating portal) -->
+      <div class="mkt-portal">
+        <div class="mkt-portal__frame">
+          <%= image_tag "screenshots/three-day-view.png", alt: "Todo-it Natural Week Flow" %>
+        </div>
       </div>
 
     </div>
@@ -51,7 +53,7 @@
 </section>
 
 <!-- Feature strip -->
-<div class="mkt-strip">
+<div class="mkt-strip mkt-reveal" data-scroll-reveal-target="item">
   <div class="mkt-inner">
     <div class="mkt-strip__grid">
       <div class="mkt-strip__item">
@@ -73,7 +75,7 @@
 <!-- Features -->
 <section id="features" class="mkt-section bg-white">
   <div class="mkt-inner">
-    <div style="text-align: center; margin-bottom: 3.5rem;">
+    <div class="mkt-section-intro mkt-reveal" data-scroll-reveal-target="item">
       <span class="mkt-label">Features</span>
       <h2 class="mkt-heading">Designed with intention</h2>
       <p class="mkt-subheading" style="margin: 0 auto;">
@@ -83,7 +85,7 @@
 
     <div class="mkt-grid-3">
 
-      <div class="mkt-card">
+      <div class="mkt-card mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 0ms">
         <div class="mkt-card__icon bg-blue-100 text-blue-600">
           <%= inline_icon "calendar" %>
         </div>
@@ -93,7 +95,7 @@
         </p>
       </div>
 
-      <div class="mkt-card">
+      <div class="mkt-card mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 80ms">
         <div class="mkt-card__icon bg-green-100 text-green-600">
           <%= inline_icon "sparkles" %>
         </div>
@@ -103,7 +105,7 @@
         </p>
       </div>
 
-      <div class="mkt-card">
+      <div class="mkt-card mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 160ms">
         <div class="mkt-card__icon bg-purple-100 text-purple-600">
           <%= inline_icon "device-phone-mobile" %>
         </div>
@@ -113,7 +115,7 @@
         </p>
       </div>
 
-      <div class="mkt-card">
+      <div class="mkt-card mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 240ms">
         <div class="mkt-card__icon bg-orange-100 text-orange-600">
           <%= inline_icon "shield-check" %>
         </div>
@@ -123,7 +125,7 @@
         </p>
       </div>
 
-      <div class="mkt-card">
+      <div class="mkt-card mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 320ms">
         <div class="mkt-card__icon bg-yellow-100 text-yellow-600">
           <%= inline_icon "circle-stack" %>
         </div>
@@ -133,7 +135,7 @@
         </p>
       </div>
 
-      <div class="mkt-card">
+      <div class="mkt-card mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 400ms">
         <div class="mkt-card__icon bg-indigo-100 text-indigo-600">
           <%= inline_icon "paint-brush" %>
         </div>
@@ -150,7 +152,7 @@
 <!-- Themes Showcase -->
 <section class="mkt-section mkt-section--cream">
   <div class="mkt-inner">
-    <div style="text-align: center; margin-bottom: 3.5rem;">
+    <div class="mkt-section-intro mkt-reveal" data-scroll-reveal-target="item">
       <span class="mkt-label">Themes</span>
       <h2 class="mkt-heading">A style for every mood</h2>
       <p class="mkt-subheading" style="margin: 0 auto;">
@@ -161,7 +163,7 @@
     <div class="mkt-grid-3">
 
       <!-- Classic -->
-      <div class="mkt-theme-card">
+      <div class="mkt-theme-card mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 0ms">
         <%= image_tag "screenshots/seven-day-dotted.png", alt: "Classic Dotted Theme", class: "w-full rounded-xl shadow-md border border-gray-200 mkt-theme-img" %>
         <div class="mkt-theme-label">
           <div class="mkt-theme-name">Classic Dotted</div>
@@ -170,8 +172,8 @@
       </div>
 
       <!-- Lined -->
-      <div class="mkt-theme-card">
-        <%= image_tag "screenshots/theme-accent.png", alt: "Lined Paper Theme", class: "w-full rounded-xl shadow-md border border-gray-200 mkt-theme-img" %>
+      <div class="mkt-theme-card mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 100ms">
+        <%= image_tag "screenshots/seven-day-lined.png", alt: "Lined Paper Theme", class: "w-full rounded-xl shadow-md border border-gray-200 mkt-theme-img" %>
         <div class="mkt-theme-label">
           <div class="mkt-theme-name">Lined Paper</div>
           <div class="mkt-theme-desc">Clean lines for structured thinking</div>
@@ -179,7 +181,7 @@
       </div>
 
       <!-- Dark -->
-      <div class="mkt-theme-card">
+      <div class="mkt-theme-card mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 200ms">
         <%= image_tag "screenshots/dark-mode.png", alt: "Dark Mode Theme", class: "w-full rounded-xl shadow-md border border-gray-700 mkt-theme-img" %>
         <div class="mkt-theme-label">
           <div class="mkt-theme-name">Dark Mode</div>
@@ -194,7 +196,7 @@
 <!-- Privacy & Trust -->
 <section class="mkt-section bg-white">
   <div class="mkt-inner">
-    <div style="text-align: center; margin-bottom: 3.5rem;">
+    <div class="mkt-section-intro mkt-reveal" data-scroll-reveal-target="item">
       <span class="mkt-label mkt-label--green">Privacy</span>
       <h2 class="mkt-heading">Your data, your control</h2>
       <p class="mkt-subheading" style="margin: 0 auto;">
@@ -203,7 +205,7 @@
     </div>
 
     <div class="mkt-trust-grid">
-      <div class="mkt-trust-item">
+      <div class="mkt-trust-item mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 0ms">
         <div class="mkt-trust-icon bg-green-100 text-green-600">
           <%= inline_icon "lock-closed" %>
         </div>
@@ -211,7 +213,7 @@
         <p class="mkt-trust-text">No social logins, no big tech tracking. Your notes belong to you - not Google, not Facebook.</p>
       </div>
 
-      <div class="mkt-trust-item">
+      <div class="mkt-trust-item mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 80ms">
         <div class="mkt-trust-icon bg-blue-100 text-blue-600">
           <%= inline_icon "circle-stack" %>
         </div>
@@ -219,7 +221,7 @@
         <p class="mkt-trust-text">Download once and your data lives on your device. No subscriptions, no lock-in, no server dependency.</p>
       </div>
 
-      <div class="mkt-trust-item">
+      <div class="mkt-trust-item mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 160ms">
         <div class="mkt-trust-icon bg-purple-100 text-purple-600">
           <%= inline_icon "bolt" %>
         </div>
@@ -227,7 +229,7 @@
         <p class="mkt-trust-text">Once downloaded, works completely offline. On a plane, underground, anywhere - your todos are always there.</p>
       </div>
 
-      <div class="mkt-trust-item">
+      <div class="mkt-trust-item mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 240ms">
         <div class="mkt-trust-icon bg-orange-100 text-orange-600">
           <%= inline_icon "shield-check" %>
         </div>
@@ -236,14 +238,14 @@
       </div>
     </div>
 
-    <div style="text-align: center; margin-top: 3rem;">
-      <div style="display: inline-flex; align-items: center; gap: 1rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 0.875rem; padding: 1rem 1.75rem;">
+    <div class="mkt-reveal" data-scroll-reveal-target="item" style="text-align: center; margin-top: 3rem;">
+      <div style="display: inline-flex; align-items: center; gap: 1rem; background: #F2F5EF; border: 1px solid #B5C1A8; border-radius: 0.875rem; padding: 1rem 1.75rem;">
         <div class="mkt-trust-icon bg-green-100 text-green-600" style="margin: 0; flex-shrink: 0;">
           <%= inline_icon "shield-check" %>
         </div>
         <div style="text-align: left;">
-          <div style="font-weight: 600; color: #15803d; font-size: 0.9rem;">GDPR Compliant</div>
-          <div style="font-size: 0.825rem; color: #16a34a;">Full data rights - export or permanently delete at any time</div>
+          <div style="font-weight: 600; color: #4E5C64; font-size: 0.9rem;">GDPR Compliant</div>
+          <div style="font-size: 0.825rem; color: #4E5C64;">Full data rights - export or permanently delete at any time</div>
         </div>
       </div>
     </div>
@@ -251,12 +253,12 @@
 </section>
 
 <!-- CTA -->
-<section class="mkt-cta">
+<section class="mkt-cta mkt-reveal" data-scroll-reveal-target="item">
   <div class="mkt-inner">
     <h2 class="mkt-cta__title">Ready to get organised, beautifully?</h2>
     <p class="mkt-cta__subtitle">
       Try Todo-it free for 7 days. No credit card. No commitment.<br>
-      Download forever for just $9.99 when you're ready.
+      Download forever for just £9.99 when you're ready.
     </p>
     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
       <%= link_to signup_path, class: "mkt-btn mkt-btn--white" do %>
@@ -266,7 +268,7 @@
         View pricing
       <% end %>
     </div>
-    <p class="mkt-cta__trust">No credit card required &nbsp;&middot;&nbsp; 7-day free trial &nbsp;&middot;&nbsp; Download forever for $9.99</p>
+    <p class="mkt-cta__trust">No credit card required &nbsp;&middot;&nbsp; 7-day free trial &nbsp;&middot;&nbsp; Download forever for £9.99</p>
   </div>
 </section>
 

@@ -1,4 +1,4 @@
-<div class="marketing-page">
+<div class="marketing-page" data-controller="scroll-reveal">
 <%= render 'shared/marketing_header' %>
 
 <!-- Header -->
@@ -20,12 +20,12 @@
 <div class="mkt-section bg-white">
   <div class="mkt-inner--narrow">
 
-    <div class="mkt-highlight-box mkt-highlight-box--blue" style="margin-bottom: 3rem;">
+    <div class="mkt-highlight-box mkt-highlight-box--blue mkt-reveal" data-scroll-reveal-target="item" style="margin-bottom: 3rem;">
       By accessing or using Todo-it, you agree to be bound by these Terms of Service and our Privacy Policy.
       If you disagree with any part of these terms, you may not access the service.
     </div>
 
-    <div class="mkt-prose">
+    <div class="mkt-prose mkt-reveal" data-scroll-reveal-target="item">
 
       <h2>1. Service Description</h2>
 
@@ -75,7 +75,7 @@
 
       <h3>3.1 One-Time Purchase</h3>
       <ul>
-        <li>One-time payment of $9.99 (no recurring charges)</li>
+        <li>One-time payment of £9.99 (no recurring charges)</li>
         <li>Download the app to your device for offline use</li>
         <li>Complete ownership of your data</li>
         <li>No monthly or annual subscriptions</li>
@@ -195,8 +195,8 @@
 
       <h2>11. Contact</h2>
       <p>If you have any questions about these Terms of Service, please contact us:</p>
-      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 0.5rem; padding: 1.25rem 1.5rem;">
-        <p style="margin: 0; color: #374151;">
+      <div style="background: #F0EDEA; border: 1px solid #D8D4CC; border-radius: 0.5rem; padding: 1.25rem 1.5rem;">
+        <p style="margin: 0; color: #4E5C64;">
           <strong>Email:</strong> <a href="mailto:legal@todo-it.app">legal@todo-it.app</a><br>
           <strong>Subject:</strong> Terms of Service Inquiry
         </p>

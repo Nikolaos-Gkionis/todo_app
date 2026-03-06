@@ -1,4 +1,4 @@
-<div class="marketing-page">
+<div class="marketing-page" data-controller="scroll-reveal">
 <%= render 'shared/navbar' %>
 
 <!-- Hero -->
@@ -21,7 +21,7 @@
 <!-- Getting Started -->
 <section class="mkt-section bg-white">
   <div class="mkt-inner">
-    <div style="text-align: center; margin-bottom: 4rem;">
+    <div class="mkt-section-intro mkt-reveal" data-scroll-reveal-target="item">
       <span class="mkt-label">Getting started</span>
       <h2 class="mkt-heading">Three steps to beautiful productivity</h2>
     </div>
@@ -29,7 +29,7 @@
     <div class="mkt-steps">
 
       <!-- Step 1 -->
-      <div class="mkt-step">
+      <div class="mkt-step mkt-reveal" data-scroll-reveal-target="item">
         <div>
           <div class="mkt-step__number">1</div>
           <h3 class="mkt-step__title">Create your first Page</h3>
@@ -40,15 +40,15 @@
           <div style="display: flex; flex-direction: column; gap: 0.625rem;">
             <div class="flex items-center">
               <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
-              <span style="font-size: 0.925rem; color: #374151;">Click "New Page" from your dashboard</span>
+              <span style="font-size: 0.925rem; color: #4E5C64;">Click "New Page" from your dashboard</span>
             </div>
             <div class="flex items-center">
               <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
-              <span style="font-size: 0.925rem; color: #374151;">Give it a meaningful name</span>
+              <span style="font-size: 0.925rem; color: #4E5C64;">Give it a meaningful name</span>
             </div>
             <div class="flex items-center">
               <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
-              <span style="font-size: 0.925rem; color: #374151;">Start adding todos straight away</span>
+              <span style="font-size: 0.925rem; color: #4E5C64;">Start adding todos straight away</span>
             </div>
           </div>
         </div>
@@ -60,9 +60,9 @@
       </div>
 
       <!-- Step 2 -->
-      <div class="mkt-step mkt-step--reverse">
+      <div class="mkt-step mkt-step--reverse mkt-reveal" data-scroll-reveal-target="item">
         <div>
-          <div class="mkt-step__number" style="background: #16a34a;">2</div>
+          <div class="mkt-step__number">2</div>
           <h3 class="mkt-step__title">Add beautiful todos</h3>
           <p class="mkt-step__text">
             Each todo has a title and optional notes - no due dates, no priority levels, no stress.
@@ -71,15 +71,15 @@
           <div style="display: flex; flex-direction: column; gap: 0.625rem;">
             <div class="flex items-center">
               <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
-              <span style="font-size: 0.925rem; color: #374151;">Click "Add a new todo&hellip;" to expand the form</span>
+              <span style="font-size: 0.925rem; color: #4E5C64;">Click "Add a new todo&hellip;" to expand the form</span>
             </div>
             <div class="flex items-center">
               <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
-              <span style="font-size: 0.925rem; color: #374151;">Add optional notes for complex tasks</span>
+              <span style="font-size: 0.925rem; color: #4E5C64;">Add optional notes for complex tasks</span>
             </div>
             <div class="flex items-center">
               <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
-              <span style="font-size: 0.925rem; color: #374151;">Tick the checkbox when done - feel the satisfaction</span>
+              <span style="font-size: 0.925rem; color: #4E5C64;">Tick the checkbox when done - feel the satisfaction</span>
             </div>
           </div>
         </div>
@@ -91,9 +91,9 @@
       </div>
 
       <!-- Step 3 -->
-      <div class="mkt-step">
+      <div class="mkt-step mkt-reveal" data-scroll-reveal-target="item">
         <div>
-          <div class="mkt-step__number" style="background: #7c3aed;">3</div>
+          <div class="mkt-step__number">3</div>
           <h3 class="mkt-step__title">Organise &amp; arrange</h3>
           <p class="mkt-step__text">
             Drag and drop todos to reorder them however you like - just like moving sticky notes around.
@@ -102,15 +102,15 @@
           <div style="display: flex; flex-direction: column; gap: 0.625rem;">
             <div class="flex items-center">
               <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
-              <span style="font-size: 0.925rem; color: #374151;">Grab the ⋮⋮ handle to drag a todo</span>
+              <span style="font-size: 0.925rem; color: #4E5C64;">Grab the ⋮⋮ handle to drag a todo</span>
             </div>
             <div class="flex items-center">
               <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
-              <span style="font-size: 0.925rem; color: #374151;">Drop it anywhere in the list</span>
+              <span style="font-size: 0.925rem; color: #4E5C64;">Drop it anywhere in the list</span>
             </div>
             <div class="flex items-center">
               <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
-              <span style="font-size: 0.925rem; color: #374151;">Your order is saved instantly</span>
+              <span style="font-size: 0.925rem; color: #4E5C64;">Your order is saved instantly</span>
             </div>
           </div>
         </div>
@@ -128,14 +128,14 @@
 <!-- Pro Tips -->
 <section class="mkt-section mkt-section--cream">
   <div class="mkt-inner">
-    <div style="text-align: center; margin-bottom: 3.5rem;">
+    <div class="mkt-section-intro mkt-reveal" data-scroll-reveal-target="item">
       <span class="mkt-label mkt-label--amber">Pro tips</span>
       <h2 class="mkt-heading">Get more out of Todo-it</h2>
     </div>
 
     <div class="mkt-grid-2">
 
-      <div class="mkt-card">
+      <div class="mkt-card mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 0ms">
         <div class="mkt-card__icon bg-yellow-100 text-yellow-600">
           <%= inline_icon "paint-brush" %>
         </div>
@@ -146,7 +146,7 @@
         </p>
       </div>
 
-      <div class="mkt-card">
+      <div class="mkt-card mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 80ms">
         <div class="mkt-card__icon bg-blue-100 text-blue-600">
           <%= inline_icon "device-phone-mobile" %>
         </div>
@@ -157,7 +157,7 @@
         </p>
       </div>
 
-      <div class="mkt-card">
+      <div class="mkt-card mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 160ms">
         <div class="mkt-card__icon bg-green-100 text-green-600">
           <%= inline_icon "sparkles" %>
         </div>
@@ -168,7 +168,7 @@
         </p>
       </div>
 
-      <div class="mkt-card">
+      <div class="mkt-card mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 240ms">
         <div class="mkt-card__icon bg-purple-100 text-purple-600">
           <%= inline_icon "folder" %>
         </div>
@@ -186,7 +186,7 @@
 <!-- PWA Installation -->
 <section class="mkt-section bg-white">
   <div class="mkt-inner">
-    <div style="text-align: center; margin-bottom: 4rem;">
+    <div class="mkt-section-intro mkt-reveal" data-scroll-reveal-target="item">
       <span class="mkt-label">Install as a PWA</span>
       <h2 class="mkt-heading">Your app, on your device</h2>
       <p class="mkt-subheading" style="margin: 0 auto;">
@@ -198,82 +198,82 @@
     <div class="mkt-grid-2--wide-gap" style="max-width: 60rem; margin: 0 auto;">
 
       <!-- Mobile -->
-      <div style="background: white; border: 1px solid #e2e8f0; border-radius: 1.25rem; padding: 2.25rem;">
+      <div class="mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 0ms; background: white; border: 1px solid #D8D4CC; border-radius: 1.25rem; padding: 2.25rem;">
         <div style="text-align: center; margin-bottom: 2rem;">
           <div class="mkt-trust-icon bg-blue-100 text-blue-600" style="margin: 0 auto 1rem;">
             <%= inline_icon "device-phone-mobile" %>
           </div>
-          <div style="font-size: 1.2rem; font-weight: 700; color: #0f172a; margin-bottom: 0.25rem;">Mobile</div>
-          <div style="font-size: 0.875rem; color: #64748b;">iOS &amp; Android</div>
+          <div style="font-size: 1.2rem; font-weight: 700; color: #4E5C64; margin-bottom: 0.25rem;">Mobile</div>
+          <div style="font-size: 0.875rem; color: #4E5C64;">iOS &amp; Android</div>
         </div>
         <div style="display: flex; flex-direction: column; gap: 1.25rem;">
           <div class="flex items-start" style="gap: 1rem;">
-            <div style="width: 1.75rem; height: 1.75rem; background: #eff6ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.75rem; font-weight: 700; color: #2563eb;">1</div>
+            <div style="width: 1.75rem; height: 1.75rem; background: #F0EDEA; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.75rem; font-weight: 700; color: #4E5C64;">1</div>
             <div>
-              <div style="font-weight: 600; color: #0f172a; font-size: 0.9rem; margin-bottom: 0.2rem;">Download the app</div>
-              <p style="font-size: 0.85rem; color: #64748b; line-height: 1.6;">After payment, click "Download App" from your account page.</p>
+              <div style="font-weight: 600; color: #4E5C64; font-size: 0.9rem; margin-bottom: 0.2rem;">Download the app</div>
+              <p style="font-size: 0.85rem; color: #4E5C64; line-height: 1.6;">After payment, click "Download App" from your account page.</p>
             </div>
           </div>
           <div class="flex items-start" style="gap: 1rem;">
-            <div style="width: 1.75rem; height: 1.75rem; background: #eff6ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.75rem; font-weight: 700; color: #2563eb;">2</div>
+            <div style="width: 1.75rem; height: 1.75rem; background: #F0EDEA; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.75rem; font-weight: 700; color: #4E5C64;">2</div>
             <div>
-              <div style="font-weight: 600; color: #0f172a; font-size: 0.9rem; margin-bottom: 0.2rem;">Open in your browser</div>
-              <p style="font-size: 0.85rem; color: #64748b; line-height: 1.6;">Open the file in Safari (iOS) or Chrome (Android).</p>
+              <div style="font-weight: 600; color: #4E5C64; font-size: 0.9rem; margin-bottom: 0.2rem;">Open in your browser</div>
+              <p style="font-size: 0.85rem; color: #4E5C64; line-height: 1.6;">Open the file in Safari (iOS) or Chrome (Android).</p>
             </div>
           </div>
           <div class="flex items-start" style="gap: 1rem;">
-            <div style="width: 1.75rem; height: 1.75rem; background: #eff6ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.75rem; font-weight: 700; color: #2563eb;">3</div>
+            <div style="width: 1.75rem; height: 1.75rem; background: #F0EDEA; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.75rem; font-weight: 700; color: #4E5C64;">3</div>
             <div>
-              <div style="font-weight: 600; color: #0f172a; font-size: 0.9rem; margin-bottom: 0.2rem;">Add to Home Screen</div>
-              <p style="font-size: 0.85rem; color: #64748b; line-height: 1.6;"><strong>iOS:</strong> Tap share &rarr; "Add to Home Screen"<br><strong>Android:</strong> Tap menu (&#8942;) &rarr; "Add to Home Screen"</p>
+              <div style="font-weight: 600; color: #4E5C64; font-size: 0.9rem; margin-bottom: 0.2rem;">Add to Home Screen</div>
+              <p style="font-size: 0.85rem; color: #4E5C64; line-height: 1.6;"><strong>iOS:</strong> Tap share &rarr; "Add to Home Screen"<br><strong>Android:</strong> Tap menu (&#8942;) &rarr; "Add to Home Screen"</p>
             </div>
           </div>
           <div class="flex items-start" style="gap: 1rem;">
-            <div style="width: 1.75rem; height: 1.75rem; background: #eff6ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.75rem; font-weight: 700; color: #2563eb;">4</div>
+            <div style="width: 1.75rem; height: 1.75rem; background: #F0EDEA; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.75rem; font-weight: 700; color: #4E5C64;">4</div>
             <div>
-              <div style="font-weight: 600; color: #0f172a; font-size: 0.9rem; margin-bottom: 0.2rem;">Launch from your home screen</div>
-              <p style="font-size: 0.85rem; color: #64748b; line-height: 1.6;">Tap the Todo-it icon - it opens full screen, no browser chrome.</p>
+              <div style="font-weight: 600; color: #4E5C64; font-size: 0.9rem; margin-bottom: 0.2rem;">Launch from your home screen</div>
+              <p style="font-size: 0.85rem; color: #4E5C64; line-height: 1.6;">Tap the Todo-it icon - it opens full screen, no browser chrome.</p>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Desktop -->
-      <div style="background: white; border: 1px solid #e2e8f0; border-radius: 1.25rem; padding: 2.25rem;">
+      <div class="mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 120ms; background: white; border: 1px solid #D8D4CC; border-radius: 1.25rem; padding: 2.25rem;">
         <div style="text-align: center; margin-bottom: 2rem;">
           <div class="mkt-trust-icon bg-green-100 text-green-600" style="margin: 0 auto 1rem;">
             <%= inline_icon "laptop" %>
           </div>
-          <div style="font-size: 1.2rem; font-weight: 700; color: #0f172a; margin-bottom: 0.25rem;">Desktop</div>
-          <div style="font-size: 0.875rem; color: #64748b;">Windows, Mac &amp; Linux</div>
+          <div style="font-size: 1.2rem; font-weight: 700; color: #4E5C64; margin-bottom: 0.25rem;">Desktop</div>
+          <div style="font-size: 0.875rem; color: #4E5C64;">Windows, Mac &amp; Linux</div>
         </div>
         <div style="display: flex; flex-direction: column; gap: 1.25rem;">
           <div class="flex items-start" style="gap: 1rem;">
-            <div style="width: 1.75rem; height: 1.75rem; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.75rem; font-weight: 700; color: #16a34a;">1</div>
+            <div style="width: 1.75rem; height: 1.75rem; background: #F2F5EF; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.75rem; font-weight: 700; color: #4E5C64;">1</div>
             <div>
-              <div style="font-weight: 600; color: #0f172a; font-size: 0.9rem; margin-bottom: 0.2rem;">Download the app</div>
-              <p style="font-size: 0.85rem; color: #64748b; line-height: 1.6;">After payment, click "Download App" from your account page.</p>
+              <div style="font-weight: 600; color: #4E5C64; font-size: 0.9rem; margin-bottom: 0.2rem;">Download the app</div>
+              <p style="font-size: 0.85rem; color: #4E5C64; line-height: 1.6;">After payment, click "Download App" from your account page.</p>
             </div>
           </div>
           <div class="flex items-start" style="gap: 1rem;">
-            <div style="width: 1.75rem; height: 1.75rem; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.75rem; font-weight: 700; color: #16a34a;">2</div>
+            <div style="width: 1.75rem; height: 1.75rem; background: #F2F5EF; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.75rem; font-weight: 700; color: #4E5C64;">2</div>
             <div>
-              <div style="font-weight: 600; color: #0f172a; font-size: 0.9rem; margin-bottom: 0.2rem;">Open in Chrome or Edge</div>
-              <p style="font-size: 0.85rem; color: #64748b; line-height: 1.6;">Open the downloaded file in Chrome, Edge, or Safari.</p>
+              <div style="font-weight: 600; color: #4E5C64; font-size: 0.9rem; margin-bottom: 0.2rem;">Open in Chrome or Edge</div>
+              <p style="font-size: 0.85rem; color: #4E5C64; line-height: 1.6;">Open the downloaded file in Chrome, Edge, or Safari.</p>
             </div>
           </div>
           <div class="flex items-start" style="gap: 1rem;">
-            <div style="width: 1.75rem; height: 1.75rem; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.75rem; font-weight: 700; color: #16a34a;">3</div>
+            <div style="width: 1.75rem; height: 1.75rem; background: #F2F5EF; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.75rem; font-weight: 700; color: #4E5C64;">3</div>
             <div>
-              <div style="font-weight: 600; color: #0f172a; font-size: 0.9rem; margin-bottom: 0.2rem;">Click the install icon</div>
-              <p style="font-size: 0.85rem; color: #64748b; line-height: 1.6;">Look for the install icon (&#8862;) in the address bar, or use the browser menu to "Install app".</p>
+              <div style="font-weight: 600; color: #4E5C64; font-size: 0.9rem; margin-bottom: 0.2rem;">Click the install icon</div>
+              <p style="font-size: 0.85rem; color: #4E5C64; line-height: 1.6;">Look for the install icon (&#8862;) in the address bar, or use the browser menu to "Install app".</p>
             </div>
           </div>
           <div class="flex items-start" style="gap: 1rem;">
-            <div style="width: 1.75rem; height: 1.75rem; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.75rem; font-weight: 700; color: #16a34a;">4</div>
+            <div style="width: 1.75rem; height: 1.75rem; background: #F2F5EF; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.75rem; font-weight: 700; color: #4E5C64;">4</div>
             <div>
-              <div style="font-weight: 600; color: #0f172a; font-size: 0.9rem; margin-bottom: 0.2rem;">Launch from Applications</div>
-              <p style="font-size: 0.85rem; color: #64748b; line-height: 1.6;">Find Todo-it in your applications folder or dock and launch it like any other app.</p>
+              <div style="font-weight: 600; color: #4E5C64; font-size: 0.9rem; margin-bottom: 0.2rem;">Launch from Applications</div>
+              <p style="font-size: 0.85rem; color: #4E5C64; line-height: 1.6;">Find Todo-it in your applications folder or dock and launch it like any other app.</p>
             </div>
           </div>
         </div>
@@ -282,29 +282,29 @@
     </div>
 
     <!-- PWA benefits -->
-    <div style="margin-top: 4rem; text-align: center;">
-      <h3 style="font-size: 1.375rem; font-weight: 700; color: #0f172a; margin-bottom: 2.5rem; letter-spacing: -0.01em;">Why install as a PWA?</h3>
+    <div class="mkt-reveal" data-scroll-reveal-target="item" style="margin-top: 4rem; text-align: center;">
+      <h3 style="font-size: 1.375rem; font-weight: 700; color: #4E5C64; margin-bottom: 2.5rem; letter-spacing: -0.01em;">Why install as a PWA?</h3>
       <div class="mkt-grid-3" style="max-width: 48rem; margin: 0 auto;">
         <div style="text-align: center;">
           <div class="mkt-trust-icon bg-blue-100 text-blue-600" style="margin: 0 auto 0.875rem;">
             <%= inline_icon "bolt" %>
           </div>
-          <div style="font-weight: 600; color: #0f172a; margin-bottom: 0.375rem; font-size: 0.925rem;">Lightning Fast</div>
-          <p style="font-size: 0.85rem; color: #64748b; line-height: 1.6;">Loads instantly, no internet required after installation</p>
+          <div style="font-weight: 600; color: #4E5C64; margin-bottom: 0.375rem; font-size: 0.925rem;">Lightning Fast</div>
+          <p style="font-size: 0.85rem; color: #4E5C64; line-height: 1.6;">Loads instantly, no internet required after installation</p>
         </div>
         <div style="text-align: center;">
           <div class="mkt-trust-icon bg-green-100 text-green-600" style="margin: 0 auto 0.875rem;">
             <%= inline_icon "shield-check" %>
           </div>
-          <div style="font-weight: 600; color: #0f172a; margin-bottom: 0.375rem; font-size: 0.925rem;">Private &amp; Secure</div>
-          <p style="font-size: 0.85rem; color: #64748b; line-height: 1.6;">Your data stays on your device, completely private</p>
+          <div style="font-weight: 600; color: #4E5C64; margin-bottom: 0.375rem; font-size: 0.925rem;">Private &amp; Secure</div>
+          <p style="font-size: 0.85rem; color: #4E5C64; line-height: 1.6;">Your data stays on your device, completely private</p>
         </div>
         <div style="text-align: center;">
           <div class="mkt-trust-icon bg-purple-100 text-purple-600" style="margin: 0 auto 0.875rem;">
             <%= inline_icon "sparkles" %>
           </div>
-          <div style="font-weight: 600; color: #0f172a; margin-bottom: 0.375rem; font-size: 0.925rem;">Native Feel</div>
-          <p style="font-size: 0.85rem; color: #64748b; line-height: 1.6;">Full screen, no browser chrome, feels like a real app</p>
+          <div style="font-weight: 600; color: #4E5C64; margin-bottom: 0.375rem; font-size: 0.925rem;">Native Feel</div>
+          <p style="font-size: 0.85rem; color: #4E5C64; line-height: 1.6;">Full screen, no browser chrome, feels like a real app</p>
         </div>
       </div>
     </div>
@@ -313,11 +313,11 @@
 </section>
 
 <!-- CTA -->
-<section class="mkt-cta">
+<section class="mkt-cta mkt-reveal" data-scroll-reveal-target="item">
   <div class="mkt-inner">
     <h2 class="mkt-cta__title">Ready to get started?</h2>
     <p class="mkt-cta__subtitle">
-      Try Todo-it free for 7 days - no credit card required. Download forever for just $9.99 when you're ready.
+      Try Todo-it free for 7 days - no credit card required. Download forever for just £9.99 when you're ready.
     </p>
     <%= link_to signup_path, class: "mkt-btn mkt-btn--white" do %>
       Start free trial

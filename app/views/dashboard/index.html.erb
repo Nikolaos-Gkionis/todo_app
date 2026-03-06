@@ -43,7 +43,7 @@
         <div class="week-col__add">
           <%= form_with model: Todo.new, url: todos_path, local: false, class: "todo-form" do |form| %>
             <%= form.hidden_field :due_date, value: date %>
-            <%= form.text_field :title, class: "todo-input", placeholder: "Add task...", autocomplete: "off" %>
+            <%= form.text_field :title, class: "todo-input", placeholder: "Add todo...", autocomplete: "off" %>
           <% end %>
         </div>
       </div>
@@ -69,7 +69,7 @@
               <div class="lists__column-add">
                 <%= form_with model: Todo.new, url: todos_path, local: false, class: "todo-form" do |form| %>
                   <%= form.hidden_field :page_id, value: page.id %>
-                  <%= form.text_field :title, class: "todo-input", placeholder: "Add task...", autocomplete: "off" %>
+                  <%= form.text_field :title, class: "todo-input", autocomplete: "off" %>
                 <% end %>
               </div>
             </div>
@@ -124,7 +124,7 @@
     <% else %>
       <div class="dashboard__empty-lists" style="display: flex; align-items: center; justify-content: flex-start; gap: 16px; padding: 24px 10px;">
         <button onclick="document.getElementById('new-list-dialog').showModal()" title="New list" aria-label="New list" style="background: #f8e1c6; border:none; cursor:pointer; font-size: 1.8rem; color: #333; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">+</button>
-        <p class="dashboard__empty-text" style="color: #666; font-size: 1rem; margin: 0; font-weight: 500;">No lists yet. Create your first list.</p>
+        <p class="dashboard__empty-text" style="color: #666; font-size: 1rem; margin: 0; font-weight: 500;">No any-time lists yet. Create your first list.</p>
       </div>
     <% end %>
   </div>

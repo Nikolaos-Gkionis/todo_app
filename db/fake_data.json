@@ -1,0 +1,293 @@
+{
+  "user": {
+    "name": "Alex Doe",
+    "email_address": "alex.doe@example.com",
+    "password": "password123"
+  },
+  "pages": [
+    {
+      "name": "SUPERMARKET",
+      "position": 1,
+      "todos": [
+        {
+          "title": "Oat milk",
+          "completed": false,
+          "position": 1
+        },
+        {
+          "title": "Bananas",
+          "completed": false,
+          "position": 2
+        },
+        {
+          "title": "Sourdough bread",
+          "completed": true,
+          "position": 3
+        },
+        {
+          "title": "Spinach",
+          "completed": true,
+          "position": 4
+        },
+        {
+          "title": "Cherry tomatoes",
+          "completed": false,
+          "position": 5
+        }
+      ]
+    },
+    {
+      "name": "CAFES TO TRY",
+      "position": 2,
+      "todos": [
+        {
+          "title": "Devocion",
+          "completed": false,
+          "position": 1
+        },
+        {
+          "title": "Sey Coffee",
+          "completed": false,
+          "position": 2
+        },
+        {
+          "title": "La Cabra",
+          "completed": false,
+          "position": 3
+        },
+        {
+          "title": "Maman",
+          "completed": false,
+          "position": 4
+        }
+      ]
+    },
+    {
+      "name": "MOVIES TO WATCH",
+      "position": 3,
+      "todos": [
+        {
+          "title": "Dune",
+          "completed": false,
+          "position": 1
+        },
+        {
+          "title": "Oppenheimer",
+          "completed": true,
+          "position": 2
+        },
+        {
+          "title": "Past Lives",
+          "completed": true,
+          "position": 3
+        },
+        {
+          "title": "Poor Things",
+          "completed": true,
+          "position": 4
+        },
+        {
+          "title": "Anatomy of a Fall",
+          "completed": false,
+          "position": 5
+        },
+        {
+          "title": "The Holdovers",
+          "completed": false,
+          "position": 6
+        }
+      ]
+    },
+    {
+      "name": "GIFT IDEAS",
+      "position": 4,
+      "todos": [
+        {
+          "title": "Candle for Mom",
+          "completed": false,
+          "position": 1
+        },
+        {
+          "title": "Coffee beans for Dave",
+          "completed": false,
+          "position": 2
+        },
+        {
+          "title": "Book for Sarah",
+          "completed": false,
+          "position": 3
+        }
+      ]
+    },
+    {
+      "name": "WORK STRATEGY",
+      "position": 5,
+      "todos": []
+    },
+    {
+      "name": "TRAVEL ITINERARY",
+      "position": 6,
+      "todos": []
+    },
+    {
+      "name": "HOME IMPROVEMENT",
+      "position": 7,
+      "todos": []
+    }
+  ],
+  "date_todos": [
+    {
+      "due_date": "2026-03-04",
+      "todos": [
+        {
+          "title": "Gym @ 6 AM",
+          "completed": false,
+          "position": 1
+        },
+        {
+          "title": "Team standup",
+          "completed": false,
+          "highlight_color": "purple",
+          "position": 2
+        },
+        {
+          "title": "Buy anniversary card",
+          "completed": false,
+          "position": 3
+        },
+        {
+          "title": "Draft project proposal",
+          "completed": false,
+          "position": 4
+        },
+        {
+          "title": "LATE AFTERNOON",
+          "completed": false,
+          "bold": true,
+          "highlight_color": "gray",
+          "position": 5
+        },
+        {
+          "title": "Pick up kids from school",
+          "completed": false,
+          "position": 6
+        },
+        {
+          "title": "Cook dinner",
+          "completed": false,
+          "position": 7
+        }
+      ]
+    },
+    {
+      "due_date": "2026-03-05",
+      "todos": [
+        {
+          "title": "Gym @ 6 AM",
+          "completed": false,
+          "position": 1
+        },
+        {
+          "title": "Client call @ 10",
+          "completed": false,
+          "position": 2
+        },
+        {
+          "title": "Review Q2 goals",
+          "completed": false,
+          "position": 3
+        },
+        {
+          "title": "Dentist appointment 4:00 PM",
+          "completed": false,
+          "highlight_color": "blue",
+          "position": 4
+        }
+      ]
+    },
+    {
+      "due_date": "2026-03-06",
+      "todos": [
+        {
+          "title": "Pilates @ 8 AM",
+          "completed": false,
+          "position": 1
+        },
+        {
+          "title": "Weekly review",
+          "completed": false,
+          "position": 2
+        },
+        {
+          "title": "Submit expense report",
+          "completed": false,
+          "position": 3
+        },
+        {
+          "title": "Order pizza",
+          "completed": false,
+          "position": 4
+        },
+        {
+          "title": "EVENING",
+          "completed": false,
+          "bold": true,
+          "highlight_color": "gray",
+          "position": 5
+        },
+        {
+          "title": "Movie night with friends",
+          "completed": false,
+          "position": 6
+        }
+      ]
+    },
+    {
+      "due_date": "2026-03-07",
+      "todos": [
+        {
+          "title": "Bake sourdough",
+          "completed": false,
+          "position": 1
+        },
+        {
+          "title": "Laundry",
+          "completed": false,
+          "position": 2
+        },
+        {
+          "title": "HOUSE CLEANING",
+          "completed": false,
+          "bold": true,
+          "highlight_color": "gray",
+          "position": 3
+        },
+        {
+          "title": "Vacuum living room",
+          "completed": false,
+          "position": 4
+        },
+        {
+          "title": "Clean windows",
+          "completed": false,
+          "position": 5
+        }
+      ]
+    },
+    {
+      "due_date": "2026-03-08",
+      "todos": [
+        {
+          "title": "Brunch @ 11 AM",
+          "completed": false,
+          "position": 1
+        },
+        {
+          "title": "Sunday hike @ 2 PM",
+          "completed": false,
+          "position": 2
+        }
+      ]
+    }
+  ]
+}

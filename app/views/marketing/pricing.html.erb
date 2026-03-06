@@ -1,4 +1,4 @@
-<div class="marketing-page">
+<div class="marketing-page" data-controller="scroll-reveal">
 <%= render 'shared/navbar' %>
 
 <!-- Hero -->
@@ -24,10 +24,10 @@
     <div class="mkt-pricing-grid">
 
       <!-- Free Trial -->
-      <div class="mkt-pricing-card">
+      <div class="mkt-pricing-card mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 0ms">
         <div style="margin-bottom: 2rem;">
           <div class="mkt-pricing-card__label">Free Trial</div>
-          <div class="mkt-pricing-price">$0</div>
+          <div class="mkt-pricing-price">£0</div>
           <div class="mkt-pricing-period">7 days on our servers</div>
         </div>
 
@@ -68,12 +68,12 @@
       </div>
 
       <!-- Download Forever -->
-      <div class="mkt-pricing-card mkt-pricing-card--featured">
+      <div class="mkt-pricing-card mkt-pricing-card--featured mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 120ms">
         <div class="mkt-pricing-badge">Most popular</div>
 
         <div style="margin-bottom: 2rem;">
           <div class="mkt-pricing-card__label mkt-pricing-card__label--blue">Download to Device</div>
-          <div class="mkt-pricing-price mkt-pricing-price--blue">$9.99</div>
+          <div class="mkt-pricing-price mkt-pricing-price--blue">£9.99</div>
           <div class="mkt-pricing-period">One-time payment - own it forever</div>
         </div>
 
@@ -140,110 +140,145 @@
     </div>
 
     <!-- Why this model -->
-    <div style="text-align: center; margin-top: 3.5rem; max-width: 42rem; margin-left: auto; margin-right: auto;">
-      <p style="color: #374151; font-size: 1rem; line-height: 1.75; margin-bottom: 0.75rem;">
+    <div class="mkt-reveal" data-scroll-reveal-target="item" style="text-align: center; margin-top: 3.5rem; max-width: 42rem; margin-left: auto; margin-right: auto;">
+      <p style="color: #4E5C64; font-size: 1rem; line-height: 1.75; margin-bottom: 0.75rem;">
         <strong>Why this model?</strong> We believe software should feel like owning a planner, not renting one.
         Try it free, fall in love, then pay once and keep it forever.
       </p>
-      <p style="font-size: 0.875rem; color: #94a3b8;">
+      <p style="font-size: 0.875rem; color: #4E5C64;">
         7-day free trial &nbsp;&middot;&nbsp; 7-day money-back guarantee &nbsp;&middot;&nbsp; Secure payment via Stripe
       </p>
     </div>
 
     <!-- Trust signals -->
     <div class="mkt-grid-3" style="margin-top: 3.5rem; max-width: 56rem; margin-left: auto; margin-right: auto;">
-      <div style="text-align: center; padding: 1.5rem; background: #f0fdf4; border-radius: 0.875rem;">
+      <div class="mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 0ms; text-align: center; padding: 1.5rem; background: #F2F5EF; border-radius: 0.875rem;">
         <div class="mkt-trust-icon bg-green-100 text-green-600" style="margin: 0 auto 0.875rem;">
           <%= inline_icon "lock-closed" %>
         </div>
-        <div style="font-weight: 600; color: #0f172a; margin-bottom: 0.375rem; font-size: 0.925rem;">Privacy First</div>
-        <p style="font-size: 0.85rem; color: #64748b; line-height: 1.6;">No tracking, no ads, no data mining</p>
+        <div style="font-weight: 600; color: #4E5C64; margin-bottom: 0.375rem; font-size: 0.925rem;">Privacy First</div>
+        <p style="font-size: 0.85rem; color: #4E5C64; line-height: 1.6;">No tracking, no ads, no data mining</p>
       </div>
-      <div style="text-align: center; padding: 1.5rem; background: #eff6ff; border-radius: 0.875rem;">
+      <div class="mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 80ms; text-align: center; padding: 1.5rem; background: #F0EDEA; border-radius: 0.875rem;">
         <div class="mkt-trust-icon bg-blue-100 text-blue-600" style="margin: 0 auto 0.875rem;">
           <%= inline_icon "circle-stack" %>
         </div>
-        <div style="font-weight: 600; color: #0f172a; margin-bottom: 0.375rem; font-size: 0.925rem;">Data Ownership</div>
-        <p style="font-size: 0.85rem; color: #64748b; line-height: 1.6;">Your data lives on your device, not ours</p>
+        <div style="font-weight: 600; color: #4E5C64; margin-bottom: 0.375rem; font-size: 0.925rem;">Data Ownership</div>
+        <p style="font-size: 0.85rem; color: #4E5C64; line-height: 1.6;">Your data lives on your device, not ours</p>
       </div>
-      <div style="text-align: center; padding: 1.5rem; background: #faf5ff; border-radius: 0.875rem;">
+      <div class="mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 160ms; text-align: center; padding: 1.5rem; background: #FBF2F3; border-radius: 0.875rem;">
         <div class="mkt-trust-icon bg-purple-100 text-purple-600" style="margin: 0 auto 0.875rem;">
           <%= inline_icon "device-phone-mobile" %>
         </div>
-        <div style="font-weight: 600; color: #0f172a; margin-bottom: 0.375rem; font-size: 0.925rem;">Works Offline</div>
-        <p style="font-size: 0.85rem; color: #64748b; line-height: 1.6;">No internet required after downloading</p>
+        <div style="font-weight: 600; color: #4E5C64; margin-bottom: 0.375rem; font-size: 0.925rem;">Works Offline</div>
+        <p style="font-size: 0.85rem; color: #4E5C64; line-height: 1.6;">No internet required after downloading</p>
       </div>
     </div>
 
   </div>
 </section>
 
-<!-- FAQ -->
-<section class="mkt-section mkt-section--cream">
+<!-- FAQ (Accordion) -->
+<section class="mkt-section mkt-section--cream mkt-reveal" data-scroll-reveal-target="item">
   <div class="mkt-inner">
-    <div style="text-align: center; margin-bottom: 3rem;">
+    <div class="mkt-section-intro">
       <span class="mkt-label">FAQ</span>
       <h2 class="mkt-heading">Common questions</h2>
     </div>
 
-    <div class="mkt-faq-list">
+    <div class="mkt-faq-list" data-controller="faq">
 
-      <div class="mkt-faq-item">
-        <div class="mkt-faq-q">What happens after my 7-day trial?</div>
-        <p class="mkt-faq-a">
-          After 7 days, your trial data expires and your account access ends. You can purchase the $9.99 download
-          at any point during - or shortly after - your trial to keep your data forever on your own device.
-        </p>
+      <div class="mkt-faq-item is-open" data-faq-target="item">
+        <div class="mkt-faq-q mkt-faq-q--toggle" data-action="click->faq#toggle">
+          <span>What happens after my 7-day trial?</span>
+          <svg class="mkt-faq-chevron" data-faq-chevron viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+        </div>
+        <div data-faq-answer>
+          <p class="mkt-faq-a">
+            After 7 days, your trial data expires and your account access ends. You can purchase the £9.99 download
+            at any point during - or shortly after - your trial to keep your data forever on your own device.
+          </p>
+        </div>
       </div>
 
-      <div class="mkt-faq-item">
-        <div class="mkt-faq-q">Can I download to my device during the trial?</div>
-        <p class="mkt-faq-a">
-          Yes! You can purchase and download the app at any point during your 7-day trial.
-          Your trial data is transferred to your device when you download, so nothing is lost.
-        </p>
+      <div class="mkt-faq-item" data-faq-target="item">
+        <div class="mkt-faq-q mkt-faq-q--toggle" data-action="click->faq#toggle">
+          <span>Can I download to my device during the trial?</span>
+          <svg class="mkt-faq-chevron" data-faq-chevron viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+        </div>
+        <div data-faq-answer>
+          <p class="mkt-faq-a">
+            Yes! You can purchase and download the app at any point during your 7-day trial.
+            Your trial data is transferred to your device when you download, so nothing is lost.
+          </p>
+        </div>
       </div>
 
-      <div class="mkt-faq-item">
-        <div class="mkt-faq-q">Do you offer refunds?</div>
-        <p class="mkt-faq-a">
-          Yes - we offer a 7-day money-back guarantee. If Todo-it isn't right for you,
-          <%= link_to "contact us", contact_path %> within 7 days for a full refund, no questions asked.
-        </p>
+      <div class="mkt-faq-item" data-faq-target="item">
+        <div class="mkt-faq-q mkt-faq-q--toggle" data-action="click->faq#toggle">
+          <span>Do you offer refunds?</span>
+          <svg class="mkt-faq-chevron" data-faq-chevron viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+        </div>
+        <div data-faq-answer>
+          <p class="mkt-faq-a">
+            Yes - we offer a 7-day money-back guarantee. If Todo-it isn't right for you,
+            <%= link_to "contact us", contact_path %> within 7 days for a full refund, no questions asked.
+          </p>
+        </div>
       </div>
 
-      <div class="mkt-faq-item">
-        <div class="mkt-faq-q">How does downloading to my device actually work?</div>
-        <p class="mkt-faq-a">
-          After payment you'll receive a download link. Todo-it is a Progressive Web App (PWA) - you open it in your browser
-          and install it to your home screen or applications folder, just like a native app.
-          No app store. No gatekeepers. It stays logged in and works offline from that point.
-        </p>
+      <div class="mkt-faq-item" data-faq-target="item">
+        <div class="mkt-faq-q mkt-faq-q--toggle" data-action="click->faq#toggle">
+          <span>How does downloading to my device actually work?</span>
+          <svg class="mkt-faq-chevron" data-faq-chevron viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+        </div>
+        <div data-faq-answer>
+          <p class="mkt-faq-a">
+            After payment you'll receive a download link. Todo-it is a Progressive Web App (PWA) - you open it in your browser
+            and install it to your home screen or applications folder, just like a native app.
+            No app store. No gatekeepers. It stays logged in and works offline from that point.
+          </p>
+        </div>
       </div>
 
-      <div class="mkt-faq-item">
-        <div class="mkt-faq-q">Can I use it on multiple devices?</div>
-        <p class="mkt-faq-a">
-          Yes - your purchase allows you to install on up to 3 devices you own (phone, tablet, laptop, desktop).
-          Each device gets its own independent copy, like having 3 separate planners.
-          Data stays local to each device with no sync between them.
-        </p>
+      <div class="mkt-faq-item" data-faq-target="item">
+        <div class="mkt-faq-q mkt-faq-q--toggle" data-action="click->faq#toggle">
+          <span>Can I use it on multiple devices?</span>
+          <svg class="mkt-faq-chevron" data-faq-chevron viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+        </div>
+        <div data-faq-answer>
+          <p class="mkt-faq-a">
+            Yes - your purchase allows you to install on up to 3 devices you own (phone, tablet, laptop, desktop).
+            Each device gets its own independent copy, like having 3 separate planners.
+            Data stays local to each device with no sync between them.
+          </p>
+        </div>
       </div>
 
-      <div class="mkt-faq-item">
-        <div class="mkt-faq-q">How is my data protected?</div>
-        <p class="mkt-faq-a">
-          During your trial, data is encrypted on our servers. After download, your data lives entirely on your device -
-          encrypted and completely private. We never sell or share your information, and we collect zero analytics.
-        </p>
+      <div class="mkt-faq-item" data-faq-target="item">
+        <div class="mkt-faq-q mkt-faq-q--toggle" data-action="click->faq#toggle">
+          <span>How is my data protected?</span>
+          <svg class="mkt-faq-chevron" data-faq-chevron viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+        </div>
+        <div data-faq-answer>
+          <p class="mkt-faq-a">
+            During your trial, data is encrypted on our servers. After download, your data lives entirely on your device -
+            encrypted and completely private. We never sell or share your information, and we collect zero analytics.
+          </p>
+        </div>
       </div>
 
-      <div class="mkt-faq-item">
-        <div class="mkt-faq-q">Is there a free tier after the trial?</div>
-        <p class="mkt-faq-a">
-          The 7-day trial is completely free with no credit card required. After that, it's a one-time $9.99 payment
-          to download to your device. No free tier with limitations - just try it free, then own it forever.
-        </p>
+      <div class="mkt-faq-item" data-faq-target="item">
+        <div class="mkt-faq-q mkt-faq-q--toggle" data-action="click->faq#toggle">
+          <span>Is there a free tier after the trial?</span>
+          <svg class="mkt-faq-chevron" data-faq-chevron viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+        </div>
+        <div data-faq-answer>
+          <p class="mkt-faq-a">
+            The 7-day trial is completely free with no credit card required. After that, it's a one-time £9.99 payment
+            to download to your device. No free tier with limitations - just try it free, then own it forever.
+          </p>
+        </div>
       </div>
 
     </div>
@@ -251,11 +286,11 @@
 </section>
 
 <!-- CTA -->
-<section class="mkt-cta">
+<section class="mkt-cta mkt-reveal" data-scroll-reveal-target="item">
   <div class="mkt-inner">
     <h2 class="mkt-cta__title">Start your beautiful todo journey</h2>
     <p class="mkt-cta__subtitle">
-      Try free for 7 days on our servers. No credit card. Download forever for $9.99 when you're ready.
+      Try free for 7 days on our servers. No credit card. Download forever for £9.99 when you're ready.
     </p>
     <%= link_to signup_path, class: "mkt-btn mkt-btn--white" do %>
       Start free trial

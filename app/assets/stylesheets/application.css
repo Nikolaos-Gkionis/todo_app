@@ -1962,17 +1962,38 @@ input:-webkit-autofill:active {
 }
 
 .navbar__nav-link {
-  color: #4b5563;
+  color: #4E5C64;
   font-weight: 500;
-  transition: color 0.15s ease-in-out;
+  transition: color var(--mkt-dur-normal, 200ms) var(--mkt-ease-smooth, ease);
+  position: relative;
+}
+
+.navbar__nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #4E5C64;
+  transition: width var(--mkt-dur-normal, 200ms) var(--mkt-ease-spring, ease);
+  border-radius: 1px;
 }
 
 .navbar__nav-link:hover {
-  color: #2563eb;
+  color: #4E5C64;
+}
+
+.navbar__nav-link:hover::after {
+  width: 100%;
 }
 
 .navbar__nav-link--active {
-  color: #2563eb;
+  color: #4E5C64;
+}
+
+.navbar__nav-link--active::after {
+  width: 100%;
 }
 
 .navbar__actions {
@@ -3494,13 +3515,74 @@ footer a:hover {
 }
 
 /* =================================
-   MARKETING 2.0 DESIGN SYSTEM
-   Professional refresh - mkt- prefix
+   MARKETING 3.0 — MOTION DESIGN SYSTEM
+   2026 UX Architect Edition
    ================================= */
+
+/* --- Motion Design Tokens (UX Architect spec) --- */
+:root {
+  --mkt-dur-instant: 80ms;
+  --mkt-dur-fast: 100ms;
+  --mkt-dur-micro: 150ms;
+  --mkt-dur-normal: 200ms;
+  --mkt-dur-smooth: 300ms;
+  --mkt-dur-modal: 275ms;
+  --mkt-dur-emphasis: 600ms;
+
+  --mkt-ease-snappy: cubic-bezier(0.2, 0, 0, 1);
+  --mkt-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --mkt-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --mkt-ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+  --mkt-shadow-raised: 0 4px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+  --mkt-shadow-float: 0 16px 40px rgba(0,0,0,0.1), 0 6px 12px rgba(0,0,0,0.04);
+  --mkt-shadow-portal: 0 32px 64px rgba(0,0,0,0.14), 0 12px 24px rgba(0,0,0,0.06);
+}
+
+/* --- Entrance Keyframes --- */
+@keyframes mkt-fade-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes mkt-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes mkt-slide-left {
+  from { opacity: 0; transform: translateX(-32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes mkt-slide-right {
+  from { opacity: 0; transform: translateX(32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes mkt-scale-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes mkt-float {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50%      { transform: translateY(-10px) rotate(-1deg); }
+}
+
+@keyframes mkt-glow-pulse {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 0.75; }
+}
+
+@keyframes mkt-dot-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.5); opacity: 0.6; }
+}
 
 /* --- Hero --- */
 .mkt-hero {
-  background: linear-gradient(135deg, #0f172a 0%, #1a1340 55%, #0d1b2a 100%);
+  background: #FBF2F3;
   padding: 5rem 0 6rem;
   position: relative;
   overflow: hidden;
@@ -3510,7 +3592,7 @@ footer a:hover {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(ellipse at 65% 45%, rgba(99, 102, 241, 0.18) 0%, transparent 65%);
+  background-image: radial-gradient(ellipse at 65% 45%, rgba(181, 193, 168, 0.08) 0%, transparent 65%);
   pointer-events: none;
 }
 
@@ -3525,12 +3607,12 @@ footer a:hover {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(78, 92, 100, 0.07);
+  border: 1px solid rgba(78, 92, 100, 0.15);
   border-radius: 9999px;
   padding: 0.375rem 1rem;
   font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: #4E5C64;
   margin-bottom: 1.75rem;
   letter-spacing: 0.01em;
 }
@@ -3539,15 +3621,16 @@ footer a:hover {
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
-  background: #34d399;
+  background: #B5C1A8;
   flex-shrink: 0;
+  animation: mkt-dot-pulse 2.5s ease-in-out infinite;
 }
 
 .mkt-hero__title {
   font-size: clamp(2.5rem, 5.5vw, 4rem);
   font-weight: 700;
   line-height: 1.1;
-  color: white;
+  color: #4E5C64;
   margin-bottom: 1.5rem;
   letter-spacing: -0.025em;
 }
@@ -3555,7 +3638,7 @@ footer a:hover {
 .mkt-hero__title-handwritten {
   font-family: 'Gloria Hallelujah', 'Comic Sans MS', cursive;
   font-weight: 400;
-  color: #fbbf24;
+  color: #4E5C64;
   display: block;
   font-size: 0.78em;
   line-height: 1.5;
@@ -3564,7 +3647,7 @@ footer a:hover {
 
 .mkt-hero__subtitle {
   font-size: 1.15rem;
-  color: rgba(255, 255, 255, 0.62);
+  color: #4E5C64;
   max-width: 38rem;
   line-height: 1.8;
   margin-bottom: 2.5rem;
@@ -3582,7 +3665,7 @@ footer a:hover {
   display: flex;
   flex-wrap: wrap;
   gap: 1.25rem 2rem;
-  color: rgba(255, 255, 255, 0.45);
+  color: #4E5C64;
   font-size: 0.875rem;
 }
 
@@ -3594,7 +3677,7 @@ footer a:hover {
 
 .mkt-hero__trust-item::before {
   content: '✓';
-  color: #34d399;
+  color: #4E5C64;
   font-weight: 700;
 }
 
@@ -3604,10 +3687,14 @@ footer a:hover {
   align-items: center;
   gap: 0.5rem;
   padding: 0.825rem 1.75rem;
-  border-radius: 0.5rem;
+  border-radius: 0.625rem;
   font-size: 0.975rem;
   font-weight: 600;
-  transition: all 0.2s ease;
+  transition: transform var(--mkt-dur-normal) var(--mkt-ease-spring),
+              box-shadow var(--mkt-dur-normal) var(--mkt-ease-smooth),
+              background-color var(--mkt-dur-fast) ease,
+              color var(--mkt-dur-fast) ease,
+              border-color var(--mkt-dur-fast) ease;
   cursor: pointer;
   border: none;
   text-decoration: none;
@@ -3615,52 +3702,57 @@ footer a:hover {
   line-height: 1.4;
 }
 
+.mkt-btn:active {
+  transform: scale(0.97);
+  transition-duration: var(--mkt-dur-instant);
+}
+
 .mkt-btn--primary {
-  background: #2563eb;
-  color: white;
+  background: #4E5C64;
+  color: #FAF8F5;
 }
 
 .mkt-btn--primary:hover {
-  background: #1d4ed8;
+  background: #3A4A52;
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.38);
-  color: white;
+  box-shadow: 0 6px 20px rgba(78, 92, 100, 0.35);
+  color: #FAF8F5;
 }
 
 .mkt-btn--ghost {
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.82);
-  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: #4E5C64;
+  border: 1.5px solid #4E5C64;
 }
 
 .mkt-btn--ghost:hover {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.38);
-  color: white;
+  background: #4E5C64;
+  border-color: #4E5C64;
+  color: #FAF8F5;
 }
 
 .mkt-btn--outline {
   background: transparent;
-  color: #374151;
-  border: 1.5px solid #d1d5db;
+  color: #4E5C64;
+  border: 1.5px solid #D8D4CC;
 }
 
 .mkt-btn--outline:hover {
-  border-color: #2563eb;
-  color: #2563eb;
-  background: #eff6ff;
+  border-color: #4E5C64;
+  color: #FAF8F5;
+  background: #4E5C64;
 }
 
 .mkt-btn--white {
-  background: white;
-  color: #2563eb;
+  background: #4E5C64;
+  color: #FAF8F5;
 }
 
 .mkt-btn--white:hover {
-  background: #f8fafc;
-  color: #1d4ed8;
+  background: #3A4A52;
+  color: #FAF8F5;
   transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 16px rgba(78, 92, 100, 0.3);
 }
 
 /* --- App Mockup --- */
@@ -3732,12 +3824,12 @@ footer a:hover {
 }
 
 .mkt-section--cream {
-  background: #fafaf8;
+  background: #FAF3EE;
 }
 
 .mkt-section--dark {
-  background: #0f172a;
-  color: white;
+  background: #F2F5EF;
+  color: #4E5C64;
 }
 
 .mkt-inner {
@@ -3755,8 +3847,8 @@ footer a:hover {
 /* --- Section Labels & Headings --- */
 .mkt-label {
   display: inline-block;
-  background: #eff6ff;
-  color: #2563eb;
+  background: #E8E2DC;
+  color: #4E5C64;
   border-radius: 9999px;
   padding: 0.25rem 0.875rem;
   font-size: 0.8rem;
@@ -3767,56 +3859,57 @@ footer a:hover {
 }
 
 .mkt-label--amber {
-  background: #fffbeb;
-  color: #92400e;
+  background: #F3DCDE;
+  color: #4E5C64;
 }
 
 .mkt-label--green {
-  background: #f0fdf4;
-  color: #15803d;
+  background: #E4ECDA;
+  color: #4E5C64;
 }
 
 .mkt-label--dark {
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.65);
+  background: rgba(78, 92, 100, 0.1);
+  color: #4E5C64;
 }
 
 .mkt-heading {
   font-size: clamp(1.875rem, 4vw, 2.625rem);
   font-weight: 700;
-  color: #0f172a;
+  color: #4E5C64;
   line-height: 1.2;
   margin-bottom: 1rem;
   letter-spacing: -0.02em;
 }
 
 .mkt-heading--white {
-  color: white;
+  color: #4E5C64;
 }
 
 .mkt-subheading {
   font-size: 1.1rem;
-  color: #64748b;
+  color: #4E5C64;
   line-height: 1.78;
   max-width: 44rem;
 }
 
 .mkt-subheading--white {
-  color: rgba(255, 255, 255, 0.62);
+  color: #4E5C64;
 }
 
 /* --- Feature Cards --- */
 .mkt-card {
   background: white;
-  border: 1px solid #f1f5f9;
-  border-radius: 0.875rem;
+  border: 1px solid #D8D4CC;
+  border-radius: 1rem;
   padding: 2rem;
-  transition: box-shadow 0.25s ease, transform 0.25s ease;
+  transition: transform var(--mkt-dur-normal) var(--mkt-ease-spring),
+              box-shadow var(--mkt-dur-smooth) var(--mkt-ease-smooth);
 }
 
 .mkt-card:hover {
-  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.09);
-  transform: translateY(-3px);
+  box-shadow: var(--mkt-shadow-float);
+  transform: translateY(-5px);
 }
 
 .mkt-card__icon {
@@ -3833,21 +3926,21 @@ footer a:hover {
 .mkt-card__title {
   font-size: 1.05rem;
   font-weight: 600;
-  color: #0f172a;
+  color: #4E5C64;
   margin-bottom: 0.625rem;
 }
 
 .mkt-card__text {
   font-size: 0.925rem;
-  color: #64748b;
+  color: #4E5C64;
   line-height: 1.72;
 }
 
 /* --- Feature Strip --- */
 .mkt-strip {
   background: white;
-  border-top: 1px solid #f1f5f9;
-  border-bottom: 1px solid #f1f5f9;
+  border-top: 1px solid #D8D4CC;
+  border-bottom: 1px solid #D8D4CC;
   padding: 1.75rem 0;
 }
 
@@ -3867,28 +3960,29 @@ footer a:hover {
   padding: 0.625rem;
   font-size: 0.9rem;
   font-weight: 500;
-  color: #374151;
+  color: #4E5C64;
 }
 
 .mkt-strip__dot {
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
-  background: #22c55e;
+  background: #B5C1A8;
   flex-shrink: 0;
 }
 
 /* --- Theme Cards --- */
 .mkt-theme-card {
-  border-radius: 0.875rem;
+  border-radius: 1rem;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: var(--mkt-shadow-raised);
+  transition: transform var(--mkt-dur-normal) var(--mkt-ease-spring),
+              box-shadow var(--mkt-dur-smooth) var(--mkt-ease-smooth);
 }
 
 .mkt-theme-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: var(--mkt-shadow-float);
 }
 
 .mkt-theme-preview {
@@ -3906,13 +4000,13 @@ footer a:hover {
 .mkt-theme-name {
   font-weight: 600;
   font-size: 0.925rem;
-  color: #0f172a;
+  color: #4E5C64;
   margin-bottom: 0.2rem;
 }
 
 .mkt-theme-desc {
   font-size: 0.825rem;
-  color: #64748b;
+  color: #4E5C64;
 }
 
 /* --- Trust Items --- */
@@ -3926,8 +4020,15 @@ footer a:hover {
   text-align: center;
   padding: 2rem 1.5rem;
   background: white;
-  border: 1px solid #f1f5f9;
-  border-radius: 0.875rem;
+  border: 1px solid #D8D4CC;
+  border-radius: 1rem;
+  transition: transform var(--mkt-dur-normal) var(--mkt-ease-spring),
+              box-shadow var(--mkt-dur-smooth) var(--mkt-ease-smooth);
+}
+
+.mkt-trust-item:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--mkt-shadow-raised);
 }
 
 .mkt-trust-icon {
@@ -3942,20 +4043,20 @@ footer a:hover {
 
 .mkt-trust-title {
   font-weight: 600;
-  color: #0f172a;
+  color: #4E5C64;
   margin-bottom: 0.5rem;
   font-size: 0.975rem;
 }
 
 .mkt-trust-text {
-  color: #64748b;
+  color: #4E5C64;
   font-size: 0.875rem;
   line-height: 1.65;
 }
 
 /* --- CTA Section --- */
 .mkt-cta {
-  background: linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #3b82f6 100%);
+  background: #F2F5EF;
   padding: 5rem 0;
   text-align: center;
 }
@@ -3963,14 +4064,14 @@ footer a:hover {
 .mkt-cta__title {
   font-size: clamp(1.75rem, 4vw, 2.625rem);
   font-weight: 700;
-  color: white;
+  color: #4E5C64;
   margin-bottom: 1rem;
   letter-spacing: -0.02em;
 }
 
 .mkt-cta__subtitle {
   font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.72);
+  color: #4E5C64;
   max-width: 36rem;
   margin: 0 auto 2.5rem;
   line-height: 1.75;
@@ -3978,7 +4079,7 @@ footer a:hover {
 
 .mkt-cta__trust {
   margin-top: 1.5rem;
-  color: rgba(255, 255, 255, 0.48);
+  color: #4E5C64;
   font-size: 0.875rem;
 }
 
@@ -3993,15 +4094,26 @@ footer a:hover {
 
 .mkt-pricing-card {
   background: white;
-  border: 2px solid #e2e8f0;
+  border: 2px solid #D8D4CC;
   border-radius: 1.25rem;
   padding: 2.5rem;
   position: relative;
+  transition: transform var(--mkt-dur-normal) var(--mkt-ease-spring),
+              box-shadow var(--mkt-dur-smooth) var(--mkt-ease-smooth);
+}
+
+.mkt-pricing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--mkt-shadow-float);
 }
 
 .mkt-pricing-card--featured {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+  border-color: #4E5C64;
+  box-shadow: 0 0 0 4px rgba(78, 92, 100, 0.08), var(--mkt-shadow-raised);
+}
+
+.mkt-pricing-card--featured:hover {
+  box-shadow: 0 0 0 4px rgba(78, 92, 100, 0.12), var(--mkt-shadow-portal);
 }
 
 .mkt-pricing-badge {
@@ -4009,8 +4121,8 @@ footer a:hover {
   top: -1rem;
   left: 50%;
   transform: translateX(-50%);
-  background: #2563eb;
-  color: white;
+  background: #4E5C64;
+  color: #FAF8F5;
   padding: 0.3rem 1.25rem;
   border-radius: 9999px;
   font-size: 0.78rem;
@@ -4023,18 +4135,18 @@ footer a:hover {
 .mkt-pricing-price {
   font-size: 3.25rem;
   font-weight: 800;
-  color: #0f172a;
+  color: #4E5C64;
   line-height: 1;
   letter-spacing: -0.04em;
 }
 
 .mkt-pricing-price--blue {
-  color: #2563eb;
+  color: #4E5C64;
 }
 
 .mkt-pricing-period {
   font-size: 0.875rem;
-  color: #94a3b8;
+  color: #4E5C64;
   margin-top: 0.3rem;
 }
 
@@ -4050,8 +4162,8 @@ footer a:hover {
   gap: 0.75rem;
   padding: 0.5rem 0;
   font-size: 0.925rem;
-  color: #374151;
-  border-bottom: 1px solid #f8fafc;
+  color: #4E5C64;
+  border-bottom: 1px solid #EDEAE6;
 }
 
 .mkt-feature-list li:last-child {
@@ -4059,7 +4171,7 @@ footer a:hover {
 }
 
 .mkt-feature-check {
-  color: #16a34a;
+  color: #4E5C64;
   font-size: 0.9rem;
   margin-top: 0.1rem;
   flex-shrink: 0;
@@ -4067,19 +4179,19 @@ footer a:hover {
 }
 
 .mkt-feature-cross {
-  color: #d1d5db;
+  color: #D8D4CC;
   font-size: 0.9rem;
   margin-top: 0.1rem;
   flex-shrink: 0;
 }
 
 .mkt-feature-text--muted {
-  color: #94a3b8;
+  color: #4E5C64;
 }
 
 /* --- FAQ --- */
 .mkt-faq-list {
-  border: 1px solid #e2e8f0;
+  border: 1px solid #D8D4CC;
   border-radius: 0.875rem;
   overflow: hidden;
   max-width: 56rem;
@@ -4087,7 +4199,7 @@ footer a:hover {
 }
 
 .mkt-faq-item {
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid #D8D4CC;
   padding: 1.625rem 2rem;
   background: white;
 }
@@ -4098,13 +4210,13 @@ footer a:hover {
 
 .mkt-faq-q {
   font-weight: 600;
-  color: #0f172a;
+  color: #4E5C64;
   font-size: 1rem;
   margin-bottom: 0.75rem;
 }
 
 .mkt-faq-a {
-  color: #64748b;
+  color: #4E5C64;
   line-height: 1.75;
   font-size: 0.925rem;
 }
@@ -4138,8 +4250,8 @@ footer a:hover {
   width: 2.75rem;
   height: 2.75rem;
   border-radius: 50%;
-  background: #2563eb;
-  color: white;
+  background: #4E5C64;
+  color: #FAF8F5;
   font-weight: 700;
   font-size: 1.1rem;
   margin-bottom: 1.25rem;
@@ -4149,21 +4261,21 @@ footer a:hover {
 .mkt-step__title {
   font-size: 1.6rem;
   font-weight: 700;
-  color: #0f172a;
+  color: #4E5C64;
   margin-bottom: 0.875rem;
   letter-spacing: -0.015em;
 }
 
 .mkt-step__text {
-  color: #64748b;
+  color: #4E5C64;
   line-height: 1.8;
   margin-bottom: 1.25rem;
   font-size: 1.025rem;
 }
 
 .mkt-step__visual {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: #F0EDEA;
+  border: 1px solid #D8D4CC;
   border-radius: 0.875rem;
   padding: 1.75rem;
 }
@@ -4174,7 +4286,7 @@ footer a:hover {
   grid-template-columns: 4rem 1fr;
   gap: 2rem;
   padding: 3rem 0;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid #D8D4CC;
   align-items: flex-start;
 }
 
@@ -4196,19 +4308,19 @@ footer a:hover {
 .mkt-manifesto__title {
   font-size: 1.625rem;
   font-weight: 700;
-  color: #0f172a;
+  color: #4E5C64;
   margin-bottom: 0.875rem;
   letter-spacing: -0.015em;
 }
 
 .mkt-manifesto__body {
   font-size: 1.025rem;
-  color: #475569;
+  color: #4E5C64;
   line-height: 1.82;
 }
 
 .mkt-manifesto__body strong {
-  color: #0f172a;
+  color: #4E5C64;
   font-weight: 600;
 }
 
@@ -4219,20 +4331,27 @@ footer a:hover {
 /* --- Testimonials --- */
 .mkt-testimonial {
   background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.875rem;
+  border: 1px solid #D8D4CC;
+  border-radius: 1rem;
   padding: 1.75rem;
+  transition: transform var(--mkt-dur-normal) var(--mkt-ease-spring),
+              box-shadow var(--mkt-dur-smooth) var(--mkt-ease-smooth);
+}
+
+.mkt-testimonial:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--mkt-shadow-raised);
 }
 
 .mkt-testimonial__stars {
-  color: #f59e0b;
+  color: #E8B4B8;
   font-size: 1.025rem;
   letter-spacing: 0.08em;
   margin-bottom: 1rem;
 }
 
 .mkt-testimonial__quote {
-  color: #374151;
+  color: #4E5C64;
   line-height: 1.72;
   margin-bottom: 1.25rem;
   font-style: italic;
@@ -4241,12 +4360,12 @@ footer a:hover {
 
 .mkt-testimonial__author {
   font-weight: 600;
-  color: #0f172a;
+  color: #4E5C64;
   font-size: 0.875rem;
 }
 
 .mkt-testimonial__role {
-  color: #94a3b8;
+  color: #4E5C64;
   font-size: 0.825rem;
   margin-top: 0.15rem;
 }
@@ -4254,16 +4373,16 @@ footer a:hover {
 /* --- Philosophy cards (Why page) --- */
 .mkt-philosophy {
   background: white;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #D8D4CC;
   border-radius: 0.875rem;
   padding: 2.25rem;
 }
 
 .mkt-philosophy__quote {
   font-size: 1.125rem;
-  color: #0f172a;
+  color: #4E5C64;
   font-style: italic;
-  border-left: 3px solid #2563eb;
+  border-left: 3px solid #B5C1A8;
   padding-left: 1.25rem;
   margin-bottom: 1.5rem;
   line-height: 1.6;
@@ -4273,17 +4392,17 @@ footer a:hover {
 .mkt-prose {
   font-size: 0.975rem;
   line-height: 1.82;
-  color: #374151;
+  color: #4E5C64;
 }
 
 .mkt-prose h2 {
   font-size: 1.375rem;
   font-weight: 700;
-  color: #0f172a;
+  color: #4E5C64;
   margin-top: 2.5rem;
   margin-bottom: 1rem;
   padding-bottom: 0.625rem;
-  border-bottom: 2px solid #f1f5f9;
+  border-bottom: 2px solid #D8D4CC;
   letter-spacing: -0.01em;
 }
 
@@ -4295,7 +4414,7 @@ footer a:hover {
 .mkt-prose h3 {
   font-size: 1.05rem;
   font-weight: 600;
-  color: #1e293b;
+  color: #4E5C64;
   margin-top: 1.75rem;
   margin-bottom: 0.625rem;
 }
@@ -4312,15 +4431,17 @@ footer a:hover {
 
 .mkt-prose li {
   margin-bottom: 0.4rem;
-  color: #475569;
+  color: #4E5C64;
 }
 
 .mkt-prose a {
-  color: #2563eb;
+  color: #4E5C64;
+  font-weight: 600;
+  text-decoration: underline;
 }
 
 .mkt-prose a:hover {
-  color: #1d4ed8;
+  color: #4E5C64;
   text-decoration: underline;
 }
 
@@ -4334,29 +4455,28 @@ footer a:hover {
 }
 
 .mkt-highlight-box--blue {
-  background: #eff6ff;
-  border-color: #2563eb;
-  color: #1e40af;
+  background: #F0EDEA;
+  border-color: #4E5C64;
+  color: #4E5C64;
 }
 
 .mkt-highlight-box--green {
-  background: #f0fdf4;
-  border-color: #16a34a;
-  color: #15803d;
+  background: #F2F5EF;
+  border-color: #B5C1A8;
+  color: #4E5C64;
 }
 
 .mkt-highlight-box--amber {
-  background: #fffbeb;
-  border-color: #d97706;
-  color: #92400e;
+  background: #FBF2F3;
+  border-color: #E8B4B8;
+  color: #4E5C64;
 }
 
 /* --- Improved Footer (WCAG AA accessible) --- */
 .mkt-footer {
-  background: #0f172a;
-  color: #f8fafc;
+  background: #4E5C64;
+  color: #FAF8F5;
   padding: 4.5rem 0 2rem;
-  /* Explicit readable font - Roboto matches marketing pages */
   font-family: 'Roboto', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 1rem;
 }
@@ -4379,38 +4499,36 @@ footer a:hover {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #475569;
+  color: #4E5C64;
   margin-bottom: 0.75rem;
 }
 
 .mkt-pricing-card__label--blue {
-  color: #1d4ed8;
+  color: #4E5C64;
 }
 
 .mkt-footer__brand-name {
   font-size: 1.375rem;
   font-weight: 700;
-  color: #ffffff;
+  color: #FAF8F5;
   margin-bottom: 0.875rem;
   display: flex;
   align-items: center;
   gap: 0.625rem;
 }
 
-/* Brand description - lighter gray for 4.5:1 contrast on dark bg */
 .mkt-footer__brand-desc {
-  color: #94a3b8;
+  color: #EDD5C8;
   font-size: 1rem;
   line-height: 1.72;
   max-width: 20rem;
   margin-bottom: 1.5rem;
 }
 
-/* Column titles - min 14px, sufficient contrast */
 .mkt-footer__col-title {
   font-size: 0.875rem;
   font-weight: 700;
-  color: #cbd5e1;
+  color: #FAF8F5;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin-bottom: 1.25rem;
@@ -4422,9 +4540,8 @@ footer a:hover {
   margin: 0;
 }
 
-/* Links - #cbd5e1 meets WCAG AA (4.5:1) on #0f172a */
 .mkt-footer__link {
-  color: #cbd5e1;
+  color: #EDD5C8;
   font-size: 1rem;
   display: block;
   padding: 0.3rem 0;
@@ -4432,25 +4549,23 @@ footer a:hover {
 }
 
 .mkt-footer__link:hover {
-  color: #f8fafc;
+  color: #FAF8F5;
 }
 
-/* Keyboard focus - visible outline for accessibility */
 .mkt-footer__link:focus-visible {
-  outline: 2px solid #94a3b8;
+  outline: 2px solid #FAF8F5;
   outline-offset: 2px;
   border-radius: 2px;
 }
 
-/* Tagline ("Made with care...") - accessible color/size */
 .mkt-footer__tagline {
-  color: #94a3b8;
+  color: #EDD5C8;
   font-size: 0.9375rem;
   margin-top: 0.5rem;
 }
 
 .mkt-footer__bottom {
-  border-top: 1px solid #1e293b;
+  border-top: 1px solid rgba(250, 248, 245, 0.15);
   padding-top: 2rem;
   display: flex;
   justify-content: space-between;
@@ -4459,9 +4574,8 @@ footer a:hover {
   gap: 1rem;
 }
 
-/* Copyright - lighter gray for 4.5:1 contrast */
 .mkt-footer__copyright {
-  color: #94a3b8;
+  color: #EDD5C8;
   font-size: 0.9375rem;
 }
 
@@ -4496,6 +4610,53 @@ footer a:hover {
 .marketing-page .mkt-testimonial__author {
   font-weight: 600;
 }
+
+/* --- Scoped palette overrides for marketing pages --- */
+.marketing-landing .btn--primary,
+.marketing-page .btn--primary {
+  background-color: #4E5C64 !important;
+  color: #FAF8F5 !important;
+}
+.marketing-landing .btn--primary:hover,
+.marketing-page .btn--primary:hover {
+  background-color: #3A4A52 !important;
+}
+
+/* Icon background tints — all derived from the 5-colour palette */
+.marketing-landing .bg-blue-100,
+.marketing-page .bg-blue-100 { background-color: #E8EDF0 !important; }
+.marketing-landing .text-blue-600,
+.marketing-page .text-blue-600 { color: #4E5C64 !important; }
+
+.marketing-landing .bg-green-100,
+.marketing-page .bg-green-100 { background-color: #E4ECDA !important; }
+.marketing-landing .text-green-600,
+.marketing-page .text-green-600 { color: #4E5C64 !important; }
+
+.marketing-landing .bg-purple-100,
+.marketing-page .bg-purple-100 { background-color: #F3DCDE !important; }
+.marketing-landing .text-purple-600,
+.marketing-page .text-purple-600 { color: #4E5C64 !important; }
+
+.marketing-landing .bg-orange-100,
+.marketing-page .bg-orange-100 { background-color: #F5EAE2 !important; }
+.marketing-landing .text-orange-600,
+.marketing-page .text-orange-600 { color: #4E5C64 !important; }
+
+.marketing-landing .bg-yellow-100,
+.marketing-page .bg-yellow-100 { background-color: #F5EAE2 !important; }
+.marketing-landing .text-yellow-600,
+.marketing-page .text-yellow-600 { color: #4E5C64 !important; }
+
+.marketing-landing .bg-indigo-100,
+.marketing-page .bg-indigo-100 { background-color: #E8EDF0 !important; }
+.marketing-landing .text-indigo-600,
+.marketing-page .text-indigo-600 { color: #4E5C64 !important; }
+
+.marketing-landing .bg-red-100,
+.marketing-page .bg-red-100 { background-color: #F3DCDE !important; }
+.marketing-landing .text-red-600,
+.marketing-page .text-red-600 { color: #4E5C64 !important; }
 
 /* Responsive grid helpers for marketing pages */
 .mkt-grid-3 {
@@ -4646,6 +4807,305 @@ footer a:hover {
 
   .mkt-faq-item {
     padding: 1.25rem 1.25rem;
+  }
+}
+
+/* --- Scroll Reveal System --- */
+.mkt-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity var(--mkt-dur-smooth) var(--mkt-ease-out),
+              transform var(--mkt-dur-smooth) var(--mkt-ease-spring);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.mkt-reveal--left {
+  transform: translateX(-32px);
+}
+
+.mkt-reveal--right {
+  transform: translateX(32px);
+}
+
+.mkt-reveal--scale {
+  transform: scale(0.92);
+}
+
+.mkt-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0) translateX(0) scale(1);
+}
+
+/* --- Hero Entrance (above-the-fold, CSS-only) --- */
+.marketing-landing .mkt-hero .mkt-hero__eyebrow,
+.marketing-page .mkt-hero .mkt-hero__eyebrow {
+  animation: mkt-fade-up 500ms var(--mkt-ease-out) 100ms both;
+}
+
+.marketing-landing .mkt-hero .mkt-hero__title,
+.marketing-page .mkt-hero .mkt-hero__title {
+  animation: mkt-fade-up 600ms var(--mkt-ease-out) 250ms both;
+}
+
+.marketing-landing .mkt-hero .mkt-hero__subtitle,
+.marketing-page .mkt-hero .mkt-hero__subtitle {
+  animation: mkt-fade-up 600ms var(--mkt-ease-out) 400ms both;
+}
+
+.marketing-landing .mkt-hero .mkt-hero__cta-group,
+.marketing-page .mkt-hero .mkt-hero__cta-group {
+  animation: mkt-fade-up 500ms var(--mkt-ease-out) 550ms both;
+}
+
+.marketing-landing .mkt-hero .mkt-hero__trust-strip,
+.marketing-page .mkt-hero .mkt-hero__trust-strip {
+  animation: mkt-fade-in 600ms var(--mkt-ease-out) 700ms both;
+}
+
+/* --- Floating Portal (hero app mockup) --- */
+.mkt-portal {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.mkt-portal__frame {
+  transform: rotateY(-3deg) rotateX(2deg);
+  transition: transform 500ms var(--mkt-ease-spring);
+  box-shadow: var(--mkt-shadow-portal);
+  border-radius: 1rem;
+  overflow: hidden;
+  position: relative;
+  animation: mkt-scale-in 800ms var(--mkt-ease-spring) 350ms both;
+}
+
+.mkt-portal__frame::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 1rem;
+  border: 2px solid rgba(78, 92, 100, 0.2);
+  pointer-events: none;
+  animation: mkt-glow-pulse 3s ease-in-out infinite;
+}
+
+.mkt-portal__frame:hover {
+  transform: rotateY(-1deg) rotateX(1deg) translateY(-6px);
+  box-shadow: var(--mkt-shadow-portal), 0 0 40px rgba(78, 92, 100, 0.08);
+}
+
+.mkt-portal__frame img {
+  display: block;
+  width: 100%;
+  border-radius: 0;
+}
+
+/* --- Floating Animation (for accent elements) --- */
+.mkt-float {
+  animation: mkt-float 6s ease-in-out infinite;
+}
+
+/* --- Navbar Scroll State (sticky glass morphism) --- */
+.marketing-landing .navbar,
+.marketing-page .navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: box-shadow var(--mkt-dur-smooth) var(--mkt-ease-smooth),
+              background-color var(--mkt-dur-smooth) var(--mkt-ease-smooth),
+              backdrop-filter var(--mkt-dur-smooth) var(--mkt-ease-smooth),
+              -webkit-backdrop-filter var(--mkt-dur-smooth) var(--mkt-ease-smooth);
+}
+
+.marketing-landing .navbar--scrolled,
+.marketing-page .navbar--scrolled {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.03);
+}
+
+/* --- Enhanced Section Spacing --- */
+.mkt-section-intro {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+/* --- FAQ Accordion --- */
+.mkt-faq-item[data-faq-target="item"] {
+  cursor: pointer;
+}
+
+.mkt-faq-q--toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.mkt-faq-q--toggle:hover {
+  color: #4E5C64;
+}
+
+.mkt-faq-chevron {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  transition: transform var(--mkt-dur-modal) var(--mkt-ease-spring);
+  color: #4E5C64;
+}
+
+.mkt-faq-item.is-open .mkt-faq-chevron {
+  transform: rotate(180deg);
+  color: #4E5C64;
+}
+
+[data-faq-answer] {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--mkt-dur-modal) var(--mkt-ease-smooth);
+}
+
+.mkt-faq-item.is-open [data-faq-answer] {
+  max-height: none;
+}
+
+/* --- Philosophy Card Hover --- */
+.mkt-philosophy {
+  transition: transform var(--mkt-dur-normal) var(--mkt-ease-spring),
+              box-shadow var(--mkt-dur-smooth) var(--mkt-ease-smooth);
+}
+
+.mkt-philosophy:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--mkt-shadow-raised);
+}
+
+/* --- Manifesto Section Dividers --- */
+.mkt-manifesto {
+  transition: transform var(--mkt-dur-normal) var(--mkt-ease-spring);
+}
+
+.mkt-manifesto:hover {
+  transform: translateX(4px);
+}
+
+/* --- Enhanced CTA Gradient --- */
+/* CTA gradient animation removed — CTA now uses solid light background */
+
+/* --- Step Visual Enhancement --- */
+.mkt-step__visual {
+  transition: transform var(--mkt-dur-normal) var(--mkt-ease-spring),
+              box-shadow var(--mkt-dur-smooth) var(--mkt-ease-smooth);
+}
+
+.mkt-step__visual:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--mkt-shadow-float);
+}
+
+/* --- Link Hover Underline Animation --- */
+.mkt-link-animated {
+  position: relative;
+  text-decoration: none;
+}
+
+.mkt-link-animated::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: currentColor;
+  transition: width var(--mkt-dur-normal) var(--mkt-ease-spring);
+}
+
+.mkt-link-animated:hover::after {
+  width: 100%;
+}
+
+/* --- Icon Bounce on Reveal --- */
+.mkt-reveal.is-visible .mkt-card__icon,
+.mkt-reveal.is-visible .mkt-trust-icon,
+.mkt-reveal.is-visible .mkt-manifesto__icon {
+  animation: mkt-scale-in var(--mkt-dur-emphasis) var(--mkt-ease-spring) both;
+}
+
+/* --- prefers-reduced-motion: disable all custom animations --- */
+@media (prefers-reduced-motion: reduce) {
+  .mkt-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .mkt-hero__eyebrow-dot {
+    animation: none !important;
+  }
+
+  .marketing-landing .mkt-hero .mkt-hero__eyebrow,
+  .marketing-page .mkt-hero .mkt-hero__eyebrow,
+  .marketing-landing .mkt-hero .mkt-hero__title,
+  .marketing-page .mkt-hero .mkt-hero__title,
+  .marketing-landing .mkt-hero .mkt-hero__subtitle,
+  .marketing-page .mkt-hero .mkt-hero__subtitle,
+  .marketing-landing .mkt-hero .mkt-hero__cta-group,
+  .marketing-page .mkt-hero .mkt-hero__cta-group,
+  .marketing-landing .mkt-hero .mkt-hero__trust-strip,
+  .marketing-page .mkt-hero .mkt-hero__trust-strip {
+    animation: none !important;
+  }
+
+  .mkt-portal__frame {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .mkt-portal__frame::after {
+    animation: none !important;
+  }
+
+  .mkt-float {
+    animation: none !important;
+  }
+
+  .mkt-cta {
+    animation: none !important;
+  }
+
+  .mkt-btn {
+    transition: background-color var(--mkt-dur-fast) ease,
+                color var(--mkt-dur-fast) ease !important;
+  }
+
+  .mkt-card,
+  .mkt-theme-card,
+  .mkt-trust-item,
+  .mkt-testimonial,
+  .mkt-pricing-card,
+  .mkt-philosophy,
+  .mkt-manifesto,
+  .mkt-step__visual {
+    transition: none !important;
+  }
+
+  .mkt-reveal.is-visible .mkt-card__icon,
+  .mkt-reveal.is-visible .mkt-trust-icon,
+  .mkt-reveal.is-visible .mkt-manifesto__icon {
+    animation: none !important;
+  }
+
+  [data-faq-answer] {
+    transition: none !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .mkt-faq-chevron {
+    transition: none !important;
   }
 }
 
