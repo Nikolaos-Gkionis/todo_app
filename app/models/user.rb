@@ -13,6 +13,7 @@ class User < ApplicationRecord
     validates :name, length: { minimum: 2, maximum: 50 }, allow_blank: true, on: :update
     validates :password, length: { minimum: 6 }, on: :create
     validates :font_family, inclusion: { in: %w[default serif sans_serif handwritten system_ui georgia menlo] }, allow_blank: true
+    validates :app_title, length: { minimum: 1, maximum: 30 }, allow_nil: false
 
     # Download tracking
     MAX_DOWNLOADS = 3

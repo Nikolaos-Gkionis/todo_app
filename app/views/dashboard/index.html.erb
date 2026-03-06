@@ -5,7 +5,19 @@
       <!-- Search functionality removed per user request -->
     </div>
     <div class="dashboard__header-center" style="font-size: 1.5rem; font-weight: 800; letter-spacing: 0.1em; color: #7c6cc4;">
-      TODO-IT
+      <%# Clickable app title — hover to reveal edit hint, click to open rename modal %>
+      <span id="app-title-display"
+            title="Click to rename"
+            style="cursor: pointer; position: relative; transition: opacity 0.2s;"
+            onmouseenter="this.querySelector('.app-title-edit-hint').style.opacity='1'"
+            onmouseleave="this.querySelector('.app-title-edit-hint').style.opacity='0'"
+            onclick="document.getElementById('app-title-dialog').showModal()">
+        <%= current_user.app_title %>
+        <span class="app-title-edit-hint"
+              style="opacity: 0; transition: opacity 0.2s; font-size: 0.65rem; font-weight: 500; color: #aaa; margin-left: 4px; vertical-align: middle;">
+          &#9998;
+        </span>
+      </span>
     </div>
     <div class="dashboard__header-right" style="display: flex; gap: 20px; align-items: center;">
       <div style="display: flex; gap: 12px; color: #888; font-weight: bold; font-size: 1.2rem; align-items: center;">
@@ -154,4 +166,109 @@
     </div>
   <% end %>
 </dialog>
+
+<%# ── Rename App Title Modal ── %>
+<dialog id="app-title-dialog" style="padding: 24px; border-radius: 12px; border: none; box-shadow: 0 10px 25px rgba(0,0,0,0.2); width: 100%; max-width: 400px; margin: auto; font-family: var(--user-font, inherit);">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h3 style="margin: 0; font-size: 1.25rem; font-weight: 600; color: #333;">Rename Your App</h3>
+    <form method="dialog">
+      <button style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #888;">&times;</button>
+    </form>
+  </div>
+
+  <p style="margin: 0 0 16px; font-size: 0.85rem; color: #888;">
+    Give your app a custom name. This only changes the display title.
+  </p>
+
+  <form id="app-title-form" style="display: flex; flex-direction: column; gap: 16px;">
+    <input type="text"
+           id="app-title-input"
+           value="<%= current_user.app_title %>"
+           maxlength="30"
+           required
+           autofocus
+           style="padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; font-family: var(--user-font, inherit);">
+
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <span id="app-title-char-count" style="font-size: 0.75rem; color: #aaa;"><%= current_user.app_title.length %>/30</span>
+      <div style="display: flex; gap: 12px;">
+        <button type="button" onclick="document.getElementById('app-title-dialog').close()" style="padding: 10px 16px; background: #f3f4f6; color: #4b5563; border: none; border-radius: 6px; font-weight: 500; cursor: pointer;">Cancel</button>
+        <button type="submit" id="app-title-save-btn" style="padding: 10px 20px; background: #7c6cc4; color: white; border: none; border-radius: 6px; font-weight: 500; cursor: pointer;">Save</button>
+      </div>
+    </div>
+  </form>
+</dialog>
+
+<%# ── App Title Rename Script ── %>
+<script>
+  (function() {
+    // Wait for DOM to be ready, then wire up the rename form
+    function setupAppTitleRename() {
+      var form    = document.getElementById('app-title-form');
+      var input   = document.getElementById('app-title-input');
+      var counter = document.getElementById('app-title-char-count');
+      var display = document.getElementById('app-title-display');
+      var dialog  = document.getElementById('app-title-dialog');
+      var saveBtn = document.getElementById('app-title-save-btn');
+
+      if (!form || !input) return;
+
+      // Live character counter
+      input.addEventListener('input', function() {
+        counter.textContent = input.value.length + '/30';
+      });
+
+      // Reset input value each time the dialog opens
+      dialog.addEventListener('close', function() {
+        // Nothing needed — we update the input on successful save
+      });
+
+      // Submit handler — PATCH to settings endpoint via fetch
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        var newTitle = input.value.trim();
+        if (newTitle.length === 0 || newTitle.length > 30) return;
+
+        // Disable button while saving
+        saveBtn.disabled = true;
+        saveBtn.textContent = 'Saving…';
+
+        var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        fetch('<%= settings_path %>', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': csrfToken,
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({ user: { app_title: newTitle } })
+        })
+        .then(function(response) { return response.json(); })
+        .then(function(data) {
+          if (data.status === 'success') {
+            // Update the visible title on the page without a reload
+            var titleSpan = display.childNodes[0];
+            titleSpan.textContent = newTitle + ' ';
+            dialog.close();
+          } else {
+            alert('Could not save: ' + (data.errors || []).join(', '));
+          }
+        })
+        .catch(function() {
+          alert('Something went wrong. Please try again.');
+        })
+        .finally(function() {
+          saveBtn.disabled = false;
+          saveBtn.textContent = 'Save';
+        });
+      });
+    }
+
+    // Bind on initial load and after Turbo navigation
+    document.addEventListener('DOMContentLoaded', setupAppTitleRename);
+    document.addEventListener('turbo:load', setupAppTitleRename);
+  })();
+</script>
 
