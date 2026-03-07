@@ -1,4 +1,4 @@
-<div class="marketing-page">
+<div class="marketing-page" data-controller="scroll-reveal">
 <%= render 'shared/navbar' %>
 
 <!-- Hero -->
@@ -9,7 +9,7 @@
       Our thinking behind Todo-it
     </span>
     <h1 class="mkt-hero__title" style="font-size: clamp(2.25rem, 5vw, 3.5rem);">
-      Why we built <span style="color: #fbbf24;">Todo-it</span>
+      Why we built Todo-it
     </h1>
     <p class="mkt-hero__subtitle" style="margin: 0 auto;">
       Because your mind deserves clarity, not clutter.
@@ -22,7 +22,7 @@
 <section class="mkt-section bg-white">
   <div class="mkt-inner--narrow">
 
-    <div class="mkt-manifesto">
+    <div class="mkt-manifesto mkt-reveal" data-scroll-reveal-target="item">
       <div>
         <div class="mkt-manifesto__icon bg-red-100 text-red-600">
           <%= inline_icon "gift" %>
@@ -37,7 +37,7 @@
       </div>
     </div>
 
-    <div class="mkt-manifesto">
+    <div class="mkt-manifesto mkt-reveal" data-scroll-reveal-target="item">
       <div>
         <div class="mkt-manifesto__icon bg-orange-100 text-orange-600">
           <%= inline_icon "credit-card" %>
@@ -46,13 +46,13 @@
       <div>
         <h2 class="mkt-manifesto__title">Against subscriptions</h2>
         <div class="mkt-manifesto__body">
-          <p>$5/month sounds nothing. Until you realise that's $60/year. In three years, you've bought the same app three times. The subscription model is great for software companies. Not so much for you.</p>
-          <p>Here, you pay <strong>once - $9.99</strong> - and download the app to your device forever. No monthly surprises. No price increases. No "we're changing our plans" emails. It's yours. That's how software should work.</p>
+          <p>£5/month sounds nothing. Until you realise that's £60/year. In three years, you've bought the same app three times. The subscription model is great for software companies. Not so much for you.</p>
+          <p>Here, you pay <strong>once - £9.99</strong> - and download the app to your device forever. No monthly surprises. No price increases. No "we're changing our plans" emails. It's yours. That's how software should work.</p>
         </div>
       </div>
     </div>
 
-    <div class="mkt-manifesto">
+    <div class="mkt-manifesto mkt-reveal" data-scroll-reveal-target="item">
       <div>
         <div class="mkt-manifesto__icon bg-yellow-100 text-yellow-600">
           <%= inline_icon "building-storefront" %>
@@ -62,12 +62,12 @@
         <h2 class="mkt-manifesto__title">Against the app store tax</h2>
         <div class="mkt-manifesto__body">
           <p>30% fees. Arbitrary rejections. Months-long approvals. Sudden bans. The app store model keeps developers permanently at someone else's mercy - and that cost always gets passed to you.</p>
-          <p><strong>We go direct.</strong> Download from us. No gatekeepers. No cut taken. Just the app, at a fair price. And unlike the notebook you'd buy at a stationery shop, this one never runs out of pages.</p>
+          <p><strong>We go direct.</strong> Download from us. No gatekeepers. No cut taken. Just the app, at a fair price. And unlike the planner you'd buy at a stationery shop, this one never runs out of pages.</p>
         </div>
       </div>
     </div>
 
-    <div class="mkt-manifesto">
+    <div class="mkt-manifesto mkt-reveal" data-scroll-reveal-target="item">
       <div>
         <div class="mkt-manifesto__icon bg-green-100 text-green-600">
           <%= inline_icon "shield-check" %>
@@ -82,7 +82,7 @@
       </div>
     </div>
 
-    <div class="mkt-manifesto">
+    <div class="mkt-manifesto mkt-reveal" data-scroll-reveal-target="item">
       <div>
         <div class="mkt-manifesto__icon bg-blue-100 text-blue-600">
           <%= inline_icon "device-phone-mobile" %>
@@ -103,7 +103,7 @@
 <!-- Philosophy -->
 <section class="mkt-section mkt-section--cream">
   <div class="mkt-inner">
-    <div style="text-align: center; margin-bottom: 3.5rem;">
+    <div class="mkt-section-intro mkt-reveal" data-scroll-reveal-target="item">
       <span class="mkt-label">Our philosophy</span>
       <h2 class="mkt-heading">What we believe</h2>
       <p class="mkt-subheading" style="margin: 0 auto;">
@@ -113,52 +113,52 @@
 
     <div class="mkt-grid-2" style="max-width: 56rem; margin: 0 auto;">
 
-      <div class="mkt-philosophy">
+      <div class="mkt-philosophy mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 0ms">
         <div class="mkt-philosophy__quote">
-          "Software should feel like owning a notebook, not renting one."
+          "Software should feel like owning a planner, not renting one."
         </div>
-        <div style="font-weight: 600; color: #0f172a; margin-bottom: 1rem; font-size: 0.95rem;">For people who value ownership</div>
+        <div style="font-weight: 600; color: #4E5C64; margin-bottom: 1rem; font-size: 0.95rem;">For people who value ownership</div>
         <div style="display: flex; flex-direction: column; gap: 0.5rem;">
           <div class="flex items-center">
             <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
-            <span style="font-size: 0.9rem; color: #374151;">7-day free trial, no card required</span>
+            <span style="font-size: 0.9rem; color: #4E5C64;">7-day free trial, no card required</span>
           </div>
           <div class="flex items-center">
             <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
-            <span style="font-size: 0.9rem; color: #374151;">Download to your device forever</span>
+            <span style="font-size: 0.9rem; color: #4E5C64;">Download to your device forever</span>
           </div>
           <div class="flex items-center">
             <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
-            <span style="font-size: 0.9rem; color: #374151;">No vendor lock-in</span>
+            <span style="font-size: 0.9rem; color: #4E5C64;">No vendor lock-in</span>
           </div>
           <div class="flex items-center">
             <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
-            <span style="font-size: 0.9rem; color: #374151;">One-time payment</span>
+            <span style="font-size: 0.9rem; color: #4E5C64;">One-time payment</span>
           </div>
         </div>
       </div>
 
-      <div class="mkt-philosophy">
+      <div class="mkt-philosophy mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 120ms">
         <div class="mkt-philosophy__quote">
           "Life's too short for complicated todo apps."
         </div>
-        <div style="font-weight: 600; color: #0f172a; margin-bottom: 1rem; font-size: 0.95rem;">For mindful productivity</div>
+        <div style="font-weight: 600; color: #4E5C64; margin-bottom: 1rem; font-size: 0.95rem;">For mindful productivity</div>
         <div style="display: flex; flex-direction: column; gap: 0.5rem;">
           <div class="flex items-center">
             <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
-            <span style="font-size: 0.9rem; color: #374151;">Minimalist, focused design</span>
+            <span style="font-size: 0.9rem; color: #4E5C64;">Minimalist, focused design</span>
           </div>
           <div class="flex items-center">
             <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
-            <span style="font-size: 0.9rem; color: #374151;">Focus on today, not a backlog</span>
+            <span style="font-size: 0.9rem; color: #4E5C64;">Focus on today, not a backlog</span>
           </div>
           <div class="flex items-center">
             <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
-            <span style="font-size: 0.9rem; color: #374151;">No distractions or notifications</span>
+            <span style="font-size: 0.9rem; color: #4E5C64;">No distractions or notifications</span>
           </div>
           <div class="flex items-center">
             <div class="hand-checkbox hand-checkbox-checked mr-3" style="transform: scale(0.8); flex-shrink: 0;"></div>
-            <span style="font-size: 0.9rem; color: #374151;">Beautiful simplicity</span>
+            <span style="font-size: 0.9rem; color: #4E5C64;">Beautiful simplicity</span>
           </div>
         </div>
       </div>
@@ -170,14 +170,14 @@
 <!-- Testimonials -->
 <section class="mkt-section bg-white">
   <div class="mkt-inner">
-    <div style="text-align: center; margin-bottom: 3.5rem;">
+    <div class="mkt-section-intro mkt-reveal" data-scroll-reveal-target="item">
       <span class="mkt-label">What people say</span>
       <h2 class="mkt-heading">Real reactions from real users</h2>
     </div>
 
     <div class="mkt-grid-3">
 
-      <div class="mkt-testimonial">
+      <div class="mkt-testimonial mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 0ms">
         <div class="mkt-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="mkt-testimonial__quote">
           "Finally, a todo app that doesn't overwhelm me. The 7-day trial was perfect - I could really put it through its paces before committing."
@@ -186,7 +186,7 @@
         <div class="mkt-testimonial__role">Designer</div>
       </div>
 
-      <div class="mkt-testimonial">
+      <div class="mkt-testimonial mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 100ms">
         <div class="mkt-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="mkt-testimonial__quote">
           "Love that I own my data. Downloaded to my phone and it works offline perfectly. No more subscription anxiety - I paid once and that's that."
@@ -195,10 +195,10 @@
         <div class="mkt-testimonial__role">Software Developer</div>
       </div>
 
-      <div class="mkt-testimonial">
+      <div class="mkt-testimonial mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 200ms">
         <div class="mkt-testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="mkt-testimonial__quote">
-          "The hand-drawn style makes it feel personal and warm. It's like having a beautiful notebook that never runs out of pages."
+          "The minimal style makes it feel personal and calm. It's like having a beautiful planner that never runs out of pages."
         </p>
         <div class="mkt-testimonial__author">Emma L.</div>
         <div class="mkt-testimonial__role">Writer</div>
@@ -207,20 +207,20 @@
     </div>
 
     <!-- Trust indicators -->
-    <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 3rem;">
-      <div style="display: flex; align-items: center; gap: 0.625rem; color: #64748b; font-size: 0.875rem;">
+    <div class="mkt-reveal" data-scroll-reveal-target="item" style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 3rem;">
+      <div style="display: flex; align-items: center; gap: 0.625rem; color: #4E5C64; font-size: 0.875rem;">
         <div class="mkt-trust-icon bg-green-100 text-green-600" style="width: 2.25rem; height: 2.25rem; margin: 0; flex-shrink: 0;">
           <%= inline_icon "check-circle" %>
         </div>
         7-day free trial
       </div>
-      <div style="display: flex; align-items: center; gap: 0.625rem; color: #64748b; font-size: 0.875rem;">
+      <div style="display: flex; align-items: center; gap: 0.625rem; color: #4E5C64; font-size: 0.875rem;">
         <div class="mkt-trust-icon bg-blue-100 text-blue-600" style="width: 2.25rem; height: 2.25rem; margin: 0; flex-shrink: 0;">
           <%= inline_icon "check-circle" %>
         </div>
         Money-back guarantee
       </div>
-      <div style="display: flex; align-items: center; gap: 0.625rem; color: #64748b; font-size: 0.875rem;">
+      <div style="display: flex; align-items: center; gap: 0.625rem; color: #4E5C64; font-size: 0.875rem;">
         <div class="mkt-trust-icon bg-purple-100 text-purple-600" style="width: 2.25rem; height: 2.25rem; margin: 0; flex-shrink: 0;">
           <%= inline_icon "check-circle" %>
         </div>
@@ -231,11 +231,11 @@
 </section>
 
 <!-- CTA -->
-<section class="mkt-cta">
+<section class="mkt-cta mkt-reveal" data-scroll-reveal-target="item">
   <div class="mkt-inner">
     <h2 class="mkt-cta__title">Ready to experience the difference?</h2>
     <p class="mkt-cta__subtitle">
-      Try Todo-it free for 7 days on our servers. No credit card. Download forever for $9.99 when you're ready.
+      Try Todo-it free for 7 days on our servers. No credit card. Download forever for £9.99 when you're ready.
     </p>
     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
       <%= link_to signup_path, class: "mkt-btn mkt-btn--white" do %>

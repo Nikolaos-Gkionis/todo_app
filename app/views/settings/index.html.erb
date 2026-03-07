@@ -31,8 +31,7 @@
           <%= form.label :name, "Name", class: "block text-sm font-medium text-gray-700 mb-2" %>
           <%= form.text_field :name,
                 placeholder: "Enter your name",
-                class: "form-input w-full px-3 py-2 pulse-focus",
-                style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
+                class: "form-input w-full px-3 py-2 pulse-focus" %>
         </div>
 
         <!-- Email Update -->
@@ -41,8 +40,7 @@
           <%= form.email_field :email_address,
                 placeholder: "Enter your email",
                 required: true,
-                class: "form-input w-full px-3 py-2 pulse-focus",
-                style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
+                class: "form-input w-full px-3 py-2 pulse-focus" %>
         </div>
 
         <!-- Current Password (required for email/password changes) -->
@@ -50,8 +48,7 @@
           <%= form.label :current_password, "Current Password", class: "block text-sm font-medium text-gray-700 mb-2" %>
           <%= form.password_field :current_password,
                 placeholder: "Enter your current password to make changes",
-                class: "form-input w-full px-3 py-2 pulse-focus",
-                style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
+                class: "form-input w-full px-3 py-2 pulse-focus" %>
           <p class="text-sm text-gray-500 mt-1">Required to update your email or password. Optional for name changes.</p>
         </div>
 
@@ -60,8 +57,7 @@
           <%= form.label :password, "New Password (optional)", class: "block text-sm font-medium text-gray-700 mb-2" %>
           <%= form.password_field :password,
                 placeholder: "Leave blank to keep current password",
-                class: "form-input w-full px-3 py-2 pulse-focus",
-                style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
+                class: "form-input w-full px-3 py-2 pulse-focus" %>
         </div>
 
         <!-- Confirm New Password -->
@@ -69,8 +65,7 @@
           <%= form.label :password_confirmation, "Confirm New Password", class: "block text-sm font-medium text-gray-700 mb-2" %>
           <%= form.password_field :password_confirmation,
                 placeholder: "Confirm your new password",
-                class: "form-input w-full px-3 py-2 pulse-focus",
-                style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
+                class: "form-input w-full px-3 py-2 pulse-focus" %>
         </div>
 
         <!-- Submit Button -->
@@ -80,6 +75,80 @@
           </button>
         </div>
       <% end %>
+    </div>
+
+    <!-- Appearance / Advanced Settings -->
+    <div class="notebook-card">
+      <h2 class="text-xl font-semibold mb-6">Appearance</h2>
+      <p class="text-gray-600 text-sm mb-4">Customize accent color and typography. These settings apply across all themes.</p>
+
+      <%= form_with model: @user, url: settings_path, method: :patch, local: true, data: { turbo: false }, html: { id: "appearance-form", "data-turbo": "false" }, class: "space-y-6" do |form| %>
+        <!-- Accent color picker -->
+        <div>
+          <%= form.label :accent_color, "Accent color", class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <div class="flex flex--align-center gap-4">
+            <input type="color"
+                   name="user[accent_color]"
+                   id="user_accent_color"
+                   value="<%= @user.accent_color.presence || '#3b82f6' %>"
+                   class="h-10 w-16 cursor-pointer rounded border border-gray-300">
+            <input type="text"
+                   id="user_accent_color_hex"
+                   value="<%= @user.accent_color.presence || '#3b82f6' %>"
+                   class="form-input w-24 font-mono text-sm"
+                   placeholder="#3b82f6"
+                   maxlength="7"
+                   autocomplete="off">
+            <span class="text-sm text-gray-500">or leave default blue</span>
+          </div>
+          <p class="text-sm text-gray-500 mt-1">Used for links, buttons, and highlights.</p>
+        </div>
+
+        <!-- Font family -->
+        <div>
+          <%= form.label :font_family, "Typography", class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <%= form.select :font_family,
+                options_for_select([
+                  [ "Default (handwritten)", "default" ],
+                  [ "Serif (Lora)", "serif" ],
+                  [ "Sans Serif (Inter)", "sans_serif" ]
+                ], @user.font_family || "default"),
+                {},
+                class: "form-input w-full max-w-xs" %>
+          <p class="text-sm text-gray-500 mt-1">Choose a font for your todo text.</p>
+        </div>
+
+        <div>
+          <button type="submit" class="text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline--blue cursor-pointer bg-transparent border-0 inline-block">
+            Save Appearance
+          </button>
+        </div>
+      <% end %>
+
+      <script>
+      (function() {
+        var colorInput = document.getElementById('user_accent_color');
+        var hexInput = document.getElementById('user_accent_color_hex');
+        var form = colorInput && colorInput.closest('form');
+        if (colorInput && hexInput) {
+          colorInput.addEventListener('input', function() {
+            hexInput.value = this.value;
+          });
+          hexInput.addEventListener('input', function() {
+            if (/^#[0-9A-Fa-f]{6}$/.test(this.value)) {
+              colorInput.value = this.value;
+            }
+          });
+          if (form) {
+            form.addEventListener('submit', function() {
+              if (/^#[0-9A-Fa-f]{6}$/.test(hexInput.value)) {
+                colorInput.value = hexInput.value;
+              }
+            });
+          }
+        }
+      })();
+      </script>
     </div>
 
     <!-- Trial & Download Status Section -->
@@ -196,9 +265,18 @@
 
     <!-- Account Actions Section -->
     <div class="notebook-card">
-      <h2 class="text-xl font-semibold mb-6 text-red-700">Danger Zone</h2>
+      <h2 class="text-xl font-semibold mb-6">Account Actions</h2>
 
-      <div class="border-t border-red-200 pt-4">
+      <div class="mb-6">
+        <p class="text-sm text-gray-600 mb-3">Sign out of your account on this device.</p>
+        <button type="button" class="text-gray-600 hover:text-gray-800 font-medium hand-underline inline-block bg-transparent border-0 cursor-pointer text-base p-0" onclick="window.showLogoutModal()">
+          Sign Out
+        </button>
+      </div>
+
+      <h2 class="text-xl font-semibold mb-6 text-red-700 mt-8 border-t border-gray-200 pt-6">Danger Zone</h2>
+
+      <div>
         <p class="text-sm text-gray-600 mb-3">Once you delete your account, there is no going back. Please be certain.</p>
         <%= link_to "Delete Account",
               delete_account_path,

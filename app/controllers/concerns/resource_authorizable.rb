@@ -6,9 +6,9 @@ module ResourceAuthorizable
     return if current_user.can_create_page?
 
     if current_user.trial_expired? && !current_user.device_downloaded?
-      redirect_to pages_path, alert: flash_trial_expired_redirect
+      redirect_to app_root_path, alert: flash_trial_expired_redirect
     else
-      redirect_to pages_path, alert: flash_page_limit_reached
+      redirect_to app_root_path, alert: flash_page_limit_reached
     end
   end
 
@@ -43,7 +43,7 @@ module ResourceAuthorizable
   def set_and_authorize_page!
     @page = current_user.pages.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    redirect_to pages_path, alert: "Page not found or access denied."
+    redirect_to app_root_path, alert: "Page not found or access denied."
   end
 
   def set_and_authorize_todo!
@@ -56,7 +56,7 @@ module ResourceAuthorizable
   def ensure_owns_page!(page)
     return if page.user == current_user
 
-    redirect_to pages_path, alert: "Access denied."
+    redirect_to app_root_path, alert: "Access denied."
   end
 
   def ensure_owns_todo!(todo)

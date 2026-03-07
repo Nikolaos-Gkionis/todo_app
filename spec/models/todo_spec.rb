@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Todo, type: :model do
   describe 'associations' do
-    it { should belong_to(:page) }
+    it { should belong_to(:page).optional }
   end
 
   describe 'validations' do
@@ -23,8 +23,23 @@ RSpec.describe Todo, type: :model do
       end
     end
 
-    describe 'page' do
-      it { should validate_presence_of(:page) }
+    describe 'assignments' do
+      let(:page) { create(:page) }
+      let(:todo) { create(:todo, page: page) }
+
+      it 'assigns to date' do
+        date = Date.today
+        todo.assign_to_date(date)
+        expect(todo.due_date).to eq(date)
+        expect(todo.page_id).to be_nil
+      end
+
+      it 'assigns to page' do
+        todo.assign_to_date(Date.today)
+        todo.assign_to_page(page.id)
+        expect(todo.page_id).to eq(page.id)
+        expect(todo.due_date).to be_nil
+      end
     end
 
     describe 'position' do
@@ -66,7 +81,7 @@ RSpec.describe Todo, type: :model do
 
       it 'reorders todos according to new order' do
         new_order = [ todo3.id, todo1.id, todo2.id ]
-        Todo.reorder_positions!(page, new_order)
+        Todo.reorder_positions!(new_order)
 
         expect(todo3.reload.position).to eq(1)
         expect(todo1.reload.position).to eq(2)
@@ -74,7 +89,7 @@ RSpec.describe Todo, type: :model do
       end
 
       it 'handles empty order' do
-        expect { Todo.reorder_positions!(page, []) }.not_to raise_error
+        expect { Todo.reorder_positions!([]) }.not_to raise_error
       end
     end
   end
@@ -226,9 +241,19 @@ RSpec.describe Todo, type: :model do
     let(:page) { create(:page) }
     let(:todo) { create(:todo, page: page) }
 
-    describe '#association_name' do
-      it 'returns :todos' do
-        expect(todo.send(:association_name)).to eq(:todos)
+    describe '#position_scope' do
+      it 'returns page.todos when page is present' do
+        expect(todo.send(:position_scope)).to eq(page.todos)
+      end
+
+      it 'returns by due_date when due_date is present' do
+        todo_date = build(:todo, page: nil, due_date: Date.today)
+        expect(todo_date.send(:position_scope).to_sql).to eq(Todo.where(due_date: Date.today, page_id: nil).to_sql)
+      end
+
+      it 'returns none when neither is present' do
+        todo_empty = build(:todo, page: nil, due_date: nil)
+        expect(todo_empty.send(:position_scope).to_sql).to eq(Todo.none.to_sql)
       end
     end
   end

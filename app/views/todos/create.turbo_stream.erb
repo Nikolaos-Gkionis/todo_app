@@ -1,0 +1,27 @@
+<% if @todo.due_date.present? %>
+  <%= turbo_stream.append "todos_date_#{@todo.due_date}" do %>
+    <%= render "todos/todo", todo: @todo %>
+  <% end %>
+<% elsif @todo.page_id.present? %>
+  <%= turbo_stream.append "todos_page_#{@todo.page_id}" do %>
+    <%= render "todos/todo", todo: @todo %>
+  <% end %>
+<% end %>
+
+<%# Find the specific target container and reset ONLY its form inputs, letting us add items rapidly! %>
+<%= turbo_stream.update "todo-form-reset-#{@todo.id}" do %>
+  <%# A small script included in stream payload ensures the closest local form gets cleared avoiding a full page wipe %>
+  <script>
+    (function() {
+      // Small trick: the newly inserted turbo_stream will execute this script.
+      // We know an element with id `todo_<%= @todo.id %>` was just inserted.
+      const el = document.getElementById("todo_<%= @todo.id %>");
+      if(el) {
+        const form = el.closest('.week-col, .lists__column').querySelector('form.todo-form');
+        if(form) {
+          form.reset();
+        }
+      }
+    })();
+  </script>
+<% end %>

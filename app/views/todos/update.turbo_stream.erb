@@ -1,0 +1,4 @@
+<%# Update the individual todo natively within its current container %>
+<%= turbo_stream.replace "todo_#{@todo.id}" do %>
+  <%= render "todos/todo", todo: @todo %>
+<% end %>

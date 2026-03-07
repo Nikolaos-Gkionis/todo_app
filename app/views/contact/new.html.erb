@@ -1,4 +1,4 @@
-<div class="marketing-page">
+<div class="marketing-page" data-controller="scroll-reveal">
 <%= render 'shared/navbar' %>
 
 <!-- Hero -->
@@ -20,7 +20,7 @@
 <!-- Contact Form -->
 <section class="mkt-section bg-white">
   <div class="mkt-inner">
-    <div style="max-width: 32rem; margin: 0 auto;">
+    <div class="mkt-reveal" data-scroll-reveal-target="item" style="max-width: 32rem; margin: 0 auto;">
 
       <% if flash[:alert] %>
         <div class="mb-6 p-4 rounded-lg bg-red-50 border border-red-200 text-red-800" role="alert">
@@ -39,8 +39,7 @@
           <%= form.text_field :name,
                 value: params[:name],
                 placeholder: "Your name",
-                class: "w-full form-input px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
-                style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif;" %>
+                class: "w-full form-input px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
         </div>
 
         <div>
@@ -49,8 +48,7 @@
                 value: params[:email],
                 placeholder: "your@email.com",
                 required: true,
-                class: "w-full form-input px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
-                style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif;" %>
+                class: "w-full form-input px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
         </div>
 
         <div>
@@ -60,8 +58,7 @@
                 placeholder: "How can we help?",
                 required: true,
                 rows: 5,
-                class: "w-full form-input px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-y",
-                style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif;" %>
+                class: "w-full form-input px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-y" %>
         </div>
 
         <div>
