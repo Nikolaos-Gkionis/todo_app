@@ -1,6 +1,11 @@
-<div class="dashboard">
-  <%# ── Header ── %>
-  <header class="dashboard__header" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; margin-bottom: 20px;">
+<%# Focus mode: when view_days == 1, hide nav/title/FAB, center day, show pomodoro %>
+<% if (@view_days || 7) == 1 %>
+  <%= content_for :body_class, "focus-mode" %>
+<% end %>
+
+<div class="dashboard<%= ' dashboard--focus-mode lists-collapsed' if (@view_days || 7) == 1 %>">
+  <%# ── Header (hidden in focus mode) ── %>
+  <header class="dashboard__header<%= ' dashboard__header--hidden' if (@view_days || 7) == 1 %>" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; margin-bottom: 20px;">
     <div class="dashboard__header-left" style="display: flex; gap: 15px; align-items: center;">
       <!-- Search functionality removed per user request -->
     </div>
@@ -30,8 +35,8 @@
     </div>
   </header>
 
-  <%# ── Week View (60% height) ── %>
-  <div class="dashboard__week-view" style="grid-template-columns: repeat(<%= @view_days %>, 1fr);">
+  <%# ── Week View (60% height; centered single column in focus mode) ── %>
+  <div class="dashboard__week-view dashboard__week-view--<%= @view_days == 1 ? 'focus' : 'multi' %>" style="grid-template-columns: repeat(<%= @view_days %>, 1fr);">
     <% @week_dates.each do |date| %>
       <%
         is_today = date == Time.current.to_date
@@ -62,9 +67,35 @@
     <% end %>
   </div>
 
-  <%# ── Custom Lists (fill remaining height) ── %>
-  <div class="dashboard__lists" data-controller="collapsible-list">
-    <% if @pages.any? %>
+  <%# ── Custom Lists (fill remaining height; replaced by pomodoro in focus mode) ── %>
+  <% focus_mode = (@view_days || 7) == 1 %>
+  <div class="dashboard__lists<%= ' dashboard__lists--focus' if focus_mode %>" data-controller="<%= focus_mode ? '' : 'collapsible-list' %>">
+    <% if focus_mode %>
+      <%# ── Focus mode: Pomodoro panel + exit button (replaces lists) ── %>
+      <div class="focus-mode__pomodoro" data-controller="pomodoro" data-pomodoro-duration-value="25">
+        <div class="pomodoro__controls">
+          <div class="pomodoro__durations">
+            <button type="button" class="pomodoro__duration-btn" data-action="click->pomodoro#setDuration" data-pomodoro-minutes-param="15">15 min</button>
+            <button type="button" class="pomodoro__duration-btn pomodoro__duration-btn--active" data-action="click->pomodoro#setDuration" data-pomodoro-minutes-param="25">25 min</button>
+            <button type="button" class="pomodoro__duration-btn" data-action="click->pomodoro#setDuration" data-pomodoro-minutes-param="45">45 min</button>
+          </div>
+          <div class="pomodoro__timer-row">
+            <span class="pomodoro__display" data-pomodoro-target="display">25:00</span>
+            <button type="button" class="pomodoro__play-btn" data-action="click->pomodoro#toggle" data-pomodoro-target="playBtn" aria-label="Play">▶</button>
+            <button type="button" class="pomodoro__pause-btn" data-action="click->pomodoro#toggle" data-pomodoro-target="pauseBtn" aria-label="Pause" style="display:none;">⏸</button>
+          </div>
+        </div>
+        <%= link_to "Exit focus mode", app_root_path(days: 7), class: "focus-mode__exit", data: { turbo_action: "replace" } %>
+      </div>
+      <%# Pomodoro completion modal (only in focus mode) %>
+      <dialog id="pomodoro-done-modal" class="pomodoro-done-modal" onclick="if(event.target===this)this.close()">
+        <div class="pomodoro-done-modal__content" onclick="event.stopPropagation()">
+          <h2 class="pomodoro-done-modal__title">Well done!</h2>
+          <p class="pomodoro-done-modal__text">You completed a focus session. Take a short break.</p>
+          <button type="button" class="pomodoro-done-modal__btn" onclick="document.getElementById('pomodoro-done-modal').close()">OK</button>
+        </div>
+      </dialog>
+    <% elsif @pages.any? %>
 
       <%# Scrollable column bodies (task lists) — flex:1 to fill space above the title bar %>
       <div class="lists__body" data-collapsible-list-target="content">

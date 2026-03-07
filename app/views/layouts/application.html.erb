@@ -43,7 +43,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="<%= 'body--font-handwritten' if logged_in? && current_user&.font_family == 'handwritten' %>" id="app-body" style="<%= "height: 100vh; overflow: hidden; height: 100dvh;" if logged_in? %><%= 'font-family: var(--user-font);' if logged_in? && current_user && font_stack_for(current_user) %>">
+  <body class="<%= 'body--font-handwritten' if logged_in? && current_user&.font_family == 'handwritten' %><%= " #{yield :body_class}" if content_for?(:body_class) %>" id="app-body" style="<%= "height: 100vh; overflow: hidden; height: 100dvh;" if logged_in? %><%= 'font-family: var(--user-font);' if logged_in? && current_user && font_stack_for(current_user) %>">
     <!-- Skip to main content - first focusable for keyboard/screen reader users -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <!-- Load theme immediately to prevent flash -->

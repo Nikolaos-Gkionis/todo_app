@@ -90,11 +90,15 @@
           </div>
         </div>
 
-        <%# View Options %>
+        <%# View Options — F = Focus mode (1 day), 2/3/5/7 = day counts %>
         <div class="pref-section">
           <div class="pref-section__label">View Days</div>
           <div class="pref-toggle-group">
-            <% [1, 2, 3, 5, 7].each do |n| %>
+            <a href="<%= app_root_path(days: 1) %>"
+               class="pref-toggle-btn<%= ' pref-toggle-btn--active' if (@view_days || 7) == 1 %>"
+               data-turbo-action="replace"
+               title="Focus mode">F</a>
+            <% [2, 3, 5, 7].each do |n| %>
               <a href="<%= app_root_path(days: n) %>"
                  class="pref-toggle-btn<%= ' pref-toggle-btn--active' if (@view_days || 7) == n %>"
                  data-turbo-action="replace"><%= n %></a>
