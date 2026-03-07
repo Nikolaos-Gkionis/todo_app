@@ -1627,6 +1627,14 @@ input:-webkit-autofill:active {
   color: #6272a4;
 }
 
+.theme-dark .lists__titlebar-scroll-btn {
+  color: #6272a4;
+}
+
+.theme-dark .lists__titlebar-scroll-btn:hover {
+  color: #f8f8f2;
+}
+
 .theme-dark .lists__tabs {
   border-bottom-color: #383a4e;
 }
@@ -5874,8 +5882,9 @@ body.focus-mode [data-controller*="fab-navigation"] .fab {
   display: flex;
   overflow-x: auto;
   scrollbar-width: none;
-  gap: 0;
+  gap: 32px;
   align-items: center;
+  min-width: 0;
 }
 
 .lists__titlebar-names::-webkit-scrollbar {
@@ -5891,6 +5900,49 @@ body.focus-mode [data-controller*="fab-navigation"] .fab {
   color: #555;
   line-height: 1;
   padding: 0 0 0 8px;
+}
+
+/* Add button when inside scroll area (after last list) */
+.lists__titlebar-add--inline {
+  flex: 0 0 auto;
+  padding: 0 0 0 8px;
+  min-width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Scroll arrows for list headers (visible only when content overflows) */
+.lists__titlebar-scroll-arrows {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding-left: 8px;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.lists__titlebar-scroll-arrows--visible {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lists__titlebar-scroll-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.4rem;
+  color: #555;
+  line-height: 1;
+  padding: 0 6px;
+}
+
+.lists__titlebar-scroll-btn:hover {
+  color: #111;
 }
 
 

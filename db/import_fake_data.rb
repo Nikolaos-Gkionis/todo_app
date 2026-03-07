@@ -29,7 +29,9 @@ data['pages'].each do |page_data|
       title: todo_data['title'],
       completed: todo_data['completed'],
       position: todo_data['position'],
-      user_id: user.id
+      user_id: user.id,
+      notes: todo_data['notes'],
+      highlight_color: todo_data['highlight_color']
     )
   end
 end
@@ -45,7 +47,9 @@ data['date_todos'].each do |date_data|
       position: todo_data['position'],
       due_date: due_date,
       highlight_color: todo_data['highlight_color'],
-      bold: todo_data['bold']
+      bold: todo_data['bold'],
+      notes: todo_data['notes'],
+      recurrence_rule: todo_data['recurrence_rule']
     )
   end
 end

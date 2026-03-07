@@ -21,9 +21,12 @@ export default class extends Controller {
         const isLists = this.element.dataset.dragLists !== undefined
         if (isLists) {
             // Column reordering — horizontal drag
+            // Exclude add button from reorder when on titlebar (it stays after last list)
+            const isTitlebar = this.element.classList.contains('lists__titlebar-names')
             this.sortable = Sortable.create(this.element, {
                 animation: 150,
                 handle: ".lists__column-title",
+                filter: isTitlebar ? ".lists__titlebar-add" : null,
                 ghostClass: 'todo-item--ghost',
                 forceFallback: true,   // Ensure the entire tall column dragging ghost is visually rendered
                 fallbackTolerance: 3,

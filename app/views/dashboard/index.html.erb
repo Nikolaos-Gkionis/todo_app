@@ -121,14 +121,14 @@
       </div>
 
       <%# Sticky bottom bar: chevron | list title strip (scrollable) | + button %>
-      <div class="lists__titlebar">
+      <div class="lists__titlebar" data-controller="list-scroll-arrows">
         <%# Left: global collapse toggle %>
         <button data-action="click->collapsible-list#toggle" data-collapsible-list-target="chevronBtn" title="Toggle lists" aria-label="Toggle lists" class="lists__titlebar-chevron">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" class="collapsible-list__chevron" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </button>
 
-        <%# Middle: scrollable list-title headers (draggable to reorder) %>
-        <div class="lists__titlebar-names" data-controller="drag" data-drag-lists="true">
+        <%# Middle: scrollable list-title headers (draggable to reorder) + add button at end %>
+        <div class="lists__titlebar-names" data-controller="drag" data-drag-lists="true" data-list-scroll-arrows-target="scrollContainer" id="lists-titlebar-names">
           <% @pages.each do |page| %>
             <div class="lists__titlebar-col" data-page-id="<%= page.id %>" style="flex: 0 0 280px;">
               <h3 class="lists__column-title" style="display:flex; justify-content:space-between; align-items:center; cursor:grab; margin:0;">
@@ -162,10 +162,15 @@
               </h3>
             </div>
           <% end %>
+          <%# + button scrolls with list headers, appears after last list %>
+          <button onclick="document.getElementById('new-list-dialog').showModal()" title="New list" aria-label="New list" class="lists__titlebar-add lists__titlebar-add--inline">+</button>
         </div>
 
-        <%# Right: add new list %>
-        <button onclick="document.getElementById('new-list-dialog').showModal()" title="New list" aria-label="New list" class="lists__titlebar-add">+</button>
+        <%# Right: scroll arrows (visible only when list headers overflow) %>
+        <div class="lists__titlebar-scroll-arrows" data-list-scroll-arrows-target="arrows">
+          <button type="button" onclick="document.getElementById('lists-titlebar-names').scrollBy({left:-280,behavior:'smooth'})" title="Scroll left" aria-label="Scroll list headers left" class="lists__titlebar-scroll-btn">‹</button>
+          <button type="button" onclick="document.getElementById('lists-titlebar-names').scrollBy({left:280,behavior:'smooth'})" title="Scroll right" aria-label="Scroll list headers right" class="lists__titlebar-scroll-btn">›</button>
+        </div>
       </div>
 
     <% else %>
