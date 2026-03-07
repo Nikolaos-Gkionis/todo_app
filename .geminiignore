@@ -1,0 +1,24 @@
+# .geminiignore
+
+# Rails Bloat
+/log/*
+/tmp/*
+/storage/*
+/public/assets/*
+/public/packs/*
+/node_modules/*
+/vendor/bundle/*
+
+# Database
+/db/*.sqlite3
+/db/schema.rb
+/db/structure.sql
+
+# Test & Coverage
+/test/vcr_cassettes/*
+/coverage/*
+
+# System
+.DS_Store
+.env*
+*.log

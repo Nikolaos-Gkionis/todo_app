@@ -293,6 +293,8 @@ RSpec.describe 'Settings and Account Management Flow', type: :request do
       allow(UserMailer).to receive(:email_changed).and_return(double(deliver_now: true))
 
       # Step 1: Change email
+      original_email = user.email_address
+
       patch settings_path, params: {
         user: {
           name: user.name,
@@ -303,7 +305,7 @@ RSpec.describe 'Settings and Account Management Flow', type: :request do
       expect(response).to redirect_to(settings_path)
 
       # Step 2: Verify email notification was sent
-      expect(UserMailer).to have_received(:email_changed).with(user, 'user19@example.com')
+      expect(UserMailer).to have_received(:email_changed).with(user, original_email)
     end
 
     it 'sends password change notifications' do

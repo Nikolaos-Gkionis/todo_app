@@ -1,282 +1,322 @@
-<!-- Floating Action Button + Bottom Sheet Navigation -->
+<%# Minimal FAB + Bottom Sheet + Side Drawers %>
 <% if logged_in? %>
-  <div data-controller="fab-navigation" 
-       data-action="keydown@document->fab-navigation#closeOnEscape"
-       data-action="click@document->fab-navigation#closeOnOverlay">
-    
-    <!-- Floating Action Button -->
-    <div class="fab-container" style="position: fixed; bottom: 24px; left: 24px; z-index: 1001; width: 56px; height: 56px;">
-      <button class="fab-button" 
-              data-fab-navigation-target="button"
-              data-action="click->fab-navigation#toggle"
-              aria-label="Open navigation menu" 
-              aria-expanded="false"
-              style="width: 56px; height: 56px; border-radius: 50%; background: <%= theme_fab_colors[:background] %>; border: 2px solid <%= theme_fab_colors[:border] %>; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
-        <svg class="fab-icon fab-icon--closed" 
-             data-fab-navigation-target="closedIcon"
-             fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px;" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<%= theme_fab_icon %>" />
-        </svg>
-        <svg class="fab-icon fab-icon--open hidden" 
-             data-fab-navigation-target="openIcon"
-             fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px;" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-    </div>
+  <div data-controller="fab-navigation"
+       data-fab-navigation-current-days-value="<%= @view_days || 7 %>"
+       data-action="keydown@document->fab-navigation#closeOnEscape click@document->fab-navigation#closeOnOverlay open-theme-drawer@window->fab-navigation#openThemeDrawer open-view-drawer@window->fab-navigation#openViewDrawer open-preferences@window->fab-navigation#openPreferences open-settings-panel@window->fab-navigation#openSettingsPanel">
 
-    <!-- Bottom Sheet Overlay -->
-    <div class="bottom-sheet-overlay hidden" 
-         data-fab-navigation-target="overlay"></div>
+    <%# ── FAB Button (top-left, no background) ── %>
+    <button class="fab"
+            data-fab-navigation-target="button"
+            data-action="click->fab-navigation#openPreferences"
+            aria-label="Open Preferences menu"
+            aria-expanded="false">
+      <svg class="fab__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
 
-    <!-- Mobile/Tablet Bottom Sheet -->
-    <div class="bottom-sheet bottom-sheet--mobile hidden" 
-         data-fab-navigation-target="bottomSheet"
-         data-action="touchstart->fab-navigation#touchStart touchmove->fab-navigation#touchMove touchend->fab-navigation#touchEnd"
-         style="position: fixed; bottom: 0; left: 0; right: 0; background: white; border-radius: 24px 24px 0 0; z-index: 1002; max-height: 50vh; min-height: 280px; overflow: hidden; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.2); width: 100%; border: 2px solid #e5e7eb; border-bottom: none;">
-    <!-- Bottom Sheet Handle and Close Button -->
-    <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 24px 0;">
-      <div class="bottom-sheet__handle" style="width: 60px; height: 6px; background: linear-gradient(90deg, #d1d5db, #9ca3af, #d1d5db); border-radius: 3px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"></div>
-      <button data-action="click->fab-navigation#close"
-              aria-label="Close navigation menu"
-              style="width: 32px; height: 32px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; color: #92400e; stroke-width: 2.5;" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-    </div>
-    
-    <!-- Navigation Menu - Mobile Quadrant Layout -->
-    <div class="bottom-sheet__content" style="flex: 1; overflow-y: auto; padding: 0; background: linear-gradient(180deg, #fef7cd, #fef3c7);">
-      <nav class="bottom-sheet__nav bottom-sheet__nav--quadrant" style="padding: 20px 24px 32px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 16px; height: 100%;">
-        
-        <!-- Pages - Top Left -->
-        <a href="<%= pages_path %>" class="bottom-sheet__nav-item bottom-sheet__nav-item--quadrant" aria-label="View all pages" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 16px; text-decoration: none; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px);">
-          <div class="bottom-sheet__nav-icon" style="width: 48px; height: 48px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); border: 2px solid #fef3c7;">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px; color: white; stroke-width: 2.5;" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z" />
-            </svg>
-          </div>
-          <div class="bottom-sheet__nav-text" style="text-align: center;">
-            <span class="bottom-sheet__nav-label" style="display: block; font-size: 16px; font-weight: 600; color: #92400e; margin-bottom: 2px; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">Pages</span>
-            <span class="bottom-sheet__nav-desc" style="display: block; font-size: 12px; color: #a16207; font-style: italic; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive;">View all</span>
-          </div>
-        </a>
 
-        <!-- Settings - Top Right -->
-        <a href="<%= settings_path %>" class="bottom-sheet__nav-item bottom-sheet__nav-item--quadrant" aria-label="Account settings" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 16px; text-decoration: none; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px);">
-          <div class="bottom-sheet__nav-icon" style="width: 48px; height: 48px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); border: 2px solid #fef3c7;">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px; color: white; stroke-width: 2.5;" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-            </svg>
-          </div>
-          <div class="bottom-sheet__nav-text" style="text-align: center;">
-            <span class="bottom-sheet__nav-label" style="display: block; font-size: 16px; font-weight: 600; color: #92400e; margin-bottom: 2px; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">Settings</span>
-            <span class="bottom-sheet__nav-desc" style="display: block; font-size: 12px; color: #a16207; font-style: italic; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive;">Account</span>
-          </div>
-        </a>
-
-        <!-- Theme Selection - Bottom Left -->
-        <div class="bottom-sheet__theme-quadrant" 
-             data-action="click->fab-navigation#openThemeModal"
-             style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 16px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px); cursor: pointer; transition: all 0.2s ease;"
-             onmouseover="this.style.transform='scale(1.02)'" 
-             onmouseout="this.style.transform='scale(1)'">
-          <div class="bottom-sheet__theme-icon" style="width: 48px; height: 48px; background: <%= theme_fab_colors[:background] %>; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); border: 2px solid #fef3c7;">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px; color: white; stroke-width: 2.5;" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />
-            </svg>
-          </div>
-          <div class="bottom-sheet__theme-details" style="text-align: center;">
-            <h3 class="bottom-sheet__theme-label" style="font-size: 16px; font-weight: 600; color: #92400e; margin: 0 0 4px 0; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">Themes</h3>
-            <p class="bottom-sheet__theme-desc" style="font-size: 12px; color: #a16207; margin: 0; font-style: italic; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive; line-height: 1.2;">Change style</p>
-          </div>
+    <%# ── Preferences Side Drawer (slides from left) ── %>
+    <div data-fab-navigation-target="preferencesOverlay" class="side-drawer__overlay" style="display:none;"></div>
+    <div data-fab-navigation-target="preferencesDrawer" class="side-drawer preferences-drawer">
+      <div class="side-drawer__header" style="justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 12px; margin-bottom: 16px;">
+        <div style="display: flex; gap: 16px;">
+          <button data-action="click->fab-navigation#showPreferencesTab" data-fab-navigation-target="prefTabBtn" title="App Settings" aria-label="App Settings" class="pref-tab-btn pref-tab-btn--active">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </button>
+          <button data-action="click->fab-navigation#showAccountTab" data-fab-navigation-target="accTabBtn" title="Account Details" aria-label="Account Details" class="pref-tab-btn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </button>
         </div>
-
-        <!-- Logout - Bottom Right -->
-        <a href="#" 
-           onclick="window.showLogoutModal(); return false;"
-           class="bottom-sheet__nav-item bottom-sheet__nav-item--quadrant bottom-sheet__nav-item--logout"
-           style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #fca5a5; border-radius: 16px; text-decoration: none; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px);">
-          <div class="bottom-sheet__nav-icon" style="width: 48px; height: 48px; background: linear-gradient(135deg, #ef4444, #dc2626); border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); border: 2px solid #fef3c7;">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px; color: white; stroke-width: 2.5;" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-            </svg>
-          </div>
-          <div class="bottom-sheet__nav-text" style="text-align: center;">
-            <span class="bottom-sheet__nav-label" style="display: block; font-size: 16px; font-weight: 600; color: #92400e; margin-bottom: 2px; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">Logout</span>
-            <span class="bottom-sheet__nav-desc" style="display: block; font-size: 12px; color: #a16207; font-style: italic; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive;">Sign out</span>
-          </div>
-        </a>
-      </nav>
-    </div>
-  </div>
-
-  <!-- Desktop Navigation Bar -->
-  <div class="desktop-nav hidden" 
-       data-fab-navigation-target="desktopNav"
-       style="position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(135deg, #fef3c7, #fef7cd); border-top: 3px solid #d1d5db; z-index: 1002; padding: 16px 24px; box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px);">
-    
-    <!-- Close Button -->
-    <div style="position: absolute; top: 8px; right: 16px;">
-      <button data-action="click->fab-navigation#close"
-              aria-label="Close navigation menu"
-              style="width: 32px; height: 32px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; color: #92400e; stroke-width: 2.5;" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-    </div>
-
-    <!-- User Info -->
-    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
-      <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #1d4ed8); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4); border: 2px solid #fef3c7;">
-        <div class="logo-checkbox" style="width: 20px; height: 20px; filter: brightness(0) invert(1);"></div>
+        <button data-action="click->fab-navigation#closePreferences" class="side-drawer__close" aria-label="Close" style="top: 0;">&times;</button>
       </div>
-      <div>
-        <h3 style="font-size: 16px; font-weight: 600; color: #92400e; margin: 0 0 4px 0; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);"><%= current_user.display_name %></h3>
-        <p style="font-size: 14px; color: #a16207; margin: 0; font-style: italic; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive;"><%= random_motivational_message %></p>
-      </div>
-    </div>
+      <div class="side-drawer__body">
 
-    <!-- Navigation Items -->
-    <nav style="display: flex; gap: 16px; justify-content: center;">
-      <!-- Pages -->
-      <a href="<%= pages_path %>" style="display: flex; align-items: center; gap: 12px; padding: 12px 20px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px);">
-        <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); border: 2px solid #fef3c7;">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; color: white; stroke-width: 2.5;">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z" />
-          </svg>
+        <%# ========== PREFERENCES TAB ========== %>
+        <div data-fab-navigation-target="prefTabContent" style="display: block;">
+        <%# Theme selection %>
+        <div class="pref-section">
+          <div class="pref-section__label">Theme</div>
+          <div class="theme-modal__grid">
+            <% %w[classic lined graph vintage dark].each do |t| %>
+              <button class="theme-option<%= ' theme-option--active' if current_theme == t %>"
+                      data-theme="<%= t %>"
+                      data-action="click->fab-navigation#selectTheme"
+                      aria-label="Select <%= t.capitalize %> theme">
+                <div class="theme-preview theme-btn--<%= t %>"></div>
+                <span class="theme-option__label"><%= t.capitalize %></span>
+              </button>
+            <% end %>
+          </div>
         </div>
-        <span style="font-size: 14px; font-weight: 600; color: #92400e; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">My Pages</span>
-      </a>
 
-      <!-- Settings -->
-      <a href="<%= settings_path %>" style="display: flex; align-items: center; gap: 12px; padding: 12px 20px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px);">
-        <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); border: 2px solid #fef3c7;">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; color: white; stroke-width: 2.5;">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-          </svg>
+        <%# Accent colour %>
+        <div class="pref-section">
+          <div class="pref-section__label">Accent Colour</div>
+          <div class="pref-color-swatches" id="pref-color-swatches">
+            <% swatches = ['#7c6cc4', '#e53935', '#f97316', '#eab308', '#22c55e', '#14b8a6', '#3b82f6', '#8b5cf6', '#ec4899', '#6b7280'] %>
+            <% swatches.each do |color| %>
+              <button class="pref-color-swatch<%= ' pref-color-swatch--active' if (current_user.accent_color.presence || '#7c6cc4') == color %>"
+                      style="background: <%= color %>;"
+                      data-color="<%= color %>"
+                      onclick="applyAccentColor('<%= color %>'); document.querySelectorAll('.pref-color-swatch').forEach(s => s.classList.remove('pref-color-swatch--active')); this.classList.add('pref-color-swatch--active');"
+                      aria-label="Accent colour <%= color %>"></button>
+            <% end %>
+            <label class="pref-color-swatch pref-color-swatch--custom" title="Custom colour">
+              <input type="color" id="pref-custom-color" value="<%= current_user.accent_color.presence || '#7c6cc4' %>" style="opacity:0;position:absolute;width:1px;height:1px;" onchange="applyAccentColor(this.value);">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+            </label>
+          </div>
         </div>
-        <span style="font-size: 14px; font-weight: 600; color: #92400e; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">Settings</span>
-      </a>
 
-      <!-- Theme Selection -->
-      <button data-action="click->fab-navigation#openThemeModal"
-              style="display: flex; align-items: center; gap: 12px; padding: 12px 20px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px); cursor: pointer;"
-              aria-label="Change theme">
-        <div style="width: 32px; height: 32px; background: <%= theme_fab_colors[:background] %>; border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); border: 2px solid #fef3c7;">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; color: white; stroke-width: 2.5;" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />
-          </svg>
+        <%# Font family — system fonts + fallbacks %>
+        <div class="pref-section">
+          <div class="pref-section__label">Font</div>
+          <div class="pref-font-list" id="pref-font-list">
+            <% font_options = [
+                 ['system_ui', 'System UI', "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"],
+                 ['serif', 'Serif', "Georgia, 'Times New Roman', Times, serif"],
+                 ['monospace', 'Monospace', "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Courier New', monospace"],
+                 ['handwritten', 'Handwritten', "'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif"]
+               ] %>
+            <% font_options.each do |value, label, stack| %>
+              <button class="pref-font-btn<%= ' pref-font-btn--active' if (current_user.font_family || 'default') == value %>"
+                      data-font-value="<%= value %>"
+                      style="font-family: <%= stack %>;"
+                      onclick="applyFontFamily('<%= j value %>', '<%= j stack %>');">
+                <%= label %>
+              </button>
+            <% end %>
+          </div>
         </div>
-        <span style="font-size: 14px; font-weight: 600; color: #92400e; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">Themes</span>
-      </button>
 
-      <!-- Logout -->
-      <a href="#" 
-         onclick="window.showLogoutModal(); return false;"
-         style="display: flex; align-items: center; gap: 12px; padding: 12px 20px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #fca5a5; border-radius: 12px; text-decoration: none; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px);">
-        <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #ef4444, #dc2626); border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); border: 2px solid #fef3c7;">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; color: white; stroke-width: 2.5;">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-          </svg>
+        <%# View Options — F = Focus mode (1 day), 2/3/5/7 = day counts %>
+        <div class="pref-section">
+          <div class="pref-section__label">View Days</div>
+          <div class="pref-toggle-group">
+            <a href="<%= app_root_path(days: 1) %>"
+               class="pref-toggle-btn<%= ' pref-toggle-btn--active' if (@view_days || 7) == 1 %>"
+               data-turbo-action="replace"
+               title="Focus mode">F</a>
+            <% [2, 3, 5, 7].each do |n| %>
+              <a href="<%= app_root_path(days: n) %>"
+                 class="pref-toggle-btn<%= ' pref-toggle-btn--active' if (@view_days || 7) == n %>"
+                 data-turbo-action="replace"><%= n %></a>
+            <% end %>
+          </div>
         </div>
-        <span style="font-size: 14px; font-weight: 600; color: #92400e; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">Logout</span>
-      </a>
-    </nav>
-  </div>
 
-  <!-- Theme Selection Modal -->
-  <div data-fab-navigation-target="themeModal" 
-       class="theme-modal hidden" 
-       data-action="click->fab-navigation#closeThemeModalOnBackdrop"
-       style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 2000; display: none !important; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
-    <div class="theme-modal__content" 
-         style="background: white; border-radius: 20px; padding: 24px; max-width: 400px; width: 90%; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); border: 2px solid #e5e7eb; position: relative;">
-      
-      <!-- Close Button -->
-      <button data-action="click->fab-navigation#closeThemeModal"
-              aria-label="Close theme selector"
-              style="position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; color: #92400e; stroke-width: 2.5;" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
+        <%# Show completed %>
+        <div class="pref-section">
+          <div class="pref-section__label">Completed to-dos</div>
+          <div class="pref-toggle-group">
+            <button class="pref-toggle-btn pref-toggle-btn--active" id="pref-show-completed" onclick="toggleCompletedTodos(true); this.classList.add('pref-toggle-btn--active'); document.getElementById('pref-hide-completed').classList.remove('pref-toggle-btn--active');">Show</button>
+            <button class="pref-toggle-btn" id="pref-hide-completed" onclick="toggleCompletedTodos(false); this.classList.add('pref-toggle-btn--active'); document.getElementById('pref-show-completed').classList.remove('pref-toggle-btn--active');">Hide</button>
+          </div>
+        </div>
 
-      <!-- Modal Header -->
-      <div style="text-align: center; margin-bottom: 24px;">
-        <h2 style="font-size: 20px; font-weight: 600; color: #92400e; margin: 0 0 8px 0; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">Choose Theme</h2>
-        <p style="font-size: 14px; color: #a16207; margin: 0; font-style: italic; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive;">Select your preferred style</p>
-      </div>
+        <%# Roll unfinished to-dos to next day %>
+        <div class="pref-section">
+          <div class="pref-section__label">Roll to next day</div>
+          <p class="pref-section__hint">Move unfinished to-dos forward at midnight</p>
+          <div class="pref-toggle-group">
+            <button class="pref-toggle-btn<%= ' pref-toggle-btn--active' if current_user.roll_over? %>"
+                    id="pref-roll-over-yes"
+                    onclick="toggleRollOver(true);">Yes</button>
+            <button class="pref-toggle-btn<%= ' pref-toggle-btn--active' unless current_user.roll_over? %>"
+                    id="pref-roll-over-no"
+                    onclick="toggleRollOver(false);">No</button>
+          </div>
+        </div>
 
-      <!-- Theme Options -->
-      <div class="theme-options" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-        <!-- Classic Theme -->
-        <button class="theme-option <%= 'active' if current_theme == 'classic' %>" 
-                data-theme="classic" 
-                data-action="click->fab-navigation#selectTheme"
-                aria-label="Select Classic theme"
-                style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);"
-                onmouseover="this.style.transform='scale(1.02)'" 
-                onmouseout="this.style.transform='scale(1)'">
-          <div class="theme-preview theme-btn--classic" style="width: 40px; height: 40px; border-radius: 8px; border: 2px solid #fef3c7;"></div>
-          <span style="font-size: 12px; font-weight: 600; color: #92400e; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive;">Classic</span>
-        </button>
+        </div> <%# End PREFERENCES TAB %>
 
-        <!-- Lined Theme -->
-        <button class="theme-option <%= 'active' if current_theme == 'lined' %>" 
-                data-theme="lined" 
-                data-action="click->fab-navigation#selectTheme"
-                aria-label="Select Lined theme"
-                style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);"
-                onmouseover="this.style.transform='scale(1.02)'" 
-                onmouseout="this.style.transform='scale(1)'">
-          <div class="theme-preview theme-btn--lined" style="width: 40px; height: 40px; border-radius: 8px; border: 2px solid #fef3c7;"></div>
-          <span style="font-size: 12px; font-weight: 600; color: #92400e; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive;">Lined</span>
-        </button>
+        <%# ========== ACCOUNT TAB ========== %>
+        <div data-fab-navigation-target="accTabContent" style="display: none;">
+          <div class="pref-section">
+            <h3 class="side-drawer__title" style="margin-bottom: 1.5rem; font-size: 1.1rem; color: #333;">Account Settings</h3>
+            <%= form_with model: current_user, url: "/app/settings/account", method: :patch, local: true, class: "space-y-4" do |form| %>
+              <div class="pref-section">
+                <div class="pref-section__label">Display Name</div>
+                <%= form.text_field :display_name, class: "pref-input" %>
+              </div>
+              <div class="pref-section">
+                <div class="pref-section__label">Email</div>
+                <%= form.email_field :email_address, class: "pref-input" %>
+              </div>
+              <div class="pref-section">
+                <div class="pref-section__label">New Password</div>
+                <%= form.password_field :password, class: "pref-input", placeholder: "Leave blank to keep current" %>
+              </div>
+              <div class="pref-section">
+                <div class="pref-section__label">Confirm Password</div>
+                <%= form.password_field :password_confirmation, class: "pref-input", placeholder: "Confirm new password" %>
+              </div>
+              <div class="pref-section" style="margin-top: 24px;">
+                <%= form.submit "Save Account", class: "pref-save-btn" %>
+              </div>
+            <% end %>
+            <div class="pref-section" style="margin-top: 16px;">
+              <button type="button" class="pref-save-btn" style="background-color: transparent; color: #4b5563; border: 1px solid #d1d5db;" onclick="window.showLogoutModal()">Sign Out</button>
+            </div>
+            <div class="pref-section pref-section--danger" style="margin-top: 32px; border-top: 1px solid #ffebee; padding-top: 16px;">
+              <%= link_to "Delete Account", delete_account_path, class: "pref-danger-link" %>
+            </div>
+          </div>
+        </div> <%# End ACCOUNT TAB %>
 
-        <!-- Graph Theme -->
-        <button class="theme-option <%= 'active' if current_theme == 'graph' %>" 
-                data-theme="graph" 
-                data-action="click->fab-navigation#selectTheme"
-                aria-label="Select Graph theme"
-                style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);"
-                onmouseover="this.style.transform='scale(1.02)'" 
-                onmouseout="this.style.transform='scale(1)'">
-          <div class="theme-preview theme-btn--graph" style="width: 40px; height: 40px; border-radius: 8px; border: 2px solid #fef3c7;"></div>
-          <span style="font-size: 12px; font-weight: 600; color: #92400e; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive;">Graph</span>
-        </button>
-
-        <!-- Vintage Theme -->
-        <button class="theme-option <%= 'active' if current_theme == 'vintage' %>" 
-                data-theme="vintage" 
-                data-action="click->fab-navigation#selectTheme"
-                aria-label="Select Vintage theme"
-                style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);"
-                onmouseover="this.style.transform='scale(1.02)'" 
-                onmouseout="this.style.transform='scale(1)'">
-          <div class="theme-preview theme-btn--vintage" style="width: 40px; height: 40px; border-radius: 8px; border: 2px solid #fef3c7;"></div>
-          <span style="font-size: 12px; font-weight: 600; color: #92400e; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive;">Vintage</span>
-        </button>
-
-        <!-- Dark Theme -->
-        <button class="theme-option <%= 'active' if current_theme == 'dark' %>" 
-                data-theme="dark" 
-                data-action="click->fab-navigation#selectTheme"
-                aria-label="Select Dark theme"
-                style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px; background: rgba(255, 255, 255, 0.8); border: 2px dashed #d1d5db; border-radius: 12px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);"
-                onmouseover="this.style.transform='scale(1.02)'" 
-                onmouseout="this.style.transform='scale(1)'">
-          <div class="theme-preview theme-btn--dark" style="width: 40px; height: 40px; border-radius: 8px; border: 2px solid #fef3c7;"></div>
-          <span style="font-size: 12px; font-weight: 600; color: #92400e; font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive;">Dark</span>
-        </button>
       </div>
     </div>
   </div>
+
+  <%# ── Notes Side Panel (slides from left, wider than preferences) ── %>
+  <div data-controller="notes-panel"
+       data-action="open-notes-panel@window->notes-panel#open keydown@document->notes-panel#closeOnEscape click@document->notes-panel#closeOnOverlay">
+
+    <%# Overlay %>
+    <div data-notes-panel-target="overlay" class="side-drawer__overlay" style="display:none;"></div>
+
+    <%# Drawer %>
+    <div data-notes-panel-target="drawer" class="side-drawer notes-drawer">
+
+      <%# Header: todo title + close button %>
+      <div class="notes-drawer__header">
+        <div class="notes-drawer__title-row">
+          <span class="notes-drawer__color-dot"></span>
+          <h2 class="notes-drawer__title" data-notes-panel-target="title">Add a note to this task</h2>
+        </div>
+        <button data-action="click->notes-panel#close" class="side-drawer__close" aria-label="Close notes">&times;</button>
+      </div>
+
+      <%# Toolbar: formatting + date %>
+      <div class="notes-drawer__toolbar">
+        <div class="notes-drawer__format-btns">
+          <button type="button" class="notes-fmt-btn" data-action="click->notes-panel#bold" title="Bold" aria-label="Bold"><strong>B</strong></button>
+          <button type="button" class="notes-fmt-btn notes-fmt-btn--italic" data-action="click->notes-panel#italic" title="Italic" aria-label="Italic"><em>I</em></button>
+          <button type="button" class="notes-fmt-btn" data-action="click->notes-panel#insertLink" title="Insert link" aria-label="Insert link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          </button>
+          <button type="button" class="notes-fmt-btn" data-action="click->notes-panel#addSubtask" title="Add subtask" aria-label="Add subtask">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </button>
+          <button type="button" class="notes-fmt-btn" data-action="click->notes-panel#insertBullet" title="Bullet list" aria-label="Bullet list">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          </button>
+          <button type="button" class="notes-fmt-btn" data-action="click->notes-panel#insertImage" title="Insert image" aria-label="Insert image">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </button>
+        </div>
+        <span class="notes-drawer__date" data-notes-panel-target="date"></span>
+      </div>
+
+      <%# Editor body %>
+      <div class="notes-drawer__body">
+        <div class="notes-drawer__editor"
+             data-notes-panel-target="editor"
+             data-action="input->notes-panel#onEditorInput"
+             contenteditable="true"
+             data-placeholder="Add notes"></div>
+
+        <%# Subtask list %>
+        <div class="notes-drawer__subtasks" data-notes-panel-target="subtaskList"></div>
+      </div>
+
+      <%# Save indicator %>
+      <div class="notes-drawer__footer">
+        <span class="notes-drawer__saved" data-notes-panel-target="savedIndicator"></span>
+      </div>
+
+      <%# Link insertion modal %>
+      <div class="notes-link-modal" data-notes-panel-target="linkModal" style="display:none;">
+        <div class="notes-link-modal__card">
+          <div class="notes-link-modal__header">
+            <h3 class="notes-link-modal__title">Insert Link</h3>
+            <button type="button" class="notes-link-modal__close" data-action="click->notes-panel#closeLinkModal" aria-label="Close">&times;</button>
+          </div>
+          <input type="url"
+                 class="notes-link-modal__input"
+                 data-notes-panel-target="linkInput"
+                 placeholder="https://example.com"
+                 data-action="keydown->notes-panel#linkInputKeydown">
+          <div class="notes-link-modal__actions">
+            <button type="button" class="notes-link-modal__btn notes-link-modal__btn--cancel" data-action="click->notes-panel#closeLinkModal">Cancel</button>
+            <button type="button" class="notes-link-modal__btn notes-link-modal__btn--insert" data-action="click->notes-panel#confirmLink">Insert</button>
+          </div>
+        </div>
+      </div>
+
+      <%# Hidden file input for image picker — opens device file explorer / camera / gallery %>
+      <input type="file"
+             accept="image/*"
+             data-notes-panel-target="imageFileInput"
+             data-action="change->notes-panel#onImageFileSelected"
+             class="notes-image-file-input">
+    </div>
+  </div>
+
+  <script>
+  // ── Accent colour ──
+  function applyAccentColor(color) {
+    document.documentElement.style.setProperty('--user-accent', color);
+    // Also update all elements that use the accent color
+    document.documentElement.style.setProperty('--accent', color);
+    const csrf = document.querySelector('meta[name="csrf-token"]').content;
+    fetch('/app/settings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-Token': csrf, 'X-HTTP-Method-Override': 'PATCH' },
+      body: JSON.stringify({ user: { accent_color: color } })
+    }).catch(() => {});
+  }
+
+  // ── Font family ──
+  function applyFontFamily(value, stack) {
+    if (stack) {
+      document.documentElement.style.setProperty('--user-font', stack);
+    }
+    if (value === 'handwritten') {
+      document.body.classList.add('body--font-handwritten');
+    } else {
+      document.body.classList.remove('body--font-handwritten');
+    }
+    document.querySelectorAll('.pref-font-btn').forEach(b => b.classList.remove('pref-font-btn--active'));
+    const active = document.querySelector(`.pref-font-btn[data-font-value="${value}"]`);
+    if (active) active.classList.add('pref-font-btn--active');
+    const csrf = document.querySelector('meta[name="csrf-token"]').content;
+    fetch('/app/settings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-Token': csrf, 'X-HTTP-Method-Override': 'PATCH' },
+      body: JSON.stringify({ user: { font_family: value } })
+    }).catch(() => {});
+  }
+
+  // ── Show/Hide completed ──
+  function toggleCompletedTodos(show) {
+    document.querySelectorAll('.todo-item--done').forEach(el => { el.style.display = show ? '' : 'none'; });
+    localStorage.setItem('showCompleted', show);
+  }
+
+  // ── Roll over unfinished to-dos ──
+  function toggleRollOver(enabled) {
+    // Update the active button state
+    document.getElementById('pref-roll-over-yes').classList.toggle('pref-toggle-btn--active', enabled);
+    document.getElementById('pref-roll-over-no').classList.toggle('pref-toggle-btn--active', !enabled);
+
+    // Persist the setting to the server
+    var csrf = document.querySelector('meta[name="csrf-token"]').content;
+    fetch('/app/settings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-Token': csrf, 'X-HTTP-Method-Override': 'PATCH' },
+      body: JSON.stringify({ user: { roll_over: enabled } })
+    }).catch(function() {});
+  }
+
+  // Apply saved preference on page load
+  document.addEventListener('turbo:load', function() {
+    const show = localStorage.getItem('showCompleted') !== 'false';
+    if (!show) document.querySelectorAll('.todo-item--done').forEach(el => { el.style.display = 'none'; });
+    const celebEl = document.getElementById('pref-celebrations');
+    if (celebEl) celebEl.checked = localStorage.getItem('celebrations') !== 'false';
+  });
+  </script>
 
 <% end %>

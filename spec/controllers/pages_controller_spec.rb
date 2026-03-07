@@ -11,27 +11,9 @@ RSpec.describe PagesController, type: :controller do
   end
 
   describe 'GET #index' do
-    it 'renders the index template' do
+    it "redirects to the app root" do
       get :index
-      expect(response).to render_template(:index)
-      expect(response).to have_http_status(:success)
-    end
-
-    it 'assigns current user pages ordered by newest first' do
-      old_page = create(:page, user: user, created_at: 2.days.ago)
-      new_page = create(:page, user: user, created_at: 1.day.ago)
-
-      get :index
-
-      expect(assigns(:pages)).to eq([ new_page, old_page ])
-    end
-
-    it 'does not include other users pages' do
-      create(:page, user: other_user)
-
-      get :index
-
-      expect(assigns(:pages)).not_to include(other_page)
+      expect(response).to redirect_to(app_root_path)
     end
 
     it 'requires authentication' do
@@ -142,7 +124,7 @@ RSpec.describe PagesController, type: :controller do
         it 'redirects to pages index with success message' do
           post :create, params: { page: valid_page_params }
 
-          expect(response).to redirect_to(pages_path)
+          expect(response).to redirect_to(app_root_path)
           expect(flash[:notice]).to eq('Page was successfully created.')
         end
 
@@ -199,7 +181,7 @@ RSpec.describe PagesController, type: :controller do
       it 'redirects to pages index with trial expired message' do
         post :create, params: { page: valid_page_params }
 
-        expect(response).to redirect_to(pages_path)
+        expect(response).to redirect_to(app_root_path)
         expect(flash[:alert]).to eq('Your trial has expired. Please download the app to continue creating pages.')
       end
     end
@@ -319,7 +301,7 @@ RSpec.describe PagesController, type: :controller do
     it 'redirects to pages index with success message' do
       delete :destroy, params: { id: page.id }
 
-      expect(response).to redirect_to(pages_path)
+      expect(response).to redirect_to(app_root_path)
       expect(flash[:notice]).to eq('Page was successfully deleted.')
     end
 
@@ -371,13 +353,7 @@ RSpec.describe PagesController, type: :controller do
   describe 'user isolation' do
     it 'ensures users can only access their own pages' do
       # Create pages for both users
-      user_page = create(:page, user: user)
       other_user_page = create(:page, user: other_user)
-
-      # User should only see their own pages in index
-      get :index
-      expect(assigns(:pages)).to include(user_page)
-      expect(assigns(:pages)).not_to include(other_user_page)
 
       # User should not be able to access other user's page
       expect {

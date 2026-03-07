@@ -76,7 +76,7 @@ RSpec.describe StripeController, type: :controller do
         post :create_checkout_session
 
         expect(response).to redirect_to(settings_path)
-        expect(flash[:alert]).to eq('Payment setup failed: Card declined')
+        expect(flash[:alert]).to eq('Payment setup failed. Please try again or contact support if the issue persists.')
       end
     end
   end
@@ -93,7 +93,9 @@ RSpec.describe StripeController, type: :controller do
         double('Stripe::Checkout::Session',
           payment_status: 'paid',
           id: stripe_session_id,
-          metadata: { 'user_id' => user.id.to_s }
+          metadata: { 'user_id' => user.id.to_s },
+          customer_details: nil,
+          customer_email: user.email_address
         )
       end
 
@@ -183,7 +185,7 @@ RSpec.describe StripeController, type: :controller do
         get :success, params: { session_id: stripe_session_id }
 
         expect(response).to redirect_to(pricing_path)
-        expect(flash[:alert]).to eq('Error processing payment: Session not found')
+        expect(flash[:alert]).to eq('Something went wrong processing your payment. Please contact support if the charge appears on your card.')
       end
     end
 

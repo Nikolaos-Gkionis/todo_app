@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title><%= content_for(:title) || "Todo-it" %></title>
+    <title><%= content_for(:title) || (logged_in? && current_user&.app_title.presence) || "Todo-it" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -19,18 +19,31 @@
     <meta name="theme-color" content="#4a5568">
     
     <!-- App Meta Tags -->
-    <meta name="description" content="Todo-it - Beautiful notebook-style todo app with hand-drawn aesthetics">
+    <meta name="description" content="Todo-it - The simplest calendar-based todo app. 100% Yours.">
     <meta name="author" content="Todo-it App">
     <meta property="og:title" content="Todo-it - Beautiful Todo App">
-    <meta property="og:description" content="Organize your tasks in a beautiful notebook-style interface">
+    <meta property="og:description" content="Reduced mental clutter. Offline-first. Zero-Cloud. Private by design.">
     <meta property="og:type" content="website">
 
     <%# Custom BEM-based CSS system - no Tailwind needed! %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%# User accent & font (Advanced Settings) - only when logged in %>
+    <% if logged_in? && current_user %>
+      <style>
+        :root {
+          --user-accent: <%= current_user.accent_color.presence || '#3b82f6' %>;
+          <% if (stack = font_stack_for(current_user)) %>
+          --user-font: <%= raw stack %>;
+          <% else %>
+          --user-font: inherit;
+          <% end %>
+        }
+      </style>
+    <% end %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="notebook-background handwritten" id="app-body">
+  <body class="<%= 'body--font-handwritten' if logged_in? && current_user&.font_family == 'handwritten' %><%= " #{yield :body_class}" if content_for?(:body_class) %>" id="app-body" style="<%= "height: 100vh; overflow: hidden; height: 100dvh;" if logged_in? %><%= 'font-family: var(--user-font);' if logged_in? && current_user && font_stack_for(current_user) %>">
     <!-- Skip to main content - first focusable for keyboard/screen reader users -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <!-- Load theme immediately to prevent flash -->
@@ -80,30 +93,7 @@
 
 
 
-  <!-- Flash Messages -->
-  <% if notice %>
-    <div class="flash-message flash-message--success" role="alert" aria-live="polite" data-auto-dismiss="true">
-      ✅ <%= notice %>
-    </div>
-  <% end %>
-  
-  <% if alert %>
-    <div class="flash-message flash-message--error" role="alert" aria-live="assertive" data-auto-dismiss="true">
-      ⚠️ <%= alert %>
-    </div>
-  <% end %>
-  
-  <% if flash[:error] %>
-    <div class="flash-message flash-message--error" role="alert" aria-live="assertive" data-auto-dismiss="true">
-      ⚠️ <%= flash[:error] %>
-    </div>
-  <% end %>
-
-  <% if flash[:trial] %>
-    <div class="flash-message flash-message--trial" role="alert" aria-live="polite" data-auto-dismiss="true">
-      <%= flash[:trial] %>
-    </div>
-  <% end %>
+  <!-- Flash Messages Removed per User Request -->
 
     <main id="main-content">
       <%= yield %>
@@ -130,6 +120,34 @@
               </button>
               <button type="button" class="logout-modal__btn logout-modal__btn--primary" onclick="window.confirmLogout()">
                 Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Warning / Confirmation Modal (reusable for delete actions) -->
+    <div id="confirm-modal" class="confirm-modal" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="confirmModalLabel" aria-hidden="true" onclick="if(event.target === this) window.hideConfirmModal()">
+      <div class="confirm-modal__backdrop">
+        <div class="confirm-modal__dialog">
+          <div class="confirm-modal__content">
+            <div class="confirm-modal__icon" aria-hidden="true">
+              <!-- Warning triangle icon -->
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+            </div>
+            <h2 class="confirm-modal__title" id="confirmModalLabel">Are you sure?</h2>
+            <p class="confirm-modal__message" id="confirmModalMessage">This action cannot be undone.</p>
+            <div class="confirm-modal__footer">
+              <button type="button" class="confirm-modal__btn confirm-modal__btn--no" onclick="window.hideConfirmModal()">
+                No
+              </button>
+              <button type="button" class="confirm-modal__btn confirm-modal__btn--yes" id="confirmModalYes">
+                Yes
               </button>
             </div>
           </div>
@@ -204,6 +222,48 @@
         form.appendChild(methodInput);
         document.body.appendChild(form);
         form.submit();
+      };
+
+      // Global confirm modal functions
+      window.showConfirmModal = function(options) {
+        // options: { message, onConfirm }
+        var modal = document.getElementById('confirm-modal');
+        if (!modal) return;
+
+        // Set custom message if provided
+        var msgEl = document.getElementById('confirmModalMessage');
+        if (msgEl && options && options.message) {
+          msgEl.textContent = options.message;
+        }
+
+        // Wire up the "Yes" button to run the confirm callback
+        var yesBtn = document.getElementById('confirmModalYes');
+        var newYes = yesBtn.cloneNode(true);
+        yesBtn.parentNode.replaceChild(newYes, yesBtn);
+        newYes.addEventListener('click', function() {
+          window.hideConfirmModal();
+          if (options && typeof options.onConfirm === 'function') {
+            options.onConfirm();
+          }
+        });
+
+        // Show modal
+        window._confirmModalPreviousFocus = document.activeElement;
+        modal.classList.add('show');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        newYes.focus();
+      };
+
+      window.hideConfirmModal = function() {
+        var modal = document.getElementById('confirm-modal');
+        if (!modal) return;
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        if (window._confirmModalPreviousFocus && window._confirmModalPreviousFocus.focus) {
+          window._confirmModalPreviousFocus.focus();
+        }
       };
 
       // Theme management functions
@@ -303,20 +363,7 @@
       }
       
       function setupFlashMessages() {
-        const flashMessages = document.querySelectorAll('.flash-message[data-auto-dismiss="true"]:not([data-timeout-set])');
-        flashMessages.forEach(function(message) {
-          message.setAttribute('data-timeout-set', 'true'); // Prevent multiple timeouts
-          setTimeout(function() {
-            if (message && message.parentNode) {
-              message.style.opacity = '0';
-              setTimeout(function() {
-                if (message && message.parentNode) {
-                  message.parentNode.removeChild(message);
-                }
-              }, 500); // Wait for fade animation to complete
-            }
-          }, 3000); // Show for 3 seconds
-        });
+        // Flash messages removed
       }
       
       // Initialize on DOM ready

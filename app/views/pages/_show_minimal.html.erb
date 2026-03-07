@@ -1,0 +1,133 @@
+<%# Minimal template: simple vertical todo list (default view) %>
+<!-- Todos List -->
+<div class="notebook-card">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-xl font-semibold">Todos (<%= @todos.count %>)</h2>
+    <% if current_user.free? %>
+      <div class="text-sm text-gray-700">
+        <span class="text-gray-600">
+          Unlimited todos
+        </span>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @todos.any? %>
+  <div class="space-y-3"
+       data-controller="sortable"
+       data-sortable-url-value="<%= reorder_todos_path %>">
+    <% @todos.each do |todo| %>
+
+    <div class="todo-item flex flex--align-start p-3 <%= 'todo-item--new' if flash[:new_todo_id] == todo.id %>"
+         data-sortable-target="item"
+         data-todo-id="<%= todo.id %>">
+      <%= form_with model: todo, method: :patch, url: todo_path(todo), local: true, class: "flex flex--align-center mr-3" do |form| %>
+      <div class="hand-checkbox <%= todo.completed? ? 'hand-checkbox--checked' : 'hand-checkbox--unchecked' %>"
+           onclick="this.closest('form').submit()"
+           role="button"
+           tabindex="0"
+           aria-label="<%= todo.completed? ? 'Mark as incomplete' : 'Mark as complete' %>">
+      </div>
+      <%= form.hidden_field :completed, value: !todo.completed %>
+      <% end %>
+
+      <!-- Drag handle -->
+      <div class="drag-handle mr-3 mt-1" aria-label="Drag to reorder" role="button" tabindex="0">
+        <svg class="w-4 h-4 text-gray-500" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 2v2H5V2h2zm0 4v2H5V6h2zm0 4v2H5v-2h2zm0 4v2H5v-2h2zm0 4v2H5v-2h2zM9 2v2h2V2H9zm0 4v2h2V6H9zm0 4v2h2v-2H9zm0 4v2h2v-2H9zm0 4v2h2v-2H9z"/>
+        </svg>
+      </div>
+
+      <div class="flex--grow">
+        <div class="todo-title font-medium <%= 'hand-strike-through text-gray-500' if todo.completed %>"
+            <% if flash[:new_todo_id] == todo.id %>
+              data-controller="typewriter"
+              data-typewriter-text-value="<%= todo.title %>"
+              data-typewriter-speed-value="75"
+              data-typewriter-delay-value="300"
+            <% end %>>
+          <% if flash[:new_todo_id] == todo.id %>
+            <!-- Text will be animated by typewriter controller -->
+          <% else %>
+            <%= todo.title %>
+          <% end %>
+        </div>
+        <% if todo.notes.present? %>
+        <p class="text-sm text-gray-700 mt-1 <%= 'line-through' if todo.completed %>"><%= todo.notes %></p>
+        <% end %>
+      </div>
+
+      <!-- Edit/Delete buttons for todos -->
+      <div class="flex space-x-2 ml-2 flex-shrink-0">
+        <!-- Edit button removed to simplify -->
+        <%= link_to todo_path(todo),
+              method: :delete,
+              data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this task?" },
+              class: "text-red-600 hover:text-red-800 text-sm font-medium hand-underline hand-underline--red flex flex--align-center p-1",
+              title: "Delete todo",
+              "aria-label" => "Delete todo: #{todo.title}" do %>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+          </svg>
+          <span class="hidden md:inline ml-1">Delete</span>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+  <% end %>
+
+  <!-- Collapsible Add Todo Form -->
+  <div class="mt-6">
+    <button id="add-todo-trigger" class="add-todo--collapsed w-full text-left" onclick="toggleAddTodo()" aria-label="Add a new todo">
+      <p class="text-gray-700">✏️ Add a new todo...</p>
+    </button>
+
+    <div id="add-todo-form" class="add-todo--expanded hidden form-slide-in">
+      <h2 class="text-lg font-semibold mb-4">Add New Todo</h2>
+      <%= form_with model: Todo.new, url: todos_path, local: true, class: "space-y-4" do |form| %>
+        <%= form.hidden_field :page_id, value: @page.id %>
+        <div>
+          <%= form.label :title, "What needs to be done?", class: "form-label" %>
+          <%= form.text_field :title, class: "form-input", placeholder: "Enter task name", required: true %>
+        </div>
+
+        <div>
+          <%= form.label :notes, "Additional notes (optional)", class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= form.text_area :notes, class: "form-input w-full pulse-focus", placeholder: "Additional notes (optional)", rows: 2, style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
+        </div>
+
+        <div class="flex space-x-3">
+          <%= form.submit "Add Todo", class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline--blue cursor-pointer bg-transparent border-0" %>
+          <button type="button" onclick="toggleAddTodo()" class="text-gray-600 hover:text-gray-800 font-medium hand-underline hand-underline--gray cursor-pointer bg-transparent border-0">Cancel</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <% if @todos.empty? %>
+    <div class="text-center py-8">
+      <p class="text-gray-500">📝 No todos yet. Click above to add your first one!</p>
+    </div>
+  <% end %>
+</div>
+
+<script>
+function toggleAddTodo() {
+  const trigger = document.getElementById('add-todo-trigger');
+  const form = document.getElementById('add-todo-form');
+  if (trigger && form) {
+    if (form.classList.contains('hidden')) {
+      form.classList.remove('hidden');
+      trigger.classList.add('hidden');
+      const input = form.querySelector('input[name="todo[title]"]');
+      if (input) input.focus();
+    } else {
+      form.classList.add('hidden');
+      trigger.classList.remove('hidden');
+      const f = form.querySelector('form');
+      if (f) f.reset();
+    }
+  }
+}
+</script>

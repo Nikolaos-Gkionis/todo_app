@@ -46,6 +46,26 @@ module ApplicationHelper
     MOTIVATIONAL_PHRASES.sample
   end
 
+  # Font stack for preferences (default / serif / sans_serif / system_ui / georgia / menlo)
+  def font_stack_for(user)
+    return nil unless user
+
+    case user.font_family.to_s
+    when "serif"
+      "'Lora', Georgia, 'Times New Roman', serif"
+    when "sans_serif"
+      "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+    when "system_ui"
+      "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    when "georgia"
+      "Georgia, 'Times New Roman', serif"
+    when "menlo"
+      "'Menlo', 'Courier New', Courier, monospace"
+    else
+      nil # default = use body's handwritten font
+    end
+  end
+
   # Get current theme from session or default to classic
   def current_theme
     session[:theme] || "classic"

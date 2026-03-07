@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_02_151948) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_06_163400) do
   create_table "migration_statuses", force: :cascade do |t|
     t.string "migration_type", null: false
     t.string "status", default: "pending", null: false
@@ -34,6 +34,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_02_151948) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "template", default: "minimal", null: false
+    t.integer "position"
     t.index ["user_id"], name: "index_pages_on_user_id"
   end
 
@@ -41,11 +43,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_02_151948) do
     t.string "title"
     t.text "notes"
     t.boolean "completed"
-    t.integer "page_id", null: false
+    t.integer "page_id"
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "due_date"
+    t.integer "user_id", null: false
+    t.boolean "bold"
+    t.string "highlight_color"
+    t.string "recurrence_rule"
     t.index ["page_id"], name: "index_todos_on_page_id"
+    t.index ["user_id"], name: "index_todos_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -63,6 +71,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_02_151948) do
     t.string "remember_token"
     t.datetime "remember_token_expires_at"
     t.integer "download_count", default: 0
+    t.string "accent_color"
+    t.string "font_family", default: "default", null: false
+    t.string "app_name"
+    t.string "app_title", default: "TODO-IT", null: false
+    t.boolean "roll_over", default: true, null: false
     t.index ["device_downloaded"], name: "idx_users_device_downloaded"
     t.index ["download_token"], name: "idx_users_download_token"
     t.index ["trial_expires_at"], name: "idx_users_trial_expires"
@@ -71,4 +84,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_02_151948) do
 
   add_foreign_key "pages", "users"
   add_foreign_key "todos", "pages"
+  add_foreign_key "todos", "users"
 end

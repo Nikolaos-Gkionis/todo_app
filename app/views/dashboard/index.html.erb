@@ -1,0 +1,310 @@
+<%# Focus mode: when view_days == 1, hide nav/title/FAB, center day, show pomodoro %>
+<% if (@view_days || 7) == 1 %>
+  <%= content_for :body_class, "focus-mode" %>
+<% end %>
+
+<div class="dashboard<%= ' dashboard--focus-mode lists-collapsed' if (@view_days || 7) == 1 %>">
+  <%# ── Header (hidden in focus mode) ── %>
+  <header class="dashboard__header<%= ' dashboard__header--hidden' if (@view_days || 7) == 1 %>" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; margin-bottom: 20px;">
+    <div class="dashboard__header-left" style="display: flex; gap: 15px; align-items: center;">
+      <!-- Search functionality removed per user request -->
+    </div>
+    <div class="dashboard__header-center" style="font-size: 1.5rem; font-weight: 800; letter-spacing: 0.1em; color: #7c6cc4;">
+      <%# Clickable app title — hover to reveal edit hint, click to open rename modal %>
+      <span id="app-title-display"
+            title="Click to rename"
+            style="cursor: pointer; position: relative; transition: opacity 0.2s;"
+            onmouseenter="this.querySelector('.app-title-edit-hint').style.opacity='1'"
+            onmouseleave="this.querySelector('.app-title-edit-hint').style.opacity='0'"
+            onclick="document.getElementById('app-title-dialog').showModal()">
+        <%= current_user.app_title %>
+        <span class="app-title-edit-hint"
+              style="opacity: 0; transition: opacity 0.2s; font-size: 0.65rem; font-weight: 500; color: #aaa; margin-left: 4px; vertical-align: middle;">
+          &#9998;
+        </span>
+      </span>
+    </div>
+    <div class="dashboard__header-right" style="display: flex; gap: 20px; align-items: center;">
+      <div style="display: flex; gap: 12px; color: #888; font-weight: bold; font-size: 1.2rem; align-items: center;">
+        <%= link_to "&laquo;".html_safe, app_root_path(start_date: @start_date - @view_days.days), style: "background:none; border:none; cursor:pointer; color:inherit; text-decoration:none;" %>
+        <%= link_to "&lsaquo;".html_safe, app_root_path(start_date: @start_date - 1.day), style: "background:none; border:none; cursor:pointer; color:inherit; text-decoration:none;" %>
+        <%= link_to "TODAY", app_root_path, style: "font-size: 0.8rem; font-weight: 800; color: inherit; text-decoration: none; padding: 0 5px;" %>
+        <%= link_to "&rsaquo;".html_safe, app_root_path(start_date: @start_date + 1.day), style: "background:none; border:none; cursor:pointer; color:inherit; text-decoration:none;" %>
+        <%= link_to "&raquo;".html_safe, app_root_path(start_date: @start_date + @view_days.days), style: "background:none; border:none; cursor:pointer; color:inherit; text-decoration:none;" %>
+      </div>
+    </div>
+  </header>
+
+  <%# ── Week View (60% height; centered single column in focus mode) ── %>
+  <div class="dashboard__week-view dashboard__week-view--<%= @view_days == 1 ? 'focus' : 'multi' %>" style="grid-template-columns: repeat(<%= @view_days %>, 1fr);">
+    <% @week_dates.each do |date| %>
+      <%
+        is_today = date == Time.current.to_date
+        day_todos = (@todos_by_date[date] || []).sort_by { |t| [t.completed? ? 1 : 0, t.position] }
+      %>
+      <div class="week-col<%= ' week-col--today' if is_today %>">
+        <div class="week-col__header">
+          <span class="week-col__date"><%= date.strftime('%-d %b %Y').upcase %></span>
+          <span class="week-col__day<%= ' week-col__day--today' if is_today %>"><%= date.strftime('%A').upcase %></span>
+        </div>
+
+        <div class="week-col__items"
+             data-controller="drag"
+             data-drag-date="<%= date %>"
+             id="todos_date_<%= date %>">
+          <% day_todos.each do |todo| %>
+            <%= render "todos/todo", todo: todo %>
+          <% end %>
+        </div>
+
+        <div class="week-col__add">
+          <%= form_with model: Todo.new, url: todos_path, local: false, class: "todo-form" do |form| %>
+            <%= form.hidden_field :due_date, value: date %>
+            <%= form.text_field :title, class: "todo-input", autocomplete: "off" %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <%# ── Custom Lists (fill remaining height; replaced by pomodoro in focus mode) ── %>
+  <% focus_mode = (@view_days || 7) == 1 %>
+  <div class="dashboard__lists<%= ' dashboard__lists--focus' if focus_mode %>" data-controller="<%= focus_mode ? '' : 'collapsible-list' %>">
+    <% if focus_mode %>
+      <%# ── Focus mode: Pomodoro panel + exit button (replaces lists) ── %>
+      <div class="focus-mode__pomodoro" data-controller="pomodoro" data-pomodoro-duration-value="25">
+        <div class="pomodoro__controls">
+          <div class="pomodoro__durations">
+            <button type="button" class="pomodoro__duration-btn" data-action="click->pomodoro#setDuration" data-pomodoro-minutes-param="15">15 min</button>
+            <button type="button" class="pomodoro__duration-btn pomodoro__duration-btn--active" data-action="click->pomodoro#setDuration" data-pomodoro-minutes-param="25">25 min</button>
+            <button type="button" class="pomodoro__duration-btn" data-action="click->pomodoro#setDuration" data-pomodoro-minutes-param="45">45 min</button>
+          </div>
+          <div class="pomodoro__timer-row">
+            <span class="pomodoro__display" data-pomodoro-target="display">25:00</span>
+            <button type="button" class="pomodoro__play-btn" data-action="click->pomodoro#toggle" data-pomodoro-target="playBtn" aria-label="Play">▶</button>
+            <button type="button" class="pomodoro__pause-btn" data-action="click->pomodoro#toggle" data-pomodoro-target="pauseBtn" aria-label="Pause" style="display:none;">⏸</button>
+          </div>
+        </div>
+        <%= link_to "Exit focus mode", app_root_path(days: 7), class: "focus-mode__exit", data: { turbo_action: "replace" } %>
+      </div>
+      <%# Pomodoro completion modal (only in focus mode) %>
+      <dialog id="pomodoro-done-modal" class="pomodoro-done-modal" onclick="if(event.target===this)this.close()">
+        <div class="pomodoro-done-modal__content" onclick="event.stopPropagation()">
+          <h2 class="pomodoro-done-modal__title">Well done!</h2>
+          <p class="pomodoro-done-modal__text">You completed a focus session. Take a short break.</p>
+          <button type="button" class="pomodoro-done-modal__btn" onclick="document.getElementById('pomodoro-done-modal').close()">OK</button>
+        </div>
+      </dialog>
+    <% elsif @pages.any? %>
+
+      <%# Scrollable column bodies (task lists) — flex:1 to fill space above the title bar %>
+      <div class="lists__body" data-collapsible-list-target="content">
+        <div class="lists__columns" data-controller="drag" data-drag-lists="true">
+          <% @pages.each do |page| %>
+            <div class="lists__column"
+                 data-page-id="<%= page.id %>"
+                 data-controller="drag"
+                 data-drag-page-id="<%= page.id %>"
+                 id="todos_page_<%= page.id %>">
+              <% page.todos.ordered.each do |todo| %>
+                <%= render "todos/todo", todo: todo %>
+              <% end %>
+              <div class="lists__column-add">
+                <%= form_with model: Todo.new, url: todos_path, local: false, class: "todo-form" do |form| %>
+                  <%= form.hidden_field :page_id, value: page.id %>
+                  <%= form.text_field :title, class: "todo-input", autocomplete: "off" %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <%# Sticky bottom bar: chevron | list title strip (scrollable) | + button %>
+      <div class="lists__titlebar" data-controller="list-scroll-arrows">
+        <%# Left: global collapse toggle %>
+        <button data-action="click->collapsible-list#toggle" data-collapsible-list-target="chevronBtn" title="Toggle lists" aria-label="Toggle lists" class="lists__titlebar-chevron">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" class="collapsible-list__chevron" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+
+        <%# Middle: scrollable list-title headers (draggable to reorder) + add button at end %>
+        <div class="lists__titlebar-names" data-controller="drag" data-drag-lists="true" data-list-scroll-arrows-target="scrollContainer" id="lists-titlebar-names">
+          <% @pages.each do |page| %>
+            <div class="lists__titlebar-col" data-page-id="<%= page.id %>" style="flex: 0 0 280px;">
+              <h3 class="lists__column-title" style="display:flex; justify-content:space-between; align-items:center; cursor:grab; margin:0;">
+                <span style="display:flex; align-items:center; gap:6px;">
+                  <span class="drag-handle" style="color:#ccc; cursor:grab; font-size:1.1rem; user-select:none;">&#8942;&#8942;</span>
+                  <%= page.name.upcase %>
+                </span>
+                <div style="position:relative;">
+                  <button aria-label="List options" style="background:none; border:none; cursor:pointer; font-size:1.1rem; color:#888; padding:0 4px;" onclick="document.getElementById('options-dialog-<%= page.id %>').showModal()">⋮</button>
+                  <dialog id="options-dialog-<%= page.id %>" style="padding:16px; border-radius:8px; border:1px solid #eee; box-shadow:0 4px 12px rgba(0,0,0,0.15); width:220px; z-index:100;">
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <span style="font-size:0.85rem; font-weight:600; color:#888;">LIST OPTIONS</span>
+                        <form method="dialog"><button style="background:none; border:none; cursor:pointer; font-size:1.2rem; line-height:1;">&times;</button></form>
+                      </div>
+                      <%= form_with model: page, url: page_path(page), method: :patch, local: true, style: "display:flex; flex-direction:column; gap:8px;" do |f| %>
+                        <%= f.text_field :name, class: "todo-input", placeholder: "Rename list...", style: "padding:8px; background:#fafafa; border-radius:4px;" %>
+                        <%= f.submit "Rename", style: "background:#7c6cc4; color:white; border:none; border-radius:4px; padding:6px; cursor:pointer; font-size:0.85rem;" %>
+                      <% end %>
+                      <hr style="border:none; border-top:1px solid #eee; margin:4px 0;">
+                      <%= form_with url: page_path(page), method: :delete, local: true, id: "delete-list-form-#{page.id}" do |f| %>
+                        <button type="button"
+                                onclick="document.getElementById('options-dialog-<%= page.id %>').close(); window.showConfirmModal({ message: 'This will permanently delete the list and all its todos. Are you sure?', onConfirm: function() { document.getElementById('delete-list-form-<%= page.id %>').submit(); } });"
+                                style="background:transparent; color:#e74c3c; border:1px solid #e74c3c; border-radius:4px; padding:6px; width:100%; cursor:pointer; font-size:0.85rem;">
+                          Delete List
+                        </button>
+                      <% end %>
+                    </div>
+                  </dialog>
+                </div>
+              </h3>
+            </div>
+          <% end %>
+          <%# + button scrolls with list headers, appears after last list %>
+          <button onclick="document.getElementById('new-list-dialog').showModal()" title="New list" aria-label="New list" class="lists__titlebar-add lists__titlebar-add--inline">+</button>
+        </div>
+
+        <%# Right: scroll arrows (visible only when list headers overflow) %>
+        <div class="lists__titlebar-scroll-arrows" data-list-scroll-arrows-target="arrows">
+          <button type="button" onclick="document.getElementById('lists-titlebar-names').scrollBy({left:-280,behavior:'smooth'})" title="Scroll left" aria-label="Scroll list headers left" class="lists__titlebar-scroll-btn">‹</button>
+          <button type="button" onclick="document.getElementById('lists-titlebar-names').scrollBy({left:280,behavior:'smooth'})" title="Scroll right" aria-label="Scroll list headers right" class="lists__titlebar-scroll-btn">›</button>
+        </div>
+      </div>
+
+    <% else %>
+      <div class="dashboard__empty-lists" style="display: flex; align-items: center; justify-content: flex-start; gap: 16px; padding: 24px 10px;">
+        <button onclick="document.getElementById('new-list-dialog').showModal()" title="New list" aria-label="New list" style="background: #f8e1c6; border:none; cursor:pointer; font-size: 1.8rem; color: #333; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">+</button>
+        <p class="dashboard__empty-text" style="color: #666; font-size: 1rem; margin: 0; font-weight: 500;">No any-time lists yet. Create your first list.</p>
+      </div>
+    <% end %>
+  </div>
+</div>
+<dialog id="new-list-dialog" style="padding: 24px; border-radius: 12px; border: none; box-shadow: 0 10px 25px rgba(0,0,0,0.2); width: 100%; max-width: 450px; margin: auto; font-family: var(--user-font, inherit);">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h3 style="margin: 0; font-size: 1.25rem; font-weight: 600; color: #333;">Create New List</h3>
+    <form method="dialog">
+      <button style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #888;">&times;</button>
+    </form>
+  </div>
+  
+  <%= form_with model: Page.new, local: true, class: "space-y-4" do |form| %>
+    <div>
+      <%= form.text_field :name, class: "w-full form-input", placeholder: "What's this list about?", required: true, autofocus: true, style: "padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; font-family: var(--user-font, inherit);" %>
+    </div>
+    
+    <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+      <form method="dialog" style="display: inline;">
+        <button type="submit" style="padding: 10px 16px; background: #f3f4f6; color: #4b5563; border: none; border-radius: 6px; font-weight: 500; cursor: pointer;">Cancel</button>
+      </form>
+      <%= form.submit "Create", style: "padding: 10px 20px; background: #7c6cc4; color: white; border: none; border-radius: 6px; font-weight: 500; cursor: pointer;" %>
+    </div>
+  <% end %>
+</dialog>
+
+<%# ── Rename App Title Modal ── %>
+<dialog id="app-title-dialog" style="padding: 24px; border-radius: 12px; border: none; box-shadow: 0 10px 25px rgba(0,0,0,0.2); width: 100%; max-width: 400px; margin: auto; font-family: var(--user-font, inherit);">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h3 style="margin: 0; font-size: 1.25rem; font-weight: 600; color: #333;">Rename Your App</h3>
+    <form method="dialog">
+      <button style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #888;">&times;</button>
+    </form>
+  </div>
+
+  <p style="margin: 0 0 16px; font-size: 0.85rem; color: #888;">
+    Give your app a custom name. This only changes the display title.
+  </p>
+
+  <form id="app-title-form" style="display: flex; flex-direction: column; gap: 16px;">
+    <input type="text"
+           id="app-title-input"
+           value="<%= current_user.app_title %>"
+           maxlength="30"
+           required
+           autofocus
+           style="padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; font-family: var(--user-font, inherit);">
+
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <span id="app-title-char-count" style="font-size: 0.75rem; color: #aaa;"><%= current_user.app_title.length %>/30</span>
+      <div style="display: flex; gap: 12px;">
+        <button type="button" onclick="document.getElementById('app-title-dialog').close()" style="padding: 10px 16px; background: #f3f4f6; color: #4b5563; border: none; border-radius: 6px; font-weight: 500; cursor: pointer;">Cancel</button>
+        <button type="submit" id="app-title-save-btn" style="padding: 10px 20px; background: #7c6cc4; color: white; border: none; border-radius: 6px; font-weight: 500; cursor: pointer;">Save</button>
+      </div>
+    </div>
+  </form>
+</dialog>
+
+<%# ── App Title Rename Script ── %>
+<script>
+  (function() {
+    // Wait for DOM to be ready, then wire up the rename form
+    function setupAppTitleRename() {
+      var form    = document.getElementById('app-title-form');
+      var input   = document.getElementById('app-title-input');
+      var counter = document.getElementById('app-title-char-count');
+      var display = document.getElementById('app-title-display');
+      var dialog  = document.getElementById('app-title-dialog');
+      var saveBtn = document.getElementById('app-title-save-btn');
+
+      if (!form || !input) return;
+
+      // Live character counter
+      input.addEventListener('input', function() {
+        counter.textContent = input.value.length + '/30';
+      });
+
+      // Reset input value each time the dialog opens
+      dialog.addEventListener('close', function() {
+        // Nothing needed — we update the input on successful save
+      });
+
+      // Submit handler — PATCH to settings endpoint via fetch
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        var newTitle = input.value.trim();
+        if (newTitle.length === 0 || newTitle.length > 30) return;
+
+        // Disable button while saving
+        saveBtn.disabled = true;
+        saveBtn.textContent = 'Saving…';
+
+        var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        fetch('<%= settings_path %>', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': csrfToken,
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({ user: { app_title: newTitle } })
+        })
+        .then(function(response) { return response.json(); })
+        .then(function(data) {
+          if (data.status === 'success') {
+            // Update the visible title on the page without a reload
+            var titleSpan = display.childNodes[0];
+            titleSpan.textContent = newTitle + ' ';
+            dialog.close();
+          } else {
+            alert('Could not save: ' + (data.errors || []).join(', '));
+          }
+        })
+        .catch(function() {
+          alert('Something went wrong. Please try again.');
+        })
+        .finally(function() {
+          saveBtn.disabled = false;
+          saveBtn.textContent = 'Save';
+        });
+      });
+    }
+
+    // Bind on initial load and after Turbo navigation
+    document.addEventListener('DOMContentLoaded', setupAppTitleRename);
+    document.addEventListener('turbo:load', setupAppTitleRename);
+  })();
+</script>
+

@@ -4,28 +4,52 @@ class PagesController < ApplicationController
   before_action :set_page, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    # Only show current user's pages, ordered by newest first
-    @pages = current_user.pages.order(created_at: :desc)
+    redirect_to app_root_path
+  end
+
+  def reorder
+    page_ids = params[:page_ids]
+    if page_ids.present?
+      page_ids.each_with_index do |id, index|
+        current_user.pages.where(id: id).update_all(position: index + 1)
+      end
+      render json: { success: true }
+    else
+      render json: { success: false }, status: :bad_request
+    end
   end
 
   def show
     # @page is set by before_action
     @todos = @page.todos.ordered.where.not(id: nil)  # Get saved todos in position order
     @new_todo = @page.todos.build                    # New todo for the form
+
+    # Calendar template: prepare week dates and grouped todos
+    if @page.template == "calendar"
+      today = Time.current.to_date
+      @week_start = today.beginning_of_week(:monday)
+      @week_end = @week_start + 6.days
+      @week_dates = (@week_start..@week_end).to_a
+      # Todos with due_date in this week, grouped by date
+      @todos_by_date = @todos.select { |t| t.due_date.present? }.group_by(&:due_date)
+      @unscheduled_todos = @todos.reject(&:due_date)
+      # Index of today for mobile scroll (0=Monday)
+      @today_index = @week_dates.index(today) || 0
+    end
   end
 
   def new
-    # Create new page for current user
-    @page = current_user.pages.build
+    # Create new page for current user (template defaults to minimal)
+    @page = current_user.pages.build(template: "minimal")
   end
 
   def create
     # Check if user can create more pages
     unless current_user.can_create_page?
       if current_user.trial_expired? && !current_user.device_downloaded?
-        redirect_to pages_path, alert: "Your trial has expired. Please download the app to continue creating pages."
+        redirect_to app_root_path, alert: "Your trial has expired. Please download the app to continue creating pages."
       else
-        redirect_to pages_path, alert: "You've reached the page limit. Download the app for unlimited pages!"
+        redirect_to app_root_path, alert: "You've reached the page limit. Download the app for unlimited pages!"
       end
       return
     end
@@ -34,7 +58,7 @@ class PagesController < ApplicationController
     @page = current_user.pages.build(page_params)
 
     if @page.save
-      redirect_to pages_path, notice: "Page was successfully created."
+      redirect_to app_root_path, notice: "Page was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -58,7 +82,7 @@ class PagesController < ApplicationController
   def destroy
     # @page is set by before_action
     @page.destroy
-    redirect_to pages_path, notice: "Page was successfully deleted."
+    redirect_to app_root_path, notice: "Page was successfully deleted."
   end
 
   # Offline page for service worker
@@ -74,6 +98,6 @@ class PagesController < ApplicationController
   end
 
   def page_params
-    params.require(:page).permit(:name, :description, :cover_color)
+    params.require(:page).permit(:name, :description, :cover_color, :template)
   end
 end
