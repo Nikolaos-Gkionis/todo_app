@@ -27,7 +27,9 @@
         </span>
       </span>
     </div>
-    <div class="dashboard__header-right" style="display: flex; gap: 20px; align-items: center;">
+    <div class="dashboard__header-right dashboard__nav-row" style="display: flex; gap: 12px; color: #888; font-weight: bold; font-size: 1.2rem; align-items: center;">
+      <%= link_to "&laquo;".html_safe, app_root_path(start_date: @start_date - 7.days, days: @view_days), class: "dashboard__nav-btn", "aria-label" => "Previous week", title: "Previous week" %>
+      <%= link_to "&lsaquo;".html_safe, app_root_path(start_date: @start_date - 1.day, days: @view_days), class: "dashboard__nav-btn", "aria-label" => "Previous day", title: "Previous day" %>
       <button type="button"
               class="calendar-picker__trigger"
               aria-label="Pick a date"
@@ -40,6 +42,8 @@
           <line x1="3" y1="10" x2="21" y2="10"></line>
         </svg>
       </button>
+      <%= link_to "&rsaquo;".html_safe, app_root_path(start_date: @start_date + 1.day, days: @view_days), class: "dashboard__nav-btn", "aria-label" => "Next day", title: "Next day" %>
+      <%= link_to "&raquo;".html_safe, app_root_path(start_date: @start_date + 7.days, days: @view_days), class: "dashboard__nav-btn", "aria-label" => "Next week", title: "Next week" %>
     </div>
   </header>
 

@@ -5861,6 +5861,20 @@ body.focus-mode [data-controller*="fab-navigation"] .fab {
 /* =================================
    CALENDAR PICKER MODAL
    ================================= */
+.dashboard__nav-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  padding: 4px 6px;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.dashboard__nav-btn:hover {
+  color: var(--user-accent, #3b82f6);
+}
+
 .calendar-picker__trigger {
   background: none;
   border: none;
@@ -6048,6 +6062,9 @@ body.focus-mode [data-controller*="fab-navigation"] .fab {
 }
 
 /* Dark theme overrides for calendar modal */
+.theme-dark .dashboard__nav-btn { color: #6272a4; }
+.theme-dark .dashboard__nav-btn:hover { color: #bd93f9; }
+.theme-dark .dashboard__nav-row { color: #6272a4; }
 .theme-dark .calendar-picker__trigger { color: #6272a4; }
 .theme-dark .calendar-picker__trigger:hover { color: #bd93f9; }
 .theme-dark .calendar-modal__title { color: #f8f8f2; }
