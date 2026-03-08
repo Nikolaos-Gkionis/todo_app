@@ -1,13 +1,15 @@
 <div id="todo_<%= todo.id %>"
      data-id="<%= todo.id %>"
-     class="todo-item<%= ' todo-item--done' if todo.completed? %><%= ' todo-item--bold' if todo.bold? %>"
-     <% if todo.highlight_color.present? %>style="background: <%= todo.highlight_color %>22; border-right: 3px solid <%= todo.highlight_color %>;"<% end %>>
+     data-controller="todo-actions"
+     data-todo-actions-todo-id-value="<%= todo.id %>"
+     class="todo-item<%= ' todo-item--done' if todo.completed? %><%= ' todo-item--bold' if todo.bold? %><%= ' todo-item--has-notes' if todo.notes.present? %>"
+     <% if todo.highlight_color.present? %>style="background: <%= todo.highlight_color %>22;"<% end %>>
 
   <%# Completion / title form %>
-  <%= form_with model: todo, method: :patch, local: false, class: "todo-item__form" do |form| %>
+  <%= form_with model: todo, method: :patch, local: false, class: "todo-item__form", data: { todo_actions_target: "completeForm" } do |form| %>
     <%= form.hidden_field :completed, value: !todo.completed %>
     <% is_recurring = todo.recurrence_rule.present? || todo.title.to_s.downcase.match?(/\bevery\s+(day|other day|weekday|week|other week|month|year)\b/) %>
-    <button type="submit" class="todo-item__title<%= ' todo-item__title--done' if todo.completed? %>" aria-label="<%= todo.completed? ? 'Mark as incomplete' : 'Mark as complete' %>">
+    <button type="submit" class="todo-item__title<%= ' todo-item__title--done' if todo.completed? %>" aria-label="<%= todo.completed? ? 'Mark as incomplete' : 'Mark as complete' %>" data-action="click->todo-actions#onTitleClick" data-todo-actions-target="titleBtn">
       <%= todo.title %>
       <% if is_recurring %>
         <svg aria-label="Recurring task" style="display:inline-block; margin-left:4px; vertical-align:middle;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2"><path d="M17 1l4 4-4 4"></path><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><path d="M7 23l-4-4 4-4"></path><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
@@ -15,9 +17,9 @@
     </button>
   <% end %>
 
-  <%# Actions + style toolbar %>
+  <%# Actions: toolbar (Bold, Star, Recurr, Notes) + Delete outside group %>
   <span class="todo-item__actions">
-    <%# Style mini-toolbar — shown on hover %>
+    <%# Style mini-toolbar — Bold, Star, Recurr, Notes (shown on hover; on mobile opens in modal) %>
     <span class="todo-item__toolbar" role="toolbar" aria-label="Style options">
       <%# Bold %>
       <%= form_with model: todo, method: :patch, local: false, class: "todo-toolbar__form" do |f| %>
@@ -27,13 +29,13 @@
         </button>
       <% end %>
 
-      <%# Highlight colour picker %>
+      <%# Highlight colour picker (Star) %>
       <span class="todo-toolbar__highlight-wrap" title="Highlight">
         <button type="button" class="todo-toolbar__btn todo-toolbar__btn--highlight" onclick="this.nextElementSibling.classList.toggle('todo-highlight-picker--open')" aria-label="Highlight colour">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="<%= todo.highlight_color.presence || 'none' %>" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         </button>
         <div class="todo-highlight-picker" role="listbox">
-          <% [nil, '#ef4444', '#f97316', '#eab308', '#22c55e', '#3b82f6', '#8b5cf6'].each do |color| %>
+          <% [nil, '#d1d5db', '#ef4444', '#f97316', '#eab308', '#22c55e', '#3b82f6', '#8b5cf6'].each do |color| %>
             <%= form_with model: todo, method: :patch, local: false do |f| %>
               <%= f.hidden_field :highlight_color, value: color.to_s %>
               <button type="submit"
@@ -67,25 +69,65 @@
         </div>
       </span>
 
-      <%# Delete %>
-      <%= link_to todo_path(todo),
-            data: { "turbo-method": :delete, confirm: "Delete?" },
-            class: "todo-item__delete",
-            title: "Delete",
-            "aria-label" => "Delete: #{todo.title}" do %>
-        ×
-      <% end %>
+      <%# Notes — inside toolbar at end (right) %>
+      <button type="button"
+              class="todo-item__notes-btn todo-toolbar__btn<%= ' todo-item__notes-btn--active' if todo.notes.present? %>"
+              id="notes-btn-<%= todo.id %>"
+              title="Notes"
+              aria-label="Open notes for: <%= todo.title %>"
+              onclick="window.dispatchEvent(new CustomEvent('open-notes-panel', { detail: { id: '<%= todo.id %>', title: '<%= j(todo.title) %>', notes: this.dataset.todoNotes } }))"
+              data-todo-notes="<%= h(todo.notes.to_s) %>">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+      </button>
     </span>
+
+    <%# Delete — outside toolbar group %>
+    <%= link_to todo_path(todo),
+          data: { "turbo-method": :delete, confirm: "Delete?" },
+          class: "todo-item__delete",
+          title: "Delete",
+          "aria-label" => "Delete: #{todo.title}" do %>
+      ×
+    <% end %>
   </span>
 
-  <%# Notes indicator — on its own when notes exist, right of toolbar to avoid touch accidents %>
-  <button type="button"
-          class="todo-item__notes-btn<%= ' todo-item__notes-btn--active' if todo.notes.present? %>"
-          id="notes-btn-<%= todo.id %>"
-          title="Notes"
-          aria-label="Open notes for: <%= todo.title %>"
-          onclick="window.dispatchEvent(new CustomEvent('open-notes-panel', { detail: { id: '<%= todo.id %>', title: '<%= j(todo.title) %>', notes: this.dataset.todoNotes } }))"
-          data-todo-notes="<%= h(todo.notes.to_s) %>">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
-  </button>
+  <%# Mobile: tiny options modal (Bold, Star, Recurr, Notes, Delete) — opened on single tap %>
+  <dialog id="todo-options-<%= todo.id %>" class="todo-options-modal" data-todo-actions-target="optionsModal" onclick="if(event.target===this)this.close()">
+    <div class="todo-options-modal__content" onclick="event.stopPropagation()">
+      <div class="todo-options-modal__toolbar">
+        <%# Duplicate toolbar content for modal — same actions %>
+        <%= form_with model: todo, method: :patch, local: false, class: "todo-toolbar__form" do |f| %>
+          <%= f.hidden_field :bold, value: !todo.bold %>
+          <button type="submit" class="todo-toolbar__btn<%= ' todo-toolbar__btn--active' if todo.bold? %>" title="Bold"><strong>B</strong></button>
+        <% end %>
+        <span class="todo-toolbar__highlight-wrap">
+          <button type="button" class="todo-toolbar__btn todo-toolbar__btn--highlight" onclick="this.nextElementSibling.classList.toggle('todo-highlight-picker--open')"><svg width="14" height="14" viewBox="0 0 24 24" fill="<%= todo.highlight_color.presence || 'none' %>" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>
+          <div class="todo-highlight-picker todo-highlight-picker--modal">
+            <% [nil, '#d1d5db', '#ef4444', '#f97316', '#eab308', '#22c55e', '#3b82f6', '#8b5cf6'].each do |color| %>
+              <%= form_with model: todo, method: :patch, local: false do |f| %>
+                <%= f.hidden_field :highlight_color, value: color.to_s %>
+                <button type="submit" class="todo-highlight-color<%= ' todo-highlight-color--active' if todo.highlight_color == color.to_s %>" style="background: <%= color || '#ffffff' %>; border: 1px solid #ccc;"><%= '✕' if color.nil? %></button>
+              <% end %>
+            <% end %>
+          </div>
+        </span>
+        <span class="todo-toolbar__recur-wrap">
+          <button type="button" class="todo-toolbar__btn<%= ' todo-toolbar__btn--active' if todo.recurrence_rule.present? %>" onclick="this.nextElementSibling.classList.toggle('todo-recur-picker--open')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></button>
+          <div class="todo-recur-picker">
+            <% [nil, 'every day', 'every weekday', 'every week', 'every month', 'every year'].each do |rule| %>
+              <%= form_with model: todo, method: :patch, local: false do |f| %>
+                <%= f.hidden_field :recurrence_rule, value: rule.to_s %>
+                <button type="submit" class="todo-recur-option<%= ' todo-recur-option--active' if todo.recurrence_rule == rule.to_s %>"><%= rule.nil? ? 'None' : rule.capitalize %></button>
+              <% end %>
+            <% end %>
+          </div>
+        </span>
+        <button type="button" class="todo-toolbar__btn<%= ' todo-item__notes-btn--active' if todo.notes.present? %>" onclick="document.getElementById('todo-options-<%= todo.id %>').close(); window.dispatchEvent(new CustomEvent('open-notes-panel', { detail: { id: '<%= todo.id %>', title: '<%= j(todo.title) %>', notes: document.getElementById('notes-btn-<%= todo.id %>').dataset.todoNotes } }))" title="Notes">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+        </button>
+        <%= link_to todo_path(todo), data: { "turbo-method": :delete, confirm: "Delete?" }, class: "todo-options-modal__delete", title: "Delete" do %>×<% end %>
+      </div>
+      <form method="dialog"><button type="submit" class="todo-options-modal__close">Close</button></form>
+    </div>
+  </dialog>
 </div>

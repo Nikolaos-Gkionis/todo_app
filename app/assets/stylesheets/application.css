@@ -1608,6 +1608,23 @@ input:-webkit-autofill:active {
   color: #f8f8f2;
 }
 
+.theme-dark .todo-options-modal__content {
+  background: #282a36;
+}
+
+.theme-dark .todo-options-modal__delete {
+  color: #6272a4;
+}
+
+.theme-dark .todo-options-modal__delete:hover {
+  color: #ff5555;
+}
+
+.theme-dark .todo-options-modal__close {
+  background: #44475a;
+  color: #f8f8f2;
+}
+
 /* ── Highlight colour picker ── */
 .theme-dark .todo-highlight-picker {
   background: #383a4e;
@@ -5623,10 +5640,11 @@ a.text-blue-800:hover {
 }
 
 .todo-item__delete {
-  font-size: 1rem;
-  color: #ccc;
+  font-size: 1.125rem;
+  color: #999;
   text-decoration: none;
   line-height: 1;
+  margin-left: 4px;
 }
 
 .todo-item__delete:hover {
@@ -6754,6 +6772,10 @@ body.focus-mode [data-controller*="fab-navigation"] .fab {
   margin-right: 4px;
 }
 
+.todo-item__toolbar .todo-item__notes-btn {
+  margin-left: 0;
+}
+
 .todo-item:hover .todo-item__toolbar {
   display: flex;
 }
@@ -6812,6 +6834,10 @@ body.focus-mode [data-controller*="fab-navigation"] .fab {
 }
 
 .todo-highlight-picker--open {
+  display: flex;
+}
+
+.todo-highlight-picker--modal.todo-highlight-picker--open {
   display: flex;
 }
 
@@ -7644,43 +7670,125 @@ body.focus-mode [data-controller*="fab-navigation"] .fab {
   transition: opacity 0.3s;
 }
 
-/* ── Notes icon: on its own when todo has notes, right of toolbar ── */
+/* ── Notes icon: inside toolbar at end (right) ── */
 .todo-item__notes-btn {
   background: none;
   border: none;
   cursor: pointer;
   padding: 3px 5px;
   border-radius: 4px;
-  color: #ccc;
+  color: #888;
   line-height: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  opacity: 0;
-  transition: opacity 0.15s, color 0.15s;
-  margin-left: 8px;
-}
-
-.todo-item:hover .todo-item__notes-btn {
-  opacity: 1;
+  transition: color 0.15s;
 }
 
 .todo-item__notes-btn:hover {
-  color: #888;
+  color: #333;
 }
 
-/* When todo has notes: always visible, clearly on its own */
 .todo-item__notes-btn--active {
-  opacity: 1;
   color: var(--user-accent, #7c6cc4);
-  margin-left: 12px;
 }
 
 .todo-item__notes-btn--active:hover {
-  opacity: 1;
   color: var(--user-accent, #7c6cc4);
   filter: brightness(0.85);
+}
+
+/* Subtle right border for todos with notes — user accent colour */
+.todo-item--has-notes {
+  border-right: 3px solid var(--user-accent, #3b82f6);
+}
+
+/* ── Todo options modal (mobile) ── */
+.todo-options-modal {
+  padding: 0;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  max-width: 92vw;
+  width: auto;
+  margin: auto;
+}
+
+.todo-options-modal::backdrop {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.todo-options-modal__content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.todo-options-modal__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.todo-options-modal__toolbar .todo-highlight-picker,
+.todo-options-modal__toolbar .todo-recur-picker {
+  z-index: 500;
+}
+
+.todo-options-modal__toolbar .todo-toolbar__btn,
+.todo-options-modal__toolbar .todo-highlight-color,
+.todo-options-modal__toolbar .todo-recur-option {
+  min-width: 36px;
+}
+
+.todo-options-modal__delete {
+  font-size: 1.25rem;
+  color: #999;
+  margin-left: auto;
+  padding: 4px 8px;
+}
+
+.todo-options-modal__delete:hover {
+  color: #e74c3c;
+}
+
+.todo-options-modal__close {
+  padding: 8px 16px;
+  background: #f3f4f6;
+  color: #4b5563;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+/* Mobile: show actions on tap instead of hover; single tap = options, double tap = complete */
+@media (max-width: 768px) {
+  .todo-item:hover .todo-item__actions {
+    opacity: 1;
+  }
+
+  .todo-item__actions {
+    opacity: 0.7;
+  }
+
+  .todo-item__toolbar {
+    margin-right: 2px;
+  }
+
+  .todo-toolbar__btn {
+    padding: 4px 6px;
+    min-width: 32px;
+  }
+
+  .todo-item__delete {
+    font-size: 1.125rem;
+    padding: 2px 4px;
+  }
 }
 
 /* ============= DARK THEME: NOTES ============= */
