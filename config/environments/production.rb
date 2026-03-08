@@ -55,8 +55,9 @@ Rails.application.configure do
   config.cache_store = :solid_cache_store
 
   # Replace the default in-process and non-durable queuing backend for Active Job.
-  config.active_job.queue_adapter = :solid_queue
-  config.solid_queue.connects_to = { database: { writing: :queue } }
+  # Use :async when Solid Queue is disabled (saves ~300MB; jobs run in-process, less reliable)
+  config.active_job.queue_adapter = ENV["SOLID_QUEUE_IN_PUMA"] == "true" ? :solid_queue : :async
+  config.solid_queue.connects_to = { database: { writing: :queue } } if ENV["SOLID_QUEUE_IN_PUMA"] == "true"
 
   # Email configuration for production
   # DigitalOcean blocks outbound SMTP (ports 25/465/587), so we use Brevo API (HTTPS) instead
