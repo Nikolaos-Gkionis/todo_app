@@ -4,6 +4,9 @@ service: todo_app
 # Name of the container image.
 image: nikolaosgkionis/todo_app
 
+# How long to wait for the app to become healthy (db:prepare + Rails boot + Solid Queue can take 60s+)
+deploy_timeout: 90
+
 # Deploy to these servers.
 servers:
   web:
@@ -20,6 +23,11 @@ servers:
 proxy:
   ssl: true
   host: todo-it.app
+  # Puma logs show "Listening on 0.0.0.0:3000" — proxy must match (Thruster may not be binding 80).
+  app_port: 3000
+  healthcheck:
+    path: /up
+    timeout: 60
 
 # Credentials for your image host.
 registry:

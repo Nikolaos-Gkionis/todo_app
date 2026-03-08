@@ -35,7 +35,8 @@ Rails.application.configure do
   config.force_ssl = true
 
   # Skip http-to-https redirect for the default health check endpoint.
-  # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
+  # Kamal/Traefik health checks use HTTP; without this, Rails redirects to HTTPS and the check fails.
+  config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
 
   # Log to STDOUT with the current request id as a default log tag.
   config.log_tags = [ :request_id ]
@@ -105,5 +106,6 @@ Rails.application.configure do
   # ]
   #
   # Skip DNS rebinding protection for the default health check endpoint.
-  # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  # Traefik may use IP or internal hostname for health checks; allow /up without host verification.
+  config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 end
