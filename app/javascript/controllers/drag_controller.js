@@ -128,5 +128,34 @@ export default class extends Controller {
             headers: { "X-CSRF-Token": csrfToken },
             body: formData
         })
+        .then(res => res.ok && res.json())
+        .then(data => {
+            // Sync the other list region so both stay in order without manual reload
+            if (data && data.success) {
+                this.syncOtherListsRegion(pageIds)
+            }
+        })
+    }
+
+    // When lists are reordered in one region (columns or titlebar), sync the other region's DOM
+    syncOtherListsRegion(pageIds) {
+        const columns = document.querySelector('.lists__columns')
+        const titlebar = document.getElementById('lists-titlebar-names')
+        if (!columns || !titlebar) return
+
+        const isTitlebar = this.element.id === 'lists-titlebar-names' || this.element.classList.contains('lists__titlebar-names')
+        const other = isTitlebar ? columns : titlebar
+
+        const pageChildren = Array.from(other.children).filter(el => el.dataset && el.dataset.pageId)
+        const otherChildren = Array.from(other.children).filter(el => !el.dataset || !el.dataset.pageId)
+
+        if (pageChildren.length === 0) return
+
+        const byId = Object.fromEntries(pageChildren.map(el => [el.dataset.pageId, el]))
+        pageIds.forEach(id => {
+            const el = byId[id]
+            if (el) other.appendChild(el)
+        })
+        otherChildren.forEach(el => other.appendChild(el))
     }
 }

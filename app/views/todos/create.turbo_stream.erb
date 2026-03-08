@@ -8,8 +8,8 @@
   <% end %>
 <% end %>
 
-<%# Find the specific target container and reset ONLY its form inputs, letting us add items rapidly! %>
-<%= turbo_stream.update "todo-form-reset-#{@todo.id}" do %>
+<%# Persistent target in layout; script resets the form in the column where the todo was just added %>
+<%= turbo_stream.update "turbo-form-reset-target" do %>
   <%# A small script included in stream payload ensures the closest local form gets cleared avoiding a full page wipe %>
   <script>
     (function() {

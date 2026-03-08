@@ -4,49 +4,6 @@ This document outlines the details and requirements for the four items planned f
 
 ---
 
-## 3. Hot-Reload Bug Fix
-
-### Current State
-- **Procfile.dev:** Only runs `web: bin/rails server`.
-- **Asset pipeline:** Propshaft (Rails default).
-- **JavaScript:** Importmap + Turbo + Stimulus.
-- **No explicit hot-reload setup:** No Guard, Listen, or livereload gems.
-
-### Likely "Hot-Reload Bug"
-- CSS or view changes require a manual browser refresh to appear.
-- Possible causes:
-  1. No file watcher for CSS/ERB.
-  2. Turbo Drive caching pages.
-  3. Propshaft/asset fingerprinting cache.
-  4. Service worker caching (PWA).
-
-### Requirements
-1. **Identify** the specific symptom (e.g. CSS, JS, or ERB not updating without refresh).
-2. **Fix** so that code changes are reflected without manual reload.
-
-### Implementation Options
-
-| Approach | Pros | Cons |
-|---------|------|------|
-| **Turbo morph / refresh** | Uses existing stack | May need explicit refresh triggers |
-| **Add `bin/dev` watcher** | Standard Rails pattern | Requires extra process |
-| **LiveReload / guard-livereload** | Full reload on change | Adds gems and setup |
-| **Rails 8 default `bin/dev`** | Simple if supported | Check current Rails 8 defaults |
-
-### Files to Inspect
-- `Procfile.dev` – what runs in dev.
-- `config/environments/development.rb` – asset and cache settings.
-- Turbo Drive settings (e.g. `data-turbo-permanent`).
-- Service worker (`app/views/pwa/service-worker.js`) – may cache assets.
-
-### Recommended Next Steps
-1. Reproduce the bug (describe when changes don’t appear).
-2. Check if `stylesheet_link_tag` uses `data-turbo-track="reload"` (it does in `application.html.erb`).
-3. Consider adding a CSS watcher to `Procfile.dev` (e.g. via `listen` or `cssbundling-rails` if adopted).
-4. Verify development mode disables aggressive caching.
-
----
-
 ## 4. Stripe to Paddle Migration
 
 ### Current Stripe Integration

@@ -7,6 +7,7 @@ class TodosController < ApplicationController
 
     if @todo.save
       respond_to do |format|
+        format.turbo_stream
         format.html { redirect_back fallback_location: app_root_path, notice: "Todo added!" }
       end
     else
@@ -30,6 +31,7 @@ class TodosController < ApplicationController
         replicate_recurring_todos(@todo)
       end
       respond_to do |format|
+        format.turbo_stream
         format.html { redirect_back fallback_location: app_root_path, notice: "Todo updated." }
         format.json { render json: { status: "success", id: @todo.id } }
       end
@@ -44,6 +46,7 @@ class TodosController < ApplicationController
   def destroy
     @todo.destroy
     respond_to do |format|
+      format.turbo_stream
       format.html { redirect_back fallback_location: app_root_path, notice: "Todo deleted." }
     end
   end
