@@ -40,8 +40,8 @@
     </div>
   </div>
 
-  <!-- Mobile Full-Screen Menu -->
-  <div class="mobile-menu hidden" id="mobile-menu" aria-hidden="true">
+  <!-- Mobile Full-Screen Menu (inline bg fallback if CSS fails to load) -->
+  <div class="mobile-menu hidden" id="mobile-menu" aria-hidden="true" style="background-color: #ffffff;">
     <div class="mobile-menu__header">
       <%= link_to root_path, class: "flex items-center" do %>
         <div class="logo-checkbox mr-3"></div>

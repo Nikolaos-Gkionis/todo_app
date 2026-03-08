@@ -25,6 +25,8 @@ proxy:
   host: todo-it.app
   # Puma logs show "Listening on 0.0.0.0:3000" — proxy must match (Thruster may not be binding 80).
   app_port: 3000
+  # Increase timeout; 502s often caused by proxy giving up before app responds
+  response_timeout: 60
   healthcheck:
     path: /up
     timeout: 60
@@ -51,14 +53,14 @@ env:
   clear:
     # Run the Solid Queue Supervisor inside the web server's Puma process to do jobs.
     # When you start using multiple servers, you should split out job processing to a dedicated machine.
-    # TEMP: Disabled to reduce memory during boot on 2GB droplet (use :async in production.rb)
-    SOLID_QUEUE_IN_PUMA: false
+    # Re-enabled now that droplet is upsized (was disabled for 2GB memory)
+    SOLID_QUEUE_IN_PUMA: true
 
     # Set number of processes dedicated to Solid Queue (default: 1)
     # JOB_CONCURRENCY: 3
 
-    # Set number of cores available to the application on each server (default: 1).
-    # WEB_CONCURRENCY: 2
+    # 2 Puma workers for better throughput (reduces 502s under load)
+    WEB_CONCURRENCY: 2
 
     # Match this to any external database server to configure Active Record correctly
     # Use todo_app-db for a db accessory server on same machine via local kamal docker network.
