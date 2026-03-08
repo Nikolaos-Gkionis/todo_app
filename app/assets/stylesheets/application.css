@@ -1098,7 +1098,7 @@ body.body--font-handwritten {
    NOTEBOOK THEME COMPONENTS (BEM)
    ================================= */
 
-/* Notebook background patterns - now plain white for minimal look */
+/* Notebook background - Classic theme: plain white */
 .notebook-background {
   background-color: #ffffff;
 }
@@ -1377,9 +1377,11 @@ input:-webkit-autofill:active {
   background-size: 20px 20px;
 }
 
-/* Theme 4: Vintage Paper */
+/* Theme 4: Vintage Paper — warm dotted grid on cream */
 .theme-vintage {
   background-color: #FDFBF7;
+  background-image: radial-gradient(circle, #d4af87 1px, transparent 1px);
+  background-size: 20px 20px;
   color: #3e2723;
 }
 
@@ -1875,7 +1877,7 @@ input:-webkit-autofill:active {
 }
 
 .theme-btn--classic {
-  background: radial-gradient(circle, #ddd 30%, transparent 30%), #fefefe;
+  background: #e5e7eb;
 }
 
 .theme-btn--lined {
@@ -2398,6 +2400,7 @@ button.hand-underline:hover {
   box-shadow:
     0 10px 25px rgba(0, 0, 0, 0.1),
     0 0 0 1px rgba(255, 255, 255, 0.2);
+  font-family: var(--user-font, inherit);
 }
 
 /* Dark theme modal */
@@ -3336,6 +3339,8 @@ footer a:hover {
 
 .logout-modal.show {
   display: flex;
+  align-items: center;
+  justify-content: center;
   opacity: 1;
 }
 
@@ -3470,7 +3475,7 @@ footer a:hover {
 /* Keyboard focus - visible outline for modal buttons (WCAG 2.4.7) */
 .logout-modal__btn:focus-visible,
 .logout-modal__close:focus-visible {
-  outline: 2px solid #2563eb;
+  outline: 2px solid var(--user-accent, #3b82f6);
   outline-offset: 2px;
 }
 
@@ -3575,6 +3580,8 @@ footer a:hover {
 
 .confirm-modal.show {
   display: flex;
+  align-items: center;
+  justify-content: center;
   opacity: 1;
 }
 
@@ -3684,7 +3691,7 @@ footer a:hover {
 
 /* Focus styles (WCAG 2.4.7) */
 .confirm-modal__btn:focus-visible {
-  outline: 2px solid #2563eb;
+  outline: 2px solid var(--user-accent, #3b82f6);
   outline-offset: 2px;
 }
 
@@ -5821,23 +5828,26 @@ body.focus-mode [data-controller*="fab-navigation"] .fab {
   font-size: 1.75rem;
   font-weight: 800;
   color: #111;
+  font-family: var(--user-font, inherit);
 }
 
 .pomodoro-done-modal__text {
   margin: 0 0 24px;
   font-size: 1rem;
   color: #666;
+  font-family: var(--user-font, inherit);
 }
 
 .pomodoro-done-modal__btn {
   padding: 12px 32px;
-  background: var(--user-accent, #7c6cc4);
+  background: var(--user-accent, #3b82f6);
   color: #fff;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
+  font-family: var(--user-font, inherit);
 }
 
 .theme-dark .pomodoro__duration-btn { background: #44475a; border-color: #6272a4; color: #f8f8f2; }
@@ -6327,7 +6337,7 @@ body.focus-mode [data-controller*="fab-navigation"] .fab {
 }
 
 .theme-option--active {
-  border-color: #7c6cc4;
+  border-color: var(--user-accent, #3b82f6) !important;
 }
 
 .theme-option__label {
@@ -7023,6 +7033,7 @@ body.focus-mode [data-controller*="fab-navigation"] .fab {
   color: #333;
   flex: 1;
   text-align: center;
+  font-family: var(--user-font, inherit);
 }
 
 .calendar-picker__nav {
@@ -7539,6 +7550,7 @@ body.focus-mode [data-controller*="fab-navigation"] .fab {
   font-weight: 600;
   color: #222;
   margin: 0;
+  font-family: var(--user-font, inherit);
 }
 
 .notes-link-modal__close {
@@ -7564,11 +7576,11 @@ body.focus-mode [data-controller*="fab-navigation"] .fab {
   outline: none;
   transition: border-color 0.15s;
   box-sizing: border-box;
-  font-family: inherit;
+  font-family: var(--user-font, inherit);
 }
 
 .notes-link-modal__input:focus {
-  border-color: var(--user-accent, #7c6cc4);
+  border-color: var(--user-accent, #3b82f6);
 }
 
 .notes-link-modal__actions {
@@ -7585,6 +7597,7 @@ body.focus-mode [data-controller*="fab-navigation"] .fab {
   font-weight: 500;
   cursor: pointer;
   transition: background 0.15s;
+  font-family: var(--user-font, inherit);
 }
 
 .notes-link-modal__btn--cancel {
@@ -7597,7 +7610,7 @@ body.focus-mode [data-controller*="fab-navigation"] .fab {
 }
 
 .notes-link-modal__btn--insert {
-  background: var(--user-accent, #7c6cc4);
+  background: var(--user-accent, #3b82f6);
   color: #fff;
 }
 

@@ -99,19 +99,19 @@
       <%= yield %>
     </main>
 
-    <!-- Logout Confirmation Modal -->
+    <!-- Sign Out Confirmation Modal -->
     <div data-logout-target="modal" class="logout-modal" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="logoutModalLabel" aria-hidden="true" onclick="if(event.target === this) window.hideLogoutModal()">
       <div class="logout-modal__backdrop">
         <div class="logout-modal__dialog">
           <div class="logout-modal__content">
             <div class="logout-modal__header">
-              <h2 class="logout-modal__title" id="logoutModalLabel">Confirm Logout</h2>
+              <h2 class="logout-modal__title" id="logoutModalLabel">Confirm Sign Out</h2>
               <button type="button" class="logout-modal__close" onclick="window.hideLogoutModal()" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="logout-modal__body">
-              <p>Are you sure you want to logout?</p>
+              <p>Are you sure you want to sign out?</p>
               <p class="logout-modal__subtext">You'll need to sign in again to access your todos.</p>
             </div>
             <div class="logout-modal__footer">
@@ -119,7 +119,7 @@
                 Cancel
               </button>
               <button type="button" class="logout-modal__btn logout-modal__btn--primary" onclick="window.confirmLogout()">
-                Logout
+                Sign Out
               </button>
             </div>
           </div>
