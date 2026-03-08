@@ -3,7 +3,10 @@
   <%= content_for :body_class, "focus-mode" %>
 <% end %>
 
-<div class="dashboard<%= ' dashboard--focus-mode lists-collapsed' if (@view_days || 7) == 1 %>">
+<div class="dashboard<%= ' dashboard--focus-mode lists-collapsed' if (@view_days || 7) == 1 %>"
+     data-controller="date-picker"
+     data-date-picker-base-path-value="<%= app_root_path %>"
+     data-date-picker-start-date-value="<%= @start_date.strftime('%Y-%m-%d') %>">
   <%# ── Header (hidden in focus mode) ── %>
   <header class="dashboard__header<%= ' dashboard__header--hidden' if (@view_days || 7) == 1 %>" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; margin-bottom: 20px;">
     <div class="dashboard__header-left" style="display: flex; gap: 15px; align-items: center;">
@@ -25,13 +28,18 @@
       </span>
     </div>
     <div class="dashboard__header-right" style="display: flex; gap: 20px; align-items: center;">
-      <div style="display: flex; gap: 12px; color: #888; font-weight: bold; font-size: 1.2rem; align-items: center;">
-        <%= link_to "&laquo;".html_safe, app_root_path(start_date: @start_date - @view_days.days), style: "background:none; border:none; cursor:pointer; color:inherit; text-decoration:none;" %>
-        <%= link_to "&lsaquo;".html_safe, app_root_path(start_date: @start_date - 1.day), style: "background:none; border:none; cursor:pointer; color:inherit; text-decoration:none;" %>
-        <%= link_to "TODAY", app_root_path, style: "font-size: 0.8rem; font-weight: 800; color: inherit; text-decoration: none; padding: 0 5px;" %>
-        <%= link_to "&rsaquo;".html_safe, app_root_path(start_date: @start_date + 1.day), style: "background:none; border:none; cursor:pointer; color:inherit; text-decoration:none;" %>
-        <%= link_to "&raquo;".html_safe, app_root_path(start_date: @start_date + @view_days.days), style: "background:none; border:none; cursor:pointer; color:inherit; text-decoration:none;" %>
-      </div>
+      <button type="button"
+              class="calendar-picker__trigger"
+              aria-label="Pick a date"
+              title="Pick a date"
+              data-action="click->date-picker#open">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+      </button>
     </div>
   </header>
 
@@ -180,6 +188,35 @@
       </div>
     <% end %>
   </div>
+
+  <%# ── Calendar Picker Modal (inside dashboard for Stimulus target scope) ── %>
+  <dialog id="calendar-picker-modal"
+          class="calendar-modal"
+          data-date-picker-target="modal"
+          onclick="if(event.target===this)this.close()">
+    <div class="calendar-modal__content" onclick="event.stopPropagation()">
+      <div class="calendar-modal__header">
+        <h3 class="calendar-modal__title">Pick a date</h3>
+        <form method="dialog">
+          <button type="submit" class="calendar-modal__close" aria-label="Close">&times;</button>
+        </form>
+      </div>
+      <%= link_to "Today", app_root_path, class: "calendar-modal__today-link", data: { turbo_frame: "_top" } %>
+      <div class="calendar-modal__month-nav">
+        <button type="button" class="calendar-modal__month-btn" data-action="click->date-picker#monthPrev" aria-label="Previous month">&lsaquo;</button>
+        <span class="calendar-modal__month-label" data-date-picker-target="monthLabel">March 2025</span>
+        <button type="button" class="calendar-modal__month-btn" data-action="click->date-picker#monthNext" aria-label="Next month">&rsaquo;</button>
+      </div>
+      <div class="calendar-modal__grid" data-date-picker-target="grid" role="grid">
+        <%# Grid content is injected by Stimulus %>
+      </div>
+      <div class="calendar-modal__footer">
+        <form method="dialog">
+          <button type="submit" class="calendar-modal__cancel">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </dialog>
 </div>
 <dialog id="new-list-dialog" style="padding: 24px; border-radius: 12px; border: none; box-shadow: 0 10px 25px rgba(0,0,0,0.2); width: 100%; max-width: 450px; margin: auto; font-family: var(--user-font, inherit);">
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
