@@ -9,6 +9,16 @@ user = User.find_or_initialize_by(email_address: user_data['email_address'])
 user.name = user_data['name']
 user.password = user_data['password']
 user.password_confirmation = user_data['password'] if user.respond_to?(:password_confirmation=)
+# Trial status (when present in fake data)
+if user_data['trial_started_at']
+  user.trial_started_at = Time.zone.parse(user_data['trial_started_at'])
+end
+if user_data['trial_expires_at']
+  user.trial_expires_at = Time.zone.parse(user_data['trial_expires_at'])
+end
+if user_data.key?('device_downloaded')
+  user.device_downloaded = user_data['device_downloaded']
+end
 user.save!
 
 puts "Created user: #{user.email_address}"
@@ -25,14 +35,17 @@ data['pages'].each do |page_data|
   )
 
   page_data['todos'].each do |todo_data|
-    page.todos.create!(
+    attrs = {
       title: todo_data['title'],
-      completed: todo_data['completed'],
+      completed: todo_data['completed'] || false,
       position: todo_data['position'],
       user_id: user.id,
       notes: todo_data['notes'],
       highlight_color: todo_data['highlight_color']
-    )
+    }
+    attrs[:is_visual_break] = true if todo_data['is_visual_break']
+    attrs[:bold] = todo_data['bold'] if todo_data.key?('bold')
+    page.todos.create!(attrs)
   end
 end
 

@@ -6,6 +6,9 @@ Rails.application.configure do
   # Make code changes take effect immediately without server restart.
   config.enable_reloading = true
 
+  # Prevent asset caching in development so CSS/font changes appear immediately
+  config.public_file_server.headers = { "Cache-Control" => "no-cache, no-store, must-revalidate" }
+
   # Do not eager load code on boot.
   config.eager_load = false
 

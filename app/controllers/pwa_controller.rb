@@ -1,5 +1,7 @@
 class PwaController < ApplicationController
-  # Skip authentication for PWA files
+  # PWA install is restricted to paid users; trial users get 401
+  before_action :ensure_pwa_access!, only: [ :manifest, :service_worker ]
+  # Skip default require_login for these actions (we handle auth in ensure_pwa_access!)
   skip_before_action :require_login, only: [ :manifest, :service_worker ]
   # Skip CSRF protection for service worker (it's requested by the browser, not a form submission)
   skip_before_action :verify_authenticity_token, only: [ :service_worker ]
@@ -17,6 +19,12 @@ class PwaController < ApplicationController
   end
 
   private
+
+  def ensure_pwa_access!
+    # Must be logged in and have paid to install PWA
+    return head :unauthorized unless logged_in?
+    return head :unauthorized unless current_user.can_install_pwa?
+  end
 
   def manifest_data
     {

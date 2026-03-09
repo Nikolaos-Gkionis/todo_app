@@ -83,10 +83,13 @@ module TrialManageable
   end
 
   def mark_as_downloaded!
-    update!(
+    attrs = {
       device_downloaded: true,
       download_token: nil # Clear token after successful download
-    )
+    }
+    # Set paid_at on first payment (enables PWA install); safe if column not yet migrated
+    attrs[:paid_at] = (paid_at || Time.current) if respond_to?(:paid_at)
+    update!(attrs)
   end
 
   def trial_days_remaining

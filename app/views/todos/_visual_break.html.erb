@@ -1,4 +1,7 @@
-<%# Visual break: horizontal divider in list — styling only, no extra functionality %>
+<%# Visual break: section divider with optional title (grey, bold) — styling only %>
 <div class="todo-visual-break" data-turbo-frame="_top">
+  <% if todo.present? && todo.title.present? && todo.title.strip.present? %>
+    <div class="todo-visual-break__section"><%= todo.title.strip.upcase %></div>
+  <% end %>
   <hr class="todo-visual-break__line" />
 </div>

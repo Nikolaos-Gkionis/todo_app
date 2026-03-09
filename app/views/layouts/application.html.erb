@@ -10,8 +10,10 @@
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps %>
-    <%= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+    <%# PWA manifest: only for paid users (trial users cannot install) %>
+    <% if logged_in? && current_user&.can_install_pwa? %>
+      <%= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+    <% end %>
 
     <!-- Favicon and App Icons -->
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -25,13 +27,16 @@
     <meta property="og:description" content="Reduced mental clutter. Offline-first. Zero-Cloud. Private by design.">
     <meta property="og:type" content="website">
 
+    <%# Preconnect to fonts for snappy font switching %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <%# Custom BEM-based CSS system - no Tailwind needed! %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%# User accent & font (Advanced Settings) - only when logged in %>
     <% if logged_in? && current_user %>
       <style>
         :root {
-          --user-accent: <%= current_user.accent_color.presence || '#3b82f6' %>;
+          --user-accent: <%= current_user.accent_color.presence || '#9966CC' %>;
           <% if (stack = font_stack_for(current_user)) %>
           --user-font: <%= raw stack %>;
           <% else %>
@@ -384,7 +389,8 @@
       window.applyThemeGlobal = applyTheme;
     </script>
 
-    <!-- PWA Service Worker Registration -->
+    <%# PWA Service Worker: only for paid users (trial users cannot install) %>
+    <% if logged_in? && current_user&.can_install_pwa? %>
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
@@ -398,5 +404,6 @@
         });
       }
     </script>
+    <% end %>
   </body>
 </html>

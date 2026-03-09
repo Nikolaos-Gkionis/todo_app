@@ -1,57 +1,36 @@
 {
   "user": {
-    "name": "Morgan Boston",
-    "email_address": "morgan.boston@gmail.com",
-    "password": "password123"
+    "name": "Persephonie Gkionis",
+    "email_address": "persephonie@icloud.com",
+    "password": "Leanne123",
+    "trial_started_at": "2026-03-07T00:00:00Z",
+    "trial_expires_at": "2026-03-14T00:00:00Z",
+    "device_downloaded": false
   },
   "pages": [
     {
-      "name": "GROCERIES",
+      "name": "NOT YET",
       "position": 1,
       "todos": [
         {"title": "Oat milk", "completed": false, "position": 1},
         {"title": "Bananas & berries", "completed": false, "position": 2},
-        {"title": "Sourdough bread", "completed": true, "position": 3},
-        {"title": "Spinach & arugula", "completed": true, "position": 4},
-        {"title": "Cherry tomatoes", "completed": false, "position": 5}
-      ]
-    },
-    {
-      "name": "CAFES TO TRY",
-      "position": 2,
-      "todos": [
-        {"title": "Devoción", "completed": false, "position": 1, "notes": "<p>Williamsburg location — try their <strong>single-origin pour-over</strong>. <a href=\"https://devocion.com\">Menu here</a></p><ul><li>Best for: morning meetings</li><li>Outlets: limited</li></ul><!--subtasks:[{\"text\":\"Check opening hours\",\"done\":false},{\"text\":\"Book table for 2\",\"done\":false}]-->"},
-        {"title": "Sey Coffee", "completed": false, "position": 2},
-        {"title": "La Cabra", "completed": false, "position": 3, "notes": "<p><em>Danish roaster</em> — known for light roasts. Bring laptop for afternoon work.</p><!--subtasks:[{\"text\":\"Try their cardamom bun\",\"done\":false}]-->"},
-        {"title": "Maman", "completed": true, "position": 4}
-      ]
-    },
-    {
-      "name": "MOVIES TO WATCH",
-      "position": 3,
-      "todos": [
-        {"title": "Dune: Part Two", "completed": false, "position": 1, "notes": "<p>Seen Part 1 — <a href=\"https://www.imdb.com/title/tt15239678/\">IMDb</a>. Watch in IMAX if possible.</p><!--subtasks:[{\"text\":\"Check IMAX showtimes\",\"done\":false},{\"text\":\"Buy tickets ahead\",\"done\":false},{\"text\":\"Invite Jamie\",\"done\":true}]-->"},
-        {"title": "Oppenheimer", "completed": true, "position": 2},
-        {"title": "Past Lives", "completed": true, "position": 3},
-        {"title": "The Holdovers", "completed": false, "position": 4}
-      ]
-    },
-    {
-      "name": "GIFT IDEAS",
-      "position": 4,
-      "todos": [
-        {"title": "Candle for Mom", "completed": false, "position": 1, "notes": "<p>She likes <strong>vanilla & sandalwood</strong>. Check: Diptyque, Le Labo.</p>"},
-        {"title": "Coffee beans for Dave", "completed": false, "position": 2},
-        {"title": "Book for Sarah", "completed": false, "position": 3, "notes": "<p>Latest from <em>Maggie Shipstead</em> or similar literary fiction.</p><!--subtasks:[{\"text\":\"Browse Bookshop.org\",\"done\":false}]-->"}
-      ]
-    },
-    {
-      "name": "WORK PROJECTS",
-      "position": 5,
-      "todos": [
-        {"title": "Q2 roadmap draft", "completed": false, "position": 1, "highlight_color": "#8b5cf6"},
-        {"title": "Research competitors", "completed": false, "position": 2},
-        {"title": "Update team docs", "completed": true, "position": 3}
+        {"title": "Sourdough bread", "completed": false, "position": 3},
+        {"title": "MOVIES", "completed": false, "bold": true, "highlight_color": "#666666", "position": 4},
+        {"title": "Dune: Part Two", "completed": false, "position": 5},
+        {"title": "Past Lives", "completed": false, "position": 6},
+        {"title": "The Holdovers", "completed": false, "position": 7},
+        {"title": "HOMEWORK", "completed": false, "bold": true, "highlight_color": "#666666", "position": 8},
+        {"title": "Read Chapter 5", "completed": false, "position": 9},
+        {"title": "Math problem set", "completed": false, "position": 10},
+        {"title": "Essay draft", "completed": false, "position": 11},
+        {"title": "GIFT IDEAS", "completed": false, "bold": true, "highlight_color": "#666666", "position": 12},
+        {"title": "Candle for Mom", "completed": false, "position": 13},
+        {"title": "Book for Sarah", "completed": false, "position": 14},
+        {"title": "Devoción", "completed": false, "position": 15},
+        {"title": "Sey Coffee", "completed": false, "position": 16},
+        {"title": "WORK", "completed": false, "bold": true, "highlight_color": "#666666", "position": 17},
+        {"title": "Q2 roadmap draft", "completed": false, "position": 18, "highlight_color": "#9966CC"},
+        {"title": "Update team docs", "completed": false, "position": 19}
       ]
     }
   ],
@@ -63,81 +42,91 @@
         {"title": "Meal prep for week", "completed": true, "position": 2},
         {"title": "Grocery run", "completed": true, "position": 3},
         {"title": "Call parents", "completed": false, "position": 4},
-        {"title": "AFTERNOON", "completed": false, "bold": true, "highlight_color": "#6b7280", "position": 5},
-        {"title": "Read 1 hour", "completed": false, "position": 6, "notes": "<p>Currently on <strong>Project Hail Mary</strong>. <em>Chapter 12</em>.</p>"},
+        {"title": "AFTERNOON", "completed": false, "bold": true, "highlight_color": "#666666", "position": 5},
+        {"title": "Read 1 hour", "completed": false, "position": 6, "notes": "<p>Currently on <strong>Project Hail Mary</strong>.</p>"},
         {"title": "Plan next week", "completed": false, "position": 7},
-        {"title": "Evening yoga", "completed": false, "position": 8}
+        {"title": "Evening yoga", "completed": false, "position": 8},
+        {"title": "Review lecture notes", "completed": false, "position": 9},
+        {"title": "Gym @ 5 PM", "completed": false, "position": 10}
       ]
     },
     {
       "due_date": "2026-03-10",
       "todos": [
         {"title": "Morning run", "completed": true, "position": 1, "recurrence_rule": "every day"},
-        {"title": "Team standup", "completed": true, "position": 2, "highlight_color": "#8b5cf6", "recurrence_rule": "every weekday"},
+        {"title": "Team standup", "completed": true, "position": 2, "highlight_color": "#9966CC", "recurrence_rule": "every weekday"},
         {"title": "Review PRs", "completed": false, "position": 3},
-        {"title": "1:1 with Marcus", "completed": false, "position": 4, "highlight_color": "#22c55e"},
-        {"title": "LUNCH", "completed": false, "bold": true, "highlight_color": "#6b7280", "position": 5},
-        {"title": "Draft project proposal", "completed": false, "position": 6, "notes": "<p><strong>Outline:</strong></p><ul><li>Background & problem</li><li>Proposed solution</li><li>Timeline & resources</li><li>Success metrics</li></ul><!--subtasks:[{\"text\":\"Get stakeholder buy-in\",\"done\":false},{\"text\":\"Schedule review\",\"done\":false}]-->"},
-        {"title": "Sync with design team", "completed": false, "position": 7}
+        {"title": "1:1 with Marcus", "completed": false, "position": 4, "highlight_color": "#009933"},
+        {"title": "LUNCH", "completed": false, "bold": true, "highlight_color": "#666666", "position": 5},
+        {"title": "Draft project proposal", "completed": false, "position": 6},
+        {"title": "Sync with design team", "completed": false, "position": 7},
+        {"title": "Pick up dry cleaning", "completed": false, "position": 8},
+        {"title": "Cook dinner: salmon", "completed": false, "position": 9}
       ]
     },
     {
       "due_date": "2026-03-11",
       "todos": [
         {"title": "Morning run", "completed": true, "position": 1, "recurrence_rule": "every day"},
-        {"title": "Team standup", "completed": true, "position": 2, "highlight_color": "#8b5cf6", "recurrence_rule": "every weekday"},
-        {"title": "Client call @ 10", "completed": false, "position": 3, "highlight_color": "#3b82f6"},
+        {"title": "Team standup", "completed": true, "position": 2, "highlight_color": "#9966CC", "recurrence_rule": "every weekday"},
+        {"title": "Client call @ 10", "completed": false, "position": 3, "highlight_color": "#3366CC"},
         {"title": "Buy anniversary card", "completed": false, "position": 4},
-        {"title": "LATE AFTERNOON", "completed": false, "bold": true, "highlight_color": "#6b7280", "position": 5},
+        {"title": "LATE AFTERNOON", "completed": false, "bold": true, "highlight_color": "#666666", "position": 5},
         {"title": "Pick up kids from school", "completed": false, "position": 6},
-        {"title": "Cook dinner", "completed": false, "position": 7, "notes": "<p>Tonight: <strong>sheet-pan salmon</strong> with veggies. <a href=\"https://www.bonappetit.com/recipe/sheet-pan-salmon\">Recipe</a></p><!--subtasks:[{\"text\":\"Defrost salmon\",\"done\":true},{\"text\":\"Buy asparagus\",\"done\":false}]-->"},
-        {"title": "Gym @ 6 PM", "completed": false, "position": 8}
+        {"title": "Cook dinner", "completed": false, "position": 7},
+        {"title": "Gym @ 6 PM", "completed": false, "position": 8},
+        {"title": "Finish report", "completed": false, "position": 9}
       ]
     },
     {
       "due_date": "2026-03-12",
       "todos": [
         {"title": "Morning run", "completed": false, "position": 1, "recurrence_rule": "every day"},
-        {"title": "Team standup", "completed": false, "position": 2, "highlight_color": "#8b5cf6", "recurrence_rule": "every weekday"},
-        {"title": "Dentist 4:00 PM", "completed": false, "position": 3, "highlight_color": "#3b82f6"},
+        {"title": "Team standup", "completed": false, "position": 2, "highlight_color": "#9966CC", "recurrence_rule": "every weekday"},
+        {"title": "Dentist 4:00 PM", "completed": false, "position": 3, "highlight_color": "#3366CC"},
         {"title": "Review Q2 goals", "completed": false, "position": 4},
         {"title": "Submit expense report", "completed": false, "position": 5},
-        {"title": "MORNING FOCUS", "completed": false, "bold": true, "highlight_color": "#6b7280", "position": 6},
-        {"title": "Deep work: API design", "completed": false, "position": 7, "notes": "<p><em>Focus block — no meetings</em></p><ul><li>Auth endpoints</li><li>Rate limiting</li><li>Error responses</li></ul>"},
-        {"title": "Order pizza for movie night", "completed": false, "position": 8}
+        {"title": "MORNING FOCUS", "completed": false, "bold": true, "highlight_color": "#666666", "position": 6},
+        {"title": "Deep work: API design", "completed": false, "position": 7},
+        {"title": "Order pizza for movie night", "completed": false, "position": 8},
+        {"title": "Bank appointment 2 PM", "completed": false, "position": 9},
+        {"title": "Reply to client emails", "completed": false, "position": 10}
       ]
     },
     {
       "due_date": "2026-03-13",
       "todos": [
         {"title": "Pilates @ 8 AM", "completed": false, "position": 1},
-        {"title": "Team standup", "completed": false, "position": 2, "highlight_color": "#8b5cf6", "recurrence_rule": "every weekday"},
+        {"title": "Team standup", "completed": false, "position": 2, "highlight_color": "#9966CC", "recurrence_rule": "every weekday"},
         {"title": "Weekly review", "completed": false, "position": 3},
-        {"title": "EVENING", "completed": false, "bold": true, "highlight_color": "#6b7280", "position": 4},
-        {"title": "Movie night with friends", "completed": false, "position": 5, "notes": "<p>Hosting! <strong>Dune Part 2</strong> or <em>Poor Things</em>. Popcorn + drinks.</p><!--subtasks:[{\"text\":\"Clean living room\",\"done\":false},{\"text\":\"Set up projector\",\"done\":false}]-->"},
-        {"title": "Laundry", "completed": false, "position": 6}
+        {"title": "EVENING", "completed": false, "bold": true, "highlight_color": "#666666", "position": 4},
+        {"title": "Movie night with friends", "completed": false, "position": 5},
+        {"title": "Laundry", "completed": false, "position": 6},
+        {"title": "Pack for weekend trip", "completed": false, "position": 7},
+        {"title": "Call sister", "completed": false, "position": 8},
+        {"title": "Prepare presentation slides", "completed": false, "position": 9}
       ]
     },
     {
       "due_date": "2026-03-14",
       "todos": [
         {"title": "Sleep in (weekend!)", "completed": false, "position": 1},
-        {"title": "Bake sourdough", "completed": false, "position": 2, "notes": "<p>Using <a href=\"https://www.theperfectloaf.com\">The Perfect Loaf</a> recipe. <strong>Starter fed yesterday ✓</strong></p><!--subtasks:[{\"text\":\"Autolyse 30 min\",\"done\":false},{\"text\":\"Bulk ferment 4 hrs\",\"done\":false},{\"text\":\"Shape & cold proof\",\"done\":false}]-->"},
-        {"title": "HOUSE CLEANING", "completed": false, "bold": true, "highlight_color": "#6b7280", "position": 3},
+        {"title": "Bake sourdough", "completed": false, "position": 2},
+        {"title": "HOUSE CLEANING", "completed": false, "bold": true, "highlight_color": "#666666", "position": 3},
         {"title": "Vacuum living room", "completed": false, "position": 4},
         {"title": "Clean windows", "completed": false, "position": 5},
         {"title": "Mop kitchen", "completed": false, "position": 6},
-        {"title": "Brunch @ 11 AM", "completed": false, "position": 7, "highlight_color": "#eab308"}
+        {"title": "Brunch @ 11 AM", "completed": false, "position": 7, "highlight_color": "#CC9900"}
       ]
     },
     {
       "due_date": "2026-03-15",
       "todos": [
-        {"title": "Sunday hike @ 2 PM", "completed": false, "position": 1, "highlight_color": "#22c55e"},
+        {"title": "Sunday hike @ 2 PM", "completed": false, "position": 1, "highlight_color": "#009933"},
         {"title": "Meal prep", "completed": false, "position": 2, "recurrence_rule": "every week"},
         {"title": "Review calendar for week", "completed": false, "position": 3},
         {"title": "Reply to emails", "completed": false, "position": 4},
-        {"title": "WEEK PREP", "completed": false, "bold": true, "highlight_color": "#6b7280", "position": 5},
+        {"title": "WEEK PREP", "completed": false, "bold": true, "highlight_color": "#666666", "position": 5},
         {"title": "Set 3 priorities", "completed": false, "position": 6},
         {"title": "Evening wind-down", "completed": false, "position": 7}
       ]

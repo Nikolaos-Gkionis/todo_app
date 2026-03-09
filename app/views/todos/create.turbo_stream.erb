@@ -21,8 +21,9 @@
       // We know an element with id `todo_<%= @todo.id %>` was just inserted.
       const el = document.getElementById("todo_<%= @todo.id %>");
       if(el) {
-        const form = el.closest('.week-col, .lists__column').querySelector('form.todo-form');
-        if(form) {
+        const container = el.closest('.week-col, .lists__column, .not-yet-panel__list');
+        const form = container?.querySelector('form.todo-form');
+        if (form) {
           form.reset();
         }
       }

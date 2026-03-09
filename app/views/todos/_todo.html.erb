@@ -1,3 +1,5 @@
+<%# Web-safe, accessibility-friendly highlight colours: gray, red, orange, yellow, green, blue, purple %>
+<% highlight_colors = [nil, '#CCCCCC', '#CC3333', '#FF9933', '#CC9900', '#009933', '#3366CC', '#9966CC'] %>
 <div id="todo_<%= todo.id %>"
      data-id="<%= todo.id %>"
      data-controller="todo-actions"
@@ -35,7 +37,7 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="<%= todo.highlight_color.presence || 'none' %>" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         </button>
         <div class="todo-highlight-picker" role="listbox">
-          <% [nil, '#d1d5db', '#ef4444', '#f97316', '#eab308', '#22c55e', '#3b82f6', '#8b5cf6'].each do |color| %>
+          <% highlight_colors.each do |color| %>
             <%= form_with model: todo, method: :patch, local: false do |f| %>
               <%= f.hidden_field :highlight_color, value: color.to_s %>
               <button type="submit"
@@ -103,7 +105,7 @@
         <span class="todo-toolbar__highlight-wrap">
           <button type="button" class="todo-toolbar__btn todo-toolbar__btn--highlight" onclick="this.nextElementSibling.classList.toggle('todo-highlight-picker--open')"><svg width="14" height="14" viewBox="0 0 24 24" fill="<%= todo.highlight_color.presence || 'none' %>" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>
           <div class="todo-highlight-picker todo-highlight-picker--modal">
-            <% [nil, '#d1d5db', '#ef4444', '#f97316', '#eab308', '#22c55e', '#3b82f6', '#8b5cf6'].each do |color| %>
+            <% highlight_colors.each do |color| %>
               <%= form_with model: todo, method: :patch, local: false do |f| %>
                 <%= f.hidden_field :highlight_color, value: color.to_s %>
                 <button type="submit" class="todo-highlight-color<%= ' todo-highlight-color--active' if todo.highlight_color == color.to_s %>" style="background: <%= color || '#ffffff' %>; border: 1px solid #ccc;"><%= '✕' if color.nil? %></button>

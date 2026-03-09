@@ -7,6 +7,23 @@
   </div>
 
   <div class="max-w-2xl space-y-8">
+    <%# Prominent Buy CTA: show for anyone who hasn't purchased (trial, expired, or not-yet-started) %>
+    <% unless current_user.device_downloaded? %>
+    <div class="notebook-card bg-blue-50 border-blue-200 border">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h2 class="text-lg font-semibold text-blue-900 mb-1">Enjoying Todo-it?</h2>
+          <p class="text-sm text-blue-800">Purchase once to own it forever, download to up to three devices you own. Works offline, no subscription.</p>
+        </div>
+        <%= button_to "Buy Download (£9.99)",
+              create_checkout_session_path,
+              method: :post,
+              data: { turbo: false },
+              class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 flex-shrink-0" %>
+      </div>
+    </div>
+    <% end %>
+
     <!-- Account Information Section -->
     <div class="notebook-card">
       <h2 class="text-xl font-semibold mb-6">Account Information</h2>
@@ -90,11 +107,11 @@
             <input type="color"
                    name="user[accent_color]"
                    id="user_accent_color"
-                   value="<%= @user.accent_color.presence || '#3b82f6' %>"
+                   value="<%= @user.accent_color.presence || '#9966CC' %>"
                    class="h-10 w-16 cursor-pointer rounded border border-gray-300">
             <input type="text"
                    id="user_accent_color_hex"
-                   value="<%= @user.accent_color.presence || '#3b82f6' %>"
+                   value="<%= @user.accent_color.presence || '#9966CC' %>"
                    class="form-input w-24 font-mono text-sm"
                    placeholder="#3b82f6"
                    maxlength="7"
@@ -181,7 +198,7 @@
         <div class="border-t border-gray-200 pt-4">
           <p class="text-sm text-gray-600 mb-3">Purchase the app to continue using Todo-it:</p>
           <div class="flex flex-wrap gap-3">
-            <%= button_to "Buy App ($9.99)",
+            <%= button_to "Buy App (£9.99)",
                   create_checkout_session_path,
                   method: :post,
                   data: { turbo: false },
@@ -239,7 +256,7 @@
         <!-- Purchase App -->
         <div class="border-t border-gray-200 pt-4">
           <p class="text-sm text-gray-600 mb-3">Purchase the app to continue using Todo-it:</p>
-          <%= button_to "Buy App ($9.99)",
+          <%= button_to "Buy App (£9.99)",
                 create_checkout_session_path,
                 method: :post,
                 data: { turbo: false },

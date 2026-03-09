@@ -14,6 +14,7 @@ class User < ApplicationRecord
     validates :password, length: { minimum: 6 }, on: :create
     validates :font_family, inclusion: { in: %w[default serif sans_serif handwritten system_ui georgia menlo] }, allow_blank: true
     validates :app_title, length: { minimum: 1, maximum: 30 }, allow_nil: false
+    validates :not_yet_panel_title, length: { minimum: 1, maximum: 50 }, allow_blank: false, if: -> { self.class.column_names.include?("not_yet_panel_title") }
 
     # Download tracking
     MAX_DOWNLOADS = 3
@@ -28,6 +29,12 @@ class User < ApplicationRecord
 
     def downloads_remaining
       MAX_DOWNLOADS - (download_count || 0)
+    end
+
+    # PWA install restriction: only paid users can install the app
+    # Trial users keep full server access but cannot add the PWA to their device
+    def can_install_pwa?
+      respond_to?(:paid_at) && paid_at.present?
     end
 
     # Remember token functionality for persistent authentication

@@ -8,11 +8,11 @@
      data-date-picker-base-path-value="<%= app_root_path %>"
      data-date-picker-start-date-value="<%= @start_date.strftime('%Y-%m-%d') %>">
   <%# ── Header (hidden in focus mode) ── %>
-  <header class="dashboard__header<%= ' dashboard__header--hidden' if (@view_days || 7) == 1 %>" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; margin-bottom: 20px;">
+  <header class="dashboard__header<%= ' dashboard__header--hidden' if (@view_days || 7) == 1 %>" style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 10px 0; margin-bottom: 20px;">
     <div class="dashboard__header-left" style="display: flex; gap: 15px; align-items: center;">
       <!-- Search functionality removed per user request -->
     </div>
-    <div class="dashboard__header-center" style="font-size: 1.5rem; font-weight: 800; letter-spacing: 0.1em; color: var(--user-accent);">
+    <div class="dashboard__header-center" style="font-size: 1.5rem; font-weight: 800; letter-spacing: 0.1em; color: var(--user-accent); justify-self: center;">
       <%# Clickable app title — hover to reveal edit hint, click to open rename modal %>
       <span id="app-title-display"
             title="Click to rename"
@@ -27,7 +27,7 @@
         </span>
       </span>
     </div>
-    <div class="dashboard__header-right dashboard__nav-row" style="display: flex; gap: 12px; color: #888; font-weight: bold; font-size: 1.2rem; align-items: center;">
+    <div class="dashboard__header-right dashboard__nav-row" style="display: flex; gap: 12px; color: #2d2d2d; font-weight: bold; font-size: 1.2rem; align-items: center; justify-self: end;">
       <%= link_to "&laquo;".html_safe, app_root_path(start_date: @start_date - 7.days, days: @view_days), class: "dashboard__nav-btn", "aria-label" => "Previous week", title: "Previous week" %>
       <%= link_to "&lsaquo;".html_safe, app_root_path(start_date: @start_date - 1.day, days: @view_days), class: "dashboard__nav-btn", "aria-label" => "Previous day", title: "Previous day" %>
       <button type="button"
@@ -72,7 +72,7 @@
         <div class="week-col__add">
           <%= form_with model: Todo.new, url: todos_path, local: false, class: "todo-form" do |form| %>
             <%= form.hidden_field :due_date, value: date %>
-            <%= form.text_field :title, class: "todo-input", autocomplete: "off" %>
+            <%= form.text_field :title, class: "todo-input", autocomplete: "off", placeholder: "Add todo..." %>
           <% end %>
         </div>
       </div>
@@ -109,19 +109,28 @@
   <% end %>
 
   <%# ── Right-hand "Not Yet" modal (Future Tasks) — slides from right ── %>
-  <div data-controller="not-yet-panel" data-action="keydown@document->not-yet-panel#closeOnEscape click@document->not-yet-panel#closeOnOverlay open-not-yet-panel@window->not-yet-panel#open">
+  <div data-controller="not-yet-panel"
+     data-not-yet-panel-settings-path-value="<%= settings_path %>"
+     data-action="keydown@document->not-yet-panel#closeOnEscape click@document->not-yet-panel#closeOnOverlay open-not-yet-panel@window->not-yet-panel#open">
     <%# Trigger must be inside controller scope for Stimulus to find it %>
     <button type="button"
             data-action="click->not-yet-panel#toggle"
             class="not-yet-panel__trigger"
             title="Not Yet"
             aria-label="Open Not Yet list">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="not-yet-panel__chevron"><polyline points="6 18 12 12 6 6"/><polyline points="12 18 18 12 12 6"/></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="not-yet-panel__chevron"><polyline points="6 18 12 12 6 6"/><polyline points="12 18 18 12 12 6"/></svg>
     </button>
     <div data-not-yet-panel-target="overlay" class="not-yet-panel__overlay" style="display:none;"></div>
     <div data-not-yet-panel-target="panel" class="not-yet-panel">
       <div class="not-yet-panel__header">
-        <h3 class="not-yet-panel__title">NOT YET</h3>
+        <h3 class="not-yet-panel__title"
+            contenteditable="true"
+            spellcheck="false"
+            data-not-yet-panel-target="title"
+            data-initial-value="<%= h((current_user.respond_to?(:not_yet_panel_title) && current_user.not_yet_panel_title.presence) || 'Not Yet') %>"
+            role="textbox"
+            aria-label="Panel title (click to edit)"
+            title="Click to edit"><%= h((current_user.respond_to?(:not_yet_panel_title) && current_user.not_yet_panel_title.presence) || 'Not Yet') %></h3>
         <button type="button" data-action="click->not-yet-panel#close" class="not-yet-panel__close" aria-label="Close">&times;</button>
       </div>
       <div class="not-yet-panel__body">
@@ -139,27 +148,13 @@
             <div class="not-yet-panel__add">
               <%= form_with model: Todo.new, url: todos_path, local: false, class: "todo-form" do |form| %>
                 <%= form.hidden_field :page_id, value: default_page.id %>
-                <%= form.text_field :title, class: "todo-input", autocomplete: "off" %>
+                <%= form.text_field :title, class: "todo-input", autocomplete: "off", placeholder: "Add todo..." %>
               <% end %>
             </div>
           </div>
-          <div class="not-yet-panel__actions">
-            <% if Todo.column_names.include?("is_visual_break") %>
-              <button type="button" onclick="document.getElementById('add-visual-break-form').requestSubmit()" title="Add visual break" aria-label="Add visual break" class="not-yet-panel__break-btn">— Add break</button>
-            <% end %>
-            <button type="button" onclick="document.getElementById('new-list-dialog').showModal()" class="not-yet-panel__new-list-btn">+ New list</button>
-          </div>
-          <% if Todo.column_names.include?("is_visual_break") %>
-            <%= form_with model: Todo.new, url: todos_path, local: false, id: "add-visual-break-form", style: "display:none;" do |form| %>
-              <%= form.hidden_field :page_id, value: default_page.id %>
-              <%= form.hidden_field :is_visual_break, value: "1" %>
-              <%= form.hidden_field :title, value: " " %>
-            <% end %>
-          <% end %>
         <% else %>
           <div class="not-yet-panel__empty">
             <p>No Not Yet items yet.</p>
-            <button type="button" onclick="document.getElementById('new-list-dialog').showModal()" class="not-yet-panel__new-list-btn">Create your first list</button>
           </div>
         <% end %>
       </div>
