@@ -15,6 +15,10 @@
 :root {
   --user-accent: #3b82f6;
   --user-font: inherit;
+
+  /* Responsive breakpoints (use in media queries) */
+  --bp-phone: 768px;
+  --bp-tablet: 1024px;
 }
 
 * {
@@ -5531,14 +5535,14 @@ a.text-blue-800:hover {
   position: relative;
 }
 
-/* ── Week View (desktop: dynamic columns, mobile: horizontal scroll) ── */
+/* ── Week View (fills remaining space; no bottom lists) ── */
 .dashboard__week-view {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 0;
   border-bottom: 1px solid #e5e7eb;
-  min-height: 55vh;
-  max-height: 60vh;
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
 }
 
@@ -5673,33 +5677,12 @@ a.text-blue-800:hover {
 }
 
 /* ── Custom Lists Section ── */
-.dashboard__lists {
-  display: flex;
-  flex-direction: column-reverse;
-  /* titlebar anchors at bottom; body clips away when collapsed */
-  flex: 1;
-  min-height: 0;
-  max-height: 100vh;
-}
+/* Bottom section removed per legal-changes — week view fills remaining space */
 
-.dashboard.lists-collapsed .dashboard__week-view {
-  flex: 1;
-  max-height: 100vh;
-  /* remove the 60vh cap so it fills all remaining space */
-  min-height: 0;
-}
-
-/* Collapsed: hide the body, keep the titlebar */
-.dashboard.lists-collapsed .dashboard__lists {
-  flex: 0 0 52px;
-  min-height: 52px;
-  max-height: 52px;
-  overflow: hidden;
-}
-
-/* ── Focus mode: hide nav/FAB/title, center day, pomodoro panel ── */
+/* ── Focus mode: hide nav/FAB/title/Not Yet trigger, center day, pomodoro panel ── */
 body.focus-mode .fab,
-body.focus-mode [data-controller*="fab-navigation"] .fab {
+body.focus-mode [data-controller*="fab-navigation"] .fab,
+body.focus-mode .not-yet-panel__trigger {
   display: none !important;
 }
 
@@ -5721,12 +5704,10 @@ body.focus-mode [data-controller*="fab-navigation"] .fab {
   width: 100%;
 }
 
-/* Focus mode lists area: pomodoro panel instead of collapsed lists */
-.dashboard__lists--focus {
-  flex: 0 0 auto !important;
-  min-height: auto !important;
-  max-height: none !important;
-  display: flex !important;
+/* Focus mode: pomodoro footer */
+.dashboard__focus-footer {
+  flex: 0 0 auto;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -6197,6 +6178,208 @@ body.focus-mode [data-controller*="fab-navigation"] .fab {
   color: #111;
 }
 
+/* ── Single "Not Yet" list layout ── */
+.lists__column--single {
+  flex: 1 1 100%;
+  min-width: 0;
+}
+
+.lists__titlebar--single {
+  gap: 12px;
+}
+
+.lists__column-title--not-yet {
+  flex: 1;
+  margin: 0;
+}
+
+.lists__titlebar-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.lists__titlebar-break-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #888;
+  padding: 0 6px;
+  line-height: 1;
+}
+
+.lists__titlebar-break-btn:hover {
+  color: #333;
+}
+
+/* Visual break: horizontal divider in list (styling only) */
+.todo-visual-break {
+  padding: 8px 0;
+}
+
+.todo-visual-break__line {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin: 0;
+}
+
+.theme-dark .todo-visual-break__line {
+  border-top-color: #44475a;
+}
+
+/* ── Right-hand Not Yet panel (Future Tasks) ── */
+.not-yet-panel__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1099;
+}
+
+.not-yet-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 340px;
+  max-width: 95vw;
+  background: #fff;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.25s ease;
+}
+
+.not-yet-panel--open {
+  transform: translateX(0);
+}
+
+.not-yet-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.not-yet-panel__title {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #111;
+}
+
+.not-yet-panel__close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #888;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 4px;
+}
+
+.not-yet-panel__close:hover {
+  color: #111;
+}
+
+.not-yet-panel__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.not-yet-panel__list {
+  min-height: 60px;
+}
+
+.not-yet-panel__add {
+  margin-top: 12px;
+}
+
+.not-yet-panel__actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.not-yet-panel__break-btn,
+.not-yet-panel__new-list-btn {
+  background: none;
+  border: none;
+  font-size: 0.8125rem;
+  color: #888;
+  cursor: pointer;
+}
+
+.not-yet-panel__break-btn:hover,
+.not-yet-panel__new-list-btn:hover {
+  color: #111;
+}
+
+.not-yet-panel__empty {
+  text-align: center;
+  padding: 32px 16px;
+}
+
+.not-yet-panel__empty p {
+  margin: 0 0 16px;
+  color: #666;
+  font-size: 0.9375rem;
+}
+
+.not-yet-panel__trigger {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  color: #555;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.15s ease, color 0.15s ease;
+}
+
+.not-yet-panel__trigger:hover {
+  color: #111;
+}
+
+/* Double chevron, rotated to point left (looking out from right edge) */
+.not-yet-panel__chevron {
+  transform: rotate(180deg);
+}
+
+.theme-dark .not-yet-panel {
+  background: #282a36;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.5);
+}
+
+.theme-dark .not-yet-panel__title { color: #f8f8f2; }
+.theme-dark .not-yet-panel__close { color: #6272a4; }
+.theme-dark .not-yet-panel__close:hover { color: #f8f8f2; }
+.theme-dark .not-yet-panel__header { border-bottom-color: #44475a; }
+.theme-dark .not-yet-panel__actions { border-top-color: #44475a; }
+.theme-dark .not-yet-panel__break-btn,
+.theme-dark .not-yet-panel__new-list-btn { color: #6272a4; }
+.theme-dark .not-yet-panel__break-btn:hover,
+.theme-dark .not-yet-panel__new-list-btn:hover { color: #f8f8f2; }
+.theme-dark .not-yet-panel__empty p { color: #a0aec0; }
+.theme-dark .not-yet-panel__trigger { color: #6272a4; }
+.theme-dark .not-yet-panel__trigger:hover { color: #f8f8f2; }
 
 .lists__tabs {
   display: flex;
@@ -6293,9 +6476,15 @@ body.focus-mode [data-controller*="fab-navigation"] .fab {
   padding: 32px 0;
 }
 
-.fab {
+/* Nav island — desktop: contents (children positioned separately); mobile: bottom island */
+.nav-island {
+  display: contents;
+}
+
+.fab,
+.nav-island__cog {
   position: fixed;
-  top: 24px;
+  bottom: 24px;
   left: 24px;
   z-index: 1001;
   width: 40px;
@@ -6313,7 +6502,8 @@ body.focus-mode [data-controller*="fab-navigation"] .fab {
   padding: 0;
 }
 
-.fab:hover {
+.fab:hover,
+.nav-island__cog:hover {
   opacity: 0.6;
 }
 
@@ -6328,6 +6518,125 @@ body.focus-mode [data-controller*="fab-navigation"] .fab {
 
 .fab__icon--hidden {
   display: none;
+}
+
+/* Account icon — top-left on desktop */
+.account-icon {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 1001;
+  width: 40px;
+  height: 40px;
+  border-radius: 0;
+  background: none;
+  border: none;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: opacity 0.15s ease;
+}
+
+.account-icon:hover {
+  opacity: 0.6;
+}
+
+/* Chevron (calendar) — hidden on desktop, shown in mobile island */
+.nav-island__chevron {
+  display: none;
+}
+
+.theme-dark .account-icon,
+.theme-dark .nav-island__cog,
+.theme-dark .nav-island__chevron {
+  color: #6272a4;
+}
+
+.theme-dark .account-icon:hover,
+.theme-dark .nav-island__cog:hover,
+.theme-dark .nav-island__chevron:hover {
+  color: #f8f8f2;
+}
+
+/* Mobile: full-screen panels + bottom island (Account | Cog | Chevron) */
+@media (max-width: 768px) {
+  main#main-content {
+    width: 100%;
+    max-width: none;
+    padding: 0;
+  }
+
+  /* Account & notes panels full screen on mobile (settings-sheet handled by breakpoint block below) */
+  .side-drawer.settings-panel,
+  .notes-drawer {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .side-drawer.settings-panel {
+    height: 100vh;
+    height: 100dvh;
+    max-height: none;
+  }
+
+  .not-yet-panel {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Hide dashboard's Not Yet trigger on mobile (chevron is in island) */
+  .not-yet-panel__trigger {
+    display: none !important;
+  }
+
+  .nav-island {
+    display: flex;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1001;
+    background: color-mix(in srgb, var(--user-accent, #3b82f6) 8%, white);
+    border-radius: 999px;
+    padding: 8px 16px;
+    gap: 8px;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .account-icon,
+  .fab,
+  .nav-island__cog {
+    position: static;
+    width: 36px;
+    height: 36px;
+  }
+
+  .nav-island__chevron {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: #333;
+  }
+
+  /* Flip chevrons horizontally on mobile (» → «) */
+  .nav-island__chevron-icon {
+    transform: scaleX(-1);
+  }
+
+  .theme-dark .nav-island {
+    background: color-mix(in srgb, var(--user-accent, #bd93f9) 12%, #282a36);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
 }
 
 /* ── Bottom Sheet (mobile) ── */
@@ -6906,12 +7215,360 @@ body.focus-mode [data-controller*="fab-navigation"] .fab {
 /* =================================
    PREFERENCES & SETTINGS SIDE DRAWERS
    ================================= */
-.preferences-drawer {
-  width: 230px !important;
+/* ── Settings Bottom Sheet (legal-changes: replaces left drawer) ── */
+.settings-sheet__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1098;
 }
 
+.settings-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: auto;
+  max-height: 85vh;
+  background: color-mix(in srgb, var(--user-accent, #3b82f6) 10%, white);
+  border-radius: 0;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.15);
+  z-index: 1099;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+/* Account tab: same panel size, no expansion */
+
+.settings-sheet--open {
+  transform: translateY(0);
+}
+
+.settings-sheet__handle-bar {
+  display: flex;
+  justify-content: center;
+  padding: 2px 0 2px;
+  flex-shrink: 0;
+}
+
+.settings-sheet__handle {
+  width: 40px;
+  height: 4px;
+  background: #ddd;
+  border-radius: 2px;
+}
+
+.settings-sheet__header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 6px 4px;
+  min-height: 0;
+  flex-shrink: 0;
+}
+
+/* Content area — 5% left/right padding, 2% gap handled by grid */
+.settings-sheet__content {
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 6px 5% 14px;
+  box-sizing: border-box;
+}
+
+.settings-sheet__close {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: #888;
+  cursor: pointer;
+  line-height: 1;
+  padding: 2px 6px;
+}
+
+.settings-sheet__close:hover {
+  color: #111;
+}
+
+.settings-sheet__body {
+  flex: 1;
+  min-height: 0;
+}
+
+/* 5-column grid — desktop (1024px+). Tablet/mobile overridden by media queries below. */
+.settings-sheet__columns {
+  display: grid;
+  grid-template-columns: 25% 20% 15% 10% 10%;
+  gap: 0 2%;
+  align-items: start;
+  height: 100%;
+  min-width: min-content;
+}
+
+.settings-sheet__section {
+  padding: 2px 4px 2px 8px;
+  min-width: 0;
+}
+
+/* Theme & Font aligned horizontally — same label height, content starts together */
+.settings-sheet__section--theme,
+.settings-sheet__section--font {
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-sheet__section--theme .pref-section__label,
+.settings-sheet__section--font .pref-section__label {
+  min-height: 14px;
+}
+
+/* Accent column — one row of round colour swatches, more breathing room */
+.settings-sheet__section--accent .pref-color-swatches {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 5px;
+}
+
+.settings-sheet__section--accent .pref-color-swatch {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+/* Column content — larger, readable fonts */
+.settings-sheet__section .pref-section__label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #888;
+  margin: 0 0 6px;
+}
+
+/* Theme — 2 rows (3 + 2) */
+.settings-sheet__section--theme .theme-modal__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+/* Font — 2 rows (2 + 2); higher specificity to beat global .pref-font-list */
+.settings-sheet__columns .settings-sheet__section--font .pref-font-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+}
+
+/* Exclude theme section — it uses 3-column (3+2) layout above */
+.settings-sheet__section:not(.settings-sheet__section--theme) .theme-modal__grid {
+  grid-template-columns: 1fr;
+  gap: 2px;
+}
+
+.settings-sheet__section .theme-option {
+  flex-direction: row;
+  gap: 4px;
+  padding: 2px 4px;
+}
+
+.settings-sheet__section .theme-preview {
+  width: 14px;
+  height: 14px;
+  min-width: 14px;
+  border-radius: 4px;
+}
+
+.settings-sheet__section .theme-option__label {
+  font-size: 0.68rem;
+}
+
+.settings-sheet__section:not(.settings-sheet__section--accent) .pref-color-swatches {
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.settings-sheet__section:not(.settings-sheet__section--accent) .pref-color-swatch {
+  width: 14px;
+  height: 14px;
+}
+
+/* Font section uses grid (2+2); exclude it from default flex column */
+.settings-sheet__section:not(.settings-sheet__section--font) .pref-font-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.settings-sheet__section .pref-font-btn {
+  padding: 4px 6px;
+  font-size: 0.72rem;
+}
+
+.settings-sheet__section .pref-toggle-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+/* View & Completed — single row only */
+.settings-sheet__section--view .pref-toggle-group,
+.settings-sheet__section--completed .pref-toggle-group {
+  flex-wrap: nowrap;
+}
+
+.settings-sheet__section .pref-toggle-btn {
+  padding: 4px 6px;
+  font-size: 0.72rem;
+}
+
+.settings-sheet__section .pref-section__hint {
+  display: none;
+}
+
+.theme-dark .settings-sheet {
+  background: color-mix(in srgb, var(--user-accent, #bd93f9) 12%, #282a36);
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.5);
+}
+
+.theme-dark .settings-sheet__handle { background: #44475a; }
+.theme-dark .settings-sheet__close { color: #6272a4; }
+.theme-dark .settings-sheet__close:hover { color: #f8f8f2; }
+
 .settings-panel {
-  width: 330px !important;
+  width: 330px;
+}
+
+/* =================================
+   SETTINGS SHEET — RESPONSIVE BREAKPOINTS
+   Desktop: 1024px+ (base above)
+   Tablet: 769px–1023px — wrap content, no overlap
+   Phone: ≤768px — stacked, full screen
+   ================================= */
+
+/* Tablet: keep columns, wrap content inside each to prevent overlap */
+@media (max-width: 1023px) {
+  .settings-sheet {
+    max-height: 80vh;
+  }
+
+  /* 5 columns but flexible - can shrink, no overflow */
+  .settings-sheet__columns {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px 12px;
+    min-width: 0;
+  }
+
+  .settings-sheet__section {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  /* Theme: 2 columns to fit tablet width */
+  .settings-sheet__section--theme .theme-modal__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Font: stay 2-col, smaller */
+  .settings-sheet__columns .settings-sheet__section--font .pref-font-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+  }
+
+  /* Accent: wrap swatches, smaller */
+  .settings-sheet__section--accent .pref-color-swatches {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .settings-sheet__section--accent .pref-color-swatch {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* View & Completed: wrap if needed */
+  .settings-sheet__section--view .pref-toggle-group,
+  .settings-sheet__section--completed .pref-toggle-group {
+    flex-wrap: wrap;
+  }
+
+  .settings-sheet__section .pref-toggle-btn,
+  .settings-sheet__section .pref-font-btn,
+  .settings-sheet__section .theme-option {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+  }
+}
+
+/* Phone: single column, full screen, no wasted bottom space */
+@media (max-width: 768px) {
+  .settings-sheet {
+    max-height: none;
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  .settings-sheet__content {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .settings-sheet__columns {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 0;
+    min-width: 0;
+    height: auto;
+    padding: 16px;
+  }
+
+  .settings-sheet__section {
+    padding: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    min-width: 0;
+  }
+
+  .settings-sheet__section:last-child {
+    border-bottom: none;
+  }
+
+  .settings-sheet__section .pref-section__label {
+    font-size: 0.75rem;
+    margin-bottom: 8px;
+  }
+
+  /* Theme: 3 columns in single column layout */
+  .settings-sheet__section--theme .theme-modal__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .settings-sheet__section--accent .pref-color-swatches {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .settings-sheet__section--accent .pref-color-swatch {
+    width: 28px;
+    height: 28px;
+  }
+
+  .settings-sheet__section .theme-option,
+  .settings-sheet__section .pref-font-btn,
+  .settings-sheet__section .pref-toggle-btn {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+
+  .theme-dark .settings-sheet__section {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
 }
 
 .pref-section {

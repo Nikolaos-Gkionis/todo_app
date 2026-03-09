@@ -4,7 +4,6 @@ export default class extends Controller {
   static targets = [
     "button", "viewDrawer", "viewDrawerOverlay",
     "preferencesDrawer", "preferencesOverlay",
-    "prefTabBtn", "accTabBtn", "prefTabContent", "accTabContent",
     "settingsPanel", "settingsPanelOverlay"
   ]
   static values = { currentDays: { type: Number, default: 7 } }
@@ -27,7 +26,7 @@ export default class extends Controller {
 
   closeOnEscape(event) {
     if (event.key === "Escape") {
-      if (this.hasPreferencesDrawerTarget && this.preferencesDrawerTarget.classList.contains("side-drawer--open")) {
+      if (this.hasPreferencesDrawerTarget && this.preferencesDrawerTarget.classList.contains("settings-sheet--open")) {
         this.closePreferences()
       } else if (this.hasSettingsPanelTarget && this.settingsPanelTarget.classList.contains("side-drawer--open")) {
         this.closeSettingsPanel()
@@ -58,52 +57,24 @@ export default class extends Controller {
     document.body.style.overflow = ""
   }
 
-  // ── Preferences Drawer ──
+  // ── Settings Bottom Sheet ──
   openPreferences() {
     if (this.hasPreferencesDrawerTarget) {
-      this.preferencesDrawerTarget.classList.add("side-drawer--open")
+      this.preferencesDrawerTarget.classList.add("settings-sheet--open")
     }
     if (this.hasPreferencesOverlayTarget) {
-      // ALWAYS open strictly to the generic Settings tab defaults on boot
-      this.showPreferencesTab()
+      this.preferencesOverlayTarget.style.display = "block"
     }
+    document.body.style.overflow = "hidden"
   }
 
   closePreferences() {
     if (this.hasPreferencesOverlayTarget) this.preferencesOverlayTarget.style.display = "none"
-    if (this.hasPreferencesDrawerTarget) this.preferencesDrawerTarget.classList.remove("side-drawer--open")
+    if (this.hasPreferencesDrawerTarget) this.preferencesDrawerTarget.classList.remove("settings-sheet--open")
+    document.body.style.overflow = ""
   }
 
-  // ── Preferences Tabs ──
-  showPreferencesTab() {
-    if (this.hasPrefTabContentTarget) this.prefTabContentTarget.style.display = "block"
-    if (this.hasAccTabContentTarget) this.accTabContentTarget.style.display = "none"
-
-    if (this.hasPrefTabBtnTarget) {
-      this.prefTabBtnTarget.classList.add("pref-tab-btn--active")
-      this.prefTabBtnTarget.style.color = ""
-    }
-    if (this.hasAccTabBtnTarget) {
-      this.accTabBtnTarget.classList.remove("pref-tab-btn--active")
-      this.accTabBtnTarget.style.color = ""
-    }
-  }
-
-  showAccountTab() {
-    if (this.hasPrefTabContentTarget) this.prefTabContentTarget.style.display = "none"
-    if (this.hasAccTabContentTarget) this.accTabContentTarget.style.display = "block"
-
-    if (this.hasPrefTabBtnTarget) {
-      this.prefTabBtnTarget.classList.remove("pref-tab-btn--active")
-      this.prefTabBtnTarget.style.color = ""
-    }
-    if (this.hasAccTabBtnTarget) {
-      this.accTabBtnTarget.classList.add("pref-tab-btn--active")
-      this.accTabBtnTarget.style.color = ""
-    }
-  }
-
-  // ── Settings Panel (Legacy or secondary config) ──
+  // ── Account Panel (left side drawer) ──
   openSettingsPanel() {
     if (this.hasSettingsPanelTarget) {
       this.settingsPanelTarget.classList.add("side-drawer--open")

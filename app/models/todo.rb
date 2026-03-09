@@ -4,8 +4,15 @@ class Todo < ApplicationRecord
   belongs_to :page, optional: true
 
   before_validation :set_user_from_page, on: :create, if: -> { user_id.nil? && page_id.present? }
+  before_validation :set_visual_break_title, on: :create
 
-  validates :title, presence: true, length: { minimum: 1, maximum: 200 }
+  # Visual break: divider in list, no completion/editing (requires is_visual_break column)
+  def is_visual_break?
+    return false unless self.class.column_names.include?("is_visual_break")
+    is_visual_break == true
+  end
+
+  validates :title, presence: true, length: { minimum: 1, maximum: 200 }, unless: :is_visual_break?
 
   # Simple scopes for ordering
   scope :ordered, -> { order(:position) }
@@ -35,6 +42,10 @@ class Todo < ApplicationRecord
 
   def set_user_from_page
     self.user = page.user if page
+  end
+
+  def set_visual_break_title
+    self.title = " " if is_visual_break? && title.blank?
   end
 
   def position_scope

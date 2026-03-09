@@ -1,9 +1,9 @@
 // Todo-it Progressive Web App Service Worker
 // Handles offline functionality, caching, and background sync
 
-const CACHE_NAME = 'todo-it-v1.0.6';
-const STATIC_CACHE = 'todo-it-static-v1.0.6';
-const DYNAMIC_CACHE = 'todo-it-dynamic-v1.0.6';
+const CACHE_NAME = 'todo-it-v1.0.13';
+const STATIC_CACHE = 'todo-it-static-v1.0.13';
+const DYNAMIC_CACHE = 'todo-it-dynamic-v1.0.13';
 
 // Static assets to cache immediately
 const STATIC_ASSETS = [

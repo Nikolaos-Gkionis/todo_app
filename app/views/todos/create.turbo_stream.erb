@@ -3,8 +3,12 @@
     <%= render "todos/todo", todo: @todo %>
   <% end %>
 <% elsif @todo.page_id.present? %>
-  <%= turbo_stream.append "todos_page_#{@todo.page_id}" do %>
-    <%= render "todos/todo", todo: @todo %>
+  <%= turbo_stream.append "todos_page_not_yet" do %>
+    <% if @todo.is_visual_break? %>
+      <%= render "todos/visual_break", todo: @todo %>
+    <% else %>
+      <%= render "todos/todo", todo: @todo %>
+    <% end %>
   <% end %>
 <% end %>
 

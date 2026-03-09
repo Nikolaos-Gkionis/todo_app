@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_06_163400) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_09_120000) do
   create_table "migration_statuses", force: :cascade do |t|
     t.string "migration_type", null: false
     t.string "status", default: "pending", null: false
@@ -52,6 +52,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_06_163400) do
     t.boolean "bold"
     t.string "highlight_color"
     t.string "recurrence_rule"
+    t.boolean "is_visual_break", default: false, null: false
     t.index ["page_id"], name: "index_todos_on_page_id"
     t.index ["user_id"], name: "index_todos_on_user_id"
   end

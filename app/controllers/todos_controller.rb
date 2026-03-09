@@ -77,7 +77,7 @@ class TodosController < ApplicationController
   end
 
   def todo_params
-    params.require(:todo).permit(:title, :notes, :completed, :position, :due_date, :page_id, :bold, :highlight_color, :recurrence_rule)
+    params.require(:todo).permit(:title, :notes, :completed, :position, :due_date, :page_id, :bold, :highlight_color, :recurrence_rule, :is_visual_break)
   end
 
   def replicate_recurring_todos(source_todo)
