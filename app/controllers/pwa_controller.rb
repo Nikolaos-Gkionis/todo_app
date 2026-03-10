@@ -20,7 +20,7 @@ class PwaController < ApplicationController
   private
 
   def ensure_logged_in_for_pwa!
-    return head :unauthorized unless logged_in?
+    head :unauthorized unless logged_in?
   end
 
   def manifest_data
