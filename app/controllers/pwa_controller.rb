@@ -24,12 +24,13 @@ class PwaController < ApplicationController
   end
 
   def manifest_data
+    base = request.base_url
     {
       name: "Todo-it - Nicely Done ",
       short_name: "Todo-it",
       description: "Beautiful, offline-first todo app. Start with a 7-day free trial, then download forever. Your data, your device.",
-      start_url: "/app",
-      scope: "/",
+      start_url: "#{base}/app",
+      scope: "#{base}/",
       display: "standalone",
       orientation: "portrait-primary",
       theme_color: "#667eea",
@@ -37,98 +38,23 @@ class PwaController < ApplicationController
       categories: [ "productivity", "utilities" ],
       lang: "en-US",
       icons: [
-        {
-          src: "/icon-72.png",
-          sizes: "72x72",
-          type: "image/png",
-          purpose: "any"
-        },
-        {
-          src: "/icon-96.png",
-          sizes: "96x96",
-          type: "image/png",
-          purpose: "any"
-        },
-        {
-          src: "/icon-128.png",
-          sizes: "128x128",
-          type: "image/png",
-          purpose: "any"
-        },
-        {
-          src: "/icon-144.png",
-          sizes: "144x144",
-          type: "image/png",
-          purpose: "any"
-        },
-        {
-          src: "/icon-152.png",
-          sizes: "152x152",
-          type: "image/png",
-          purpose: "any"
-        },
-        {
-          src: "/icon-192.png",
-          sizes: "192x192",
-          type: "image/png",
-          purpose: "any"
-        },
-        {
-          src: "/icon-384.png",
-          sizes: "384x384",
-          type: "image/png",
-          purpose: "any"
-        },
-        {
-          src: "/icon-512.png",
-          sizes: "512x512",
-          type: "image/png",
-          purpose: "any"
-        },
-        {
-          src: "/icon-512-maskable.png",
-          sizes: "512x512",
-          type: "image/png",
-          purpose: "maskable"
-        }
+        { src: "#{base}/icon-72.png", sizes: "72x72", type: "image/png", purpose: "any" },
+        { src: "#{base}/icon-96.png", sizes: "96x96", type: "image/png", purpose: "any" },
+        { src: "#{base}/icon-128.png", sizes: "128x128", type: "image/png", purpose: "any" },
+        { src: "#{base}/icon-144.png", sizes: "144x144", type: "image/png", purpose: "any" },
+        { src: "#{base}/icon-152.png", sizes: "152x152", type: "image/png", purpose: "any" },
+        { src: "#{base}/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
+        { src: "#{base}/icon-384.png", sizes: "384x384", type: "image/png", purpose: "any" },
+        { src: "#{base}/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
+        { src: "#{base}/icon-512-maskable.png", sizes: "512x512", type: "image/png", purpose: "maskable" }
       ],
       shortcuts: [
-        {
-          name: "Add New Page",
-          short_name: "New Page",
-          description: "Create a new todo page",
-          url: "/app/pages/new",
-          icons: [
-            {
-              src: "/icon-96.png",
-              sizes: "96x96"
-            }
-          ]
-        },
-        {
-          name: "View All Pages",
-          short_name: "My Pages",
-          description: "See all your todo pages",
-          url: "/app",
-          icons: [
-            {
-              src: "/icon-96.png",
-              sizes: "96x96"
-            }
-          ]
-        },
-        {
-          name: "Settings",
-          short_name: "Settings",
-          description: "App settings and preferences",
-          url: "/app/settings",
-          icons: [
-            {
-              src: "/icon-96.png",
-              sizes: "96x96"
-            }
-          ]
-        }
+        { name: "Add New Page", short_name: "New Page", description: "Create a new todo page",
+          url: "#{base}/app/pages/new", icons: [ { src: "#{base}/icon-96.png", sizes: "96x96" } ] },
+        { name: "View All Pages", short_name: "My Pages", description: "See all your todo pages",
+          url: "#{base}/app", icons: [ { src: "#{base}/icon-96.png", sizes: "96x96" } ] },
+        { name: "Settings", short_name: "Settings", description: "App settings and preferences",
+          url: "#{base}/app/settings", icons: [ { src: "#{base}/icon-96.png", sizes: "96x96" } ] }
       ],
       related_applications: [],
       prefer_related_applications: false

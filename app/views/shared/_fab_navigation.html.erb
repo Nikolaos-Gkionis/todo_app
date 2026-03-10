@@ -136,9 +136,9 @@
         <button data-action="click->fab-navigation#closeSettingsPanel" class="side-drawer__close" aria-label="Close">&times;</button>
       </div>
       <div class="side-drawer__body">
-        <%# Buy CTA: show for users who haven't purchased %>
+        <%# Buy CTA: show for users who haven't purchased (hidden when running as installed PWA via JS) %>
         <% unless current_user.device_downloaded? %>
-        <div class="pref-section pref-section--buy" style="margin-bottom: 20px; padding: 12px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px;">
+        <div class="pref-section pref-section--buy" data-standalone-hide="buy" style="margin-bottom: 20px; padding: 12px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px;">
           <div class="pref-section__label" style="margin-bottom: 6px; color: #1e40af; font-weight: 600;">Enjoying Todo-it?</div>
           <p style="font-size: 0.85rem; color: #1e3a8a; margin-bottom: 12px;">Purchase once to own it forever, download to up to three devices you own. Works offline, no subscription.</p>
           <%= button_to "Buy Download (£9.99)",

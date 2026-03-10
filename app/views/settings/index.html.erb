@@ -7,9 +7,9 @@
   </div>
 
   <div class="max-w-2xl space-y-8">
-    <%# Prominent Buy CTA: show for anyone who hasn't purchased (trial, expired, or not-yet-started) %>
+    <%# Prominent Buy CTA: show for anyone who hasn't purchased (hidden when running as installed PWA via JS) %>
     <% unless current_user.device_downloaded? %>
-    <div class="notebook-card bg-blue-50 border-blue-200 border">
+    <div class="notebook-card bg-blue-50 border-blue-200 border" data-standalone-hide="buy">
       <div class="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h2 class="text-lg font-semibold text-blue-900 mb-1">Enjoying Todo-it?</h2>
@@ -195,7 +195,7 @@
 
         <!-- Purchase Options - Only show buy button for non-purchased users -->
         <% unless current_user.device_downloaded? %>
-        <div class="border-t border-gray-200 pt-4">
+        <div class="border-t border-gray-200 pt-4" data-standalone-hide="buy">
           <p class="text-sm text-gray-600 mb-3">Purchase the app to continue using Todo-it:</p>
           <div class="flex flex-wrap gap-3">
             <%= button_to "Buy App (£9.99)",
@@ -254,7 +254,7 @@
         </div>
 
         <!-- Purchase App -->
-        <div class="border-t border-gray-200 pt-4">
+        <div class="border-t border-gray-200 pt-4" data-standalone-hide="buy">
           <p class="text-sm text-gray-600 mb-3">Purchase the app to continue using Todo-it:</p>
           <%= button_to "Buy App (£9.99)",
                 create_checkout_session_path,

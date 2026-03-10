@@ -10,9 +10,9 @@
 
     <%= yield :head %>
 
-    <%# PWA manifest: only for paid users (trial users cannot install) %>
+    <%# PWA manifest: only for paid users (trial users cannot install) — full URL helps Chrome show install icon %>
     <% if logged_in? && current_user&.can_install_pwa? %>
-      <%= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+      <%= tag.link rel: "manifest", href: pwa_manifest_url(format: :json), crossorigin: "use-credentials" %>
     <% end %>
 
     <!-- Favicon and App Icons -->
@@ -373,16 +373,25 @@
         // Flash messages removed
       }
       
+      // Hide Buy CTA when running as installed PWA (standalone) — user has already "downloaded"
+      function hideBuyIfStandalone() {
+        if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+          document.querySelectorAll('[data-standalone-hide="buy"]').forEach(function(el) { el.style.display = 'none'; });
+        }
+      }
+
       // Initialize on DOM ready
       document.addEventListener('DOMContentLoaded', function() {
         setupThemeSelector();
         setupFlashMessages();
+        hideBuyIfStandalone();
       });
       
       // Re-initialize after Turbo navigation
       document.addEventListener('turbo:load', function() {
         setupThemeSelector();
         setupFlashMessages();
+        hideBuyIfStandalone();
       });
       
       // Store the function globally for immediate use

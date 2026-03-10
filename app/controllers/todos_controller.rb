@@ -3,12 +3,27 @@ class TodosController < ApplicationController
   before_action :set_todo, only: [ :update, :destroy ]
 
   def create
-    @todo = current_user.todos.build(todo_params)
+    attrs = todo_params.to_h
+    created_default_page = false
+
+    # When adding from empty Not Yet panel (no pages), create a default "Not Yet" page first
+    if attrs["page_id"].blank? && current_user.pages.empty?
+      default_page = current_user.pages.create!(name: "Not Yet")
+      attrs["page_id"] = default_page.id.to_s
+      created_default_page = true
+    end
+
+    @todo = current_user.todos.build(attrs)
 
     if @todo.save
-      respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_back fallback_location: app_root_path, notice: "Todo added!" }
+      # From empty state, DOM lacks todos_page_not_yet target — redirect to refresh layout
+      if created_default_page
+        redirect_to app_root_path, notice: "Todo added!"
+      else
+        respond_to do |format|
+          format.turbo_stream
+          format.html { redirect_back fallback_location: app_root_path, notice: "Todo added!" }
+        end
       end
     else
       # If validation fails, we should ideally handle it, but for inline forms, redirecting back works best

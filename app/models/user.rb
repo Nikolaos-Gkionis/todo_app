@@ -33,7 +33,9 @@ class User < ApplicationRecord
 
     # PWA install restriction: only paid users can install the app
     # Trial users keep full server access but cannot add the PWA to their device
+    # Include device_downloaded for legacy purchasers who may not have paid_at
     def can_install_pwa?
+      return true if device_downloaded?
       respond_to?(:paid_at) && paid_at.present?
     end
 

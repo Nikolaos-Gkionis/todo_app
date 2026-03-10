@@ -155,6 +155,11 @@
         <% else %>
           <div class="not-yet-panel__empty">
             <p>No Not Yet items yet.</p>
+            <div class="not-yet-panel__add">
+              <%= form_with model: Todo.new, url: todos_path, local: false, class: "todo-form" do |form| %>
+                <%= form.text_field :title, class: "todo-input", autocomplete: "off", placeholder: "Add todo..." %>
+              <% end %>
+            </div>
           </div>
         <% end %>
       </div>
