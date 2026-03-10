@@ -41,17 +41,17 @@ class AnalyticsService
     Rails.logger.info "Download data: #{download_data.to_json}"
   end
 
-  # Track payment completion
-  def self.track_payment_completion(user, session_id)
+  # Track payment completion (Polar order_id or legacy Stripe session_id)
+  def self.track_payment_completion(user, payment_id)
     Rails.logger.info "Payment completion tracked for user #{user.id}"
 
     payment_data = {
       user_id: user.id,
       email: user.email_address,
-      stripe_session_id: session_id,
+      polar_order_id: payment_id,
       payment_completed_at: Time.current,
-      amount: 990, # $9.99 in cents
-      currency: "usd"
+      amount: 999, # £9.99 in pence
+      currency: "gbp"
     }
 
     Rails.logger.info "Payment data: #{payment_data.to_json}"

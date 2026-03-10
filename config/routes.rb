@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, or 500 otherwise.
   get "up" => "rails/health#show", as: :rails_health_check
 
+  # Polar webhooks (public, no auth - verification via signature)
+  post "/webhooks/polar", to: "webhooks/polar#create"
+
   # PWA routes (must be before other routes to avoid conflicts)
   get "/manifest.json", to: "pwa#manifest", as: "pwa_manifest"
   get "/service-worker.js", to: "pwa#service_worker", as: "pwa_service_worker", defaults: { format: :js }
@@ -67,11 +70,17 @@ Rails.application.routes.draw do
     post "/download/token", to: "downloads#generate_token", as: "generate_download_token"
     post "/download/mark", to: "downloads#mark_downloaded", as: "mark_downloaded"
 
-    # Stripe Integration
-    post "/stripe/create-checkout-session", to: "stripe#create_checkout_session", as: "create_checkout_session"
-    get "/stripe/success", to: "stripe#success", as: "success_stripe"
-    get "/stripe/cancel", to: "stripe#cancel", as: "cancel_stripe"
-    get "/stripe/customer-portal", to: "stripe#customer_portal", as: "customer_portal"
-    post "/stripe/webhook", to: "stripe#webhook"
+    # Polar Integration (Merchant of Record)
+    post "/polar/create-checkout", to: "polar#create_checkout", as: "create_checkout_session"
+    get "/polar/success", to: "polar#success", as: "success_polar"
+    get "/polar/cancel", to: "polar#cancel", as: "cancel_polar"
+
+    # Polar Webhooks (no /app prefix - must be publicly accessible)
+    # Legacy Stripe (kept for historical data)
+    post "/stripe/create-checkout-session", to: "legacy/stripe#create_checkout_session", as: "legacy_create_checkout_session"
+    get "/stripe/success", to: "legacy/stripe#success", as: "success_stripe"
+    get "/stripe/cancel", to: "legacy/stripe#cancel", as: "cancel_stripe"
+    get "/stripe/customer-portal", to: "legacy/stripe#customer_portal", as: "customer_portal"
+    post "/stripe/webhook", to: "legacy/stripe#webhook"
   end
 end

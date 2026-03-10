@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_09_190000) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_10_000000) do
   create_table "migration_statuses", force: :cascade do |t|
     t.string "migration_type", null: false
     t.string "status", default: "pending", null: false
@@ -79,8 +79,13 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_09_190000) do
     t.boolean "roll_over", default: true, null: false
     t.string "not_yet_panel_title", default: "Not Yet", null: false
     t.datetime "paid_at"
+    t.string "polar_customer_id"
+    t.string "polar_product_id"
+    t.string "polar_order_id"
     t.index ["device_downloaded"], name: "idx_users_device_downloaded"
     t.index ["download_token"], name: "idx_users_download_token"
+    t.index ["polar_customer_id"], name: "index_users_on_polar_customer_id"
+    t.index ["polar_order_id"], name: "index_users_on_polar_order_id"
     t.index ["trial_expires_at"], name: "idx_users_trial_expires"
     t.check_constraint "trial_expires_at IS NULL OR trial_expires_at > trial_started_at", name: "check_trial_expires_after_start"
   end

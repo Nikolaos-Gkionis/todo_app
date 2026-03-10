@@ -44,8 +44,11 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
-# Stripe payment processing
+# Stripe payment processing (legacy - kept for historical data)
 gem "stripe"
+
+# Faraday for Polar.sh API (Merchant of Record)
+gem "faraday"
 
 # Brevo API for email (avoids blocked SMTP ports on DigitalOcean)
 gem "brevo-rails"

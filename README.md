@@ -215,7 +215,7 @@ Through building this app, you've mastered:
    git clone <your-repo>
    cd todo_app
    cp .env.example .env
-   # Edit .env with your Stripe keys
+   # Edit .env with your Polar keys (see docs/payment-migration.md)
    ```
 
 2. **Launch with Docker:**
@@ -257,9 +257,10 @@ kamal app logs
 Required environment variables (copy from `.env.example`):
 
 ```bash
-# Stripe (required for payments)
-STRIPE_PUBLISHABLE_KEY=pk_test_...
-STRIPE_SECRET_KEY=sk_test_...
+# Polar (required for payments - Merchant of Record)
+POLAR_ACCESS_TOKEN=polar_oat_...
+POLAR_PRODUCT_ID=uuid-from-polar-dashboard
+POLAR_WEBHOOK_SECRET=whsec_...
 ```
 
 ---
