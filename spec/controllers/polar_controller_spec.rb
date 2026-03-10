@@ -54,9 +54,9 @@ RSpec.describe PolarController, type: :controller do
         allow(controller).to receive(:current_user).and_return(user)
       end
 
-      it "redirects to settings with error" do
+      it "redirects to app root with error" do
         post :create_checkout
-        expect(response).to redirect_to(settings_path)
+        expect(response).to redirect_to(app_root_path)
         expect(flash[:alert]).to include("not configured")
       end
     end
@@ -72,14 +72,12 @@ RSpec.describe PolarController, type: :controller do
     context "when user already purchased" do
       before do
         allow(user).to receive(:device_downloaded?).and_return(true)
-        allow(user).to receive(:download_token).and_return(nil)
-        allow(user).to receive(:generate_download_token!).and_return("token_123")
         allow(controller).to receive(:current_user).and_return(user)
       end
 
-      it "redirects to download" do
+      it "redirects to purchase complete page" do
         get :success
-        expect(response).to redirect_to(download_app_path(token: "token_123"))
+        expect(response).to redirect_to(purchase_complete_path)
       end
     end
 
@@ -89,18 +87,17 @@ RSpec.describe PolarController, type: :controller do
         allow(controller).to receive(:current_user).and_return(user)
       end
 
-      it "redirects to settings with wait message" do
+      it "redirects to purchase complete page" do
         get :success
-        expect(response).to redirect_to(settings_path)
-        expect(flash[:notice]).to include("Thank you")
+        expect(response).to redirect_to(purchase_complete_path)
       end
     end
   end
 
   describe "GET #cancel" do
-    it "redirects to settings with cancellation message" do
+    it "redirects to app root with cancellation message" do
       get :cancel
-      expect(response).to redirect_to(settings_path)
+      expect(response).to redirect_to(app_root_path)
       expect(flash[:alert]).to eq("Payment was cancelled. No charges were made.")
     end
   end

@@ -1,6 +1,8 @@
 class DownloadsController < ApplicationController
-  before_action :require_login
+  # Allow token-based access when user clicks from email (e.g. different device)
+  skip_before_action :require_login, if: :token_provided?
   before_action :set_user
+  before_action :authenticate_user_or_token!
 
   # Show download page with instructions
   def show
@@ -14,7 +16,7 @@ class DownloadsController < ApplicationController
     @download_token = @user.download_token || @user.generate_download_token!
   end
 
-  # Download the app bundle
+  # Download the app bundle (supports token auth for email link clicks)
   def download
     Rails.logger.info "Download requested for user #{@user.id} with token: #{params[:token]}"
 
@@ -29,7 +31,7 @@ class DownloadsController < ApplicationController
     unless @user.can_download?
       Rails.logger.info "User has reached download limit: #{@user.download_count}/#{User::MAX_DOWNLOADS}"
       flash[:error] = "You've reached the maximum of #{User::MAX_DOWNLOADS} downloads. Each device gets its own independent copy."
-      redirect_to download_path
+      redirect_to download_path(token: params[:token])
       return
     end
 
@@ -107,7 +109,7 @@ class DownloadsController < ApplicationController
     rescue => e
       Rails.logger.error "PWA bundle creation failed: #{e.message}"
       Rails.logger.error e.backtrace.join("\n")
-          flash[:error] = "Download failed. Please try again or contact support."
+      flash[:error] = "Download failed. Please try again or contact support."
       redirect_to app_root_path
     end
   end
@@ -254,7 +256,27 @@ class DownloadsController < ApplicationController
 
   private
 
+  def token_provided?
+    params[:token].present?
+  end
+
+  # Allow access via session (logged in) or valid download token (email link)
+  def authenticate_user_or_token!
+    return if @user.present?
+
+    if params[:token].present?
+      flash[:error] = "Invalid or expired download link. Please sign in or request a new link from the app."
+    else
+      flash_login_required
+    end
+    redirect_to login_path
+  end
+
   def set_user
-    @user = current_user
+    @user = if logged_in?
+      current_user
+    elsif params[:token].present?
+      User.find_by(download_token: params[:token])
+    end
   end
 end

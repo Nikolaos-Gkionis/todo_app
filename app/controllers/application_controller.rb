@@ -48,6 +48,7 @@ class ApplicationController < ActionController::Base
     # Redirect to login if not authenticated
     unless logged_in?
       flash_login_required
+      session[:return_to] = request.original_url
       redirect_to login_path
     end
   end

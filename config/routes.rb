@@ -64,6 +64,9 @@ Rails.application.routes.draw do
     get "/trial/export", to: "trial#export_data", as: "export_trial_data"
     get "/trial/download", to: "trial#download", as: "trial_download"
 
+    # PWA Install Guide (post-payment only, no marketing mix)
+    get "/install", to: "install#show", as: "install_pwa"
+
     # App Downloads
     get "/download", to: "downloads#show", as: "download"
     get "/download/app", to: "downloads#download", as: "download_app"

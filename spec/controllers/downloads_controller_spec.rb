@@ -179,7 +179,7 @@ RSpec.describe DownloadsController, type: :controller do
         it 'redirects to download page with error' do
           get :download, params: { token: 'downloaded_token_789' }
 
-          expect(response).to redirect_to(download_path)
+          expect(response).to redirect_to(download_path(token: 'downloaded_token_789'))
           expect(flash[:error]).to eq('You\'ve reached the maximum of 3 downloads. Each device gets its own independent copy.')
         end
 
@@ -187,7 +187,7 @@ RSpec.describe DownloadsController, type: :controller do
           # The controller logs download limit reached, but we'll just verify the behavior
           get :download, params: { token: 'downloaded_token_789' }
 
-          expect(response).to redirect_to(download_path)
+          expect(response).to redirect_to(download_path(token: 'downloaded_token_789'))
         end
       end
     end
@@ -345,7 +345,7 @@ RSpec.describe DownloadsController, type: :controller do
       it 'prevents further downloads' do
         get :download, params: { token: downloaded_user.download_token }
 
-        expect(response).to redirect_to(download_path)
+        expect(response).to redirect_to(download_path(token: downloaded_user.download_token))
         expect(flash[:error]).to include('maximum of 3 downloads')
       end
     end

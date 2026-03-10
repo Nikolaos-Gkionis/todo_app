@@ -2,6 +2,9 @@
 <div class="download-header">
   <div class="container">
     <div class="download-header__content">
+      <%= link_to app_root_path, class: "download-header__back", style: "display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: #4b5563; text-decoration: none; font-size: 0.95rem;" do %>
+        ← Back to app
+      <% end %>
       <h1 class="download-header__title">Download Todo-it to Your Device</h1>
       <p class="download-header__subtitle">
         Get the full offline experience with all your data stored locally on your device.
@@ -79,6 +82,11 @@
         <p class="download-step__description">
           Follow the instructions below for your device type. If you exported your data, it will be automatically restored during installation.
         </p>
+        <%= link_to (params[:token].present? ? install_pwa_path(token: params[:token]) : install_pwa_path),
+                    class: "download-button download-button--secondary",
+                    style: "margin-bottom: 1rem;" do %>
+          📱 View detailed PWA install guide (viewport lock, account icon)
+        <% end %>
         
         <!-- Mobile Instructions -->
         <div class="device-instructions">

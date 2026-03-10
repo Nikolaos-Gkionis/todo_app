@@ -27,7 +27,8 @@ class SessionsController < ApplicationController
         }
       end
 
-      redirect_to app_root_path, notice: "Successfully logged in!"
+      redirect_target = session.delete(:return_to).presence || app_root_path
+      redirect_to redirect_target, notice: "Successfully logged in!"
     else
       # Login failed
       flash.now[:alert] = "Invalid email or password"

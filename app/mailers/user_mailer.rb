@@ -2,10 +2,11 @@ class UserMailer < ApplicationMailer
   # Set default sender email
   default from: "Todo-it <noreply@todo-it.app>"
 
-  # Purchase confirmation email with download link
-  def purchase_confirmation(user, download_url)
+  # Purchase confirmation email with download link and install guide
+  def purchase_confirmation(user, download_url, install_guide_url = nil)
     @user = user
     @download_url = download_url
+    @install_guide_url = install_guide_url.presence || install_pwa_url
     @app_name = "Todo-it"
 
     mail(

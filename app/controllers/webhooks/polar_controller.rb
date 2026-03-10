@@ -45,8 +45,11 @@ module Webhooks
       AnalyticsService.track_trial_conversion(user)
       AnalyticsService.track_payment_completion(user, order_data["id"])
 
-      download_url = download_app_url(token: download_token)
-      UserMailer.purchase_confirmation(user, download_url).deliver_later
+      # Send download page URL (with token) so user lands on instructions page first.
+      # Token allows access from email on another device without being logged in.
+      download_page_url = download_url(token: download_token)
+      install_guide_url = install_pwa_url(token: download_token)
+      UserMailer.purchase_confirmation(user, download_page_url, install_guide_url).deliver_later
 
       Rails.logger.info "Polar order.paid: fulfilled for user #{user.id}"
     rescue StandardError => e
