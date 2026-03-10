@@ -4,9 +4,6 @@ class DashboardController < ApplicationController
   def index
     today = Time.current.to_date
 
-    # Zero-Loss Auto-Rollover: push past unfinished tasks to today
-    current_user.todos.pending.where("due_date < ?", today).update_all(due_date: today)
-
     @start_date = params[:start_date].present? ? Date.parse(params[:start_date]) : today
 
     # View switcher: default 7 days (full week), persisted in session
