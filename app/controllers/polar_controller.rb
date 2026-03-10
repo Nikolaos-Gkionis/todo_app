@@ -42,17 +42,8 @@ class PolarController < ApplicationController
 
   def success
     # Polar redirects here after payment. The actual fulfillment happens via webhook (order.paid).
-    # If user arrives here before webhook processes, redirect to download if they're already marked.
-    if current_user.device_downloaded?
-      download_token = current_user.download_token || current_user.generate_download_token!
-      redirect_to download_app_path(token: download_token),
-                  notice: "Payment successful! Your app is ready to download. 🎉"
-      return
-    end
-
-    # Webhook may not have processed yet - show a short wait message and suggest refresh
-    redirect_to app_root_path,
-                notice: "Thank you for your purchase! We're setting up your download. Please refresh in a moment, or check your email for the download link."
+    # Send all users to the purchase complete page, which polls and redirects when ready.
+    redirect_to purchase_complete_path
   end
 
   def cancel

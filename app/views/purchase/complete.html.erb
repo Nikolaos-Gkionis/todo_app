@@ -1,0 +1,98 @@
+<%# Post-purchase landing page: polls until webhook fulfills, then redirects to download %>
+<%# Uses full page reload when redirecting so Buy Now button is removed from cached views %>
+<div class="download-header">
+  <div class="container">
+    <div class="download-header__content">
+      <h1 class="download-header__title">🎉 Thank you for your purchase!</h1>
+      <p class="download-header__subtitle">
+        We're preparing your download. This usually takes a few seconds.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="download-status">
+  <div class="container">
+    <div class="download-status__card">
+      <div class="download-status__icon" id="purchase-status-icon">⏳</div>
+      <div class="download-status__info">
+        <h2 class="download-status__title" id="purchase-status-title">Setting up your download...</h2>
+        <p class="download-status__description" id="purchase-status-desc">
+          We've sent a confirmation email to <strong><%= current_user.email_address %></strong> with your download link.
+          You can also wait here — we'll redirect you automatically when ready.
+        </p>
+        <div id="purchase-polling-actions" style="margin-top: 1.5rem;">
+          <button type="button" class="download-button download-button--secondary" id="purchase-check-now" onclick="checkPurchaseStatus()">
+            Check now
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%# PWA install guide link — show while waiting %>
+<div class="download-instructions">
+  <div class="container">
+    <h3 class="download-instructions__title">While you wait</h3>
+    <p style="margin-bottom: 1rem; color: #4b5563;">
+      Follow our step-by-step guide to install Todo-it on your device as a Progressive Web App.
+    </p>
+    <%= link_to how_to_path(anchor: "install-pwa"),
+                class: "download-button download-button--secondary",
+                target: "_blank",
+                rel: "noopener" do %>
+      📱 View PWA install guide
+    <% end %>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // Poll for purchase fulfillment — when webhook processes, redirect with full reload
+    var pollInterval;
+    var maxAttempts = 60; // 2 minutes (60 * 2 sec)
+    var attempts = 0;
+
+    window.checkPurchaseStatus = function() {
+      fetch('<%= purchase_status_path %>', {
+        headers: { 'Accept': 'application/json' },
+        credentials: 'same-origin'
+      })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.ready && data.download_url) {
+            clearInterval(pollInterval);
+            // Full page reload ensures fresh data (Buy Now button removed)
+            window.location.href = data.download_url;
+          }
+        })
+        .catch(function() { /* ignore */ });
+    };
+
+    function startPolling() {
+      pollInterval = setInterval(function() {
+        attempts++;
+        if (attempts >= maxAttempts) {
+          clearInterval(pollInterval);
+          var icon = document.getElementById('purchase-status-icon');
+          var title = document.getElementById('purchase-status-title');
+          var desc = document.getElementById('purchase-status-desc');
+          var btn = document.getElementById('purchase-check-now');
+          if (icon) icon.textContent = '📧';
+          if (title) title.textContent = 'Check your email';
+          if (desc) desc.innerHTML = 'Your download link was sent to your email. If you don\'t see it, check your spam folder. You can also try <a href="<%= purchase_complete_path %>">refreshing this page</a>.';
+          if (btn) btn.style.display = 'none';
+          return;
+        }
+        window.checkPurchaseStatus();
+      }, 2000);
+    }
+
+    // First check after 1 second, then poll every 2 seconds
+    setTimeout(function() {
+      window.checkPurchaseStatus();
+      startPolling();
+    }, 1000);
+  })();
+</script>

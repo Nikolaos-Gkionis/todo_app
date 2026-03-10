@@ -70,6 +70,10 @@ Rails.application.routes.draw do
     post "/download/token", to: "downloads#generate_token", as: "generate_download_token"
     post "/download/mark", to: "downloads#mark_downloaded", as: "mark_downloaded"
 
+    # Purchase flow (post-checkout)
+    get "/purchase/complete", to: "purchase#complete", as: "purchase_complete"
+    get "/purchase/status", to: "purchase#status", as: "purchase_status"
+
     # Polar Integration (Merchant of Record)
     post "/polar/create-checkout", to: "polar#create_checkout", as: "create_checkout_session"
     get "/polar/success", to: "polar#success", as: "success_polar"
