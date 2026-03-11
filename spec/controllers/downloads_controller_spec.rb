@@ -279,7 +279,7 @@ RSpec.describe DownloadsController, type: :controller do
         html = controller.send(:create_simple_html)
 
         expect(html).to include('<!DOCTYPE html>')
-        expect(html).to include('<title>Todo-it - Offline App</title>')
+        expect(html).to include('<title>Task Days - Offline App</title>')
         expect(html).to include('Installation Instructions')
         expect(html).to include('Your Data')
         expect(html).to include('serviceWorker.register')
@@ -292,8 +292,8 @@ RSpec.describe DownloadsController, type: :controller do
 
         expect { JSON.parse(manifest) }.not_to raise_error
         parsed = JSON.parse(manifest)
-        expect(parsed['name']).to eq('Todo-it - Nicely Done ')
-        expect(parsed['short_name']).to eq('Todo-it')
+        expect(parsed['name']).to eq('Task Days - Organise Your Days')
+        expect(parsed['short_name']).to eq('Task Days')
         expect(parsed['display']).to eq('standalone')
         expect(parsed['icons']).to be_an(Array)
       end
@@ -303,12 +303,12 @@ RSpec.describe DownloadsController, type: :controller do
       it 'generates comprehensive installation instructions' do
         instructions = controller.send(:create_installation_instructions)
 
-        expect(instructions).to include('Todo-it PWA Installation Instructions')
+        expect(instructions).to include('Task Days PWA Installation Instructions')
         expect(instructions).to include('MOBILE DEVICES')
         expect(instructions).to include('DESKTOP')
         expect(instructions).to include('OFFLINE USAGE')
         expect(instructions).to include('DATA RESTORATION')
-        expect(instructions).to include('support@todo-it.app')
+        expect(instructions).to include('support@task-days.com')
       end
     end
   end

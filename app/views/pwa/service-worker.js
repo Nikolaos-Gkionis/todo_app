@@ -1,4 +1,4 @@
-// Todo-it Progressive Web App Service Worker
+// Task Days Progressive Web App Service Worker
 // Handles offline functionality, caching, and background sync
 
 const CACHE_NAME = 'todo-it-v1.0.13';
@@ -159,7 +159,7 @@ async function syncTodos() {
     await clearSyncedTodosFromIndexedDB();
 
     // Notify user of successful sync
-    self.registration.showNotification('Todo-it Sync Complete', {
+    self.registration.showNotification('Task Days Sync Complete', {
       body: 'Your offline changes have been synced successfully!',
       icon: '/icon-192.png',
       badge: '/icon-192.png'
@@ -213,7 +213,7 @@ self.addEventListener('push', event => {
     };
 
     event.waitUntil(
-      self.registration.showNotification(data.title || 'Todo-it', options)
+      self.registration.showNotification(data.title || 'Task Days', options)
     );
   } catch (error) {
     console.error('[Service Worker] Push notification error:', error);

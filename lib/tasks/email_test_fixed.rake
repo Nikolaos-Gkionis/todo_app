@@ -19,7 +19,7 @@ namespace :email do
 
     # Test each email type
     emails_to_test = [
-      { name: "purchase_confirmation", method: :purchase_confirmation, args: [ test_user, "https://todo-it.app/download?token=test-123" ] },
+      { name: "purchase_confirmation", method: :purchase_confirmation, args: [ test_user, "https://task-days.com/download?token=test-123" ] },
       { name: "password_changed", method: :password_changed, args: [ test_user ] },
       { name: "email_changed", method: :email_changed, args: [ test_user, "old@example.com" ] },
       { name: "welcome_trial", method: :welcome_trial, args: [ test_user ] },

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Todo-it has migrated from Stripe to Polar.sh as the Merchant of Record. Polar handles UK VAT/tax, checkout, and payment processing.
+Task Days has migrated from Stripe to Polar.sh as the Merchant of Record. Polar handles UK VAT/tax, checkout, and payment processing.
 
 ## Implementation Status
 
@@ -25,7 +25,7 @@ Todo-it has migrated from Stripe to Polar.sh as the Merchant of Record. Polar ha
 6. Configure:
    - **Scopes**: Enable at least `checkouts:write` and `products:read` (or `products:write` if creating via API).
    - **Expiration**: Set as needed (e.g. no expiry for production).
-   - **Name**: e.g. `Todo-it Production`.
+   - **Name**: e.g. `Task Days Production`.
 7. Click Create → **copy the token immediately** (it’s only shown once).
 8. Save as `POLAR_ACCESS_TOKEN` in `.env` and `.kamal/secrets`.
 
@@ -36,7 +36,7 @@ Todo-it has migrated from Stripe to Polar.sh as the Merchant of Record. Polar ha
 1. In the Polar dashboard, go to **Products → Catalogue** (or `https://polar.sh/dashboard/YOUR_ORG_SLUG/products`).
 2. Click **New Product**.
 3. Configure:
-   - **Name**: `Todo-it - Download to Device`
+   - **Name**: `Task Days - Download to Device`
    - **Description**: `Download to your device forever - unlimited pages, offline access, and data ownership`
    - **Billing cycle**: **One-time purchase**
    - **Pricing type**: **Fixed price**
@@ -54,7 +54,7 @@ Todo-it has migrated from Stripe to Polar.sh as the Merchant of Record. Polar ha
 2. Click **Add Endpoint**.
 3. Enter the endpoint URL:
    ```
-   https://todo-it.app/webhooks/polar
+   https://task-days.com/webhooks/polar
    ```
    (Use your real domain in production; for local tests use `polar listen`.)
 4. **Delivery format**: Keep **Raw** (JSON).
@@ -80,7 +80,7 @@ Todo-it has migrated from Stripe to Polar.sh as the Merchant of Record. Polar ha
 
 1. **Create Organization & Product on Polar**
    - Sign up at https://polar.sh
-   - Create a one-time product: "Todo-it - Download to Device" at £9.99
+   - Create a one-time product: "Task Days - Download to Device" at £9.99
    - Or run: `POLAR_ORGANIZATION_ID=your-org-uuid POLAR_ACCESS_TOKEN=xxx bin/rails polar:create_product`
 
 2. **Configure Webhook**
@@ -107,7 +107,7 @@ For Polar-hosted downloadable files (vs. our dynamic PWA ZIP), you would:
 - Create a Benefit of type `downloadables` linked to that file
 - Attach the benefit to the product
 
-Todo-it uses webhook fulfillment: when `order.paid` fires, we mark the user and send our own download link. No Polar file upload needed.
+Task Days uses webhook fulfillment: when `order.paid` fires, we mark the user and send our own download link. No Polar file upload needed.
 
 ---
 
@@ -139,7 +139,7 @@ To test the full flow (checkout → order.paid webhook → download + email) wit
    - **Amount**: 100%
    - **Duration**: Once
    - **Code**: `FAMTEST` (or any code)
-   - **Name**: Todo-it Test 100%
+   - **Name**: Task Days Test 100%
 3. Copy the discount ID and set `POLAR_TEST_DISCOUNT_ID` in `.env`.
 4. Or use the code at checkout: add `?discount_code=FAMTEST` to the checkout URL (requires code support in your flow).
 

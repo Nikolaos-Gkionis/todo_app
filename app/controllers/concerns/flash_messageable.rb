@@ -38,7 +38,7 @@ module FlashMessageable
   end
 
   def flash_trial_expired
-    flash[:trial] = "⚠️ Trial Expired - Download the app to continue using Todo-it."
+    flash[:trial] = "⚠️ Trial Expired - Download the app to continue using Task Days."
   end
 
   # Access control messages

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title><%= content_for(:title) || (logged_in? && current_user&.app_title.presence) || "Todo-it" %></title>
+    <title><%= content_for(:title) || (logged_in? && current_user&.app_title.presence) || "Task Days" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -21,9 +21,9 @@
     <meta name="theme-color" content="#4a5568">
     
     <!-- App Meta Tags -->
-    <meta name="description" content="Todo-it - The simplest calendar-based todo app. 100% Yours.">
-    <meta name="author" content="Todo-it App">
-    <meta property="og:title" content="Todo-it - Beautiful Todo App">
+    <meta name="description" content="Task Days - Organise tasks by day. 100% Yours.">
+    <meta name="author" content="Task Days">
+    <meta property="og:title" content="Task Days - Organise Your Days">
     <meta property="og:description" content="Reduced mental clutter. Offline-first. Zero-Cloud. Private by design.">
     <meta property="og:type" content="website">
 
@@ -48,7 +48,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="<%= 'body--font-handwritten' if logged_in? && current_user&.font_family == 'handwritten' %><%= " #{yield :body_class}" if content_for?(:body_class) %>" id="app-body" data-controller="app-keyboard" data-purchased="<%= (current_user&.device_downloaded?) ? 'true' : 'false' %>" style="<%= "height: 100vh; overflow: hidden; height: 100dvh;" if logged_in? %><%= 'font-family: var(--user-font);' if logged_in? && current_user && font_stack_for(current_user) %>">
+  <body class="<%= 'body--font-handwritten' if logged_in? && current_user&.font_family == 'handwritten' %><%= " #{yield :body_class}" if content_for?(:body_class) %>" id="app-body" data-controller="app-keyboard" data-purchased="<%= (current_user&.device_downloaded?) ? 'true' : 'false' %><%= ' data-marketing-page="true"' if controller_name == 'marketing' || controller_name == 'contact' %>" style="<%= "height: 100vh; overflow: hidden; height: 100dvh;" if logged_in? %><%= 'font-family: var(--user-font);' if logged_in? && current_user && font_stack_for(current_user) %>">
     <%# Hidden div for Turbo Stream form-reset target (todo create clears input without full reload) %>
     <div id="turbo-form-reset-target" hidden aria-hidden="true"></div>
     <!-- Skip to main content - first focusable for keyboard/screen reader users -->
@@ -86,7 +86,9 @@
           }
         }
         
-        const savedTheme = localStorage.getItem('notebook-theme') || 'classic';
+        // Marketing pages: never apply app themes (dark/lined/etc) — always light for correct H1/colour visibility
+        const isMarketing = document.body.getAttribute('data-marketing-page') === 'true';
+        const savedTheme = isMarketing ? 'classic' : (localStorage.getItem('notebook-theme') || 'classic');
         applyTheme(savedTheme);
         
         // Store the function globally for later use
@@ -316,8 +318,9 @@
       function setupThemeSelector() {
         const themeButtons = document.querySelectorAll('[data-theme]');
         
-        // Load saved theme from localStorage and apply it
-        const savedTheme = localStorage.getItem('notebook-theme') || 'classic';
+        // Marketing pages: never apply app themes (preserves H1/colour visibility)
+        const isMarketing = document.body.getAttribute('data-marketing-page') === 'true';
+        const savedTheme = isMarketing ? 'classic' : (localStorage.getItem('notebook-theme') || 'classic');
         applyTheme(savedTheme);
         
         // Only set up theme selector if theme buttons exist (projects index page only)

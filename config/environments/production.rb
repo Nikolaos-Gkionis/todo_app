@@ -76,7 +76,7 @@ Rails.application.configure do
     config.action_mailer.smtp_settings = {
       address: ENV.fetch("SMTP_ADDRESS", "smtp.gmail.com"),
       port: ENV.fetch("SMTP_PORT", 587),
-      domain: ENV.fetch("SMTP_DOMAIN", "todo-it.app"),
+      domain: ENV.fetch("SMTP_DOMAIN", "task-days.com"),
       user_name: ENV.fetch("CONTACT_EMAIL", ""),
       password: ENV.fetch("SMTP_PASSWORD", ""),
       authentication: :plain,
@@ -86,7 +86,7 @@ Rails.application.configure do
 
   # Set host to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = {
-    host: ENV.fetch("MAILER_HOST", "todo-it.app"),
+    host: ENV.fetch("MAILER_HOST", "task-days.com"),
     protocol: "https"
   }
 

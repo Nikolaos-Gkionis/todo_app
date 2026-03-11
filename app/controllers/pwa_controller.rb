@@ -26,8 +26,8 @@ class PwaController < ApplicationController
   def manifest_data
     base = request.base_url
     {
-      name: "Todo-it - Nicely Done ",
-      short_name: "Todo-it",
+      name: "Task Days - Organise Your Days",
+      short_name: "Task Days",
       description: "Beautiful, offline-first todo app. Start with a 7-day free trial, then download forever. Your data, your device.",
       start_url: "#{base}/app",
       scope: "#{base}/",

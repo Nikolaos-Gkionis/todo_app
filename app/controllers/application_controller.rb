@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
         # Invalid or expired token, clear the cookie
         cookies.delete(:remember_token)
         # Set a flash message to inform user about expired session
-        flash[:notice] = "Please sign in to continue using Todo-it."
+        flash[:notice] = "Please sign in to continue using Task Days."
         nil
       end
     end

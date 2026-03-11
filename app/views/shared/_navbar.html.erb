@@ -5,8 +5,8 @@
       <!-- Logo -->
       <div class="navbar__logo">
         <%= link_to (defined?(root_path) ? root_path : pages_path), class: "flex items-center" do %>
-          <div class="logo-checkbox"></div>
-          <span class="navbar__logo-text">Todo-it</span>
+          <%= image_tag "icons/logo-light.png", alt: "Task Days", class: "navbar__logo-img navbar__logo-img--nav", width: 50, height: 50 %>
+          <span class="navbar__logo-text">Task Days</span>
         <% end %>
       </div>
       
@@ -75,8 +75,8 @@
     <div class="mobile-menu hidden" id="mobile-menu" aria-hidden="true" style="background-color: #ffffff;">
       <div class="mobile-menu__header">
         <%= link_to (defined?(root_path) ? root_path : pages_path), class: "flex items-center" do %>
-          <div class="logo-checkbox mr-3"></div>
-          <span class="navbar__logo-text">Todo-it</span>
+          <%= image_tag "icons/logo-light.png", alt: "Task Days", class: "navbar__logo-img navbar__logo-img--nav mr-3", width: 50, height: 50 %>
+          <span class="navbar__logo-text">Task Days</span>
         <% end %>
         <button type="button" class="mobile-menu__close-btn mobile-menu-close">
           <span class="sr-only">Close menu</span>

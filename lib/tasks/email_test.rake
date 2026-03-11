@@ -15,7 +15,7 @@ namespace :email do
 
     # Test purchase confirmation email
     puts "Sending purchase confirmation email..."
-    download_url = "https://todo-it.app/download?token=test-token-123"
+    download_url = "https://task-days.com/download?token=test-token-123"
     UserMailer.purchase_confirmation(test_user, download_url).deliver_now
     puts "✅ Purchase confirmation email sent"
 
@@ -68,7 +68,7 @@ namespace :email do
 
     case type
     when "purchase"
-      download_url = "https://todo-it.app/download?token=test-token-123"
+      download_url = "https://task-days.com/download?token=test-token-123"
       UserMailer.purchase_confirmation(test_user, download_url).deliver_now
       puts "✅ Purchase confirmation email sent"
     when "password"

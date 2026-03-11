@@ -103,7 +103,7 @@ class DownloadsController < ApplicationController
       # Send the ZIP file
       Rails.logger.info "Sending ZIP file, size: #{zip_data.string.length} bytes"
       send_data zip_data.string,
-                filename: "todo-it-app-#{@user.id}-#{Time.current.strftime('%Y%m%d-%H%M%S')}.zip",
+                filename: "task-days-app-#{@user.id}-#{Time.current.strftime('%Y%m%d-%H%M%S')}.zip",
                 type: "application/zip",
                 disposition: "attachment"
     rescue => e
@@ -121,15 +121,15 @@ class DownloadsController < ApplicationController
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Todo-it - Offline App</title>
+        <title>Task Days - Offline App</title>
         <link rel="manifest" href="manifest.json">
         <link rel="stylesheet" href="styles.css">
         <meta name="theme-color" content="#667eea">
       </head>
       <body class="notebook-background handwritten" id="app-body">
         <div class="container px-4 py-8 mt-4">
-          <h1 class="text-3xl font-bold mb-6">Todo-it Offline App</h1>
-          <p class="text-gray-600 mb-4">This is your offline Todo-it app. Your data has been included in this bundle.</p>
+          <h1 class="text-3xl font-bold mb-6">Task Days Offline App</h1>
+          <p class="text-gray-600 mb-4">This is your offline Task Days app. Your data has been included in this bundle.</p>
       #{'    '}
           <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
             <h2 class="text-lg font-semibold text-blue-900 mb-2">📱 Installation Instructions</h2>
@@ -162,8 +162,8 @@ class DownloadsController < ApplicationController
   def create_manifest_json
     <<~JSON
       {
-        "name": "Todo-it - Nicely Done ",
-        "short_name": "Todo-it",
+        "name": "Task Days - Organise Your Days",
+        "short_name": "Task Days",
         "description": "Beautiful, offline-first todo app. Your data, your device.",
         "start_url": "./index.html",
         "scope": "./",
@@ -193,24 +193,24 @@ class DownloadsController < ApplicationController
 
   def create_installation_instructions
     <<~INSTRUCTIONS
-      Todo-it PWA Installation Instructions
+      Task Days PWA Installation Instructions
       =====================================
 
-      This is your personal Todo-it app bundle. Follow these steps to install it on your device:
+      This is your personal Task Days app bundle. Follow these steps to install it on your device:
 
       MOBILE DEVICES (iOS/Android):
       1. Extract this ZIP file to a folder on your device
       2. Open the index.html file in your mobile browser
       3. Look for "Add to Home Screen" in your browser menu
       4. Tap "Add" to install the app on your home screen
-      5. Launch Todo-it from your home screen
+      5. Launch Task Days from your home screen
 
       DESKTOP (Chrome/Edge/Safari):
       1. Extract this ZIP file to a folder on your computer
       2. Open the index.html file in your browser
       3. Look for the install icon in your browser's address bar
       4. Click "Install" when prompted
-      5. Launch Todo-it from your applications or desktop
+      5. Launch Task Days from your applications or desktop
 
       OFFLINE USAGE:
       - The app works completely offline once installed
@@ -222,9 +222,9 @@ class DownloadsController < ApplicationController
       - You can also import data manually through the app's settings
 
       SUPPORT:
-      If you need help, contact us at support@todo-it.app
+      If you need help, contact us at support@task-days.com
 
-      Enjoy your offline Todo-it experience!
+      Enjoy your offline Task Days experience!
     INSTRUCTIONS
   end
 

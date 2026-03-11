@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "Todo-it <noreply@todo-it.app>"
+  default from: "Task Days <noreply@task-days.com>"
   layout "mailer"
 
   # Set default URL options for email links

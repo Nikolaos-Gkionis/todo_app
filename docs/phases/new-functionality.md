@@ -1,7 +1,7 @@
-# Todo-it.app UI Style and Functionality Documentation
+# Task Days UI Style and Functionality Documentation
 
 ## Overview
-Todo-it.app is designed as a highly minimalist to-do list application for users who want a simple, uncluttered system without complex project folders, tags, or contexts. The application focuses on a time-based visual structure, split between daily calendar tasks and flexible "Someday" lists.
+Task Days is designed as a highly minimalist task app for users who want a simple, uncluttered system without complex project folders, tags, or contexts. The application focuses on a time-based visual structure, split between daily calendar tasks and flexible "Someday" lists.
 
 ---
 
@@ -28,7 +28,7 @@ Todo-it.app is designed as a highly minimalist to-do list application for users 
 | **Formatting** | Markdown & Toolbars | Style text using Markdown (e.g., `**bold**`, `*italic*`), a hover formatting toolbar, or keyboard shortcuts (`Ctrl/Cmd+B`, `Ctrl/Cmd+I`, `Ctrl/Cmd+K`). |
 | **Task Notes** | Extra Context | Attach ideas, links, subtasks (`[]`), bulleted lists (`-`), or images to specific tasks. Notes are fully editable on web but read-only on mobile. |
 | **Organization** | Someday Lists & Tabs | Create custom lists for flexible planning (e.g., "this month", "shopping"). Group these lists into customizable "Tabs" to prioritize or hide contexts. |
-| **External Input** | Email to Task | Users can email tasks directly to their Todo-it.app "today" list using a unique email address. |
+| **External Input** | Email to Task | Users can email tasks directly to their Task Days "today" list using a unique email address. |
 | **Notifications** | Daily Digest | Users can schedule a daily email summarizing their to-dos, and reply directly to the email to add new tasks. |
 | **Calendar** | Custom Holidays | Add yearly occasions (birthdays, anniversaries) to the top of a day's timeline without them rolling over like standard tasks. |
 
