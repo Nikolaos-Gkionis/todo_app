@@ -13,6 +13,7 @@ export default class extends Controller {
                 animation: 150,
                 handle: ".lists__tab-name",
                 filter: ".lists__tab--add",
+                preventOnFilter: false,
                 onEnd: this.reorderPages.bind(this)
             })
             return
@@ -27,6 +28,7 @@ export default class extends Controller {
                 animation: 150,
                 handle: ".lists__column-title",
                 filter: isTitlebar ? ".lists__titlebar-add" : null,
+                preventOnFilter: false,
                 ghostClass: 'todo-item--ghost',
                 forceFallback: true,   // Ensure the entire tall column dragging ghost is visually rendered
                 fallbackTolerance: 3,
@@ -45,6 +47,7 @@ export default class extends Controller {
             chosenClass: 'todo-item--chosen',
             dragClass: 'todo-item--drag',
             filter: filter,
+            preventOnFilter: false,
             fallbackOnBody: true,
             swapThreshold: 0.65,
             onStart: isNotYetList ? this.onDragStartFromNotYet.bind(this) : null,

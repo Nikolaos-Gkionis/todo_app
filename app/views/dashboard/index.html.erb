@@ -70,7 +70,7 @@
         </div>
 
         <div class="week-col__add">
-          <%= form_with model: Todo.new, url: todos_path, local: false, class: "todo-form" do |form| %>
+          <%= form_with model: Todo.new, url: todos_path, local: false, class: "todo-form", html: { id: "todo-form-date-#{date}" }, data: { controller: "todo-form", action: "submit->todo-form#onSubmit" } do |form| %>
             <%= form.hidden_field :due_date, value: date %>
             <%= form.text_field :title, class: "todo-input", autocomplete: "off", placeholder: "Add task.." %>
           <% end %>
@@ -145,8 +145,8 @@
                 <%= render "todos/todo", todo: todo %>
               <% end %>
             <% end %>
-            <div class="not-yet-panel__add">
-              <%= form_with model: Todo.new, url: todos_path, local: false, class: "todo-form" do |form| %>
+            <div class="not-yet-panel__add" id="not-yet-panel-add">
+              <%= form_with model: Todo.new, url: todos_path, local: false, class: "todo-form", html: { id: "todo-form-not-yet" }, data: { controller: "todo-form", action: "keydown->todo-form#onKeydown submit->todo-form#onSubmit" } do |form| %>
                 <%= form.hidden_field :page_id, value: default_page.id %>
                 <%= form.text_field :title, class: "todo-input", autocomplete: "off", placeholder: "Add task.." %>
               <% end %>
@@ -155,8 +155,8 @@
         <% else %>
           <div class="not-yet-panel__empty">
             <p>No Not Yet items yet.</p>
-            <div class="not-yet-panel__add">
-              <%= form_with model: Todo.new, url: todos_path, local: false, class: "todo-form" do |form| %>
+            <div class="not-yet-panel__add" id="not-yet-panel-add-empty">
+              <%= form_with model: Todo.new, url: todos_path, local: false, class: "todo-form", html: { id: "todo-form-not-yet-empty" }, data: { controller: "todo-form", action: "keydown->todo-form#onKeydown submit->todo-form#onSubmit" } do |form| %>
                 <%= form.text_field :title, class: "todo-input", autocomplete: "off", placeholder: "Add task.." %>
               <% end %>
             </div>

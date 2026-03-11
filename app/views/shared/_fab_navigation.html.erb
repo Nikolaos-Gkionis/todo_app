@@ -135,7 +135,7 @@
                   style: "width: 100%; background: #2563eb; color: white; margin: 0;" %>
           </div>
           <% end %>
-          <%= form_with model: current_user, url: settings_path, method: :patch, local: true, class: "space-y-4" do |form| %>
+          <%= form_with model: current_user, url: settings_path, method: :patch, local: true, class: "space-y-4", html: { "data-no-enter-submit" => "true" } do |form| %>
             <div class="pref-section">
               <div class="pref-section__label">Name</div>
               <%= form.text_field :name, class: "pref-input", placeholder: "Your name" %>

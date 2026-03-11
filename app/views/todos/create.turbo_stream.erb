@@ -3,7 +3,7 @@
     <%= render "todos/todo", todo: @todo %>
   <% end %>
 <% elsif @todo.page_id.present? %>
-  <%= turbo_stream.append "todos_page_not_yet" do %>
+  <%= turbo_stream.before "not-yet-panel-add" do %>
     <% if @todo.is_visual_break? %>
       <%= render "todos/visual_break", todo: @todo %>
     <% else %>
@@ -12,21 +12,8 @@
   <% end %>
 <% end %>
 
-<%# Persistent target in layout; script resets the form in the column where the todo was just added %>
+<%# Stimulus controller runs on connect — scripts in turbo update don't reliably execute %>
+<% form_id = @todo.due_date.present? ? "todo-form-date-#{@todo.due_date}" : "todo-form-not-yet" %>
 <%= turbo_stream.update "turbo-form-reset-target" do %>
-  <%# A small script included in stream payload ensures the closest local form gets cleared avoiding a full page wipe %>
-  <script>
-    (function() {
-      // Small trick: the newly inserted turbo_stream will execute this script.
-      // We know an element with id `todo_<%= @todo.id %>` was just inserted.
-      const el = document.getElementById("todo_<%= @todo.id %>");
-      if(el) {
-        const container = el.closest('.week-col, .lists__column, .not-yet-panel__list');
-        const form = container?.querySelector('form.todo-form');
-        if (form) {
-          form.reset();
-        }
-      }
-    })();
-  </script>
+  <div data-controller="form-reset" data-form-reset-form-id-value="<%= form_id %>"></div>
 <% end %>
