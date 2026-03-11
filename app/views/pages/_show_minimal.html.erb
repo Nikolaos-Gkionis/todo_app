@@ -80,7 +80,7 @@
   <!-- Collapsible Add Todo Form -->
   <div class="mt-6">
     <button id="add-todo-trigger" class="add-todo--collapsed w-full text-left" onclick="toggleAddTodo()" aria-label="Add a new todo">
-      <p class="text-gray-700">✏️ Add a new todo...</p>
+      <p class="text-gray-700">✏️ Add a new task..</p>
     </button>
 
     <div id="add-todo-form" class="add-todo--expanded hidden form-slide-in">
@@ -89,7 +89,7 @@
         <%= form.hidden_field :page_id, value: @page.id %>
         <div>
           <%= form.label :title, "What needs to be done?", class: "form-label" %>
-          <%= form.text_field :title, class: "form-input", placeholder: "Add todo...", required: true %>
+          <%= form.text_field :title, class: "form-input", placeholder: "Add task..", required: true %>
         </div>
 
         <div>

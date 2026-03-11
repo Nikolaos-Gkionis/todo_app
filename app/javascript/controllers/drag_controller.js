@@ -35,13 +35,23 @@ export default class extends Controller {
             return
         }
 
+        // Exclude add-form from being draggable when present (Not Yet panel)
+        const filter = this.element.querySelector('.not-yet-panel__add') ? '.not-yet-panel__add' : null
+        const isNotYetList = this.element.classList.contains('not-yet-panel__list')
         this.sortable = Sortable.create(this.element, {
             group: 'todos-shared',
             animation: 150,
             ghostClass: 'todo-item--ghost',
             chosenClass: 'todo-item--chosen',
             dragClass: 'todo-item--drag',
-            onEnd: this.end.bind(this)
+            filter: filter,
+            fallbackOnBody: true,
+            swapThreshold: 0.65,
+            onStart: isNotYetList ? this.onDragStartFromNotYet.bind(this) : null,
+            onEnd: (e) => {
+                if (isNotYetList) this.onDragEndFromNotYet()
+                this.end(e)
+            }
         })
     }
 
@@ -49,6 +59,14 @@ export default class extends Controller {
         if (this.sortable) {
             this.sortable.destroy()
         }
+    }
+
+    onDragStartFromNotYet() {
+        document.body.classList.add('is-dragging-from-not-yet')
+    }
+
+    onDragEndFromNotYet() {
+        document.body.classList.remove('is-dragging-from-not-yet')
     }
 
     end(event) {

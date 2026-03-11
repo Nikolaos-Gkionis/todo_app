@@ -1,18 +1,11 @@
-<%# Minimal FAB + Bottom Sheet + Account Side Panel %>
+<%# Cog (top-left) opens unified preferences panel (left drawer with Preferences + Account tabs) %>
 <% if logged_in? %>
   <div data-controller="fab-navigation"
        data-fab-navigation-current-days-value="<%= @view_days || 7 %>"
-       data-action="keydown@document->fab-navigation#closeOnEscape click@document->fab-navigation#closeOnOverlay open-theme-drawer@window->fab-navigation#openThemeDrawer open-view-drawer@window->fab-navigation#openViewDrawer open-preferences@window->fab-navigation#openPreferences open-settings-panel@window->fab-navigation#openSettingsPanel">
+       data-action="keydown@document->fab-navigation#closeOnEscape click@document->fab-navigation#closeOnOverlay open-theme-drawer@window->fab-navigation#openThemeDrawer open-view-drawer@window->fab-navigation#openViewDrawer open-preferences@window->fab-navigation#openPreferences open-settings-panel@window->fab-navigation#openPreferences">
 
-    <%# ── Nav island: desktop = scattered, mobile = bottom island (Account | Cog | Chevron) ── %>
+    <%# ── Nav: Cog (top-left), Chevron (mobile island only for Not Yet) ── %>
     <div class="nav-island">
-      <button type="button"
-              class="account-icon"
-              data-action="click->fab-navigation#openSettingsPanel"
-              aria-label="Account settings"
-              title="Account">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      </button>
       <button class="fab nav-island__cog"
               data-fab-navigation-target="button"
               data-action="click->fab-navigation#openPreferences"
@@ -31,154 +24,148 @@
       </button>
     </div>
 
-    <%# ── Settings Bottom Sheet (preferences only) ── %>
-    <div data-fab-navigation-target="preferencesOverlay" class="settings-sheet__overlay" style="display:none;"></div>
-    <div data-fab-navigation-target="preferencesDrawer" class="settings-sheet">
-      <div class="settings-sheet__handle-bar">
-        <div class="settings-sheet__handle"></div>
-      </div>
-      <div class="settings-sheet__header">
-        <button data-action="click->fab-navigation#closePreferences" class="settings-sheet__close" aria-label="Close">&times;</button>
-      </div>
-      <div class="settings-sheet__body">
-        <div class="settings-sheet__content">
-        <div class="settings-sheet__columns">
-        <%# Column 1: Theme %>
-        <div class="settings-sheet__section settings-sheet__section--theme pref-section">
-          <div class="pref-section__label">Theme</div>
-          <div class="theme-modal__grid">
-            <%# Top row 3: Classic, Lined, Graph | Bottom row 2: Vintage, Dark %>
-          <% %w[classic lined graph vintage dark].each do |t| %>
-              <button class="theme-option<%= ' theme-option--active' if current_theme == t %>"
-                      data-theme="<%= t %>"
-                      data-action="click->fab-navigation#selectTheme"
-                      aria-label="Select <%= t.capitalize %> theme">
-                <div class="theme-preview theme-btn--<%= t %>"></div>
-                <span class="theme-option__label"><%= t.capitalize %></span>
-              </button>
-            <% end %>
-          </div>
-        </div>
-
-        <%# Column 2: Font (aligned with Theme) %>
-        <div class="settings-sheet__section settings-sheet__section--font pref-section">
-          <div class="pref-section__label">Font</div>
-          <div class="pref-font-list" id="pref-font-list">
-            <%# Order: row1 System UI, Monospace | row2 Serif, Handwritten %>
-            <% font_options = [
-                 ['system_ui', 'System UI', "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"],
-                 ['monospace', 'Monospace', "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Courier New', monospace"],
-                 ['serif', 'Serif', "Georgia, 'Times New Roman', Times, serif"],
-                 ['handwritten', 'Handwritten', "'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif"]
-               ] %>
-            <% font_options.each do |value, label, stack| %>
-              <button class="pref-font-btn<%= ' pref-font-btn--active' if (current_user.font_family || 'default') == value %>"
-                      data-font-value="<%= value %>"
-                      style="font-family: <%= stack %>;"
-                      onclick="applyFontFamily('<%= j value %>', '<%= j stack %>');">
-                <%= label %>
-              </button>
-            <% end %>
-          </div>
-        </div>
-
-        <%# Column 3: Accent colour — web-safe, accessibility-friendly palette %>
-        <div class="settings-sheet__section settings-sheet__section--accent pref-section">
-          <div class="pref-section__label">Accent Colour</div>
-          <div class="pref-color-swatches" id="pref-color-swatches">
-            <% accent_swatches = ['#9966CC', '#CC3333', '#FF9933', '#CC9900', '#009933', '#3366CC', '#CC6699', '#666666'] %>
-            <% accent_swatches.each do |color| %>
-              <button class="pref-color-swatch<%= ' pref-color-swatch--active' if (current_user.accent_color.presence || '#9966CC') == color %>"
-                      style="background: <%= color %>;"
-                      data-color="<%= color %>"
-                      onclick="applyAccentColor('<%= color %>'); document.querySelectorAll('.pref-color-swatch').forEach(s => s.classList.remove('pref-color-swatch--active')); this.classList.add('pref-color-swatch--active');"
-                      aria-label="Accent colour <%= color %>"></button>
-            <% end %>
-          </div>
-        </div>
-
-        <%# Column 4: View (1 row) %>
-        <div class="settings-sheet__section settings-sheet__section--view pref-section">
-          <div class="pref-section__label">View Days</div>
-          <div class="pref-toggle-group">
-            <a href="<%= app_root_path(days: 1) %>"
-               class="pref-toggle-btn<%= ' pref-toggle-btn--active' if (@view_days || 7) == 1 %>"
-               data-turbo-action="replace"
-               title="Focus mode">F</a>
-            <% [2, 4, 7].each do |n| %>
-              <a href="<%= app_root_path(days: n) %>"
-                 class="pref-toggle-btn<%= ' pref-toggle-btn--active' if (@view_days || 7) == n %>"
-                 data-turbo-action="replace"
-                 title="<%= n %> days"><%= n %></a>
-            <% end %>
-          </div>
-        </div>
-
-        <%# Column 5: Completed (1 row) %>
-        <div class="settings-sheet__section settings-sheet__section--completed pref-section">
-          <div class="pref-section__label">Completed</div>
-          <div class="pref-toggle-group">
-            <button class="pref-toggle-btn pref-toggle-btn--active" id="pref-show-completed" onclick="toggleCompletedTodos(true); this.classList.add('pref-toggle-btn--active'); document.getElementById('pref-hide-completed').classList.remove('pref-toggle-btn--active');">Show</button>
-            <button class="pref-toggle-btn" id="pref-hide-completed" onclick="toggleCompletedTodos(false); this.classList.add('pref-toggle-btn--active'); document.getElementById('pref-show-completed').classList.remove('pref-toggle-btn--active');">Hide</button>
-          </div>
-        </div>
-
-        </div> <%# End settings-sheet__columns %>
-        </div> <%# End settings-sheet__content %>
-      </div>
-    </div>
-
-    <%# ── Account Panel (left side drawer) ── %>
-    <div data-fab-navigation-target="settingsPanelOverlay" class="side-drawer__overlay" style="display:none;"></div>
-    <div data-fab-navigation-target="settingsPanel" class="side-drawer settings-panel">
+    <%# ── Unified Preferences Panel (left side drawer with tabs) ── %>
+    <div data-fab-navigation-target="preferencesOverlay" class="side-drawer__overlay" style="display:none;"></div>
+    <div data-fab-navigation-target="preferencesDrawer" data-fab-navigation-target="settingsPanel" class="side-drawer preferences-panel">
       <div class="side-drawer__header">
-        <h2 class="side-drawer__title">Account Settings</h2>
-        <button data-action="click->fab-navigation#closeSettingsPanel" class="side-drawer__close" aria-label="Close">&times;</button>
+        <h2 class="side-drawer__title">Settings</h2>
+        <button data-action="click->fab-navigation#closePreferences" class="side-drawer__close" aria-label="Close">&times;</button>
       </div>
-      <div class="side-drawer__body">
-        <%# Buy CTA: show for users who haven't purchased (hidden when running as installed PWA via JS) %>
-        <% unless current_user.device_downloaded? %>
-        <div class="pref-section pref-section--buy" data-standalone-hide="buy" style="margin-bottom: 20px; padding: 12px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px;">
-          <div class="pref-section__label" style="margin-bottom: 6px; color: #1e40af; font-weight: 600;">Enjoying Todo-it?</div>
-          <p style="font-size: 0.85rem; color: #1e3a8a; margin-bottom: 12px;">Purchase once to own it forever, download to up to three devices you own. Works offline, no subscription.</p>
-          <%= button_to "Buy Download (£9.99)",
-                create_checkout_session_path,
-                method: :post,
-                data: { turbo: false },
-                class: "pref-save-btn",
-                style: "width: 100%; background: #2563eb; color: white; margin: 0;" %>
+      <%# Tab buttons: Preferences | Account (Account hidden when PWA + purchased) %>
+      <div class="preferences-panel__tabs">
+        <button type="button" class="preferences-panel__tab preferences-panel__tab--active" data-tab="preferences" data-action="click->fab-navigation#switchTab">Preferences</button>
+        <button type="button" class="preferences-panel__tab" data-tab="account" data-action="click->fab-navigation#switchTab" data-standalone-hide="account-tab">Account</button>
+      </div>
+      <div class="side-drawer__body preferences-panel__body">
+        <%# Preferences tab content %>
+        <div data-fab-navigation-target="preferencesTab" class="preferences-panel__tab-content preferences-panel__tab-content--active">
+          <div class="preferences-panel__grid">
+            <%# Theme %>
+            <div class="settings-sheet__section settings-sheet__section--theme pref-section">
+              <div class="pref-section__label">Theme</div>
+              <div class="theme-modal__grid">
+                <% %w[classic lined graph vintage dark].each do |t| %>
+                  <button class="theme-option<%= ' theme-option--active' if current_theme == t %>"
+                          data-theme="<%= t %>"
+                          data-action="click->fab-navigation#selectTheme"
+                          aria-label="Select <%= t.capitalize %> theme">
+                    <div class="theme-preview theme-btn--<%= t %>"></div>
+                    <span class="theme-option__label"><%= t.capitalize %></span>
+                  </button>
+                <% end %>
+              </div>
+            </div>
+
+            <%# Font %>
+            <div class="settings-sheet__section settings-sheet__section--font pref-section">
+              <div class="pref-section__label">Font</div>
+              <div class="pref-font-list" id="pref-font-list">
+                <% font_options = [
+                     ['system_ui', 'System UI', "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"],
+                     ['monospace', 'Monospace', "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Courier New', monospace"],
+                     ['serif', 'Serif', "Georgia, 'Times New Roman', Times, serif"],
+                     ['handwritten', 'Handwritten', "'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif"]
+                   ] %>
+                <% font_options.each do |value, label, stack| %>
+                  <button class="pref-font-btn<%= ' pref-font-btn--active' if (current_user.font_family || 'default') == value %>"
+                          data-font-value="<%= value %>"
+                          style="font-family: <%= stack %>;"
+                          onclick="applyFontFamily('<%= j value %>', '<%= j stack %>');">
+                    <%= label %>
+                  </button>
+                <% end %>
+              </div>
+            </div>
+
+            <%# Accent colour %>
+            <div class="settings-sheet__section settings-sheet__section--accent pref-section">
+              <div class="pref-section__label">Accent Colour</div>
+              <div class="pref-color-swatches" id="pref-color-swatches">
+                <% accent_swatches = ['#9966CC', '#CC3333', '#FF9933', '#CC9900', '#009933', '#3366CC', '#CC6699', '#666666'] %>
+                <% accent_swatches.each do |color| %>
+                  <button class="pref-color-swatch<%= ' pref-color-swatch--active' if (current_user.accent_color.presence || '#9966CC') == color %>"
+                          style="background: <%= color %>;"
+                          data-color="<%= color %>"
+                          onclick="applyAccentColor('<%= color %>'); document.querySelectorAll('.pref-color-swatch').forEach(s => s.classList.remove('pref-color-swatch--active')); this.classList.add('pref-color-swatch--active');"
+                          aria-label="Accent colour <%= color %>"></button>
+                <% end %>
+              </div>
+            </div>
+
+            <%# View Days %>
+            <div class="settings-sheet__section settings-sheet__section--view pref-section">
+              <div class="pref-section__label">View Days</div>
+              <div class="pref-toggle-group">
+                <a href="<%= app_root_path(days: 1) %>"
+                   class="pref-toggle-btn<%= ' pref-toggle-btn--active' if (@view_days || 7) == 1 %>"
+                   data-turbo-action="replace"
+                   title="Focus mode">F</a>
+                <% [2, 3, 4, 5, 6, 7].each do |n| %>
+                  <a href="<%= app_root_path(days: n) %>"
+                     class="pref-toggle-btn<%= ' pref-toggle-btn--active' if (@view_days || 7) == n %>"
+                     data-turbo-action="replace"
+                     title="<%= n %> days"><%= n %></a>
+                <% end %>
+              </div>
+            </div>
+
+            <%# Completed %>
+            <div class="settings-sheet__section settings-sheet__section--completed pref-section">
+              <div class="pref-section__label">COMPLETED TASKS</div>
+              <div class="pref-toggle-group">
+                <button class="pref-toggle-btn pref-toggle-btn--active" id="pref-show-completed" onclick="toggleCompletedTodos(true); this.classList.add('pref-toggle-btn--active'); document.getElementById('pref-hide-completed').classList.remove('pref-toggle-btn--active');">Show</button>
+                <button class="pref-toggle-btn" id="pref-hide-completed" onclick="toggleCompletedTodos(false); this.classList.add('pref-toggle-btn--active'); document.getElementById('pref-show-completed').classList.remove('pref-toggle-btn--active');">Hide</button>
+              </div>
+            </div>
+          </div>
         </div>
-        <% end %>
-        <%= form_with model: current_user, url: settings_path, method: :patch, local: true, class: "space-y-4" do |form| %>
-          <div class="pref-section">
-            <div class="pref-section__label">Name</div>
-            <%= form.text_field :name, class: "pref-input", placeholder: "Your name" %>
+
+        <%# Account tab content %>
+        <div data-fab-navigation-target="accountTab" class="preferences-panel__tab-content" style="display:none;">
+          <%# Buy CTA: show for users who haven't purchased (hidden when running as installed PWA via JS) %>
+          <% unless current_user.device_downloaded? %>
+          <div class="pref-section pref-section--buy" data-standalone-hide="buy" style="margin-bottom: 20px; padding: 12px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px;">
+            <div class="pref-section__label" style="margin-bottom: 6px; color: #1e40af; font-weight: 600;">Enjoying Todo-it?</div>
+            <p style="font-size: 0.85rem; color: #1e3a8a; margin-bottom: 12px;">Purchase once to own it forever, download to up to three devices you own. Works offline, no subscription.</p>
+            <%= button_to "Buy Download (£9.99)",
+                  create_checkout_session_path,
+                  method: :post,
+                  data: { turbo: false },
+                  class: "pref-save-btn",
+                  style: "width: 100%; background: #2563eb; color: white; margin: 0;" %>
           </div>
-          <div class="pref-section">
-            <div class="pref-section__label">Email</div>
-            <%= form.email_field :email_address, class: "pref-input" %>
+          <% end %>
+          <%= form_with model: current_user, url: settings_path, method: :patch, local: true, class: "space-y-4" do |form| %>
+            <div class="pref-section">
+              <div class="pref-section__label">Name</div>
+              <%= form.text_field :name, class: "pref-input", placeholder: "Your name" %>
+            </div>
+            <div class="pref-section">
+              <div class="pref-section__label">Email</div>
+              <%= form.email_field :email_address, class: "pref-input" %>
+            </div>
+            <div class="pref-section">
+              <div class="pref-section__label">Current Password</div>
+              <%= form.password_field :current_password, class: "pref-input", placeholder: "Required for email/password changes" %>
+            </div>
+            <div class="pref-section">
+              <div class="pref-section__label">New Password</div>
+              <%= form.password_field :password, class: "pref-input", placeholder: "Leave blank to keep current" %>
+            </div>
+            <div class="pref-section">
+              <div class="pref-section__label">Confirm Password</div>
+              <%= form.password_field :password_confirmation, class: "pref-input", placeholder: "Confirm new password" %>
+            </div>
+            <div class="pref-section">
+              <%= form.submit "Save Account", class: "pref-save-btn" %>
+            </div>
+          <% end %>
+          <div class="pref-section" style="margin-top: 16px;">
+            <button type="button" class="pref-save-btn" style="background-color: transparent; color: #4b5563; border: 1px solid #d1d5db;" onclick="window.showLogoutModal()">Sign out</button>
           </div>
-          <div class="pref-section">
-            <div class="pref-section__label">Current Password</div>
-            <%= form.password_field :current_password, class: "pref-input", placeholder: "Required for email/password changes" %>
+          <div class="pref-section pref-section--danger" style="margin-top: 32px; border-top: 1px solid #ffebee; padding-top: 16px;">
+            <%= link_to "Delete Account", delete_account_path, class: "pref-danger-link" %>
           </div>
-          <div class="pref-section">
-            <div class="pref-section__label">New Password</div>
-            <%= form.password_field :password, class: "pref-input", placeholder: "Leave blank to keep current" %>
-          </div>
-          <div class="pref-section">
-            <div class="pref-section__label">Confirm Password</div>
-            <%= form.password_field :password_confirmation, class: "pref-input", placeholder: "Confirm new password" %>
-          </div>
-          <div class="pref-section">
-            <%= form.submit "Save Account", class: "pref-save-btn" %>
-          </div>
-        <% end %>
-        <div class="pref-section" style="margin-top: 16px;">
-          <button type="button" class="pref-save-btn" style="background-color: transparent; color: #4b5563; border: 1px solid #d1d5db;" onclick="window.showLogoutModal()">Sign out</button>
-        </div>
-        <div class="pref-section pref-section--danger" style="margin-top: 32px; border-top: 1px solid #ffebee; padding-top: 16px;">
-          <%= link_to "Delete Account", delete_account_path, class: "pref-danger-link" %>
         </div>
       </div>
     </div>
@@ -273,7 +260,6 @@
   // ── Accent colour ──
   function applyAccentColor(color) {
     document.documentElement.style.setProperty('--user-accent', color);
-    // Also update all elements that use the accent color
     document.documentElement.style.setProperty('--accent', color);
     const csrf = document.querySelector('meta[name="csrf-token"]').content;
     fetch('/app/settings', {
@@ -316,8 +302,6 @@
     var noEl = document.getElementById('pref-roll-over-no');
     if (yesEl) yesEl.classList.toggle('pref-toggle-btn--active', enabled);
     if (noEl) noEl.classList.toggle('pref-toggle-btn--active', !enabled);
-
-    // Persist the setting to the server
     var csrf = document.querySelector('meta[name="csrf-token"]').content;
     fetch('/app/settings', {
       method: 'POST',

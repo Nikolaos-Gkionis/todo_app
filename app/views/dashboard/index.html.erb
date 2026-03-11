@@ -72,7 +72,7 @@
         <div class="week-col__add">
           <%= form_with model: Todo.new, url: todos_path, local: false, class: "todo-form" do |form| %>
             <%= form.hidden_field :due_date, value: date %>
-            <%= form.text_field :title, class: "todo-input", autocomplete: "off", placeholder: "Add todo..." %>
+            <%= form.text_field :title, class: "todo-input", autocomplete: "off", placeholder: "Add task.." %>
           <% end %>
         </div>
       </div>
@@ -148,7 +148,7 @@
             <div class="not-yet-panel__add">
               <%= form_with model: Todo.new, url: todos_path, local: false, class: "todo-form" do |form| %>
                 <%= form.hidden_field :page_id, value: default_page.id %>
-                <%= form.text_field :title, class: "todo-input", autocomplete: "off", placeholder: "Add todo..." %>
+                <%= form.text_field :title, class: "todo-input", autocomplete: "off", placeholder: "Add task.." %>
               <% end %>
             </div>
           </div>
@@ -157,7 +157,7 @@
             <p>No Not Yet items yet.</p>
             <div class="not-yet-panel__add">
               <%= form_with model: Todo.new, url: todos_path, local: false, class: "todo-form" do |form| %>
-                <%= form.text_field :title, class: "todo-input", autocomplete: "off", placeholder: "Add todo..." %>
+                <%= form.text_field :title, class: "todo-input", autocomplete: "off", placeholder: "Add task.." %>
               <% end %>
             </div>
           </div>

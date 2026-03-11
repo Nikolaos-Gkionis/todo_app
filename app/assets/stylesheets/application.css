@@ -5686,6 +5686,7 @@ a.text-blue-800:hover {
 /* ── Focus mode: hide nav/FAB/title/Not Yet trigger, center day, pomodoro panel ── */
 body.focus-mode .fab,
 body.focus-mode [data-controller*="fab-navigation"] .fab,
+body.focus-mode .nav-island__cog,
 body.focus-mode .not-yet-panel__trigger {
   display: none !important;
 }
@@ -6262,6 +6263,11 @@ body.focus-mode .not-yet-panel__trigger {
   z-index: 1099;
 }
 
+/* During drag from Not Yet list: let drop events reach week columns underneath overlay */
+body.is-dragging-from-not-yet .not-yet-panel__overlay {
+  pointer-events: none;
+}
+
 .not-yet-panel {
   position: fixed;
   top: 0;
@@ -6512,8 +6518,28 @@ body.focus-mode .not-yet-panel__trigger {
   display: contents;
 }
 
-.fab,
+/* Cog: top-left (desktop and mobile) */
 .nav-island__cog {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 1001;
+  width: 40px;
+  height: 40px;
+  border-radius: 0;
+  background: none;
+  border: none;
+  color: #2d2d2d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: none;
+  transition: opacity 0.15s ease;
+  padding: 0;
+}
+
+.fab {
   position: fixed;
   bottom: 24px;
   left: 24px;
@@ -6551,42 +6577,16 @@ body.focus-mode .not-yet-panel__trigger {
   display: none;
 }
 
-/* Account icon — top-left on desktop (aligned with other corner icons) */
-.account-icon {
-  position: fixed;
-  top: 24px;
-  left: 24px;
-  z-index: 1001;
-  width: 40px;
-  height: 40px;
-  border-radius: 0;
-  background: none;
-  border: none;
-  color: #2d2d2d;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 0;
-  transition: opacity 0.15s ease;
-}
-
-.account-icon:hover {
-  opacity: 0.6;
-}
-
-/* Chevron (calendar) — hidden on desktop, shown in mobile island */
+/* Chevron (Not Yet) — hidden on desktop, shown in mobile island */
 .nav-island__chevron {
   display: none;
 }
 
-.theme-dark .account-icon,
 .theme-dark .nav-island__cog,
 .theme-dark .nav-island__chevron {
   color: #6272a4;
 }
 
-.theme-dark .account-icon:hover,
 .theme-dark .nav-island__cog:hover,
 .theme-dark .nav-island__chevron:hover {
   color: #f8f8f2;
@@ -6600,13 +6600,15 @@ body.focus-mode .not-yet-panel__trigger {
     padding: 0;
   }
 
-  /* Account & notes panels full screen on mobile (settings-sheet handled by breakpoint block below) */
+  /* Preferences & notes panels full screen on mobile */
+  .side-drawer.preferences-panel,
   .side-drawer.settings-panel,
   .notes-drawer {
     width: 100%;
     max-width: 100%;
   }
 
+  .side-drawer.preferences-panel,
   .side-drawer.settings-panel {
     height: 100vh;
     height: 100dvh;
@@ -6638,9 +6640,16 @@ body.focus-mode .not-yet-panel__trigger {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   }
 
-  .account-icon,
-  .fab,
+  /* Cog stays top-left on mobile; only chevron in island */
   .nav-island__cog {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .fab {
     position: static;
     width: 36px;
     height: 36px;
@@ -7483,6 +7492,61 @@ body.focus-mode .not-yet-panel__trigger {
 
 .settings-panel {
   width: 330px;
+}
+
+/* ── Preferences Panel (left drawer with tabs) ── */
+.preferences-panel {
+  width: 320px;
+  max-width: 90vw;
+}
+
+.preferences-panel__tabs {
+  display: flex;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0 24px;
+  gap: 0;
+}
+
+.preferences-panel__tab {
+  flex: 1;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.preferences-panel__tab:hover {
+  color: #374151;
+}
+
+.preferences-panel__tab--active {
+  color: var(--user-accent, #9966CC);
+  border-bottom-color: var(--user-accent, #9966CC);
+}
+
+.preferences-panel__body {
+  padding: 24px;
+}
+
+.preferences-panel__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px 16px;
+}
+
+.preferences-panel__tab-content .pref-section__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #6b7280;
+  margin: 0 0 8px;
 }
 
 /* =================================

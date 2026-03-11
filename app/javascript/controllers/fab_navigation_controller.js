@@ -4,7 +4,7 @@ export default class extends Controller {
   static targets = [
     "button", "viewDrawer", "viewDrawerOverlay",
     "preferencesDrawer", "preferencesOverlay",
-    "settingsPanel", "settingsPanelOverlay"
+    "preferencesTab", "accountTab"
   ]
   static values = { currentDays: { type: Number, default: 7 } }
 
@@ -19,20 +19,31 @@ export default class extends Controller {
     if (this.hasPreferencesOverlayTarget && event.target === this.preferencesOverlayTarget) {
       this.closePreferences()
     }
-    if (this.hasSettingsPanelOverlayTarget && event.target === this.settingsPanelOverlayTarget) {
-      this.closeSettingsPanel()
-    }
   }
 
   closeOnEscape(event) {
     if (event.key === "Escape") {
-      if (this.hasPreferencesDrawerTarget && this.preferencesDrawerTarget.classList.contains("settings-sheet--open")) {
+      if (this.hasPreferencesDrawerTarget && this.preferencesDrawerTarget.classList.contains("side-drawer--open")) {
         this.closePreferences()
-      } else if (this.hasSettingsPanelTarget && this.settingsPanelTarget.classList.contains("side-drawer--open")) {
-        this.closeSettingsPanel()
       } else if (this.hasViewDrawerTarget && this.viewDrawerTarget.classList.contains("side-drawer--open")) {
         this.closeViewDrawer()
       }
+    }
+  }
+
+  switchTab(event) {
+    const tab = event.currentTarget.dataset.tab
+    const tabs = this.element.querySelectorAll('.preferences-panel__tab')
+    tabs.forEach(t => {
+      t.classList.toggle('preferences-panel__tab--active', t.dataset.tab === tab)
+    })
+    if (this.hasPreferencesTabTarget) {
+      this.preferencesTabTarget.classList.toggle('preferences-panel__tab-content--active', tab === 'preferences')
+      this.preferencesTabTarget.style.display = tab === 'preferences' ? '' : 'none'
+    }
+    if (this.hasAccountTabTarget) {
+      this.accountTabTarget.classList.toggle('preferences-panel__tab-content--active', tab === 'account')
+      this.accountTabTarget.style.display = tab === 'account' ? '' : 'none'
     }
   }
 
@@ -57,10 +68,10 @@ export default class extends Controller {
     document.body.style.overflow = ""
   }
 
-  // ── Settings Bottom Sheet ──
+  // ── Unified Preferences Panel (left side drawer with tabs) ──
   openPreferences() {
     if (this.hasPreferencesDrawerTarget) {
-      this.preferencesDrawerTarget.classList.add("settings-sheet--open")
+      this.preferencesDrawerTarget.classList.add("side-drawer--open")
     }
     if (this.hasPreferencesOverlayTarget) {
       this.preferencesOverlayTarget.style.display = "block"
@@ -70,28 +81,7 @@ export default class extends Controller {
 
   closePreferences() {
     if (this.hasPreferencesOverlayTarget) this.preferencesOverlayTarget.style.display = "none"
-    if (this.hasPreferencesDrawerTarget) this.preferencesDrawerTarget.classList.remove("settings-sheet--open")
-    document.body.style.overflow = ""
-  }
-
-  // ── Account Panel (left side drawer) ──
-  openSettingsPanel() {
-    if (this.hasSettingsPanelTarget) {
-      this.settingsPanelTarget.classList.add("side-drawer--open")
-    }
-    if (this.hasSettingsPanelOverlayTarget) {
-      this.settingsPanelOverlayTarget.style.display = "block"
-    }
-    document.body.style.overflow = "hidden"
-  }
-
-  closeSettingsPanel() {
-    if (this.hasSettingsPanelTarget) {
-      this.settingsPanelTarget.classList.remove("side-drawer--open")
-    }
-    if (this.hasSettingsPanelOverlayTarget) {
-      this.settingsPanelOverlayTarget.style.display = "none"
-    }
+    if (this.hasPreferencesDrawerTarget) this.preferencesDrawerTarget.classList.remove("side-drawer--open")
     document.body.style.overflow = ""
   }
 

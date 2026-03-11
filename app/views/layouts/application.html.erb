@@ -48,7 +48,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="<%= 'body--font-handwritten' if logged_in? && current_user&.font_family == 'handwritten' %><%= " #{yield :body_class}" if content_for?(:body_class) %>" id="app-body" style="<%= "height: 100vh; overflow: hidden; height: 100dvh;" if logged_in? %><%= 'font-family: var(--user-font);' if logged_in? && current_user && font_stack_for(current_user) %>">
+  <body class="<%= 'body--font-handwritten' if logged_in? && current_user&.font_family == 'handwritten' %><%= " #{yield :body_class}" if content_for?(:body_class) %>" id="app-body" data-purchased="<%= (current_user&.device_downloaded?) ? 'true' : 'false' %>" style="<%= "height: 100vh; overflow: hidden; height: 100dvh;" if logged_in? %><%= 'font-family: var(--user-font);' if logged_in? && current_user && font_stack_for(current_user) %>">
     <%# Hidden div for Turbo Stream form-reset target (todo create clears input without full reload) %>
     <div id="turbo-form-reset-target" hidden aria-hidden="true"></div>
     <!-- Skip to main content - first focusable for keyboard/screen reader users -->
@@ -374,9 +374,15 @@
       }
       
       // Hide Buy CTA when running as installed PWA (standalone) — user has already "downloaded"
+      // Hide Account tab when PWA + purchased (user has bought and is using installed app)
       function hideBuyIfStandalone() {
-        if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+        var isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+        if (isStandalone) {
           document.querySelectorAll('[data-standalone-hide="buy"]').forEach(function(el) { el.style.display = 'none'; });
+        }
+        // Account tab: hide when standalone AND user has purchased (device_downloaded)
+        if (isStandalone && document.body.dataset.purchased === 'true') {
+          document.querySelectorAll('[data-standalone-hide="account-tab"]').forEach(function(el) { el.style.display = 'none'; });
         }
       }
 

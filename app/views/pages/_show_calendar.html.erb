@@ -57,7 +57,7 @@
   <%# Add Todo form (with due_date for calendar) %>
   <div class="mt-6 notebook-card p-4">
     <button type="button" id="add-todo-trigger-cal" class="add-todo--collapsed w-full text-left" onclick="toggleAddTodoCalendar()" aria-label="Add a new todo">
-      <p class="text-gray-700">✏️ Add a new todo...</p>
+      <p class="text-gray-700">✏️ Add a new task..</p>
     </button>
 
     <div id="add-todo-form-cal" class="add-todo--expanded hidden form-slide-in mt-4">
@@ -66,7 +66,7 @@
         <%= form.hidden_field :page_id, value: @page.id %>
         <div>
           <%= form.label :title, "What needs to be done?", class: "block text-sm font-medium text-gray-700 mb-1" %>
-          <%= form.text_field :title, class: "form-input w-full pulse-focus", placeholder: "Add todo...", style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
+          <%= form.text_field :title, class: "form-input w-full pulse-focus", placeholder: "Add task..", style: "font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Marker Felt', 'Trebuchet MS', cursive, sans-serif !important;" %>
         </div>
 
         <div>
