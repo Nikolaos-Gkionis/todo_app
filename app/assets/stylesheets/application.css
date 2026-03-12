@@ -6,6 +6,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+/* Iosevka Charon for brand lockup (footer, in-app); weight 500 */
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/iosevka@5.0.0/500.css');
 
 /* =================================
    RESET AND BASE STYLES
@@ -2077,6 +2079,7 @@ input:-webkit-autofill:active {
   font-size: 1.5rem;
   font-weight: 700;
   color: #111827;
+  font-family: 'Iosevka', 'Iosevka Charon', ui-monospace, monospace;
 }
 
 .navbar__nav--desktop {
@@ -4911,7 +4914,8 @@ footer a:hover {
 
 .mkt-footer__brand-name {
   font-size: 1.375rem;
-  font-weight: 700;
+  font-weight: 500;
+  font-family: 'Iosevka', 'Iosevka Charon', ui-monospace, monospace;
   color: #FAF8F5;
   margin-bottom: 0.875rem;
   display: flex;
@@ -7776,6 +7780,7 @@ body.is-dragging-from-not-yet .not-yet-panel__overlay {
 
 .preferences-panel__footer-name {
   font-weight: 500;
+  font-family: 'Iosevka', 'Iosevka Charon', ui-monospace, monospace;
 }
 
 .theme-dark .preferences-panel__footer {

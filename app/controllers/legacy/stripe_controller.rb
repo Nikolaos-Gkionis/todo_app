@@ -12,7 +12,7 @@ module Legacy
       if current_user.device_downloaded?
         download_token = current_user.download_token || current_user.generate_download_token!
         redirect_to download_app_path(token: download_token),
-                    notice: "You already own Task Days! Your download is ready."
+                    notice: "You already own Peponi.to! Your download is ready."
         return
       end
 
@@ -24,7 +24,7 @@ module Legacy
             price_data: {
               currency: "usd",
               product_data: {
-                name: "Task Days - Download to Device",
+                name: "Peponi.to - Download to Device",
                 description: "Download to your device forever - unlimited pages, offline access, and data ownership"
               },
               unit_amount: 990

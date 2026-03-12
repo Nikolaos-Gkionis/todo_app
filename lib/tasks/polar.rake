@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 namespace :polar do
-  desc "Create Task Days Download product on Polar (run once per org)"
+  desc "Create Peponi.to Download product on Polar (run once per org)"
   task create_product: :environment do
     org_id = ENV["POLAR_ORGANIZATION_ID"]
     if org_id.blank?

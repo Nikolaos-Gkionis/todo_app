@@ -18,7 +18,7 @@ namespace :email do
 
     # Test each email individually with error handling
     emails_to_test = [
-      { name: "Purchase Confirmation", method: :purchase_confirmation, args: [ test_user, "https://task-days.com/download?token=test-123" ] },
+      { name: "Purchase Confirmation", method: :purchase_confirmation, args: [ test_user, "https://peponi.to/download?token=test-123" ] },
       { name: "Password Changed", method: :password_changed, args: [ test_user ] },
       { name: "Email Changed", method: :email_changed, args: [ test_user, "old@example.com" ] },
       { name: "Welcome Trial", method: :welcome_trial, args: [ test_user ] },

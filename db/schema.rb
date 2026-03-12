@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_11_000000) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_12_100000) do
   create_table "migration_statuses", force: :cascade do |t|
     t.string "migration_type", null: false
     t.string "status", default: "pending", null: false
@@ -75,7 +75,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_11_000000) do
     t.string "accent_color"
     t.string "font_family", default: "default", null: false
     t.string "app_name"
-    t.string "app_title", default: "Task Days", null: false
+    t.string "app_title", default: "Peponi.to", null: false
     t.boolean "roll_over", default: true, null: false
     t.string "not_yet_panel_title", default: "Not Yet", null: false
     t.datetime "paid_at"

@@ -1,4 +1,4 @@
-# Task Days - Organise Tasks by Day
+# Peponi.to - Organise Tasks by Day
 
 A stunning, professional notebook-style todo application built with Rails 8.0, featuring authentic hand-drawn aesthetics, complete user authentication, and a delightful productivity experience that feels like writing in a real moleskin notebook.
 
@@ -38,7 +38,7 @@ A stunning, professional notebook-style todo application built with Rails 8.0, f
 - **Wavy red margin lines** that look genuinely hand-sketched
 - **Transparent forms** with hand-drawn underlines for authentic feel
 - **Gloria Hallelujah font** from Google Fonts with smart fallbacks
-- **"Task Days" branding** with custom checked checkbox logo
+- **Peponi.to branding** with melon character logo
 
 ### ⚡ **Advanced User Experience**
 
@@ -250,7 +250,7 @@ kamal app status
 kamal app logs
 ```
 
-**Production URL:** https://task-days.com
+**Production URL:** https://peponi.to
 
 ### **Environment Variables**
 

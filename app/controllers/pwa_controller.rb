@@ -26,8 +26,8 @@ class PwaController < ApplicationController
   def manifest_data
     base = request.base_url
     {
-      name: "Task Days - Organise Your Days",
-      short_name: "Task Days",
+      name: "Peponi.to - Organise Your Days",
+      short_name: "Peponi.to",
       description: "Beautiful, offline-first todo app. Start with a 7-day free trial, then download forever. Your data, your device.",
       start_url: "#{base}/app",
       scope: "#{base}/",
@@ -64,7 +64,7 @@ class PwaController < ApplicationController
 
   def service_worker_content
     <<~JAVASCRIPT
-      const CACHE_NAME = 'task-days-v1';
+      const CACHE_NAME = 'peponito-v1';
       const urlsToCache = [
         '/',
         '/app',

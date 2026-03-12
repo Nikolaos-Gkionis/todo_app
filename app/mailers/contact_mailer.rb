@@ -5,7 +5,7 @@ class ContactMailer < ApplicationMailer
   # CONTACT_EMAIL is used as both sender and recipient for contact form
   default from: -> {
     email = ENV["CONTACT_EMAIL"].presence
-    email ? "Task Days Contact <#{email}>" : "noreply@task-days.com"
+    email ? "Peponi.to Contact <#{email}>" : "noreply@peponi.to"
   }
 
   # Send contact form submission to your email
@@ -13,10 +13,10 @@ class ContactMailer < ApplicationMailer
     @name = params[:name]
     @email = params[:email]
     @message = params[:message]
-    @recipient = ENV["CONTACT_EMAIL"].presence || "support@task-days.com"
+    @recipient = ENV["CONTACT_EMAIL"].presence || "support@peponi.to"
 
-    subject = @message.present? ? @message.truncate(50) : "Contact from Task Days"
-    subject = "Contact from Task Days: #{subject}" unless subject.start_with?("Contact from Task Days")
+    subject = @message.present? ? @message.truncate(50) : "Contact from Peponi.to"
+    subject = "Contact from Peponi.to: #{subject}" unless subject.start_with?("Contact from Peponi.to")
 
     mail(
       to: @recipient,

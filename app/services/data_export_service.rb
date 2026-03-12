@@ -42,7 +42,7 @@ class DataExportService
     {
       version: EXPORT_VERSION,
       exported_at: Time.current.iso8601,
-      app_name: "Task Days",
+      app_name: "Peponi.to",
       trial_user_id: @user.id,
       total_pages: @user.pages.count,
       total_todos: @user.pages.joins(:todos).count

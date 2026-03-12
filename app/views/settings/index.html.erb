@@ -12,7 +12,7 @@
     <div class="notebook-card bg-blue-50 border-blue-200 border" data-standalone-hide="buy">
       <div class="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h2 class="text-lg font-semibold text-blue-900 mb-1">Enjoying Task Days?</h2>
+          <h2 class="text-lg font-semibold text-blue-900 mb-1">Enjoying Peponi.to?</h2>
           <p class="text-sm text-blue-800">Purchase once to own it forever, download to up to three devices you own. Works offline, no subscription.</p>
         </div>
         <%= button_to "Buy Download (£9.99)",
@@ -196,7 +196,7 @@
         <!-- Purchase Options - Only show buy button for non-purchased users -->
         <% unless current_user.device_downloaded? %>
         <div class="border-t border-gray-200 pt-4" data-standalone-hide="buy">
-          <p class="text-sm text-gray-600 mb-3">Purchase the app to continue using Task Days:</p>
+          <p class="text-sm text-gray-600 mb-3">Purchase the app to continue using Peponi.to:</p>
           <div class="flex flex-wrap gap-3">
             <%= button_to "Buy App (£9.99)",
                   create_checkout_session_path,
@@ -219,13 +219,13 @@
               <div class="ml-3">
                 <h3 class="text-sm font-medium text-green-800">App Purchased</h3>
                 <div class="mt-2 text-sm text-green-700">
-                  <p>You own Task Days! Download it on any device using the link below.</p>
+                  <p>You own Peponi.to! Download it on any device using the link below.</p>
                 </div>
               </div>
             </div>
           </div>
           
-          <p class="text-sm text-gray-600 mb-3">Download Task Days on any device:</p>
+          <p class="text-sm text-gray-600 mb-3">Download Peponi.to on any device:</p>
           <div class="flex flex-wrap gap-3">
             <%= link_to "Download App",
                   download_path,
@@ -247,7 +247,7 @@
                 Trial Expired
               </h3>
               <div class="mt-2 text-sm text-red-700">
-                <p>Your 7-day free trial has ended. Download the app to continue using Task Days.</p>
+                <p>Your 7-day free trial has ended. Download the app to continue using Peponi.to.</p>
               </div>
             </div>
           </div>
@@ -255,7 +255,7 @@
 
         <!-- Purchase App -->
         <div class="border-t border-gray-200 pt-4" data-standalone-hide="buy">
-          <p class="text-sm text-gray-600 mb-3">Purchase the app to continue using Task Days:</p>
+          <p class="text-sm text-gray-600 mb-3">Purchase the app to continue using Peponi.to:</p>
           <%= button_to "Buy App (£9.99)",
                 create_checkout_session_path,
                 method: :post,

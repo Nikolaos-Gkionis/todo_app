@@ -48,7 +48,7 @@ class TrialController < ApplicationController
 
         # Send the JSON file as a download
         send_data json_data,
-                  filename: "todo-it-data-#{@user.id}-#{Time.current.strftime('%Y%m%d-%H%M%S')}.json",
+                  filename: "peponito-data-#{@user.id}-#{Time.current.strftime('%Y%m%d-%H%M%S')}.json",
                   type: "application/json",
                   disposition: "attachment"
       rescue => e

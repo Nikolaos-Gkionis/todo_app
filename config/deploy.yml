@@ -22,7 +22,7 @@ servers:
 # Note: If using Cloudflare, set encryption mode in SSL/TLS setting to "Full" to enable CF-to-app encryption.
 proxy:
   ssl: true
-  host: todo-it.app
+  host: peponi.to
   # Puma logs show "Listening on 0.0.0.0:3000" — proxy must match (Thruster may not be binding 80).
   app_port: 3000
   # Increase timeout; 502s often caused by proxy giving up before app responds

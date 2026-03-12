@@ -39,7 +39,7 @@ RSpec.describe 'Trial and Download Flow', type: :request do
       # Step 5: Visit download page
       get download_path
       expect(response).to have_http_status(:success)
-      expect(response.body).to include('Download Task Days to Your Device')
+      expect(response.body).to include('Download Peponi.to to Your Device')
 
       # Step 6: Get download token
       user.reload

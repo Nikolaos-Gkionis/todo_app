@@ -1,9 +1,9 @@
-// Task Days Progressive Web App Service Worker
+// Peponi.to Progressive Web App Service Worker
 // Handles offline functionality, caching, and background sync
 
-const CACHE_NAME = 'task-days-v1.0.14';
-const STATIC_CACHE = 'task-days-static-v1.0.14';
-const DYNAMIC_CACHE = 'task-days-dynamic-v1.0.14';
+const CACHE_NAME = 'peponito-v1.0.15';
+const STATIC_CACHE = 'peponito-static-v1.0.15';
+const DYNAMIC_CACHE = 'peponito-dynamic-v1.0.15';
 
 // Static assets to cache immediately
 const STATIC_ASSETS = [
@@ -159,7 +159,7 @@ async function syncTodos() {
     await clearSyncedTodosFromIndexedDB();
 
     // Notify user of successful sync
-    self.registration.showNotification('Task Days Sync Complete', {
+    self.registration.showNotification('Peponi.to Sync Complete', {
       body: 'Your offline changes have been synced successfully!',
       icon: '/icon-192.png',
       badge: '/icon-192.png'
@@ -213,7 +213,7 @@ self.addEventListener('push', event => {
     };
 
     event.waitUntil(
-      self.registration.showNotification(data.title || 'Task Days', options)
+      self.registration.showNotification(data.title || 'Peponi.to', options)
     );
   } catch (error) {
     console.error('[Service Worker] Push notification error:', error);

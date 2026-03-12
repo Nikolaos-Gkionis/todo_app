@@ -3,7 +3,7 @@
 # Polar::ProductManager - Creates products on Polar.sh for one-time digital downloads.
 # Uses Rails.application.credentials.dig(:polar, :access_token) or ENV["POLAR_ACCESS_TOKEN"].
 #
-# Note: File upload for Polar downloadables requires multipart S3 - for Task Days'
+# Note: File upload for Polar downloadables requires multipart S3 - for Peponi.to's
 # dynamically generated PWA ZIP, we fulfill downloads via webhook (order.paid) and our
 # own download endpoint. Product creation here sets up the one-time purchase product
 # with UK VAT/tax offloaded to Polar.
@@ -31,7 +31,7 @@ module Polar
         duration: "once",
         type: "percentage",
         basis_points: 10_000, # 100%
-        name: "Task Days Test 100%",
+        name: "Peponi.to Test 100%",
         code: "FAMTEST",
         organization_id: organization_id
       }.compact
@@ -46,7 +46,7 @@ module Polar
       { "id" => discount["id"] }.merge(discount)
     end
 
-    # Create a one-time product for Task Days Download (£9.99).
+    # Create a one-time product for Peponi.to Download (£9.99).
     # Requires ORGANIZATION_ID from your Polar dashboard.
     # @param organization_id [String] Polar organization UUID
     # @return [Hash] Product response with id
@@ -55,7 +55,7 @@ module Polar
       raise Error, "Organization ID required" if organization_id.blank?
 
       body = {
-        name: "Task Days - Download to Device",
+        name: "Peponi.to - Download to Device",
         description: "Download to your device forever - unlimited pages, offline access, and data ownership",
         organization_id: organization_id,
         # One-time product (recurring_interval: null)
