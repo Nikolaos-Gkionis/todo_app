@@ -124,7 +124,7 @@ class DownloadsController < ApplicationController
         <title>Task Days - Offline App</title>
         <link rel="manifest" href="manifest.json">
         <link rel="stylesheet" href="styles.css">
-        <meta name="theme-color" content="#667eea">
+        <meta name="theme-color" content="#ffffff">
       </head>
       <body class="notebook-background handwritten" id="app-body">
         <div class="container px-4 py-8 mt-4">
@@ -169,7 +169,7 @@ class DownloadsController < ApplicationController
         "scope": "./",
         "display": "standalone",
         "orientation": "portrait-primary",
-        "theme_color": "#667eea",
+        "theme_color": "#ffffff",
         "background_color": "#ffffff",
         "categories": ["productivity", "utilities"],
         "lang": "en-US",

@@ -38,7 +38,11 @@ body {
   font-size: 1rem;
   line-height: 1.5;
   margin: 0;
-  padding: 0;
+  /* Safe area insets for PWA: content clears notches and status bar on devices with viewport-fit=cover */
+  padding-top: env(safe-area-inset-top);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
   background-color: #ffffff;
   min-height: 100vh;
 }
@@ -1215,6 +1219,44 @@ body.body--font-handwritten {
 .todo-checkbox--checked {
   background: #7c6cc4;
   border-color: #7c6cc4;
+}
+
+/* Minimalistic square checkbox for main todo list */
+.todo-checkbox-box {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid #bbb;
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
+  transition: border-color 0.1s, background 0.1s;
+}
+
+.todo-checkbox-box:hover {
+  border-color: #888;
+}
+
+.todo-checkbox-box--unchecked {
+  background: transparent;
+}
+
+.todo-checkbox-box--checked {
+  background: transparent;
+  border-color: #888;
+}
+
+.todo-checkbox-box--checked::after {
+  content: "";
+  display: block;
+  width: 5px;
+  height: 9px;
+  margin: 0 0 0 5px;
+  border: solid #777;
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg);
 }
 
 /* Logo images - navbar and footer */
@@ -5479,7 +5521,7 @@ footer a:hover {
 }
 
 .theme-dark .calendar-week {
-  background-color: #252525;
+  background-color: #282a36;
 }
 
 .theme-lined .calendar-week,
@@ -5544,7 +5586,7 @@ footer a:hover {
 }
 
 .theme-dark .calendar-day__date {
-  color: #9ca3af;
+  color: #c1c8e6;
 }
 
 .calendar-day__name {
@@ -5685,6 +5727,36 @@ a.text-blue-800:hover {
   flex-grow: 1;
 }
 
+/* Wrapper so title grows and can truncate; flex layout for display vs form */
+.todo-item__title-wrap {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+}
+
+.todo-item__title-wrap > .todo-item__title {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Menu button (⋯) to open options modal — visible on mobile, desktop */
+.todo-item__menu-btn {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 2px 8px;
+  font-size: 1.125rem;
+  color: #888;
+  cursor: pointer;
+  line-height: 1;
+  border-radius: 4px;
+  transition: color 0.15s ease;
+}
+
+.todo-item__menu-btn:hover {
+  color: #333;
+}
+
 .todo-item__title {
   font-size: 0.875rem;
   color: #222;
@@ -5708,6 +5780,43 @@ a.text-blue-800:hover {
   text-decoration-color: #ff3366;
   text-decoration-thickness: 2px;
   color: #aaa;
+}
+
+/* Inline edit: input matches title styling, snappy feel */
+.todo-item__edit-inner {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  flex: 1;
+}
+
+.todo-item__title-input {
+  font-size: 0.875rem;
+  color: #222;
+  line-height: 1.4;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  padding: 0 0 2px 0;
+  margin: 0;
+  outline: none;
+  width: 100%;
+  min-width: 60px;
+  font-family: inherit;
+}
+
+.todo-item__title-input:focus {
+  border-bottom-color: #222;
+}
+
+.todo-item__edit-form {
+  display: none;
+  flex: 1;
+  min-width: 0;
+}
+
+.todo-item__edit-form .todo-item__edit-inner[style*="display:"] {
+  display: inline-flex !important;
 }
 
 .todo-item__actions {
@@ -6146,22 +6255,49 @@ body.focus-mode .not-yet-panel__trigger {
 .theme-dark .dashboard__nav-btn { color: #6272a4; }
 .theme-dark .dashboard__nav-btn:hover { color: #bd93f9; }
 .theme-dark .dashboard__nav-row { color: #6272a4; }
+/* Force dark background – dialogs in top layer may not inherit from body, so we also support .theme-dark on the dialog itself (set by date_picker_controller) */
+.theme-dark .calendar-modal,
+.calendar-modal.theme-dark { background: #282a36 !important; color: #f8f8f2; }
+.theme-dark .calendar-modal__content,
+.calendar-modal.theme-dark .calendar-modal__content { background: #282a36 !important; }
+.theme-dark .calendar-modal__header,
+.theme-dark .calendar-modal__month-nav,
+.theme-dark .calendar-modal__grid,
+.theme-dark .calendar-modal__footer,
+.calendar-modal.theme-dark .calendar-modal__header,
+.calendar-modal.theme-dark .calendar-modal__month-nav,
+.calendar-modal.theme-dark .calendar-modal__grid,
+.calendar-modal.theme-dark .calendar-modal__footer { color: inherit; }
 .theme-dark .calendar-picker__trigger { color: #6272a4; }
 .theme-dark .calendar-picker__trigger:hover { color: #bd93f9; }
-.theme-dark .calendar-modal__title { color: #f8f8f2; }
-.theme-dark .calendar-modal__close { color: #6272a4; }
-.theme-dark .calendar-modal__close:hover { color: #f8f8f2; }
-.theme-dark .calendar-modal__today-link { color: #bd93f9; }
-.theme-dark .calendar-modal__month-label { color: #f8f8f2; }
-.theme-dark .calendar-modal__month-btn { color: #6272a4; }
-.theme-dark .calendar-modal__month-btn:hover { color: #bd93f9; }
-.theme-dark .calendar-modal__weekday { color: #6272a4; }
-.theme-dark .calendar-modal__day { color: #f8f8f2; }
-.theme-dark .calendar-modal__day:hover { background: #44475a; }
-.theme-dark .calendar-modal__day--today { background: #bd93f9; color: #282a36; }
-.theme-dark .calendar-modal__day--selected { outline-color: #bd93f9; }
-.theme-dark .calendar-modal__cancel { background: #44475a; color: #f8f8f2; }
-.theme-dark .calendar-modal__cancel:hover { background: #6272a4; }
+.theme-dark .calendar-modal__title,
+.calendar-modal.theme-dark .calendar-modal__title { color: #f8f8f2; }
+.theme-dark .calendar-modal__close,
+.calendar-modal.theme-dark .calendar-modal__close { color: #6272a4; }
+.theme-dark .calendar-modal__close:hover,
+.calendar-modal.theme-dark .calendar-modal__close:hover { color: #f8f8f2; }
+.theme-dark .calendar-modal__today-link,
+.calendar-modal.theme-dark .calendar-modal__today-link { color: #bd93f9; }
+.theme-dark .calendar-modal__month-label,
+.calendar-modal.theme-dark .calendar-modal__month-label { color: #f8f8f2; }
+.theme-dark .calendar-modal__month-btn,
+.calendar-modal.theme-dark .calendar-modal__month-btn { color: #6272a4; }
+.theme-dark .calendar-modal__month-btn:hover,
+.calendar-modal.theme-dark .calendar-modal__month-btn:hover { color: #bd93f9; }
+.theme-dark .calendar-modal__weekday,
+.calendar-modal.theme-dark .calendar-modal__weekday { color: #6272a4; }
+.theme-dark .calendar-modal__day,
+.calendar-modal.theme-dark .calendar-modal__day { color: #f8f8f2; }
+.theme-dark .calendar-modal__day:hover,
+.calendar-modal.theme-dark .calendar-modal__day:hover { background: #44475a; }
+.theme-dark .calendar-modal__day--today,
+.calendar-modal.theme-dark .calendar-modal__day--today { background: #bd93f9; color: #282a36; }
+.theme-dark .calendar-modal__day--selected,
+.calendar-modal.theme-dark .calendar-modal__day--selected { outline-color: #bd93f9; }
+.theme-dark .calendar-modal__cancel,
+.calendar-modal.theme-dark .calendar-modal__cancel { background: #44475a; color: #f8f8f2; }
+.theme-dark .calendar-modal__cancel:hover,
+.calendar-modal.theme-dark .calendar-modal__cancel:hover { background: #6272a4; }
 
 /* Task area above the title bar */
 .lists__body {
@@ -8602,6 +8738,17 @@ body.is-dragging-from-not-yet .not-yet-panel__overlay {
 .todo-options-modal__toolbar .todo-highlight-color,
 .todo-options-modal__toolbar .todo-recur-option {
   min-width: 36px;
+}
+
+.todo-options-modal__edit {
+  font-size: 0.875rem;
+  color: #4b5563;
+  padding: 4px 8px;
+  margin-right: 4px;
+}
+
+.todo-options-modal__edit:hover {
+  color: #111;
 }
 
 .todo-options-modal__delete {

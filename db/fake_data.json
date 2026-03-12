@@ -1,7 +1,7 @@
 {
   "user": {
-    "name": "Persephonie Gkionis",
-    "email_address": "persephonie@icloud.com",
+    "name": "Persephonie",
+    "email_address": "persephonie@email.com",
     "password": "Leanne123",
     "trial_started_at": "2026-03-07T00:00:00Z",
     "trial_expires_at": "2026-03-14T00:00:00Z",
@@ -12,7 +12,7 @@
       "name": "NOT YET",
       "position": 1,
       "todos": [
-        {"title": "Oat milk", "completed": false, "position": 1},
+        {"title": "LITTLE SHOP", "completed": false, "highlight_color": "#666666", "position": 1},
         {"title": "Bananas & berries", "completed": false, "position": 2},
         {"title": "Sourdough bread", "completed": false, "position": 3},
         {"title": "MOVIES", "completed": false, "bold": true, "highlight_color": "#666666", "position": 4},

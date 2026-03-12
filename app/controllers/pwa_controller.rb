@@ -31,9 +31,10 @@ class PwaController < ApplicationController
       description: "Beautiful, offline-first todo app. Start with a 7-day free trial, then download forever. Your data, your device.",
       start_url: "#{base}/app",
       scope: "#{base}/",
+      display_override: [ "fullscreen", "standalone" ],
       display: "standalone",
       orientation: "portrait-primary",
-      theme_color: "#667eea",
+      theme_color: "#ffffff",
       background_color: "#ffffff",
       categories: [ "productivity", "utilities" ],
       lang: "en-US",
@@ -63,7 +64,7 @@ class PwaController < ApplicationController
 
   def service_worker_content
     <<~JAVASCRIPT
-      const CACHE_NAME = 'todo-it-v1';
+      const CACHE_NAME = 'task-days-v1';
       const urlsToCache = [
         '/',
         '/app',

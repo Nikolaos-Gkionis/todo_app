@@ -1,6 +1,6 @@
 class TodosController < ApplicationController
   before_action :require_login
-  before_action :set_todo, only: [ :update, :destroy ]
+  before_action :set_todo, only: [ :edit, :update, :destroy ]
 
   def create
     attrs = todo_params.to_h
@@ -28,6 +28,15 @@ class TodosController < ApplicationController
     else
       # If validation fails, we should ideally handle it, but for inline forms, redirecting back works best
       redirect_back fallback_location: app_root_path, alert: "Failed to create todo."
+    end
+  end
+
+  def edit
+    # Build back path: page if assigned to page, else app root (optionally with date context)
+    @back_path = if @todo.page_id.present?
+      page_path(@todo.page)
+    else
+      app_root_path(@todo.due_date.present? ? { start_date: @todo.due_date } : {})
     end
   end
 

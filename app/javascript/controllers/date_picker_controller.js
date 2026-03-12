@@ -15,11 +15,23 @@ export default class extends Controller {
 
   connect() {
     this.displayedMonth = this.initialMonth()
+    // Ensure dark theme styles apply when dialog is in top layer (ancestor selectors may not work)
+    this.modalTarget.addEventListener("close", this.syncThemeOnClose.bind(this))
+  }
+
+  syncThemeOnClose() {
+    this.modalTarget.classList.remove("theme-dark")
   }
 
   open() {
     this.displayedMonth = this.initialMonth()
     this.render()
+    // Apply dark theme class so styles work when dialog is in browser top layer
+    if (document.body.classList.contains("theme-dark")) {
+      this.modalTarget.classList.add("theme-dark")
+    } else {
+      this.modalTarget.classList.remove("theme-dark")
+    }
     this.modalTarget.showModal()
   }
 

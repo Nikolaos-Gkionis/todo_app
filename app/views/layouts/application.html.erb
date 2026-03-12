@@ -2,8 +2,9 @@
 <html lang="en">
   <head>
     <title><%= content_for(:title) || (logged_in? && current_user&.app_title.presence) || "Task Days" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -18,7 +19,7 @@
     <!-- Favicon and App Icons -->
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <meta name="theme-color" content="#4a5568">
+    <meta name="theme-color" content="#ffffff">
     
     <!-- App Meta Tags -->
     <meta name="description" content="Task Days - Organise tasks by day. 100% Yours.">
@@ -83,6 +84,12 @@
             // Classic theme
             body.classList.add('notebook-background');
             body.classList.remove('theme-lined', 'theme-graph', 'theme-vintage', 'theme-dark');
+          }
+          
+          // Update theme-color meta tag so PWA status bar matches app background (native feel)
+          var themeColorMeta = document.querySelector('meta[name="theme-color"]');
+          if (themeColorMeta) {
+            themeColorMeta.setAttribute('content', theme === 'dark' ? '#282a36' : '#ffffff');
           }
         }
         
@@ -276,35 +283,41 @@
       };
 
       // Theme management functions
-      function applyTheme(theme) {
-        const body = document.getElementById('app-body');
-        if (!body) return;
-        
-        // Remove all theme classes
-        body.className = body.className.replace(/theme-\w+/g, '');
-        
-        // Add new theme class
-        body.classList.add(`theme-${theme}`);
-        
-        // Update background class based on theme
-        if (theme === 'lined') {
-          body.classList.remove('notebook-background');
-          body.classList.add('theme-lined');
-        } else if (theme === 'graph') {
-          body.classList.remove('notebook-background');
-          body.classList.add('theme-graph');
-        } else if (theme === 'vintage') {
-          body.classList.remove('notebook-background');
-          body.classList.add('theme-vintage');
-        } else if (theme === 'dark') {
-          body.classList.remove('notebook-background');
-          body.classList.add('theme-dark');
-        } else {
-          // Classic theme
-          body.classList.add('notebook-background');
-          body.classList.remove('theme-lined', 'theme-graph', 'theme-vintage', 'theme-dark');
+function applyTheme(theme) {
+          const body = document.getElementById('app-body');
+          if (!body) return;
+          
+          // Remove all theme classes
+          body.className = body.className.replace(/theme-\w+/g, '');
+          
+          // Add new theme class
+          body.classList.add(`theme-${theme}`);
+          
+          // Update background class based on theme
+          if (theme === 'lined') {
+            body.classList.remove('notebook-background');
+            body.classList.add('theme-lined');
+          } else if (theme === 'graph') {
+            body.classList.remove('notebook-background');
+            body.classList.add('theme-graph');
+          } else if (theme === 'vintage') {
+            body.classList.remove('notebook-background');
+            body.classList.add('theme-vintage');
+          } else if (theme === 'dark') {
+            body.classList.remove('notebook-background');
+            body.classList.add('theme-dark');
+          } else {
+            // Classic theme
+            body.classList.add('notebook-background');
+            body.classList.remove('theme-lined', 'theme-graph', 'theme-vintage', 'theme-dark');
+          }
+          
+          // Update theme-color meta tag so status bar matches app background (native PWA feel)
+          const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+          if (themeColorMeta) {
+            themeColorMeta.setAttribute('content', theme === 'dark' ? '#282a36' : '#ffffff');
+          }
         }
-      }
       
       function updateActiveButton(theme) {
         const buttons = document.querySelectorAll('[data-theme]');

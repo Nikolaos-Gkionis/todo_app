@@ -44,7 +44,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :todos, only: [ :create, :update, :destroy ] do
+    resources :todos, only: [ :create, :edit, :update, :destroy ] do
       collection do
         patch :reorder
       end
