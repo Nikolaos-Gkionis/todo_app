@@ -9,6 +9,27 @@ Step-by-step guide to point peponi.to to your DigitalOcean droplet and rename th
 
 ---
 
+## Debug: Get HTTP Working First
+
+If the site is down, fix HTTP before HTTPS. With `ssl: false` in `config/deploy.yml`:
+
+1. **Redeploy** (proxy only picks up config changes on deploy):
+   ```bash
+   kamal deploy
+   ```
+
+2. **Test HTTP:**
+   ```bash
+   curl -I http://peponi.to/up
+   ```
+   - If you see `200 OK` → HTTP works. Site is up at http://peponi.to
+   - If you see `301` to https:// → proxy still has old config; ensure deploy completed, or SSH in and `docker restart kamal-proxy`
+   - If it hangs or fails → check `kamal app logs -f` and droplet firewall (ports 80, 443)
+
+3. **Once HTTP works**, set `ssl: true` and redeploy (after Let's Encrypt rate limit clears, ~1 hour from last failure).
+
+---
+
 ## Part 1: Namecheap — Point peponi.to to Your Droplet
 
 ### Step 1.1: Log in to Namecheap
