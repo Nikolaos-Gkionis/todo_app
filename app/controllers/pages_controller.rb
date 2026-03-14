@@ -44,12 +44,16 @@ class PagesController < ApplicationController
   end
 
   def create
-    # Check if user can create more pages
-    unless current_user.can_create_page?
-      if current_user.trial_expired? && !current_user.device_downloaded?
-        redirect_to app_root_path, alert: "Your trial has expired. Please download the app to continue creating pages."
+    # Check if user can create more pages (development: skip limit for testing)
+    unless Rails.env.development? || current_user.can_create_page?
+      msg = if current_user.trial_expired? && !current_user.device_downloaded?
+        "Your trial has expired. Please download the app to continue creating pages."
       else
-        redirect_to app_root_path, alert: "You've reached the page limit. Download the app for unlimited pages!"
+        "You've reached the page limit. Download the app for unlimited pages!"
+      end
+      respond_to do |format|
+        format.html { redirect_to "#{app_root_path}?panel=open", alert: msg }
+        format.json { render json: { error: "limit", message: msg }, status: :forbidden }
       end
       return
     end
@@ -58,9 +62,16 @@ class PagesController < ApplicationController
     @page = current_user.pages.build(page_params)
 
     if @page.save
-      redirect_to app_root_path, notice: "Page was successfully created."
+      redirect_url = "#{app_root_path}?panel=open"
+      respond_to do |format|
+        format.html { redirect_to redirect_url, notice: "Page was successfully created." }
+        format.json { render json: { success: true, redirect: redirect_url } }
+      end
     else
-      render :new, status: :unprocessable_entity
+      respond_to do |format|
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: { error: "validation", errors: @page.errors.full_messages }, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -72,10 +83,18 @@ class PagesController < ApplicationController
   def update
     # @page is set by before_action
     if @page.update(page_params)
-      redirect_to @page, notice: "Page was successfully updated."
+      respond_to do |format|
+        format.html { redirect_to @page, notice: "Page was successfully updated." }
+        format.json { render json: { status: "success", name: @page.name } }
+      end
     else
-      flash.now[:alert] = "Please fix the errors below."
-      render :edit, status: :unprocessable_entity
+      respond_to do |format|
+        format.html do
+          flash.now[:alert] = "Please fix the errors below."
+          render :edit, status: :unprocessable_entity
+        end
+        format.json { render json: { status: "error", errors: @page.errors.full_messages }, status: :unprocessable_entity }
+      end
     end
   end
 

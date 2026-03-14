@@ -1,11 +1,15 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Right-hand "Not Yet" panel — slides in from right (legal-changes: Future Tasks)
+// Right-hand "Not Yet" panel — slides in from right, with tabs for each page (list)
 export default class extends Controller {
-  static targets = ["panel", "overlay", "title"]
-  static values = { settingsPath: String }
+  static targets = ["panel", "overlay", "title", "tab", "tabPane"]
+  static values = { settingsPath: String, appRootPath: String, openOnLoad: Boolean }
 
   connect() {
+    // Reopen panel after creating a new tab (redirect with ?panel=open)
+    if (this.openOnLoadValue) {
+      requestAnimationFrame(() => this.open())
+    }
     if (this.hasTitleTarget) {
       this._boundBlur = this.saveTitleOnBlur.bind(this)
       this._boundKeydown = this.handleTitleKeydown.bind(this)
@@ -52,6 +56,95 @@ export default class extends Controller {
     })
   }
 
+  // ── Tab actions ──
+  switchTab(e) {
+    // Don't switch if user clicked delete or is interacting with the label
+    if (e.target.closest(".not-yet-panel__tab-action")) return
+    const pageId = e.currentTarget.dataset.pageId
+    if (!pageId) return
+    this.showTab(pageId)
+  }
+
+  prevTab() {
+    const tabs = this.tabTargets
+    if (tabs.length < 2) return
+    const activeIdx = tabs.findIndex(t => t.classList.contains("not-yet-panel__tab--active"))
+    const nextIdx = activeIdx <= 0 ? tabs.length - 1 : activeIdx - 1
+    const pageId = tabs[nextIdx].dataset.pageId
+    this.showTab(pageId)
+  }
+
+  nextTab() {
+    const tabs = this.tabTargets
+    if (tabs.length < 2) return
+    const activeIdx = tabs.findIndex(t => t.classList.contains("not-yet-panel__tab--active"))
+    const nextIdx = activeIdx >= tabs.length - 1 ? 0 : activeIdx + 1
+    const pageId = tabs[nextIdx].dataset.pageId
+    this.showTab(pageId)
+  }
+
+  showTab(pageId) {
+    this.tabTargets.forEach(t => {
+      t.classList.toggle("not-yet-panel__tab--active", t.dataset.pageId === String(pageId))
+    })
+    this.tabPaneTargets.forEach(p => {
+      p.classList.toggle("not-yet-panel__tab-pane--active", p.dataset.pageId === String(pageId))
+    })
+  }
+
+  createTab() {
+    const dialog = document.getElementById("new-list-dialog")
+    if (dialog) dialog.showModal()
+  }
+
+  deleteTab(e) {
+    e.stopPropagation()
+    const pageId = e.currentTarget.dataset.pageId
+    if (!pageId || !confirm("Delete this list and all its tasks?")) return
+    const csrf = document.querySelector('meta[name="csrf-token"]')?.content
+    if (!csrf) return
+    fetch(`/app/pages/${pageId}`, {
+      method: "DELETE",
+      headers: { "X-CSRF-Token": csrf, "Accept": "text/html" }
+    }).then(res => {
+      if (res.ok || res.redirected) window.location.href = this.appRootPathValue || "/app"
+    })
+  }
+
+  saveTabName(e) {
+    const label = e.target
+    if (!label.classList.contains("not-yet-panel__tab-label") || !label.isContentEditable) return
+    const pageId = label.dataset.pageId
+    const value = label.textContent.trim()
+    const initial = label.dataset.initialName || ""
+    if (!pageId || value === initial || value.length === 0) {
+      if (value.length === 0) label.textContent = initial
+      return
+    }
+    label.dataset.initialName = value
+    const csrf = document.querySelector('meta[name="csrf-token"]')?.content
+    if (!csrf) return
+    fetch(`/app/pages/${pageId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json", "Accept": "application/json", "X-CSRF-Token": csrf },
+      body: JSON.stringify({ page: { name: value } })
+    }).then(r => r.json()).then(data => {
+      if (data.status === "success") return
+      label.textContent = initial
+      label.dataset.initialName = initial
+    }).catch(() => {
+      label.textContent = initial
+      label.dataset.initialName = initial
+    })
+  }
+
+  tabNameKeydown(e) {
+    if (e.key === "Enter") {
+      e.preventDefault()
+      e.target.blur()
+    }
+  }
+
   toggle() {
     const isOpen = this.hasPanelTarget && this.panelTarget.classList.contains("not-yet-panel--open")
     if (isOpen) {
@@ -74,6 +167,8 @@ export default class extends Controller {
   }
 
   closeOnOverlay(event) {
+    // Don't close when clicking inside an open dialog (e.g. new-list-dialog)
+    if (event.target.closest?.("dialog[open]")) return
     if (this.hasOverlayTarget && event.target === this.overlayTarget) {
       this.close()
     }

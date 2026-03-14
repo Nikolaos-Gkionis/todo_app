@@ -8,6 +8,11 @@ class ApplicationController < ActionController::Base
   before_action :require_login
   before_action :check_trial_status
 
+  # Friendly redirect when session/CSRF expires (e.g. after clearing site data)
+  rescue_from ActionController::InvalidAuthenticityToken do
+    redirect_to app_root_path, alert: "Your session expired. Please try again."
+  end
+
   # Make these methods available in views as well
   helper_method :current_user, :logged_in?, :trial_status_info
 

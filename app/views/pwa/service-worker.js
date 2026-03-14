@@ -60,6 +60,12 @@ self.addEventListener('fetch', event => {
   // Skip external requests
   if (!url.origin.includes(self.location.origin)) return;
 
+  // Never cache main app/dashboard — ensures fresh content after form submits (e.g. new tab)
+  if (url.pathname === '/app' || url.pathname === '/') {
+    event.respondWith(fetch(request));
+    return;
+  }
+
   // Handle API requests (network-first strategy)
   if (url.pathname.startsWith('/app/')) {
     event.respondWith(networkFirstStrategy(request));

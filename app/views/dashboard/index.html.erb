@@ -108,11 +108,12 @@
     </div>
   <% end %>
 
-  <%# ── Right-hand "Not Yet" modal (Future Tasks) — slides from right ── %>
+  <%# ── Right-hand "Not Yet" modal (Future Tasks) — slides from right, with tabs ── %>
   <div data-controller="not-yet-panel"
      data-not-yet-panel-settings-path-value="<%= settings_path %>"
+     data-not-yet-panel-app-root-path-value="<%= app_root_path %>"
+     data-not-yet-panel-open-on-load-value="<%= params[:panel] == 'open' %>"
      data-action="keydown@document->not-yet-panel#closeOnEscape click@document->not-yet-panel#closeOnOverlay open-not-yet-panel@window->not-yet-panel#open">
-    <%# Trigger must be inside controller scope for Stimulus to find it %>
     <button type="button"
             data-action="click->not-yet-panel#toggle"
             class="not-yet-panel__trigger"
@@ -123,35 +124,77 @@
     <div data-not-yet-panel-target="overlay" class="not-yet-panel__overlay" style="display:none;"></div>
     <div data-not-yet-panel-target="panel" class="not-yet-panel">
       <div class="not-yet-panel__header">
-        <h3 class="not-yet-panel__title"
-            contenteditable="true"
-            spellcheck="false"
-            data-not-yet-panel-target="title"
-            data-initial-value="<%= h((current_user.respond_to?(:not_yet_panel_title) && current_user.not_yet_panel_title.presence) || 'Not Yet') %>"
-            role="textbox"
-            aria-label="Panel title (click to edit)"
-            title="Click to edit"><%= h((current_user.respond_to?(:not_yet_panel_title) && current_user.not_yet_panel_title.presence) || 'Not Yet') %></h3>
+        <div class="not-yet-panel__tabs-row">
+          <% if @pages.any? %>
+            <% if @pages.size >= 2 %>
+              <button type="button" class="not-yet-panel__tab-arrow" data-action="click->not-yet-panel#prevTab" aria-label="Previous tab">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+            <% end %>
+            <div class="not-yet-panel__tabs-wrap<%= ' not-yet-panel__tabs-wrap--scrollable' if @pages.size >= 3 %>">
+              <% @pages.each_with_index do |page, idx| %>
+                <button type="button"
+                        class="not-yet-panel__tab<%= ' not-yet-panel__tab--active' if idx == 0 %>"
+                        data-not-yet-panel-target="tab"
+                        data-page-id="<%= page.id %>"
+                        data-action="click->not-yet-panel#switchTab">
+                  <span class="not-yet-panel__tab-label"
+                        contenteditable="true"
+                        spellcheck="false"
+                        data-page-id="<%= page.id %>"
+                        data-initial-name="<%= h(page.name) %>"
+                        data-action="blur->not-yet-panel#saveTabName keydown->not-yet-panel#tabNameKeydown"
+                        title="Click to edit"><%= h(page.name) %></span>
+                  <span class="not-yet-panel__tab-actions">
+                    <button type="button" class="not-yet-panel__tab-action" data-action="click->not-yet-panel#deleteTab" data-page-id="<%= page.id %>" title="Delete list" aria-label="Delete <%= page.name %>">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                    </button>
+                  </span>
+                </button>
+              <% end %>
+            </div>
+            <button type="button" class="not-yet-panel__tab-plus" data-action="click->not-yet-panel#createTab" aria-label="Add new list">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+            <% if @pages.size >= 2 %>
+              <button type="button" class="not-yet-panel__tab-arrow" data-action="click->not-yet-panel#nextTab" aria-label="Next tab">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            <% end %>
+          <% else %>
+            <div class="not-yet-panel__tabs-wrap">
+              <span class="not-yet-panel__tab-label" style="pointer-events:none; color:#888;"><%= h((current_user.respond_to?(:not_yet_panel_title) && current_user.not_yet_panel_title.presence) || 'Not Yet') %></span>
+            </div>
+            <button type="button" class="not-yet-panel__tab-plus" data-action="click->not-yet-panel#createTab" aria-label="Add new list">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          <% end %>
+        </div>
         <button type="button" data-action="click->not-yet-panel#close" class="not-yet-panel__close" aria-label="Close">&times;</button>
       </div>
       <div class="not-yet-panel__body">
         <% if @pages.any? %>
-          <% default_page = @pages.first %>
-          <% all_not_yet_todos = @pages.flat_map { |p| p.todos.ordered.to_a }.sort_by { |t| [@pages.index(t.page) || 0, t.position || 0] } %>
-          <div class="not-yet-panel__list" data-controller="drag" data-drag-page-id="<%= default_page.id %>" id="todos_page_not_yet">
-            <% all_not_yet_todos.each do |todo| %>
-              <% if todo.is_visual_break? %>
-                <%= render "todos/visual_break", todo: todo %>
-              <% else %>
-                <%= render "todos/todo", todo: todo %>
-              <% end %>
-            <% end %>
-            <div class="not-yet-panel__add" id="not-yet-panel-add">
-              <%= form_with model: Todo.new, url: todos_path, local: false, class: "todo-form", html: { id: "todo-form-not-yet" }, data: { controller: "todo-form", action: "keydown->todo-form#onKeydown submit->todo-form#onSubmit" } do |form| %>
-                <%= form.hidden_field :page_id, value: default_page.id %>
-                <%= form.text_field :title, class: "todo-input", autocomplete: "off", placeholder: "Add task.." %>
-              <% end %>
+          <% @pages.each_with_index do |page, idx| %>
+            <div class="not-yet-panel__tab-pane<%= ' not-yet-panel__tab-pane--active' if idx == 0 %>"
+                 data-not-yet-panel-target="tabPane"
+                 data-page-id="<%= page.id %>">
+              <div class="not-yet-panel__list" data-controller="drag" data-drag-page-id="<%= page.id %>" id="todos_page_<%= page.id %>">
+                <% page.todos.ordered.each do |todo| %>
+                  <% if todo.is_visual_break? %>
+                    <%= render "todos/visual_break", todo: todo %>
+                  <% else %>
+                    <%= render "todos/todo", todo: todo %>
+                  <% end %>
+                <% end %>
+                <div class="not-yet-panel__add" id="not-yet-panel-add-<%= page.id %>">
+                  <%= form_with model: Todo.new, url: todos_path, local: false, class: "todo-form", html: { id: "todo-form-not-yet-#{page.id}" }, data: { controller: "todo-form", action: "keydown->todo-form#onKeydown submit->todo-form#onSubmit" } do |form| %>
+                    <%= form.hidden_field :page_id, value: page.id %>
+                    <%= form.text_field :title, class: "todo-input", autocomplete: "off", placeholder: "Add task.." %>
+                  <% end %>
+                </div>
+              </div>
             </div>
-          </div>
+          <% end %>
         <% else %>
           <div class="not-yet-panel__empty">
             <p>No Not Yet items yet.</p>
@@ -203,15 +246,14 @@
     </form>
   </div>
   
-  <%= form_with model: Page.new, local: true, class: "space-y-4" do |form| %>
+  <%# Standard form submit (data-turbo=false) — full page load ensures new tab appears %>
+  <%= form_with model: Page.new, url: pages_path, local: true, html: { "data-turbo": "false" }, class: "space-y-4" do |form| %>
     <div>
       <%= form.text_field :name, class: "w-full form-input", placeholder: "What's this list about?", required: true, autofocus: true, style: "padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; font-family: var(--user-font, inherit);" %>
     </div>
-    
+
     <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
-      <form method="dialog" style="display: inline;">
-        <button type="submit" style="padding: 10px 16px; background: #f3f4f6; color: #4b5563; border: none; border-radius: 6px; font-weight: 500; cursor: pointer;">Cancel</button>
-      </form>
+      <button type="button" onclick="document.getElementById('new-list-dialog').close()" style="padding: 10px 16px; background: #f3f4f6; color: #4b5563; border: none; border-radius: 6px; font-weight: 500; cursor: pointer;">Cancel</button>
       <%= form.submit "Create", style: "padding: 10px 20px; background: var(--user-accent, #3b82f6); color: white; border: none; border-radius: 6px; font-weight: 500; cursor: pointer;" %>
     </div>
   <% end %>

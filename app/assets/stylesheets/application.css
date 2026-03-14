@@ -6463,6 +6463,9 @@ body.focus-mode .not-yet-panel__trigger {
 }
 
 /* ── Right-hand Not Yet panel (Future Tasks) ── */
+.not-yet-panel {
+  width: 440px;
+}
 .not-yet-panel__overlay {
   position: fixed;
   top: 0;
@@ -6483,7 +6486,7 @@ body.is-dragging-from-not-yet .not-yet-panel__overlay {
   top: 0;
   right: 0;
   bottom: 0;
-  width: 340px;
+  width: 440px;
   max-width: 95vw;
   background: #fff;
   box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
@@ -6502,10 +6505,159 @@ body.is-dragging-from-not-yet .not-yet-panel__overlay {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
+  padding: 12px 16px 0;
   border-bottom: 1px solid #e5e7eb;
   flex-shrink: 0;
+  gap: 8px;
 }
+
+/* Tab bar: tabs + plus + arrows */
+.not-yet-panel__tabs-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.not-yet-panel__tabs-wrap {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+.not-yet-panel__tabs-wrap::-webkit-scrollbar { display: none; }
+
+/* When 3+ tabs: show thin scrollbar + fade on right edge so user knows there's more */
+.not-yet-panel__tabs-wrap--scrollable {
+  position: relative;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+.not-yet-panel__tabs-wrap--scrollable::-webkit-scrollbar {
+  display: block;
+  height: 4px;
+}
+.not-yet-panel__tabs-wrap--scrollable::-webkit-scrollbar-track {
+  background: transparent;
+}
+.not-yet-panel__tabs-wrap--scrollable::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+.not-yet-panel__tabs-wrap--scrollable::after {
+  content: "";
+  position: sticky;
+  right: 0;
+  flex-shrink: 0;
+  width: 20px;
+  min-height: 36px;
+  align-self: stretch;
+  margin-left: -20px;
+  background: linear-gradient(to left, rgba(255, 255, 255, 0.98) 30%, transparent);
+  pointer-events: none;
+}
+.theme-dark .not-yet-panel__tabs-wrap--scrollable::after {
+  background: linear-gradient(to left, #282a36, transparent);
+}
+
+.not-yet-panel__tab {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 10px 12px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #666;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color 0.15s, border-color 0.15s;
+  margin-bottom: -1px;
+}
+.not-yet-panel__tab:hover { color: #111; }
+.not-yet-panel__tab--active {
+  color: var(--user-accent, #3b82f6);
+  border-bottom-color: var(--user-accent, #3b82f6);
+}
+
+.not-yet-panel__tab-label {
+  outline: none;
+  border-radius: 3px;
+  padding: 0 2px;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.not-yet-panel__tab-label[contenteditable="true"]:focus {
+  outline: 2px solid var(--user-accent, #3b82f6);
+  outline-offset: 1px;
+}
+
+.not-yet-panel__tab-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  opacity: 0.6;
+}
+.not-yet-panel__tab:hover .not-yet-panel__tab-actions { opacity: 1; }
+.not-yet-panel__tab-action {
+  background: none;
+  border: none;
+  padding: 2px;
+  cursor: pointer;
+  color: inherit;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+.not-yet-panel__tab-action:hover { background: rgba(0,0,0,0.08); }
+.not-yet-panel__tab-action svg { width: 12px; height: 12px; }
+
+.not-yet-panel__tab-plus {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  color: #888;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, background 0.15s;
+}
+.not-yet-panel__tab-plus:hover { color: var(--user-accent, #3b82f6); background: rgba(0,0,0,0.04); }
+.not-yet-panel__tab-plus svg { width: 16px; height: 16px; }
+
+.not-yet-panel__tab-arrow {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: #888;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, background 0.15s;
+}
+.not-yet-panel__tab-arrow:hover { color: #111; background: rgba(0,0,0,0.06); }
+.not-yet-panel__tab-arrow:disabled { opacity: 0.35; cursor: default; }
+.not-yet-panel__tab-arrow svg { width: 14px; height: 14px; }
 
 .not-yet-panel__title {
   margin: 0;
@@ -6540,6 +6692,20 @@ body.is-dragging-from-not-yet .not-yet-panel__overlay {
   flex: 1;
   overflow-y: auto;
   padding: 16px;
+}
+
+/* Tab content panes — small transition when switching */
+.not-yet-panel__tab-pane {
+  display: none;
+}
+.not-yet-panel__tab-pane--active {
+  display: block;
+  animation: not-yet-panel-fade-in 0.2s ease;
+}
+
+@keyframes not-yet-panel-fade-in {
+  from { opacity: 0.7; }
+  to { opacity: 1; }
 }
 
 .not-yet-panel__list {

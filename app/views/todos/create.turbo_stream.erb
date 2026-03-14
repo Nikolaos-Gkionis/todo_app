@@ -3,7 +3,7 @@
     <%= render "todos/todo", todo: @todo %>
   <% end %>
 <% elsif @todo.page_id.present? %>
-  <%= turbo_stream.before "not-yet-panel-add" do %>
+  <%= turbo_stream.before "not-yet-panel-add-#{@todo.page_id}" do %>
     <% if @todo.is_visual_break? %>
       <%= render "todos/visual_break", todo: @todo %>
     <% else %>
@@ -13,7 +13,7 @@
 <% end %>
 
 <%# Stimulus controller runs on connect — scripts in turbo update don't reliably execute %>
-<% form_id = @todo.due_date.present? ? "todo-form-date-#{@todo.due_date}" : "todo-form-not-yet" %>
+<% form_id = @todo.due_date.present? ? "todo-form-date-#{@todo.due_date}" : "todo-form-not-yet-#{@todo.page_id}" %>
 <%= turbo_stream.update "turbo-form-reset-target" do %>
   <div data-controller="form-reset" data-form-reset-form-id-value="<%= form_id %>"></div>
 <% end %>
