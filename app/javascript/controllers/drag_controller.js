@@ -50,9 +50,13 @@ export default class extends Controller {
             preventOnFilter: false,
             fallbackOnBody: true,
             swapThreshold: 0.65,
-            onStart: isNotYetList ? this.onDragStartFromNotYet.bind(this) : null,
+            onStart: (e) => {
+                document.body.classList.add('is-dragging-todo')
+                if (isNotYetList) document.body.classList.add('is-dragging-from-not-yet')
+            },
             onEnd: (e) => {
-                if (isNotYetList) this.onDragEndFromNotYet()
+                document.body.classList.remove('is-dragging-todo')
+                if (isNotYetList) document.body.classList.remove('is-dragging-from-not-yet')
                 this.end(e)
             }
         })
@@ -62,14 +66,6 @@ export default class extends Controller {
         if (this.sortable) {
             this.sortable.destroy()
         }
-    }
-
-    onDragStartFromNotYet() {
-        document.body.classList.add('is-dragging-from-not-yet')
-    }
-
-    onDragEndFromNotYet() {
-        document.body.classList.remove('is-dragging-from-not-yet')
     }
 
     end(event) {

@@ -10,6 +10,9 @@ export default class extends Controller {
     if (this.openOnLoadValue) {
       requestAnimationFrame(() => this.open())
     }
+    // Switch to tab when dragging todo over it — allows drop on other lists
+    this._boundTabDragOver = this.tabDragOver.bind(this)
+    document.addEventListener('dragover', this._boundTabDragOver, true)
     if (this.hasTitleTarget) {
       this._boundBlur = this.saveTitleOnBlur.bind(this)
       this._boundKeydown = this.handleTitleKeydown.bind(this)
@@ -19,10 +22,24 @@ export default class extends Controller {
   }
 
   disconnect() {
+    document.removeEventListener('dragover', this._boundTabDragOver, true)
     if (this.hasTitleTarget && this._boundBlur) {
       this.titleTarget.removeEventListener("blur", this._boundBlur)
       this.titleTarget.removeEventListener("keydown", this._boundKeydown)
     }
+  }
+
+  // When dragging a todo over an inactive tab, switch to that tab so user can drop
+  tabDragOver(e) {
+    if (!document.body.classList.contains('is-dragging-todo')) return
+    if (!this.hasPanelTarget || !this.panelTarget.classList.contains('not-yet-panel--open')) return
+    const tab = e.target.closest('.not-yet-panel__tab')
+    if (!tab) return
+    const pageId = tab.dataset.pageId
+    if (!pageId) return
+    const activePane = this.tabPaneTargets.find(p => p.classList.contains('not-yet-panel__tab-pane--active'))
+    if (activePane && activePane.dataset.pageId === String(pageId)) return // Already on this tab
+    this.showTab(pageId)
   }
 
   handleTitleKeydown(e) {
