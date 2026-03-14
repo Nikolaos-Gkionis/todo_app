@@ -99,7 +99,7 @@
                 <a href="<%= app_root_path(days: 1) %>"
                    class="pref-toggle-btn<%= ' pref-toggle-btn--active' if (@view_days || 7) == 1 %>"
                    data-turbo-action="replace"
-                   title="Focus mode">F</a>
+                   title="Today">T</a>
                 <% [2, 3, 4, 5, 6, 7].each do |n| %>
                   <a href="<%= app_root_path(days: n) %>"
                      class="pref-toggle-btn<%= ' pref-toggle-btn--active' if (@view_days || 7) == n %>"

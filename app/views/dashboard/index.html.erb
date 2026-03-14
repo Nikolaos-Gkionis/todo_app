@@ -96,7 +96,7 @@
             <button type="button" class="pomodoro__pause-btn" data-action="click->pomodoro#toggle" data-pomodoro-target="pauseBtn" aria-label="Pause" style="display:none;">⏸</button>
           </div>
         </div>
-        <%= link_to "Exit focus mode", app_root_path(days: 7), class: "focus-mode__exit", data: { turbo_action: "replace" } %>
+        <%= link_to "Exit Today mode", app_root_path(days: session[:dashboard_days_last_multi] || 7), class: "focus-mode__exit", data: { turbo_action: "replace" } %>
       </div>
       <dialog id="pomodoro-done-modal" class="pomodoro-done-modal" onclick="if(event.target===this)this.close()">
         <div class="pomodoro-done-modal__content" onclick="event.stopPropagation()">

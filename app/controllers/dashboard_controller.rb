@@ -10,6 +10,8 @@ class DashboardController < ApplicationController
     days = (params[:days] || session[:dashboard_days] || 7).to_i
     days = 7 unless [ 1, 2, 3, 4, 5, 6, 7 ].include?(days)
     session[:dashboard_days] = days
+    # Remember last multi-day view for "Exit Today mode" (so we can return to 4, not always 7)
+    session[:dashboard_days_last_multi] = days if days > 1
     @view_days = days
 
     # Calculate date range based on selected view
