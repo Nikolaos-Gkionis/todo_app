@@ -1,8 +1,40 @@
 <%# Cog (top-left) opens unified preferences panel (left drawer with Preferences + Account tabs) %>
 <% if logged_in? %>
-  <div data-controller="fab-navigation"
+  <div data-controller="fab-navigation shortcuts-help"
        data-fab-navigation-current-days-value="<%= @view_days || 7 %>"
        data-action="keydown@document->fab-navigation#closeOnEscape click@document->fab-navigation#closeOnOverlay open-theme-drawer@window->fab-navigation#openThemeDrawer open-view-drawer@window->fab-navigation#openViewDrawer open-preferences@window->fab-navigation#openPreferences open-settings-panel@window->fab-navigation#openPreferences">
+
+    <%# ── Shortcuts Help Modal (shown on ?) ── %>
+    <div id="shortcuts-help-modal" class="shortcuts-help" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="shortcuts-help-title" aria-hidden="true" data-shortcuts-help-target="modal">
+      <div data-shortcuts-help-target="overlay" class="shortcuts-help__overlay"></div>
+      <div class="shortcuts-help__dialog">
+        <div class="shortcuts-help__header">
+          <h2 class="shortcuts-help__title" id="shortcuts-help-title">Keyboard Shortcuts</h2>
+          <button type="button" class="shortcuts-help__close" data-action="click->shortcuts-help#close" aria-label="Close">&times;</button>
+        </div>
+        <div class="shortcuts-help__body">
+          <table class="shortcuts-help__table">
+            <tbody>
+              <tr><td><kbd>n</kbd></td><td>New task</td></tr>
+              <tr><td><kbd>Shift+n</kbd></td><td>Create new list (when Not Yet panel open)</td></tr>
+              <tr><td><kbd>y</kbd></td><td>Toggle Not Yet panel</td></tr>
+              <tr><td><kbd>s</kbd></td><td>Open Settings</td></tr>
+              <tr><td><kbd>t</kbd></td><td>Go to Today</td></tr>
+              <tr><td><kbd>←</kbd> <kbd>→</kbd></td><td>Previous / Next day</td></tr>
+              <tr><td><kbd>Shift+←</kbd> <kbd>Shift+→</kbd></td><td>Previous / Next week</td></tr>
+              <tr><td><kbd>c</kbd></td><td>Open calendar picker</td></tr>
+              <tr><td colspan="2" class="shortcuts-help__section">In calendar picker:</td></tr>
+              <tr><td><kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd></td><td>Move between dates</td></tr>
+              <tr><td><kbd>Enter</kbd> <kbd>Space</kbd></td><td>Select focused date</td></tr>
+              <tr><td><kbd>PgUp</kbd> <kbd>PgDn</kbd></td><td>Previous / Next month</td></tr>
+              <tr><td><kbd>x</kbd></td><td>Toggle show/hide completed tasks</td></tr>
+              <tr><td><kbd>?</kbd></td><td>Show this help</td></tr>
+              <tr><td><kbd>Esc</kbd></td><td>Close panel or modal</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
     <%# ── Nav: Cog (top-left), Chevron (mobile island only for Not Yet) ── %>
     <div class="nav-island">

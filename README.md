@@ -265,4 +265,32 @@ POLAR_WEBHOOK_SECRET=whsec_...
 
 ---
 
+## Keyboard Shortcuts
+
+Shortcuts apply when focus is not in an input, textarea, or editable field. Press `?` in the app to view this list anytime.
+
+| Key | Action |
+|-----|--------|
+| `n` | New task |
+| `Shift+n` | Create new list (when Not Yet panel open) |
+| `y` | Toggle Not Yet panel |
+| `s` | Open Settings |
+| `t` | Go to Today |
+| `←` `→` | Previous / Next day |
+| `Shift+←` `Shift+→` | Previous / Next week |
+| `c` | Open calendar picker |
+| `x` | Toggle show/hide completed tasks |
+| `?` | Show shortcuts help |
+| `Esc` | Close panel or modal |
+
+### In calendar picker
+
+| Key | Action |
+|-----|--------|
+| `←` `→` `↑` `↓` | Move between dates |
+| `Enter` `Space` | Select focused date |
+| `PgUp` `PgDn` | Previous / Next month |
+
+---
+
 **"Do it" represents a complete, production-ready Rails application with professional-grade features, beautiful design, and exceptional user experience. It's a testament to modern Rails development and thoughtful UI/UX design.**

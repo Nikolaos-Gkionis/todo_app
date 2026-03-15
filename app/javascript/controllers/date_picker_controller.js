@@ -15,12 +15,17 @@ export default class extends Controller {
 
   connect() {
     this.displayedMonth = this.initialMonth()
-    // Ensure dark theme styles apply when dialog is in top layer (ancestor selectors may not work)
-    this.modalTarget.addEventListener("close", this.syncThemeOnClose.bind(this))
+    this.boundKeydown = this.handleKeydown.bind(this)
+    this.modalTarget.addEventListener("close", this.onModalClose.bind(this))
   }
 
   syncThemeOnClose() {
     this.modalTarget.classList.remove("theme-dark")
+  }
+
+  onModalClose() {
+    this.syncThemeOnClose()
+    document.removeEventListener("keydown", this.boundKeydown)
   }
 
   open() {
@@ -33,6 +38,85 @@ export default class extends Controller {
       this.modalTarget.classList.remove("theme-dark")
     }
     this.modalTarget.showModal()
+    document.addEventListener("keydown", this.boundKeydown)
+    this.focusInitialDate()
+  }
+
+  /** Focus the selected date or today when modal opens */
+  focusInitialDate() {
+    let dateStr = null
+    if (this.hasStartDateValue && this.startDateValue) {
+      dateStr = this.startDateValue
+    } else {
+      dateStr = this.toDateString(new Date())
+    }
+    const link = this.gridTarget?.querySelector('.calendar-modal__day[data-date="' + dateStr + '"]')
+    if (link) link.focus()
+  }
+
+  /** Handle arrow keys, Enter, Space, PageUp/PageDown for keyboard navigation */
+  handleKeydown(event) {
+    if (!this.modalTarget.open) return
+
+    const target = event.target
+    const isDayLink = target?.classList?.contains?.("calendar-modal__day") && !target.classList.contains("calendar-modal__day--empty")
+
+    // Arrow keys and Enter/Space only when focus is on a day cell
+    if (isDayLink) {
+      const dateStr = target.getAttribute("data-date")
+      if (dateStr && (event.key === "ArrowLeft" || event.key === "ArrowRight" || event.key === "ArrowUp" || event.key === "ArrowDown")) {
+        event.preventDefault()
+        const nextLink = this.findAdjacentDayLink(dateStr, event.key)
+        if (nextLink) nextLink.focus()
+        return
+      }
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault()
+        target.click()
+        return
+      }
+    }
+
+    // Page Up/Down: prev/next month (work from anywhere in modal)
+    if (event.key === "PageUp") {
+      event.preventDefault()
+      this.monthPrev(event)
+      this.focusFirstDayOfMonth()
+      return
+    }
+    if (event.key === "PageDown") {
+      event.preventDefault()
+      this.monthNext(event)
+      this.focusFirstDayOfMonth()
+      return
+    }
+  }
+
+  /** Find the day link adjacent to the given date in the specified direction */
+  findAdjacentDayLink(dateStr, direction) {
+    const parts = dateStr.split("-").map(Number)
+    if (parts.length !== 3) return null
+    let d = new Date(parts[0], parts[1] - 1, parts[2])
+    const delta = direction === "ArrowLeft" ? -1 : direction === "ArrowRight" ? 1 : direction === "ArrowUp" ? -7 : 7
+    d.setDate(d.getDate() + delta)
+    const nextStr = this.toDateString(d)
+    const link = this.gridTarget?.querySelector('.calendar-modal__day[data-date="' + nextStr + '"]')
+    if (link) return link
+    // Date may be in another month; switch displayed month and re-render
+    this.displayedMonth = new Date(d.getFullYear(), d.getMonth(), 1)
+    this.render()
+    const newLink = this.gridTarget?.querySelector('.calendar-modal__day[data-date="' + nextStr + '"]')
+    if (newLink) return newLink
+    return null
+  }
+
+  /** Focus the first day of the currently displayed month */
+  focusFirstDayOfMonth() {
+    const year = this.displayedMonth.getFullYear()
+    const month = this.displayedMonth.getMonth()
+    const firstStr = this.toDateString(new Date(year, month, 1))
+    const link = this.gridTarget?.querySelector('.calendar-modal__day[data-date="' + firstStr + '"]')
+    if (link) link.focus()
   }
 
   monthPrev(event) {
@@ -123,7 +207,7 @@ export default class extends Controller {
       if (isToday) cls += " calendar-modal__day--today"
       if (isSelected) cls += " calendar-modal__day--selected"
 
-      html += '<a href="' + url + '" class="' + cls + '" data-turbo-frame="_top">' + d + '</a>'
+      html += '<a href="' + url + '" class="' + cls + '" data-date="' + dateStr + '" data-turbo-frame="_top">' + d + '</a>'
     }
 
     html += "</div>"
