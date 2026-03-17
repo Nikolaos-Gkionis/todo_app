@@ -196,4 +196,65 @@ export default class extends Controller {
       this.close()
     }
   }
+
+  /**
+   * Keyboard navigation when panel is open: Arrow Up/Down move between tasks,
+   * Page Up/Down switch between lists (tabs).
+   */
+  handlePanelKeydown(event) {
+    if (!this.hasPanelTarget || !this.panelTarget.classList.contains("not-yet-panel--open")) return
+
+    // Don't intercept when user is typing in an input or contenteditable
+    const target = event.target
+    if (target.matches("input, textarea, select")) return
+    if (target.closest("[contenteditable='true']")) return
+
+    const activePane = this.tabPaneTargets.find(p => p.classList.contains("not-yet-panel__tab-pane--active"))
+    if (!activePane) return
+
+    if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+      event.preventDefault()
+      this.focusAdjacentTask(activePane, event.key === "ArrowDown")
+    } else if (event.key === "PageUp" || event.key === "PageDown") {
+      if (this.tabTargets.length < 2) return
+      event.preventDefault()
+      if (event.key === "PageUp") {
+        this.prevTab()
+      } else {
+        this.nextTab()
+      }
+      this.focusFirstTaskInActivePane()
+    }
+  }
+
+  /** Get ordered list of focusable elements for task navigation (checkboxes + add input) */
+  getTaskFocusables(activePane) {
+    const items = []
+    activePane.querySelectorAll(".todo-item").forEach((el) => {
+      const focusable = el.querySelector(".todo-checkbox-box") || el.querySelector('[tabindex="0"]')
+      if (focusable) items.push(focusable)
+    })
+    const addInput = activePane.querySelector(".todo-input")
+    if (addInput) items.push(addInput)
+    return items
+  }
+
+  /** Focus previous or next task in the active pane */
+  focusAdjacentTask(activePane, next) {
+    const focusables = this.getTaskFocusables(activePane)
+    if (focusables.length === 0) return
+
+    const current = document.activeElement
+    const idx = focusables.indexOf(current)
+    const newIdx = next ? (idx < 0 ? 0 : Math.min(idx + 1, focusables.length - 1)) : (idx <= 0 ? focusables.length - 1 : idx - 1)
+    focusables[newIdx].focus()
+  }
+
+  /** Focus the first task (or add input) in the active pane after switching tabs */
+  focusFirstTaskInActivePane() {
+    const activePane = this.tabPaneTargets.find(p => p.classList.contains("not-yet-panel__tab-pane--active"))
+    if (!activePane) return
+    const focusables = this.getTaskFocusables(activePane)
+    if (focusables.length > 0) focusables[0].focus()
+  }
 }

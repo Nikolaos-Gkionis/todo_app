@@ -62,10 +62,14 @@ export default class extends Controller {
         this.goToToday(event)
         break
       case "ArrowLeft":
-        event.shiftKey ? this.prevWeek(event) : this.prevDay(event)
+        if (!document.querySelector(".not-yet-panel--open")) {
+          event.shiftKey ? this.prevWeek(event) : this.prevDay(event)
+        }
         break
       case "ArrowRight":
-        event.shiftKey ? this.nextWeek(event) : this.nextDay(event)
+        if (!document.querySelector(".not-yet-panel--open")) {
+          event.shiftKey ? this.nextWeek(event) : this.nextDay(event)
+        }
         break
       case "c":
         this.openCalendar(event)

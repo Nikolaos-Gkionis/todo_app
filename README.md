@@ -291,6 +291,13 @@ Shortcuts apply when focus is not in an input, textarea, or editable field. Pres
 | `Enter` `Space` | Select focused date |
 | `PgUp` `PgDn` | Previous / Next month |
 
+### In Not Yet panel
+
+| Key | Action |
+|-----|--------|
+| `↑` `↓` | Move between tasks |
+| `PgUp` `PgDn` | Previous / Next list (when 2+ lists) |
+
 ---
 
 **"Do it" represents a complete, production-ready Rails application with professional-grade features, beautiful design, and exceptional user experience. It's a testament to modern Rails development and thoughtful UI/UX design.**

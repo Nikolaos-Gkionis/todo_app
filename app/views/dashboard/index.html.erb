@@ -113,7 +113,7 @@
      data-not-yet-panel-settings-path-value="<%= settings_path %>"
      data-not-yet-panel-app-root-path-value="<%= app_root_path %>"
      data-not-yet-panel-open-on-load-value="<%= params[:panel] == 'open' %>"
-     data-action="keydown@document->not-yet-panel#closeOnEscape click@document->not-yet-panel#closeOnOverlay open-not-yet-panel@window->not-yet-panel#open toggle-not-yet-panel@window->not-yet-panel#toggle">
+     data-action="keydown@document->not-yet-panel#closeOnEscape keydown@document->not-yet-panel#handlePanelKeydown click@document->not-yet-panel#closeOnOverlay open-not-yet-panel@window->not-yet-panel#open toggle-not-yet-panel@window->not-yet-panel#toggle">
     <button type="button"
             data-action="click->not-yet-panel#toggle"
             class="not-yet-panel__trigger"
