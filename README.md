@@ -300,4 +300,4 @@ Shortcuts apply when focus is not in an input, textarea, or editable field. Pres
 
 ---
 
-**"Do it" represents a complete, production-ready Rails application with professional-grade features, beautiful design, and exceptional user experience. It's a testament to modern Rails development and thoughtful UI/UX design.**
+**"Peponi.to" represents a complete, production-ready Rails application with professional-grade features, beautiful design, and exceptional user experience. It's a testament to modern Rails development and thoughtful UI/UX design.**
