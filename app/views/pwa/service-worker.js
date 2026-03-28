@@ -12,7 +12,8 @@ const STATIC_ASSETS = [
   '/offline',
   '/assets/application.css',
   '/assets/application.js',
-  '/manifest.json'
+  '/manifest.json',
+  '/peponito.png'
 ];
 
 // Install event - cache static assets
@@ -167,8 +168,8 @@ async function syncTodos() {
     // Notify user of successful sync
     self.registration.showNotification('Peponi.to Sync Complete', {
       body: 'Your offline changes have been synced successfully!',
-      icon: '/icon-192.png',
-      badge: '/icon-192.png'
+      icon: '/peponito.png',
+      badge: '/peponito.png'
     });
   } catch (error) {
     console.error('[Service Worker] Todo sync failed:', error);
@@ -195,8 +196,8 @@ async function syncPages() {
 
     self.registration.showNotification('Page Sync Complete', {
       body: 'Your offline pages have been synced!',
-      icon: '/icon-192.png',
-      badge: '/icon-192.png'
+      icon: '/peponito.png',
+      badge: '/peponito.png'
     });
   } catch (error) {
     console.error('[Service Worker] Page sync failed:', error);
@@ -211,8 +212,8 @@ self.addEventListener('push', event => {
     const data = event.data.json();
     const options = {
       body: data.body,
-      icon: '/icon-192.png',
-      badge: '/icon-192.png',
+      icon: '/peponito.png',
+      badge: '/peponito.png',
       data: {
         path: data.path || '/app'
       }

@@ -69,6 +69,9 @@ class ApplicationController < ActionController::Base
       format.html do
         redirect_to pricing_path, alert: flash_trial_expired_paywall
       end
+      format.turbo_stream do
+        redirect_to pricing_path, alert: flash_trial_expired_paywall
+      end
       format.json { head :forbidden }
       format.any { head :forbidden }
     end
@@ -99,6 +102,8 @@ class ApplicationController < ActionController::Base
     # Check if user needs to start trial
     if current_user.needs_trial_start?
       current_user.start_trial!
+      # Reload so trial_active? / can_use_app? see DB state before the paywall callback runs
+      @current_user = current_user.reload
       flash_trial_started
     end
 

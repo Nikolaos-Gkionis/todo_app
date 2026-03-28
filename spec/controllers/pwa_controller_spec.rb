@@ -29,6 +29,7 @@ RSpec.describe PwaController, type: :controller do
       expect(response).to have_http_status(:success)
       json = JSON.parse(response.body)
       expect(json["name"]).to include("Peponi")
+      expect(json["icons"].first["src"]).to include("peponito")
     end
 
     it "returns JSON for a legacy user with device_downloaded" do
@@ -55,6 +56,7 @@ RSpec.describe PwaController, type: :controller do
       get :service_worker, format: :js
       expect(response).to have_http_status(:success)
       expect(response.body).to include("CACHE_NAME")
+      expect(response.body).to include("peponito")
     end
   end
 end

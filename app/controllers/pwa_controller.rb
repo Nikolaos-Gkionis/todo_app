@@ -26,6 +26,7 @@ class PwaController < ApplicationController
 
   def manifest_data
     base = request.base_url
+    icon = "#{base}#{helpers.asset_path("peponito.png")}"
     {
       name: "Peponi.to - Organise Your Days",
       short_name: "Peponi.to",
@@ -40,23 +41,17 @@ class PwaController < ApplicationController
       categories: [ "productivity", "utilities" ],
       lang: "en-US",
       icons: [
-        { src: "#{base}/icon-72.png", sizes: "72x72", type: "image/png", purpose: "any" },
-        { src: "#{base}/icon-96.png", sizes: "96x96", type: "image/png", purpose: "any" },
-        { src: "#{base}/icon-128.png", sizes: "128x128", type: "image/png", purpose: "any" },
-        { src: "#{base}/icon-144.png", sizes: "144x144", type: "image/png", purpose: "any" },
-        { src: "#{base}/icon-152.png", sizes: "152x152", type: "image/png", purpose: "any" },
-        { src: "#{base}/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
-        { src: "#{base}/icon-384.png", sizes: "384x384", type: "image/png", purpose: "any" },
-        { src: "#{base}/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
-        { src: "#{base}/icon-512-maskable.png", sizes: "512x512", type: "image/png", purpose: "maskable" }
+        { src: icon, sizes: "192x192", type: "image/png", purpose: "any" },
+        { src: icon, sizes: "512x512", type: "image/png", purpose: "any" },
+        { src: icon, sizes: "512x512", type: "image/png", purpose: "maskable" }
       ],
       shortcuts: [
         { name: "Add New Page", short_name: "New Page", description: "Create a new todo page",
-          url: "#{base}/app/pages/new", icons: [ { src: "#{base}/icon-96.png", sizes: "96x96" } ] },
+          url: "#{base}/app/pages/new", icons: [ { src: icon, sizes: "192x192" } ] },
         { name: "View All Pages", short_name: "My Pages", description: "See all your todo pages",
-          url: "#{base}/app", icons: [ { src: "#{base}/icon-96.png", sizes: "96x96" } ] },
+          url: "#{base}/app", icons: [ { src: icon, sizes: "192x192" } ] },
         { name: "Settings", short_name: "Settings", description: "App settings and preferences",
-          url: "#{base}/app/settings", icons: [ { src: "#{base}/icon-96.png", sizes: "96x96" } ] }
+          url: "#{base}/app/settings", icons: [ { src: icon, sizes: "192x192" } ] }
       ],
       related_applications: [],
       prefer_related_applications: false
@@ -64,14 +59,14 @@ class PwaController < ApplicationController
   end
 
   def service_worker_content
+    icon_path = helpers.asset_path("peponito.png")
     <<~JAVASCRIPT
       const CACHE_NAME = 'peponito-v1';
       const urlsToCache = [
         '/',
         '/app',
         '/manifest.json',
-        '/icon-192.png',
-        '/icon-512.png'
+        '#{icon_path}'
       ];
 
       // Install event - cache resources

@@ -53,10 +53,7 @@ class DownloadsController < ApplicationController
     @user.increment_download_count!
     Rails.logger.info "Download count incremented to: #{@user.download_count}"
 
-    if @user.device_downloaded?
-      create_pwa_bundle
-      return
-    end
+    create_pwa_bundle if @user.device_downloaded?
   end
 
   private
@@ -76,6 +73,9 @@ class DownloadsController < ApplicationController
         # Add the manifest file
         zip.put_next_entry("manifest.json")
         zip.write(create_manifest_json)
+
+        zip.put_next_entry("peponito.png")
+        zip.write(File.read(Rails.root.join("app/assets/images/peponito.png")))
 
         # Add the service worker
         zip.put_next_entry("service-worker.js")
@@ -121,6 +121,8 @@ class DownloadsController < ApplicationController
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Peponi.to - Offline App</title>
+        <link rel="icon" type="image/png" href="peponito.png">
+        <link rel="apple-touch-icon" href="peponito.png">
         <link rel="manifest" href="manifest.json">
         <link rel="stylesheet" href="styles.css">
         <meta name="theme-color" content="#ffffff">
@@ -174,16 +176,22 @@ class DownloadsController < ApplicationController
         "lang": "en-US",
         "icons": [
           {
-            "src": "/icon-192.png",
+            "src": "peponito.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "any"
           },
           {
-            "src": "/icon-512.png",
+            "src": "peponito.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any"
+          },
+          {
+            "src": "peponito.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
           }
         ]
       }

@@ -2,6 +2,7 @@ class RegistrationsController < ApplicationController
   # Allow access to signup pages without authentication
   skip_before_action :require_login, only: [ :new, :create ]
   skip_before_action :check_trial_status, only: [ :new, :create ]
+  skip_before_action :block_expired_trial_without_purchase!, only: [ :new, :create ]
 
   def new
     # Show the signup form

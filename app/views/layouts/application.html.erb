@@ -19,9 +19,9 @@
       <%= tag.link rel: "manifest", href: pwa_manifest_url(format: :json), crossorigin: "use-credentials" %>
     <% end %>
 
-    <!-- Favicon and App Icons -->
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <!-- Favicon and App Icons (Peponi mascot) -->
+    <%= tag.link rel: "icon", type: "image/png", href: image_path("peponito.png") %>
+    <%= tag.link rel: "apple-touch-icon", href: image_path("peponito.png") %>
     <meta name="theme-color" content="#ffffff">
     
     <!-- App Meta Tags -->

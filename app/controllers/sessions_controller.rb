@@ -1,6 +1,8 @@
 class SessionsController < ApplicationController
   # Allow access to login pages without authentication
   skip_before_action :require_login, only: [ :new, :create ]
+  # Never block the login form or credential POST — paywall only applies after a session exists and hits /app
+  skip_before_action :block_expired_trial_without_purchase!, only: [ :new, :create ]
 
   def new
     # Show the login form
