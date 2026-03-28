@@ -66,10 +66,10 @@ RSpec.describe DownloadsController, type: :controller do
     context 'with expired trial user' do
       before { session[:user_id] = expired_user.id }
 
-      it 'redirects to app root with error' do
+      it 'redirects to pricing (trial ended — no app access until purchase)' do
         get :show
-        expect(response).to redirect_to(app_root_path)
-        expect(flash[:error]).to eq('You need an active trial or downloaded app to access this page.')
+        expect(response).to redirect_to(pricing_path)
+        expect(flash[:alert]).to include('free trial has ended')
       end
     end
 
@@ -78,10 +78,10 @@ RSpec.describe DownloadsController, type: :controller do
 
       before { session[:user_id] = no_trial_user.id }
 
-      it 'redirects to app root with error' do
+      it 'redirects to pricing (no entitlement until trial starts or purchase)' do
         get :show
-        expect(response).to redirect_to(app_root_path)
-        expect(flash[:error]).to eq('You need an active trial or downloaded app to access this page.')
+        expect(response).to redirect_to(pricing_path)
+        expect(flash[:alert]).to include('free trial has ended')
       end
     end
   end
@@ -104,6 +104,12 @@ RSpec.describe DownloadsController, type: :controller do
 
         expect(response).to redirect_to(pricing_path)
         expect(flash[:info]).to eq('Complete your purchase to download the app to your device.')
+      end
+
+      it 'does not increment download count when redirecting trial users to pricing' do
+        expect do
+          get :download, params: { token: 'trial_token_456' }
+        end.not_to(change { trial_user.reload.download_count })
       end
 
       it 'logs download request' do
@@ -195,27 +201,27 @@ RSpec.describe DownloadsController, type: :controller do
     context 'with expired trial user' do
       before { session[:user_id] = expired_user.id }
 
-      it 'redirects to app root with error' do
+      it 'redirects to pricing (no app access after trial)' do
         get :download, params: { token: 'expired_token_000' }
 
-        expect(response).to redirect_to(app_root_path)
-        expect(flash[:error]).to eq('You need an active trial or downloaded app to download.')
+        expect(response).to redirect_to(pricing_path)
+        expect(flash[:alert]).to include('free trial has ended')
       end
 
       it 'logs user access denial' do
-        # The controller logs user access denial, but we'll just verify the behavior
+        # The controller logs user access denial, but we'll verify paywall redirect first
         get :download, params: { token: 'expired_token_000' }
 
-        expect(response).to redirect_to(app_root_path)
+        expect(response).to redirect_to(pricing_path)
       end
     end
 
     context 'with regular user (no trial)' do
-      it 'redirects to app root with error' do
+      it 'redirects to pricing (no entitlement)' do
         get :download, params: { token: 'test_token_123' }
 
-        expect(response).to redirect_to(app_root_path)
-        expect(flash[:error]).to eq('You need an active trial or downloaded app to download.')
+        expect(response).to redirect_to(pricing_path)
+        expect(flash[:alert]).to include('free trial has ended')
       end
     end
   end

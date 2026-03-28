@@ -27,14 +27,6 @@ class DownloadsController < ApplicationController
       return
     end
 
-    # Check download limit (3 devices max)
-    unless @user.can_download?
-      Rails.logger.info "User has reached download limit: #{@user.download_count}/#{User::MAX_DOWNLOADS}"
-      flash[:error] = "You've reached the maximum of #{User::MAX_DOWNLOADS} downloads. Each device gets its own independent copy."
-      redirect_to download_path(token: params[:token])
-      return
-    end
-
     # Verify download token
     unless params[:token] == @user.download_token
       Rails.logger.info "Invalid download token. Expected: #{@user.download_token}, Got: #{params[:token]}"
@@ -43,20 +35,27 @@ class DownloadsController < ApplicationController
       return
     end
 
-    # Increment download count
-    @user.increment_download_count!
-    Rails.logger.info "Download count incremented to: #{@user.download_count}"
-
-    # If user already has downloaded app, just create the bundle
-    if @user.device_downloaded?
-      create_pwa_bundle
+    # Trial-only users must pay before receiving a bundle — do not increment download quota
+    if @user.on_trial? && !@user.device_downloaded?
+      flash[:info] = "Complete your purchase to download the app to your device."
+      redirect_to pricing_path
       return
     end
 
-    # If user is on trial, redirect to payment first
-    if @user.on_trial?
-      flash[:info] = "Complete your purchase to download the app to your device."
-      redirect_to pricing_path
+    # Check download limit (3 devices max)
+    unless @user.can_download?
+      Rails.logger.info "User has reached download limit: #{@user.download_count}/#{User::MAX_DOWNLOADS}"
+      flash[:error] = "You've reached the maximum of #{User::MAX_DOWNLOADS} downloads. Each device gets its own independent copy."
+      redirect_to download_path(token: params[:token])
+      return
+    end
+
+    @user.increment_download_count!
+    Rails.logger.info "Download count incremented to: #{@user.download_count}"
+
+    if @user.device_downloaded?
+      create_pwa_bundle
+      return
     end
   end
 
@@ -241,8 +240,13 @@ class DownloadsController < ApplicationController
     redirect_to download_path
   end
 
-  # Mark app as downloaded (for testing purposes)
+  # Mark app as downloaded (development/test only — bypasses payment; never expose in production)
   def mark_downloaded
+    unless Rails.env.development? || Rails.env.test?
+      head :not_found
+      return
+    end
+
     unless @user.trial_active?
       flash[:error] = "You need an active trial to mark as downloaded."
       redirect_to app_root_path

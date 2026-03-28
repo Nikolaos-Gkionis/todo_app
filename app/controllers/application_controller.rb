@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   # Require authentication for all actions by default
   before_action :require_login
   before_action :check_trial_status
+  before_action :block_expired_trial_without_purchase!
 
   # Friendly redirect when session/CSRF expires (e.g. after clearing site data)
   rescue_from ActionController::InvalidAuthenticityToken do
@@ -14,7 +15,7 @@ class ApplicationController < ActionController::Base
   end
 
   # Make these methods available in views as well
-  helper_method :current_user, :logged_in?, :trial_status_info
+  helper_method :current_user, :logged_in?, :trial_status_info, :can_access_app_dashboard?
 
   private
 
@@ -55,6 +56,40 @@ class ApplicationController < ActionController::Base
       flash_login_required
       session[:return_to] = request.original_url
       redirect_to login_path
+    end
+  end
+
+  # After the 7-day trial, block the app until purchase (bookmarks, PWA, pinned tabs still hit the server).
+  def block_expired_trial_without_purchase!
+    return unless logged_in?
+    return if current_user.can_use_app?
+    return if expired_trial_allowed_request?
+
+    respond_to do |format|
+      format.html do
+        redirect_to pricing_path, alert: flash_trial_expired_paywall
+      end
+      format.json { head :forbidden }
+      format.any { head :forbidden }
+    end
+  end
+
+  # Logged-in users who may use /app (active trial, or purchased / legacy download)
+  def can_access_app_dashboard?
+    logged_in? && current_user.can_use_app?
+  end
+
+  def expired_trial_allowed_request?
+    case controller_path
+    when "sessions", "registrations", "marketing", "polar", "purchase", "contact"
+      true
+    when "webhooks/polar"
+      true
+    when "trial"
+      # start: before trial exists; extend_trial: special cases (controller still checks trial_active?)
+      %w[start extend_trial].include?(action_name)
+    else
+      false
     end
   end
 

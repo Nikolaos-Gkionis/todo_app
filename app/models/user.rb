@@ -39,6 +39,11 @@ class User < ApplicationRecord
       respond_to?(:paid_at) && paid_at.present?
     end
 
+    # Entitlement to use the web app (trial in-browser only, or after purchase / legacy)
+    def can_use_app?
+      trial_active? || can_install_pwa?
+    end
+
     # Remember token functionality for persistent authentication
     def remember_me!
       # Generate a secure random token

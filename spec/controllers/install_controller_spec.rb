@@ -53,10 +53,10 @@ RSpec.describe InstallController, type: :controller do
     context "with expired trial user" do
       before { session[:user_id] = expired_user.id }
 
-      it "redirects to app root with error" do
+      it "redirects to pricing (no app access after trial)" do
         get :show
-        expect(response).to redirect_to(app_root_path)
-        expect(flash[:error]).to include("active trial or downloaded app")
+        expect(response).to redirect_to(pricing_path)
+        expect(flash[:alert]).to include("free trial has ended")
       end
     end
   end

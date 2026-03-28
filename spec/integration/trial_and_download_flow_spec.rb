@@ -72,15 +72,13 @@ RSpec.describe 'Trial and Download Flow', type: :request do
 
       # Step 1: Try to access download page with expired trial
       get download_path
-      expect(response).to redirect_to(app_root_path)
-      follow_redirect!
-      expect(flash[:error]).to eq('You need an active trial or downloaded app to access this page.')
+      expect(response).to redirect_to(pricing_path)
+      expect(flash[:alert]).to include('free trial has ended')
 
       # Step 2: Try to export data with expired trial
       get export_trial_data_path
-      expect(response).to redirect_to(app_root_path)
-      follow_redirect!
-      expect(flash[:error]).to eq('No data available to export.')
+      expect(response).to redirect_to(pricing_path)
+      expect(flash[:alert]).to include('free trial has ended')
 
       # Step 3: Create downloaded user at download limit
       limit_user = create(:user, :downloaded_app, download_count: 3)
@@ -142,8 +140,7 @@ RSpec.describe 'Trial and Download Flow', type: :request do
       # Step 4: Try download with invalid token
       get download_app_path, params: { token: 'invalid_token' }
       expect(response).to redirect_to(app_root_path)
-      follow_redirect!
-      expect(response.body).to include('Invalid download token.')
+      expect(flash[:error]).to eq('Invalid download token.')
 
       # Step 5: Try download without token
       get download_app_path

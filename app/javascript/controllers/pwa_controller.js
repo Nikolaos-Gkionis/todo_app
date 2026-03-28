@@ -101,29 +101,29 @@ export default class extends Controller {
     window.addEventListener('offline', updateOnlineStatus)
   }
 
-  // Check for service worker updates
+  // Check for service worker updates (only when a SW is registered — trial users have none)
   async checkForUpdates() {
-    if ('serviceWorker' in navigator) {
-      const registration = await navigator.serviceWorker.ready
+    if (!('serviceWorker' in navigator)) return
+    const reg = await navigator.serviceWorker.getRegistration()
+    if (!reg) return
 
-      // Check for updates every 5 minutes when online
-      setInterval(() => {
-        if (navigator.onLine) {
-          registration.update()
+    // Check for updates every 5 minutes when online
+    setInterval(() => {
+      if (navigator.onLine) {
+        reg.update()
+      }
+    }, 5 * 60 * 1000)
+
+    // Listen for update found
+    reg.addEventListener('updatefound', () => {
+      const newWorker = reg.installing
+
+      newWorker.addEventListener('statechange', () => {
+        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+          this.showUpdateNotification()
         }
-      }, 5 * 60 * 1000)
-
-      // Listen for update found
-      registration.addEventListener('updatefound', () => {
-        const newWorker = registration.installing
-
-        newWorker.addEventListener('statechange', () => {
-          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-            this.showUpdateNotification()
-          }
-        })
       })
-    }
+    })
   }
 
   // Show update notification

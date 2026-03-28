@@ -1,7 +1,8 @@
 class PwaController < ApplicationController
-  # Service worker & manifest: allow all logged-in users so the app works.
-  # The "Install PWA" prompt is gated by can_install_pwa? in the UI.
+  # Manifest & service worker only for users who may install (paid / legacy device_downloaded).
+  # Matches layout: trial users get no manifest link, no SW registration, no Apple standalone metas.
   before_action :ensure_logged_in_for_pwa!, only: [ :manifest, :service_worker ]
+  skip_before_action :block_expired_trial_without_purchase!, only: [ :manifest, :service_worker ]
   skip_before_action :require_login, only: [ :manifest, :service_worker ]
   skip_before_action :verify_authenticity_token, only: [ :service_worker ]
 
@@ -20,7 +21,7 @@ class PwaController < ApplicationController
   private
 
   def ensure_logged_in_for_pwa!
-    head :unauthorized unless logged_in?
+    head :unauthorized unless logged_in? && current_user.can_install_pwa?
   end
 
   def manifest_data

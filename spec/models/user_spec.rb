@@ -383,6 +383,44 @@ RSpec.describe User, type: :model do
           expect(user.can_use_premium_themes?).to be true
         end
       end
+
+      describe '#can_install_pwa?' do
+        it 'returns true when device_downloaded' do
+          expect(create(:user, :downloaded_app).can_install_pwa?).to be true
+        end
+
+        it 'returns true when paid_at is set' do
+          u = create(:user, paid_at: Time.current, device_downloaded: false)
+          expect(u.can_install_pwa?).to be true
+        end
+
+        it 'returns false during trial without purchase' do
+          expect(create(:user, :with_trial).can_install_pwa?).to be false
+        end
+      end
+
+      describe '#can_use_app?' do
+        it 'returns true during active trial' do
+          expect(create(:user, :with_trial).can_use_app?).to be true
+        end
+
+        it 'returns true when purchased or legacy downloaded' do
+          expect(create(:user, :downloaded_app).can_use_app?).to be true
+        end
+
+        it 'returns true when paid_at set (e.g. webhook pending)' do
+          u = create(:user, :trial_expired, paid_at: Time.current, device_downloaded: false)
+          expect(u.can_use_app?).to be true
+        end
+
+        it 'returns false after trial with no purchase' do
+          expect(create(:user, :trial_expired).can_use_app?).to be false
+        end
+
+        it 'returns false before trial starts and without purchase' do
+          expect(create(:user).can_use_app?).to be false
+        end
+      end
     end
 
     describe 'trial management methods' do

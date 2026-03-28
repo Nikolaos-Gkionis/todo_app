@@ -46,6 +46,10 @@ module FlashMessageable
     flash_error("Your trial has expired. Please download the app to continue creating pages.")
   end
 
+  def flash_trial_expired_paywall
+    flash_error("Your free trial has ended. Purchase Peponi.to to keep using your account.")
+  end
+
   def flash_page_limit_reached
     flash_error("You've reached the page limit. Download the app for unlimited pages!")
   end

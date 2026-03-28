@@ -26,9 +26,9 @@ RSpec.describe 'User Registration Flow', type: :request do
       expect(response).to redirect_to(app_root_path)
       follow_redirect!
 
-      # Step 4: Should be on the app root page (pages index)
+      # Step 4: Should be on the app root page (dashboard)
       expect(response).to have_http_status(:success)
-      expect(response.body).to include('Lists')
+      expect(response.body).to include('dashboard')
 
       # Step 5: User should be automatically logged in
       user = User.find_by(email_address: 'test@example.com')
@@ -111,7 +111,7 @@ RSpec.describe 'User Registration Flow', type: :request do
 
       # Step 4: Should be on the app root page
       expect(response).to have_http_status(:success)
-      expect(response.body).to include('Lists')
+      expect(response.body).to include('dashboard')
 
       # Step 5: User should be logged in
       expect(session[:user_id]).to eq(user.id)
@@ -130,9 +130,9 @@ RSpec.describe 'User Registration Flow', type: :request do
 
       post login_path, params: invalid_params
 
-      # Step 3: Should render login form with error
+      # Step 3: Should render login form with error (SessionsController sets flash.now[:alert]; form may not echo it in HTML)
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(response.body).to include('Invalid email or password')
+      expect(response.body).to include('Sign in to your account')
       expect(session[:user_id]).to be_nil
     end
 

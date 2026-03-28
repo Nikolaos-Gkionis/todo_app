@@ -28,6 +28,8 @@
         <% elsif logged_in? %>
           <!-- Authenticated User Navigation -->
           <div class="navbar__actions space-x-4">
+            <%# Trial is in-browser only; install / offline SW UI only after purchase %>
+            <% if current_user.can_install_pwa? %>
             <!-- PWA Install Button -->
             <div data-controller="pwa">
               <button data-pwa-target="installButton"
@@ -37,13 +39,14 @@
               </button>
             </div>
 
-            <!-- Offline Indicator -->
+            <!-- Offline Indicator (service worker caches when installed) -->
             <div data-controller="pwa">
               <span data-pwa-target="offlineIndicator"
                     class="hidden px-2 py-1 text-xs rounded-full bg-orange-100 text-orange-800">
                 Offline
               </span>
             </div>
+            <% end %>
 
             <span class="navbar__user-greeting"><%= random_motivational_message %>, <%= current_user.display_name %>!</span>
             <%= link_to settings_path, class: "navbar__nav-link text-sm" do %>

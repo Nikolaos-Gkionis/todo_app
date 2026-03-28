@@ -6,13 +6,12 @@ class MarketingController < ApplicationController
   before_action :set_marketing_nav
 
   def landing
-    # Redirect to app if already logged in
-    redirect_to app_root_path if logged_in?
+    # Logged-in users with access go straight to the app; expired trials stay here (and use Pricing to pay)
+    redirect_to app_root_path if can_access_app_dashboard?
   end
 
   def pricing
-    # Redirect to app if already logged in
-    redirect_to app_root_path if logged_in?
+    redirect_to app_root_path if can_access_app_dashboard?
   end
 
   def how_to

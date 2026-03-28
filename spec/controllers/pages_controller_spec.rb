@@ -124,7 +124,7 @@ RSpec.describe PagesController, type: :controller do
         it 'redirects to pages index with success message' do
           post :create, params: { page: valid_page_params }
 
-          expect(response).to redirect_to(app_root_path)
+          expect(response).to redirect_to("#{app_root_path}?panel=open")
           expect(flash[:notice]).to eq('Page was successfully created.')
         end
 
@@ -178,11 +178,11 @@ RSpec.describe PagesController, type: :controller do
         }.not_to change(Page, :count)
       end
 
-      it 'redirects to pages index with trial expired message' do
+      it 'redirects to pricing before create (trial expired — no app access)' do
         post :create, params: { page: valid_page_params }
 
-        expect(response).to redirect_to(app_root_path)
-        expect(flash[:alert]).to eq('Your trial has expired. Please download the app to continue creating pages.')
+        expect(response).to redirect_to(pricing_path)
+        expect(flash[:alert]).to include('free trial has ended')
       end
     end
 

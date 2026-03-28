@@ -14,7 +14,7 @@ RSpec.describe 'Pages and Todos Flow', type: :request do
       # Step 1: Visit pages index
       get app_root_path
       expect(response).to have_http_status(:success)
-      expect(response.body).to include('Lists')
+      expect(response.body).to include('dashboard')
 
       # Step 2: Create a new page
       page_params = {
@@ -28,14 +28,14 @@ RSpec.describe 'Pages and Todos Flow', type: :request do
         post pages_path, params: page_params
       }.to change(Page, :count).by(1)
 
-      # Step 3: Should be redirected to app root
-      expect(response).to redirect_to(app_root_path)
+      # Step 3: Should be redirected to app root (panel opens after create)
+      expect(response).to redirect_to("#{app_root_path}?panel=open")
       follow_redirect!
 
       # Step 4: Should be on the app root page
       expect(response).to have_http_status(:success)
-      expect(response.body).to include('Lists')
-      expect(response.body).to include('SHOPPING LIST')
+      expect(response.body).to include('dashboard')
+      expect(response.body).to include('Shopping List')
 
       # Step 5: Navigate to the specific page
       page = Page.last

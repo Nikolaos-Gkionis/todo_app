@@ -224,7 +224,9 @@ export default class extends Controller {
   }
 
   saveNotes() {
-    if (!this.currentTodoId) return
+    // Capture id for async callback — close() clears currentTodoId before fetch may finish
+    const todoId = this.currentTodoId
+    if (!todoId) return
 
     const editorHTML = this.hasEditorTarget ? this.editorTarget.innerHTML : ""
     const subtasks = this.gatherSubtasks()
@@ -237,7 +239,10 @@ export default class extends Controller {
     const csrf = document.querySelector('meta[name="csrf-token"]')
     if (!csrf) return
 
-    fetch(`/app/todos/${this.currentTodoId}`, {
+    // Match server: notes "present" if stripped text or subtasks exist (see todo-item--has-notes)
+    const hasContent = editorHTML.replace(/<[^>]*>/g, "").trim().length > 0 || subtasks.length > 0
+
+    fetch(`/app/todos/${todoId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -246,13 +251,16 @@ export default class extends Controller {
       },
       body: JSON.stringify({ todo: { notes: fullNotes } })
     }).then(() => {
-      // Sync data attribute on the source button
-      const btn = document.getElementById(`notes-btn-${this.currentTodoId}`)
+      // Sync data attribute on the notes button
+      const btn = document.getElementById(`notes-btn-${todoId}`)
       if (btn) {
         btn.dataset.todoNotes = fullNotes
-        const hasContent = editorHTML.replace(/<[^>]*>/g, "").trim().length > 0 || subtasks.length > 0
         btn.classList.toggle("todo-item__notes-btn--active", hasContent)
       }
+      // Row border highlight (todo-item--has-notes) — was only applied on full page load before
+      const row = document.getElementById(`todo_${todoId}`)
+      if (row) row.classList.toggle("todo-item--has-notes", hasContent)
+
       this.updateSavedIndicator()
     }).catch(err => console.error("Notes save failed:", err))
   }

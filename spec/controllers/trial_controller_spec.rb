@@ -23,14 +23,21 @@ RSpec.describe TrialController, type: :controller do
       expect(response).to redirect_to(login_path)
     end
 
-    it 'renders the status template' do
-      get :status
-      expect(response).to render_template(:status)
-    end
+    context 'with active trial user' do
+      before do
+        session[:user_id] = trial_user.id
+        allow(controller).to receive(:current_user).and_return(trial_user)
+      end
 
-    it 'assigns the current user' do
-      get :status
-      expect(assigns(:user)).to eq(user)
+      it 'renders the status template' do
+        get :status
+        expect(response).to render_template(:status)
+      end
+
+      it 'assigns the current user' do
+        get :status
+        expect(assigns(:user)).to eq(trial_user)
+      end
     end
   end
 
@@ -203,11 +210,11 @@ RSpec.describe TrialController, type: :controller do
     end
 
     context 'with user who has no trial or download' do
-      it 'redirects with error message' do
+      it 'redirects to pricing (no entitlement)' do
         get :export_data
 
-        expect(response).to redirect_to(app_root_path)
-        expect(flash[:error]).to eq('No data available to export.')
+        expect(response).to redirect_to(pricing_path)
+        expect(flash[:alert]).to include('free trial has ended')
       end
     end
 
@@ -217,11 +224,11 @@ RSpec.describe TrialController, type: :controller do
         allow(controller).to receive(:current_user).and_return(expired_user)
       end
 
-      it 'redirects with error message' do
+      it 'redirects to pricing (trial ended)' do
         get :export_data
 
-        expect(response).to redirect_to(app_root_path)
-        expect(flash[:error]).to eq('No data available to export.')
+        expect(response).to redirect_to(pricing_path)
+        expect(flash[:alert]).to include('free trial has ended')
       end
     end
   end
@@ -259,10 +266,10 @@ RSpec.describe TrialController, type: :controller do
     end
 
     context 'with user who has no trial or download' do
-      it 'redirects to app root with error' do
+      it 'redirects to pricing (no entitlement)' do
         get :download
-        expect(response).to redirect_to(app_root_path)
-        expect(flash[:error]).to eq('You need an active trial or downloaded app to access this page.')
+        expect(response).to redirect_to(pricing_path)
+        expect(flash[:alert]).to include('free trial has ended')
       end
     end
 
@@ -272,33 +279,33 @@ RSpec.describe TrialController, type: :controller do
         allow(controller).to receive(:current_user).and_return(expired_user)
       end
 
-      it 'redirects to app root with error' do
+      it 'redirects to pricing (trial ended)' do
         get :download
-        expect(response).to redirect_to(app_root_path)
-        expect(flash[:error]).to eq('You need an active trial or downloaded app to access this page.')
+        expect(response).to redirect_to(pricing_path)
+        expect(flash[:alert]).to include('free trial has ended')
       end
     end
   end
 
   describe 'user isolation' do
+    before do
+      session[:user_id] = trial_user.id
+      allow(controller).to receive(:current_user).and_return(trial_user)
+    end
+
     it 'ensures users can only access their own trial data' do
       other_user = create(:user, :with_trial)
-      session[:user_id] = user.id
-      allow(controller).to receive(:current_user).and_return(user)
 
       get :status
-      expect(assigns(:user)).to eq(user)
+      expect(assigns(:user)).to eq(trial_user)
       expect(assigns(:user)).not_to eq(other_user)
     end
 
     it 'prevents access to other users trial data' do
       other_user = create(:user, :with_trial)
-      session[:user_id] = user.id
-      allow(controller).to receive(:current_user).and_return(user)
 
-      # User should only see their own trial status
       get :status
-      expect(assigns(:user).id).to eq(user.id)
+      expect(assigns(:user).id).to eq(trial_user.id)
       expect(assigns(:user).id).not_to eq(other_user.id)
     end
   end
@@ -314,14 +321,14 @@ RSpec.describe TrialController, type: :controller do
 
       it 'handles expired trial in export_data' do
         get :export_data
-        expect(response).to redirect_to(app_root_path)
-        expect(flash[:error]).to eq('No data available to export.')
+        expect(response).to redirect_to(pricing_path)
+        expect(flash[:alert]).to include('free trial has ended')
       end
 
       it 'handles expired trial in download' do
         get :download
-        expect(response).to redirect_to(app_root_path)
-        expect(flash[:error]).to eq('You need an active trial or downloaded app to access this page.')
+        expect(response).to redirect_to(pricing_path)
+        expect(flash[:alert]).to include('free trial has ended')
       end
     end
   end
@@ -362,11 +369,10 @@ RSpec.describe TrialController, type: :controller do
       expect(flash[:error]).to eq('Data export failed. Please try again or contact support.')
     end
 
-    it 'logs when user has no trial or download' do
-      # Test that the action works for users without trial
+    it 'redirects to pricing when user has no trial or download' do
       get :export_data
-      expect(response).to redirect_to(app_root_path)
-      expect(flash[:error]).to eq('No data available to export.')
+      expect(response).to redirect_to(pricing_path)
+      expect(flash[:alert]).to include('free trial has ended')
     end
   end
 end
