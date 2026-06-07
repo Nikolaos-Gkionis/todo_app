@@ -152,6 +152,34 @@
                 <button class="pref-toggle-btn" id="pref-hide-completed" onclick="toggleCompletedTodos(false); this.classList.add('pref-toggle-btn--active'); document.getElementById('pref-show-completed').classList.remove('pref-toggle-btn--active');">Hide</button>
               </div>
             </div>
+
+            <%# Roll unfinished tasks to next day %>
+            <div class="settings-sheet__section pref-section">
+              <div class="pref-section__label">Roll to next day</div>
+              <p class="pref-section__hint">Move unfinished tasks forward when you open the app</p>
+              <div class="pref-toggle-group">
+                <button class="pref-toggle-btn<%= ' pref-toggle-btn--active' if current_user.roll_over? %>"
+                        id="pref-roll-over-yes"
+                        onclick="toggleRollOver(true);">Yes</button>
+                <button class="pref-toggle-btn<%= ' pref-toggle-btn--active' unless current_user.roll_over? %>"
+                        id="pref-roll-over-no"
+                        onclick="toggleRollOver(false);">No</button>
+              </div>
+            </div>
+
+            <%# Lists placement %>
+            <div class="settings-sheet__section pref-section">
+              <div class="pref-section__label">Lists placement</div>
+              <p class="pref-section__hint">Show Not Yet lists at the bottom or in a right side panel</p>
+              <div class="pref-toggle-group">
+                <button class="pref-toggle-btn<%= ' pref-toggle-btn--active' if (current_user.respond_to?(:lists_placement) ? (current_user.lists_placement.presence || 'right') : 'right') == 'bottom' %>"
+                        id="pref-lists-bottom"
+                        onclick="toggleListsPlacement('bottom');">Bottom</button>
+                <button class="pref-toggle-btn<%= ' pref-toggle-btn--active' if (current_user.respond_to?(:lists_placement) ? (current_user.lists_placement.presence || 'right') : 'right') == 'right' %>"
+                        id="pref-lists-right"
+                        onclick="toggleListsPlacement('right');">Right</button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -338,7 +366,7 @@
     localStorage.setItem('showCompleted', show);
   }
 
-  // ── Roll over unfinished to-dos (UI removed; kept for compatibility) ──
+  // ── Roll over unfinished to-dos ──
   function toggleRollOver(enabled) {
     var yesEl = document.getElementById('pref-roll-over-yes');
     var noEl = document.getElementById('pref-roll-over-no');
@@ -349,6 +377,22 @@
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-Token': csrf, 'X-HTTP-Method-Override': 'PATCH' },
       body: JSON.stringify({ user: { roll_over: enabled } })
+    }).catch(function() {});
+  }
+
+  // ── Lists placement (bottom vs right side panel) ──
+  function toggleListsPlacement(placement) {
+    var bottomEl = document.getElementById('pref-lists-bottom');
+    var rightEl = document.getElementById('pref-lists-right');
+    if (bottomEl) bottomEl.classList.toggle('pref-toggle-btn--active', placement === 'bottom');
+    if (rightEl) rightEl.classList.toggle('pref-toggle-btn--active', placement === 'right');
+    var csrf = document.querySelector('meta[name="csrf-token"]').content;
+    fetch('/app/settings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-Token': csrf, 'X-HTTP-Method-Override': 'PATCH' },
+      body: JSON.stringify({ user: { lists_placement: placement } })
+    }).then(function() {
+      window.location.reload();
     }).catch(function() {});
   }
 

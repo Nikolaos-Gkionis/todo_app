@@ -4,6 +4,14 @@ class DashboardController < ApplicationController
   def index
     today = Time.current.to_date
 
+    if current_user.roll_over?
+      current_user.todos.pending.where("due_date < ?", today).update_all(due_date: today)
+    end
+
+    @lists_placement = current_user.respond_to?(:lists_placement) ? (current_user.lists_placement.presence || "right") : "right"
+    @lists_placement = "right" if @lists_placement == "left"
+    @lists_placement = "right" unless %w[bottom right].include?(@lists_placement)
+
     @start_date = params[:start_date].present? ? Date.parse(params[:start_date]) : today
 
     # View switcher: default 7 days (full week), persisted in session

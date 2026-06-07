@@ -10,12 +10,10 @@ user.name = user_data['name']
 user.password = user_data['password']
 user.password_confirmation = user_data['password'] if user.respond_to?(:password_confirmation=)
 # Trial status (when present in fake data)
-if user_data['trial_started_at']
-  user.trial_started_at = Time.zone.parse(user_data['trial_started_at'])
-end
-if user_data['trial_expires_at']
-  user.trial_expires_at = Time.zone.parse(user_data['trial_expires_at'])
-end
+# Always give the debug user an active trial so login works in local dev
+# (hardcoded dates in fake_data.json go stale over time)
+user.trial_started_at = Time.current
+user.trial_expires_at = 30.days.from_now
 if user_data.key?('device_downloaded')
   user.device_downloaded = user_data['device_downloaded']
 end

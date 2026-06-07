@@ -1,9 +1,10 @@
 <%# Focus mode: when view_days == 1, hide nav/title/FAB, center day, show pomodoro %>
-<% if (@view_days || 7) == 1 %>
-  <%= content_for :body_class, "focus-mode" %>
-<% end %>
+<% lists_placement = @lists_placement.presence || "right" %>
+<% body_classes = [ "lists-placement-#{lists_placement}" ] %>
+<% body_classes.unshift("focus-mode") if (@view_days || 7) == 1 %>
+<%= content_for :body_class, body_classes.join(" ") %>
 
-<div class="dashboard<%= ' dashboard--focus-mode' if (@view_days || 7) == 1 %>"
+<div class="dashboard<%= ' dashboard--focus-mode' if (@view_days || 7) == 1 %><%= " dashboard--lists-#{lists_placement}" unless (@view_days || 7) == 1 %>"
      data-controller="date-picker"
      data-date-picker-base-path-value="<%= app_root_path %>"
      data-date-picker-start-date-value="<%= @start_date.strftime('%Y-%m-%d') %>">
@@ -108,7 +109,14 @@
     </div>
   <% end %>
 
-  <%# ── Right-hand "Not Yet" modal (Future Tasks) — slides from right, with tabs ── %>
+  <% unless focus_mode %>
+    <% if lists_placement == "bottom" %>
+      <%= render "dashboard/bottom_lists" %>
+    <% end %>
+  <% end %>
+
+  <% if lists_placement == "right" %>
+  <%# ── Right-hand "Not Yet" panel — slides from right, with tabs ── %>
   <div data-controller="not-yet-panel"
      data-not-yet-panel-settings-path-value="<%= settings_path %>"
      data-not-yet-panel-app-root-path-value="<%= app_root_path %>"
@@ -208,6 +216,7 @@
       </div>
     </div>
   </div>
+  <% end %>
 
   <%# ── Calendar Picker Modal (inside dashboard for Stimulus target scope) ── %>
   <dialog id="calendar-picker-modal"

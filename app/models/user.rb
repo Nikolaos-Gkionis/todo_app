@@ -15,6 +15,7 @@ class User < ApplicationRecord
     validates :font_family, inclusion: { in: %w[default serif sans_serif handwritten system_ui georgia menlo] }, allow_blank: true
     validates :app_title, length: { minimum: 1, maximum: 30 }, allow_nil: false
     validates :not_yet_panel_title, length: { minimum: 1, maximum: 50 }, allow_blank: false, if: -> { self.class.column_names.include?("not_yet_panel_title") }
+    validates :lists_placement, inclusion: { in: %w[bottom right] }, allow_blank: true, if: -> { self.class.column_names.include?("lists_placement") }
 
     # Download tracking
     MAX_DOWNLOADS = 3

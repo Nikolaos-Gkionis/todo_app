@@ -6257,7 +6257,33 @@ a.text-blue-800:hover {
   position: relative;
 }
 
-/* ── Week View (fills remaining space; no bottom lists) ── */
+/* ── Custom Lists Section (bottom placement) ── */
+.dashboard__lists {
+  display: flex;
+  flex-direction: column-reverse;
+  flex: 1;
+  min-height: 0;
+  max-height: 100vh;
+}
+
+.dashboard.lists-collapsed .dashboard__week-view {
+  flex: 1;
+  max-height: 100vh;
+  min-height: 0;
+}
+
+.dashboard.lists-collapsed .dashboard__lists {
+  flex: 0 0 52px;
+  min-height: 52px;
+  max-height: 52px;
+  overflow: hidden;
+}
+
+body.lists-placement-bottom .nav-island__chevron {
+  display: none;
+}
+
+/* ── Week View (fills remaining space; shares height with bottom lists when enabled) ── */
 .dashboard__week-view {
   display: grid;
   grid-template-columns: repeat(7, 1fr);

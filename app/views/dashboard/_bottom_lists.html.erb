@@ -1,0 +1,91 @@
+<%# Bottom lists layout — shown when lists_placement is "bottom" (hidden in focus mode) %>
+<div class="dashboard__lists" data-controller="collapsible-list">
+  <% if @pages.any? %>
+    <div class="lists__body" data-collapsible-list-target="content">
+      <div class="lists__columns" data-controller="drag" data-drag-lists="true">
+        <% @pages.each do |page| %>
+          <div class="lists__column"
+               data-page-id="<%= page.id %>"
+               data-controller="drag"
+               data-drag-page-id="<%= page.id %>"
+               id="todos_page_<%= page.id %>">
+            <% page.todos.ordered.each do |todo| %>
+              <% if todo.is_visual_break? %>
+                <%= render "todos/visual_break", todo: todo %>
+              <% else %>
+                <%= render "todos/todo", todo: todo %>
+              <% end %>
+            <% end %>
+            <div class="lists__column-add">
+              <%= form_with model: Todo.new, url: todos_path, local: false, class: "todo-form", html: { id: "todo-form-page-#{page.id}" }, data: { controller: "todo-form", action: "keydown->todo-form#onKeydown submit->todo-form#onSubmit" } do |form| %>
+                <%= form.hidden_field :page_id, value: page.id %>
+                <%= form.text_field :title, class: "todo-input", autocomplete: "off", placeholder: "Add task.." %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="lists__titlebar" data-controller="list-scroll-arrows">
+      <button data-action="click->collapsible-list#toggle"
+              data-collapsible-list-target="chevronBtn"
+              title="Toggle lists"
+              aria-label="Toggle lists"
+              class="lists__titlebar-chevron">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" class="collapsible-list__chevron" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+
+      <div class="lists__titlebar-names"
+           data-controller="drag"
+           data-drag-lists="true"
+           data-list-scroll-arrows-target="scrollContainer"
+           id="lists-titlebar-names">
+        <% @pages.each do |page| %>
+          <div class="lists__titlebar-col" data-page-id="<%= page.id %>" style="flex: 0 0 280px;">
+            <h3 class="lists__column-title" style="display:flex; justify-content:space-between; align-items:center; cursor:grab; margin:0;">
+              <span style="display:flex; align-items:center; gap:6px;">
+                <span class="drag-handle" style="color:#ccc; cursor:grab; font-size:1.1rem; user-select:none;">&#8942;&#8942;</span>
+                <%= page.name.upcase %>
+              </span>
+              <div style="position:relative;">
+                <button aria-label="List options" style="background:none; border:none; cursor:pointer; font-size:1.1rem; color:#888; padding:0 4px;" onclick="document.getElementById('options-dialog-<%= page.id %>').showModal()">⋮</button>
+                <dialog id="options-dialog-<%= page.id %>" style="padding:16px; border-radius:8px; border:1px solid #eee; box-shadow:0 4px 12px rgba(0,0,0,0.15); width:220px; z-index:100;">
+                  <div style="display:flex; flex-direction:column; gap:8px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                      <span style="font-size:0.85rem; font-weight:600; color:#888;">LIST OPTIONS</span>
+                      <form method="dialog"><button style="background:none; border:none; cursor:pointer; font-size:1.2rem; line-height:1;">&times;</button></form>
+                    </div>
+                    <%= form_with model: page, url: page_path(page), method: :patch, local: true, style: "display:flex; flex-direction:column; gap:8px;" do |f| %>
+                      <%= f.text_field :name, class: "todo-input", placeholder: "Rename list...", style: "padding:8px; background:#fafafa; border-radius:4px;" %>
+                      <%= f.submit "Rename", style: "background: var(--user-accent, #3b82f6); color: white; border: none; border-radius: 4px; padding: 6px; cursor: pointer; font-size: 0.85rem;" %>
+                    <% end %>
+                    <hr style="border:none; border-top:1px solid #eee; margin:4px 0;">
+                    <%= form_with url: page_path(page), method: :delete, local: true, id: "delete-list-form-#{page.id}" do |f| %>
+                      <button type="button"
+                              onclick="document.getElementById('options-dialog-<%= page.id %>').close(); window.showConfirmModal({ message: 'This will permanently delete the list and all its todos. Are you sure?', onConfirm: function() { document.getElementById('delete-list-form-<%= page.id %>').submit(); } });"
+                              style="background:transparent; color:#e74c3c; border:1px solid #e74c3c; border-radius:4px; padding:6px; width:100%; cursor:pointer; font-size:0.85rem;">
+                        Delete List
+                      </button>
+                    <% end %>
+                  </div>
+                </dialog>
+              </div>
+            </h3>
+          </div>
+        <% end %>
+        <button onclick="document.getElementById('new-list-dialog').showModal()" title="New list" aria-label="New list" class="lists__titlebar-add lists__titlebar-add--inline">+</button>
+      </div>
+
+      <div class="lists__titlebar-scroll-arrows" data-list-scroll-arrows-target="arrows">
+        <button type="button" onclick="document.getElementById('lists-titlebar-names').scrollBy({left:-280,behavior:'smooth'})" title="Scroll left" aria-label="Scroll list headers left" class="lists__titlebar-scroll-btn">‹</button>
+        <button type="button" onclick="document.getElementById('lists-titlebar-names').scrollBy({left:280,behavior:'smooth'})" title="Scroll right" aria-label="Scroll list headers right" class="lists__titlebar-scroll-btn">›</button>
+      </div>
+    </div>
+  <% else %>
+    <div class="dashboard__empty-lists" style="display: flex; align-items: center; justify-content: flex-start; gap: 16px; padding: 24px 10px;">
+      <button onclick="document.getElementById('new-list-dialog').showModal()" title="New list" aria-label="New list" style="background: #f8e1c6; border:none; cursor:pointer; font-size: 1.8rem; color: #333; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">+</button>
+      <p class="dashboard__empty-text" style="color: #666; font-size: 1rem; margin: 0; font-weight: 500;">No any-time lists yet. Create your first list.</p>
+    </div>
+  <% end %>
+</div>
