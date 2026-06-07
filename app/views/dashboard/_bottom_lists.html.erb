@@ -46,7 +46,7 @@
             <h3 class="lists__column-title" style="display:flex; justify-content:space-between; align-items:center; cursor:grab; margin:0;">
               <span style="display:flex; align-items:center; gap:6px;">
                 <span class="drag-handle" style="color:#ccc; cursor:grab; font-size:1.1rem; user-select:none;">&#8942;&#8942;</span>
-                <%= page.name.upcase %>
+                <span id="list-name-display-<%= page.id %>"><%= page.name.upcase %></span>
               </span>
               <div style="position:relative;">
                 <button aria-label="List options" style="background:none; border:none; cursor:pointer; font-size:1.1rem; color:#888; padding:0 4px;" onclick="document.getElementById('options-dialog-<%= page.id %>').showModal()">⋮</button>
@@ -56,7 +56,7 @@
                       <span style="font-size:0.85rem; font-weight:600; color:#888;">LIST OPTIONS</span>
                       <form method="dialog"><button style="background:none; border:none; cursor:pointer; font-size:1.2rem; line-height:1;">&times;</button></form>
                     </div>
-                    <%= form_with model: page, url: page_path(page), method: :patch, local: true, style: "display:flex; flex-direction:column; gap:8px;" do |f| %>
+                    <%= form_with model: page, url: page_path(page), method: :patch, local: true, id: "rename-list-form-#{page.id}", html: { "data-list-rename-form": true, "data-page-id": page.id }, style: "display:flex; flex-direction:column; gap:8px;" do |f| %>
                       <%= f.text_field :name, class: "todo-input", placeholder: "Rename list...", style: "padding:8px; background:#fafafa; border-radius:4px;" %>
                       <%= f.submit "Rename", style: "background: var(--user-accent, #3b82f6); color: white; border: none; border-radius: 4px; padding: 6px; cursor: pointer; font-size: 0.85rem;" %>
                     <% end %>
@@ -89,3 +89,61 @@
     </div>
   <% end %>
 </div>
+
+<script>
+  (function() {
+    function setupListRenameForms() {
+      document.querySelectorAll('[data-list-rename-form]').forEach(function(form) {
+        if (form.dataset.listRenameBound) return;
+        form.dataset.listRenameBound = 'true';
+
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          var pageId = form.dataset.pageId;
+          var nameInput = form.querySelector('input[name="page[name]"]');
+          var display = document.getElementById('list-name-display-' + pageId);
+          var dialog = document.getElementById('options-dialog-' + pageId);
+          var submitBtn = form.querySelector('[type="submit"]');
+          var newName = nameInput.value.trim();
+
+          if (!newName) return;
+
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Saving…';
+
+          var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+          fetch(form.action, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': csrfToken,
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({ page: { name: newName } })
+          })
+          .then(function(response) { return response.json(); })
+          .then(function(data) {
+            if (data.status === 'success') {
+              if (display) display.textContent = data.name.toUpperCase();
+              if (dialog) dialog.close();
+            } else {
+              alert('Could not rename: ' + (data.errors || []).join(', '));
+            }
+          })
+          .catch(function() {
+            alert('Something went wrong. Please try again.');
+          })
+          .finally(function() {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Rename';
+          });
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', setupListRenameForms);
+    document.addEventListener('turbo:load', setupListRenameForms);
+  })();
+</script>
