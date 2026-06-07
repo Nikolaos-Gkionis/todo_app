@@ -27,6 +27,15 @@ RSpec.describe SessionsController, type: :controller do
         expect(flash[:notice]).to eq('Successfully logged in!')
       end
 
+      it 'redirects expired trial users to pricing (single hop, not /app then pricing)' do
+        expired = create(:user, :trial_expired, email_address: 'expired@example.com')
+
+        post :create, params: { email_address: expired.email_address, password: 'password123' }
+
+        expect(session[:user_id]).to eq(expired.id)
+        expect(response).to redirect_to(pricing_path)
+      end
+
       it 'logs in the user without remember me' do
         post :create, params: { email_address: user.email_address, password: 'password123' }
 

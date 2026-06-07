@@ -1,7 +1,7 @@
 module AuthHelpers
   def sign_in(user)
     post login_path, params: {
-      email: user.email_address,
+      email_address: user.email_address,
       password: user.password
     }
   end

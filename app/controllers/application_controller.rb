@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::Base
   include FlashMessageable
 
+  # Notebook UI (dashboard/pages/todos/settings) uses a fixed viewport with inner scroll areas.
+  # Other logged-in pages (marketing, login, downloads, checkout, etc.) must keep normal document scroll.
+  APP_VIEWPORT_FIXED_CONTROLLERS = %w[dashboard pages todos settings].freeze
+
   # Allow all browsers - remove the strict modern browser filter
   # allow_browser versions: :modern
 
@@ -15,7 +19,7 @@ class ApplicationController < ActionController::Base
   end
 
   # Make these methods available in views as well
-  helper_method :current_user, :logged_in?, :trial_status_info, :can_access_app_dashboard?
+  helper_method :current_user, :logged_in?, :trial_status_info, :can_access_app_dashboard?, :app_viewport_fixed_layout?
 
   private
 
@@ -80,6 +84,10 @@ class ApplicationController < ActionController::Base
   # Logged-in users who may use /app (active trial, or purchased / legacy download)
   def can_access_app_dashboard?
     logged_in? && current_user.can_use_app?
+  end
+
+  def app_viewport_fixed_layout?
+    logged_in? && APP_VIEWPORT_FIXED_CONTROLLERS.include?(controller_name)
   end
 
   def expired_trial_allowed_request?
