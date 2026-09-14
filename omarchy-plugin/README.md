@@ -1,12 +1,5 @@
 # Moved
 
-The Omarchy helper now lives in **[`../peponi-omarchy/`](../peponi-omarchy/)**.
+See **`../peponi-omarchy/README.md`** (pointer) and the real project at:
 
-Use:
-
-```bash
-cd peponi-omarchy
-./scripts/install.sh
-```
-
-This folder is kept only as a pointer so old links do not break during the transition.
+**`/home/nikolaos/Documents/GitHub/peponi-omarchy`**
