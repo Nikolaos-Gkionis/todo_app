@@ -149,8 +149,46 @@
   </div>
 </section>
 
+<!-- Omarchy desktop helper -->
+<section id="omarchy" class="mkt-section mkt-section--cream">
+  <div class="mkt-inner">
+    <div class="mkt-split mkt-reveal" data-scroll-reveal-target="item">
+      <div class="mkt-split__copy">
+        <span class="mkt-label">Omarchy</span>
+        <h2 class="mkt-heading" style="text-align: left;">Your Focus day, on the Linux desktop</h2>
+        <p class="mkt-subheading" style="margin: 0; text-align: left; max-width: 36rem;">
+          Paid Peponi.to owners on <a href="https://omarchy.org/" class="mkt-inline-link">Omarchy</a> can open a keyboard-first one-day overlay from the bar —
+          step days with arrows, open Not Yet with <kbd class="mkt-kbd">y</kbd>, jump to today with <kbd class="mkt-kbd">t</kbd>.
+          Same tasks as the app, summoned without leaving your desktop.
+        </p>
+        <ul class="mkt-omarchy-list">
+          <li>One-command install for Omarchy plugins</li>
+          <li>Sign in once with your paid peponi.to account</li>
+          <li>Bar toggle on the left, centre, or right — your choice</li>
+        </ul>
+        <div class="mkt-hero__cta-group" style="margin-top: 1.5rem;">
+          <%= link_to how_to_path(anchor: "omarchy"), class: "mkt-btn mkt-btn--primary" do %>
+            How to use on Omarchy &rarr;
+          <% end %>
+          <a href="https://github.com/Nikolaos-Gkionis/peponi-omarchy" class="mkt-btn mkt-btn--ghost" target="_blank" rel="noopener">
+            GitHub
+          </a>
+        </div>
+        <p style="margin-top: 0.85rem;">
+          <code class="mkt-code-chip">omarchy plugin add … --enable</code>
+        </p>
+      </div>
+      <div class="mkt-split__media">
+        <div class="mkt-portal__frame mkt-portal__frame--flat">
+          <%= image_tag "new-images/peponi-omarchy.png", alt: "Peponi One Day overlay on Omarchy Linux — focused day view with Not Yet drawer" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Themes Showcase -->
-<section class="mkt-section mkt-section--cream">
+<section class="mkt-section bg-white">
   <div class="mkt-inner">
     <div class="mkt-section-intro mkt-reveal" data-scroll-reveal-target="item">
       <span class="mkt-label">Themes</span>
