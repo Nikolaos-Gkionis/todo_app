@@ -1,5 +1,6 @@
 import Quickshell
 import Quickshell.Wayland
+import Quickshell.Io
 import QtQuick
 import qs.Commons
 import qs.Ui
@@ -10,6 +11,7 @@ import "Model.js" as Model
 //   Overlay.qml     = window + keys + day state
 //   DayView.qml     = task list for selectedDate
 //   BottomDrawer.qml = Not Yet slide-up (same window, not a 2nd layer-shell)
+//   Service.qml     = peponi CLI auth + day / Not Yet fetch
 Item {
   id: root
 
@@ -17,6 +19,7 @@ Item {
   property string omarchyPath: Quickshell.env("OMARCHY_PATH")
   property var shell: null
   property var manifest: null
+  property var service: null
 
   property bool opened: false
   property bool drawerOpen: false
@@ -27,6 +30,10 @@ Item {
   property date today: Model.startOfToday()
   property var dayTasks: []
   property var notYetItems: []
+  property string authBanner: ""
+  property bool signedIn: false
+
+  readonly property bool demoMode: Quickshell.env("PEPONI_DEMO") === "1"
 
   // Theme tokens — same menu surface as clipboard/reminders.
   property color background: Color.menu.background
@@ -104,8 +111,13 @@ Item {
   function toggleDrawer() {
     root.ensureOpenForIpc()
     root.drawerOpen = !root.drawerOpen
-    if (root.drawerOpen) drawer.resetCursor()
-    else dayView.resetCursor()
+    if (root.drawerOpen) {
+      if (root.service && typeof root.service.loadNotYet === "function")
+        root.service.loadNotYet()
+      drawer.resetCursor()
+    } else {
+      dayView.resetCursor()
+    }
     Qt.callLater(function() {
       if (keyCatcher) keyCatcher.forceActiveFocus()
     })
@@ -124,9 +136,54 @@ Item {
     })
   }
 
+  function peponiBin() {
+    var home = Quickshell.env("HOME") || ""
+    if (home !== "") return home + "/.local/bin/peponi"
+    return "peponi"
+  }
+
+  function syncFromService() {
+    if (!root.service) return false
+    root.signedIn = root.service.authenticated === true || root.demoMode
+    root.authBanner = root.service.lastError || root.service.statusMessage || ""
+    if (root.signedIn || root.demoMode) {
+      root.dayTasks = root.service.dayTasks || []
+      root.notYetItems = root.service.notYetItems || []
+    } else {
+      root.dayTasks = []
+      root.notYetItems = []
+    }
+    return true
+  }
+
   function reloadDay() {
-    root.dayTasks = Model.tasksForDate(root.selectedDate)
-    root.notYetItems = Model.notYetItems()
+    if (root.demoMode && !root.service) {
+      root.signedIn = true
+      root.authBanner = "Demo mode (PEPONI_DEMO=1)"
+      root.dayTasks = Model.tasksForDate(root.selectedDate)
+      root.notYetItems = Model.notYetItems()
+      dayView.resetCursor()
+      return
+    }
+
+    if (root.service) {
+      root.service.selectedDate = root.selectedDate
+      if (typeof root.service.loadDay === "function")
+        root.service.loadDay(root.selectedDate)
+      if (typeof root.service.loadNotYet === "function")
+        root.service.loadNotYet()
+      root.syncFromService()
+      dayView.resetCursor()
+      return
+    }
+
+    // Fallback without service: call CLI directly
+    root.signedIn = false
+    root.authBanner = "Loading…"
+    dayFallback.command = [peponiBin(), "day", Model.keyForDate(root.selectedDate), "--json"]
+    dayFallback.running = true
+    notYetFallback.command = [peponiBin(), "not-yet", "--json"]
+    notYetFallback.running = true
     dayView.resetCursor()
   }
 
@@ -143,10 +200,52 @@ Item {
     root.dismiss()
   }
 
+  Connections {
+    target: root.service
+    function onDayTasksChanged() { root.syncFromService() }
+    function onNotYetItemsChanged() { root.syncFromService() }
+    function onAuthenticatedChanged() { root.syncFromService() }
+    function onLastErrorChanged() { root.syncFromService() }
+    function onStatusMessageChanged() { root.syncFromService() }
+  }
+
   Component.onCompleted: {
     root.today = Model.startOfToday()
     root.selectedDate = root.today
+    if (root.service && typeof root.service.reloadAll === "function")
+      root.service.reloadAll()
     root.reloadDay()
+  }
+
+  Process {
+    id: dayFallback
+    command: []
+    stdout: StdioCollector {
+      onStreamFinished: {
+        if (dayFallback.exitCode === 0) {
+          root.signedIn = true
+          root.authBanner = ""
+          root.dayTasks = Model.tasksFromDayJson(this.text)
+        } else {
+          root.signedIn = false
+          root.dayTasks = []
+          root.authBanner = "Not signed in. Run peponi auth login (or scripts/install.sh)."
+        }
+      }
+    }
+  }
+
+  Process {
+    id: notYetFallback
+    command: []
+    stdout: StdioCollector {
+      onStreamFinished: {
+        if (notYetFallback.exitCode === 0)
+          root.notYetItems = Model.notYetFromJson(this.text)
+        else
+          root.notYetItems = []
+      }
+    }
   }
 
   PanelWindow {
@@ -304,6 +403,18 @@ Item {
               color: root.dim
               font.family: root.fontFamily
               font.pixelSize: Style.font.caption
+            }
+
+            Text {
+              visible: !root.signedIn && !root.demoMode
+              width: parent.width
+              wrapMode: Text.Wrap
+              text: root.authBanner !== ""
+                    ? root.authBanner
+                    : "Not signed in. Run peponi-omarchy/scripts/install.sh or: peponi auth login"
+              color: root.accent
+              font.family: root.fontFamily
+              font.pixelSize: Style.font.bodySmall
             }
           }
 
