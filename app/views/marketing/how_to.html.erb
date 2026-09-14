@@ -445,6 +445,143 @@
   </div>
 </section>
 
+<!-- Omarchy plugin guide -->
+<section id="omarchy" class="mkt-section bg-white">
+  <div class="mkt-inner">
+    <div class="mkt-section-intro mkt-reveal" data-scroll-reveal-target="item">
+      <span class="mkt-label">Omarchy</span>
+      <h2 class="mkt-heading">Use Peponi on your Linux desktop</h2>
+      <p class="mkt-subheading" style="margin: 0 auto;">
+        Paid Peponi.to accounts can install a one-day Focus overlay on
+        <a href="https://omarchy.org/" class="mkt-inline-link">Omarchy</a>.
+        Same tasks as the app — opened from the bar, driven by the keyboard.
+      </p>
+    </div>
+
+    <div class="mkt-reveal" data-scroll-reveal-target="item" style="max-width: 44rem; margin: 0 auto 3rem;">
+      <div class="mkt-portal__frame mkt-portal__frame--flat">
+        <%= image_tag "new-images/peponi-omarchy.png", alt: "Peponi One Day overlay on Omarchy Linux", class: "w-full" %>
+      </div>
+    </div>
+
+    <div class="mkt-steps">
+
+      <div class="mkt-step mkt-reveal" data-scroll-reveal-target="item">
+        <div>
+          <div class="mkt-step__number">1</div>
+          <h3 class="mkt-step__title">Install the plugin</h3>
+          <p class="mkt-step__text">
+            On an Omarchy machine, add the plugin in one command. Omarchy will ask where to put the
+            bar toggle — left, centre, or right.
+          </p>
+          <pre class="mkt-code-block" tabindex="0"><code>omarchy plugin add https://github.com/Nikolaos-Gkionis/peponi-omarchy.git --enable</code></pre>
+          <p class="mkt-step__text" style="margin-top: 0.75rem;">
+            Then finish setup (CLI + sign-in):
+          </p>
+          <pre class="mkt-code-block" tabindex="0"><code>~/.config/omarchy/plugins/peponi.one-day/scripts/setup.sh</code></pre>
+        </div>
+        <div>
+          <div class="mkt-step__visual" style="padding: 1.5rem; background: #F2F5EF; border-radius: 1rem; border: 1px solid #B5C1A8;">
+            <p style="font-size: 0.9rem; color: #4E5C64; line-height: 1.6; margin: 0;">
+              <strong>Need a paid account?</strong> Finish your Peponi.to purchase (or legacy download),
+              then use the same email and password in setup. Trial-only accounts cannot sign in to the desktop helper.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mkt-step mkt-step--reverse mkt-reveal" data-scroll-reveal-target="item">
+        <div>
+          <div class="mkt-step__number">2</div>
+          <h3 class="mkt-step__title">Open your Focus day</h3>
+          <p class="mkt-step__text">
+            Click the <strong>P</strong> icon on the Omarchy bar, or run:
+          </p>
+          <pre class="mkt-code-block" tabindex="0"><code>omarchy-shell shell toggle peponi.one-day '{}'</code></pre>
+          <p class="mkt-step__text" style="margin-top: 0.75rem;">
+            Optional global shortcut (if you accepted binds during setup):
+            <kbd class="mkt-kbd">Super</kbd>+<kbd class="mkt-kbd">Alt</kbd>+<kbd class="mkt-kbd">O</kbd>
+          </p>
+        </div>
+        <div>
+          <ul class="mkt-omarchy-list" style="margin-top: 0;">
+            <li>Overlay matches your Omarchy theme</li>
+            <li>Shows today&rsquo;s dated tasks from peponi.to</li>
+            <li>Right-click the bar icon to refresh</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mkt-step mkt-reveal" data-scroll-reveal-target="item">
+        <div>
+          <div class="mkt-step__number">3</div>
+          <h3 class="mkt-step__title">Navigate with the keyboard</h3>
+          <p class="mkt-step__text">
+            While the overlay is open it takes exclusive focus — like a small TUI on your desktop.
+          </p>
+          <div class="mkt-keys-table-wrap">
+            <table class="mkt-keys-table">
+              <thead>
+                <tr>
+                  <th>Key</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><kbd class="mkt-kbd">&larr;</kbd> / <kbd class="mkt-kbd">&rarr;</kbd></td><td>Previous / next day</td></tr>
+                <tr><td><kbd class="mkt-kbd">y</kbd></td><td>Toggle Not Yet drawer</td></tr>
+                <tr><td><kbd class="mkt-kbd">t</kbd></td><td>Jump to today</td></tr>
+                <tr><td><kbd class="mkt-kbd">&uarr;</kbd> / <kbd class="mkt-kbd">&darr;</kbd></td><td>Move in the list</td></tr>
+                <tr><td><kbd class="mkt-kbd">Esc</kbd></td><td>Close drawer, then overlay</td></tr>
+                <tr><td><kbd class="mkt-kbd">?</kbd></td><td>Shortcuts help</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <div class="mkt-step__visual" style="padding: 1.5rem; background: #F2F5EF; border-radius: 1rem; border: 1px solid #B5C1A8;">
+            <p style="font-size: 0.9rem; color: #4E5C64; line-height: 1.6; margin: 0 0 0.75rem;">
+              <strong>Global chords</strong> (optional, from setup):
+            </p>
+            <ul class="mkt-omarchy-list" style="margin: 0;">
+              <li><kbd class="mkt-kbd">Super</kbd>+<kbd class="mkt-kbd">Alt</kbd>+<kbd class="mkt-kbd">O</kbd> toggle</li>
+              <li><kbd class="mkt-kbd">Super</kbd>+<kbd class="mkt-kbd">Alt</kbd>+<kbd class="mkt-kbd">&larr;</kbd>/<kbd class="mkt-kbd">&rarr;</kbd> change day</li>
+              <li><kbd class="mkt-kbd">Super</kbd>+<kbd class="mkt-kbd">Alt</kbd>+<kbd class="mkt-kbd">Y</kbd> Not Yet</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mkt-grid-2 mkt-reveal" data-scroll-reveal-target="item" style="margin-top: 3rem; gap: 1.5rem;">
+      <div style="padding: 1.5rem; border-radius: 1rem; border: 1px solid rgba(78,92,100,0.15); background: #fff;">
+        <h3 style="font-size: 1.05rem; font-weight: 700; color: #4E5C64; margin: 0 0 0.5rem;">Move the bar toggle</h3>
+        <p style="font-size: 0.9rem; color: #4E5C64; line-height: 1.55; margin: 0 0 0.75rem;">
+          Change section anytime:
+        </p>
+        <pre class="mkt-code-block" tabindex="0"><code>omarchy bar put peponi.one-day --section left
+omarchy bar put peponi.one-day --section center
+omarchy bar put peponi.one-day --section right</code></pre>
+      </div>
+      <div style="padding: 1.5rem; border-radius: 1rem; border: 1px solid rgba(78,92,100,0.15); background: #fff;">
+        <h3 style="font-size: 1.05rem; font-weight: 700; color: #4E5C64; margin: 0 0 0.5rem;">Sign out / uninstall</h3>
+        <pre class="mkt-code-block" tabindex="0"><code>peponi auth logout
+~/.config/omarchy/plugins/peponi.one-day/scripts/uninstall.sh</code></pre>
+        <p style="font-size: 0.85rem; color: #4E5C64; line-height: 1.55; margin: 0.75rem 0 0;">
+          Or: <code class="mkt-code-chip" style="padding: 0.2rem 0.5rem;">omarchy plugin remove peponi.one-day --yes</code>
+        </p>
+      </div>
+    </div>
+
+    <div class="mkt-reveal" data-scroll-reveal-target="item" style="text-align: center; margin-top: 2.5rem;">
+      <a href="https://github.com/Nikolaos-Gkionis/peponi-omarchy" class="mkt-btn mkt-btn--primary" target="_blank" rel="noopener">
+        Plugin on GitHub &rarr;
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- CTA -->
 <section class="mkt-cta mkt-reveal" data-scroll-reveal-target="item">
   <div class="mkt-inner">

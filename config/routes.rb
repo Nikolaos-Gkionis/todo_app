@@ -15,6 +15,17 @@ Rails.application.routes.draw do
   # Polar webhooks (public, no auth - verification via signature)
   post "/webhooks/polar", to: "webhooks/polar#create"
 
+  # Desktop helper API (Omarchy / peponi CLI) — paid accounts only
+  namespace :api do
+    namespace :v1 do
+      post   "auth/login",  to: "auth#login"
+      delete "auth/logout", to: "auth#logout"
+      get    "auth/status", to: "auth#status"
+      get    "days/:date",  to: "days#show", constraints: { date: /\d{4}-\d{2}-\d{2}/ }
+      get    "not_yet",     to: "not_yet#show"
+    end
+  end
+
   # PWA routes (must be before other routes to avoid conflicts)
   get "/manifest.json", to: "pwa#manifest", as: "pwa_manifest"
   get "/service-worker.js", to: "pwa#service_worker", as: "pwa_service_worker", defaults: { format: :js }

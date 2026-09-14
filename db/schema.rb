@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_06_07_120100) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_14_120000) do
   create_table "migration_statuses", force: :cascade do |t|
     t.string "migration_type", null: false
     t.string "status", default: "pending", null: false
@@ -83,6 +83,9 @@ ActiveRecord::Schema[8.0].define(version: 2026_06_07_120100) do
     t.string "polar_product_id"
     t.string "polar_order_id"
     t.string "lists_placement", default: "right", null: false
+    t.string "desktop_api_token_digest"
+    t.datetime "desktop_api_token_expires_at"
+    t.index ["desktop_api_token_digest"], name: "index_users_on_desktop_api_token_digest", unique: true
     t.index ["device_downloaded"], name: "idx_users_device_downloaded"
     t.index ["download_token"], name: "idx_users_download_token"
     t.index ["polar_customer_id"], name: "index_users_on_polar_customer_id"

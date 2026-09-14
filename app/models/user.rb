@@ -83,4 +83,43 @@ class User < ApplicationRecord
     def display_name
       name.presence || email_address
     end
+
+    # Desktop helper API (Omarchy / peponi CLI) — store digest only; raw token returned once.
+    DESKTOP_API_TOKEN_TTL = 1.year
+
+    def issue_desktop_api_token!
+      raw = SecureRandom.urlsafe_base64(32)
+      update!(
+        desktop_api_token_digest: self.class.digest_desktop_api_token(raw),
+        desktop_api_token_expires_at: DESKTOP_API_TOKEN_TTL.from_now
+      )
+      raw
+    end
+
+    def revoke_desktop_api_token!
+      update!(desktop_api_token_digest: nil, desktop_api_token_expires_at: nil)
+    end
+
+    def desktop_api_token_valid?(raw)
+      return false if raw.blank? || desktop_api_token_digest.blank?
+      return false if desktop_api_token_expires_at.blank? || desktop_api_token_expires_at <= Time.current
+
+      ActiveSupport::SecurityUtils.secure_compare(
+        desktop_api_token_digest,
+        self.class.digest_desktop_api_token(raw)
+      )
+    end
+
+    def self.digest_desktop_api_token(raw)
+      Digest::SHA256.hexdigest(raw.to_s)
+    end
+
+    def self.find_by_desktop_api_token(raw)
+      return nil if raw.blank?
+
+      user = find_by(desktop_api_token_digest: digest_desktop_api_token(raw))
+      return nil unless user&.desktop_api_token_valid?(raw)
+
+      user
+    end
 end
