@@ -8,9 +8,9 @@ class InstallController < ApplicationController
   before_action :authenticate_user_or_token!
 
   def show
-    unless @user.trial_active? || @user.device_downloaded?
-      flash[:error] = "You need an active trial or downloaded app to view this guide."
-      redirect_to app_root_path
+    unless @user.can_install_pwa?
+      flash[:info] = "Complete your purchase to install the app on your device."
+      redirect_to pricing_path
       return
     end
 

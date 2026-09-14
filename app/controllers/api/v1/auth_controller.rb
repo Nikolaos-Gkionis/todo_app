@@ -20,7 +20,7 @@ module Api
         unless user.can_install_pwa?
           return render json: {
             error: "paid_required",
-            message: "Desktop helpers are for paid peponi.to accounts. Purchase or finish install, then try again."
+            message: "Trial accounts cannot sign in to the paid desktop helper. On Omarchy, use local mode (no account), or purchase first — then sign in to copy your tasks onto this machine."
           }, status: :forbidden
         end
 

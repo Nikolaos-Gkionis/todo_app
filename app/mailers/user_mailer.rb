@@ -45,7 +45,8 @@ class UserMailer < ApplicationMailer
     @user = user
     @app_name = "Peponi.to"
     @trial_days_remaining = user.trial_days_remaining
-    @trial_expires_at = user.trial_expires_at.strftime("%B %d, %Y")
+    # strftime on nil would 500 the whole signup if trial dates were missing
+    @trial_expires_at = user.trial_expires_at&.strftime("%B %d, %Y") || "7 days from now"
 
     mail(
       to: @user.email_address,
@@ -60,8 +61,8 @@ class UserMailer < ApplicationMailer
     @user = user
     @app_name = "Peponi.to"
     @days_remaining = user.trial_days_remaining
-    @trial_expires_at = user.trial_expires_at.strftime("%B %d, %Y")
-    @download_url = Rails.application.routes.url_helpers.download_url(host: Rails.application.config.action_mailer.default_url_options[:host])
+    @trial_expires_at = user.trial_expires_at&.strftime("%B %d, %Y")
+    @download_url = pricing_page_url
 
     mail(
       to: @user.email_address,
@@ -74,8 +75,8 @@ class UserMailer < ApplicationMailer
     @user = user
     @app_name = "Peponi.to"
     @days_remaining = user.trial_days_remaining
-    @trial_expires_at = user.trial_expires_at.strftime("%B %d, %Y")
-    @download_url = Rails.application.routes.url_helpers.download_url(host: Rails.application.config.action_mailer.default_url_options[:host])
+    @trial_expires_at = user.trial_expires_at&.strftime("%B %d, %Y")
+    @download_url = pricing_page_url
 
     mail(
       to: @user.email_address,
@@ -87,8 +88,8 @@ class UserMailer < ApplicationMailer
   def trial_expiring_tomorrow(user)
     @user = user
     @app_name = "Peponi.to"
-    @trial_expires_at = user.trial_expires_at.strftime("%B %d, %Y")
-    @download_url = Rails.application.routes.url_helpers.download_url(host: Rails.application.config.action_mailer.default_url_options[:host])
+    @trial_expires_at = user.trial_expires_at&.strftime("%B %d, %Y")
+    @download_url = pricing_page_url
 
     mail(
       to: @user.email_address,
@@ -108,15 +109,25 @@ class UserMailer < ApplicationMailer
     )
   end
 
-  # Download reminder for users who haven't downloaded yet
+  # Reminder for trial users who have not purchased yet
   def download_reminder(user)
     @user = user
     @app_name = "Peponi.to"
-    @download_url = Rails.application.routes.url_helpers.download_url(host: Rails.application.config.action_mailer.default_url_options[:host])
+    @download_url = pricing_page_url
 
     mail(
       to: @user.email_address,
-      subject: "📱 Don't forget to download Peponi.to to your device!"
+      subject: "Keep Peponi.to after your trial — one-time purchase"
+    )
+  end
+
+  private
+
+  # Trial emails send people to pricing (pay first), not the download page.
+  def pricing_page_url
+    opts = Rails.application.config.action_mailer.default_url_options || {}
+    Rails.application.routes.url_helpers.pricing_url(
+      **{ host: opts[:host] || "peponi.to", protocol: opts[:protocol] || "https", port: opts[:port] }.compact
     )
   end
 end

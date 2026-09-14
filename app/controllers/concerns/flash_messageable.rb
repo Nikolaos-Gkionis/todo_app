@@ -29,16 +29,16 @@ module FlashMessageable
 
   # Trial-specific messages
   def flash_trial_started
-    flash[:success] = "Your 7-day free trial has started! Enjoy full access to all features."
+    flash[:success] = "Your 7-day free trial has started! The website is yours for 7 days — PWA install unlocks after purchase."
   end
 
   def flash_trial_active(days_remaining)
     day_text = days_remaining == 1 ? "day" : "days"
-    flash[:trial] = "⏰ Free Trial Active - #{days_remaining} #{day_text} remaining. Download the app to continue after trial."
+    flash[:trial] = "⏰ Free Trial Active - #{days_remaining} #{day_text} remaining. Purchase to install the PWA after trial."
   end
 
   def flash_trial_expired
-    flash[:trial] = "⚠️ Trial Expired - Download the app to continue using Peponi.to."
+    flash[:trial] = "⚠️ Trial Expired - Purchase Peponi.to to keep using your account."
   end
 
   # Access control messages

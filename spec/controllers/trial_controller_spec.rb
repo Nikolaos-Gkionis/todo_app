@@ -57,7 +57,7 @@ RSpec.describe TrialController, type: :controller do
         post :start
 
         expect(response).to redirect_to(app_root_path)
-        expect(flash[:success]).to eq('Your 7-day free trial has started! Enjoy full access to all features.')
+        expect(flash[:success]).to eq('Your 7-day free trial has started! The website is yours for 7 days — PWA install unlocks after purchase.')
       end
 
       it 'handles trial start failure' do
@@ -247,9 +247,10 @@ RSpec.describe TrialController, type: :controller do
         allow(controller).to receive(:current_user).and_return(trial_user)
       end
 
-      it 'redirects to downloads controller' do
+      it 'redirects trial users to pricing (PWA is post-purchase only)' do
         get :download
-        expect(response).to redirect_to(download_path)
+        expect(response).to redirect_to(pricing_path)
+        expect(flash[:info]).to eq('Complete your purchase to download the app to your device.')
       end
     end
 

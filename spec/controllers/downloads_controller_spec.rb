@@ -27,24 +27,16 @@ RSpec.describe DownloadsController, type: :controller do
     context 'with trial user' do
       before { session[:user_id] = trial_user.id }
 
-      it 'renders the show template' do
+      it 'redirects to pricing until they purchase' do
         get :show
-        expect(response).to render_template(:show)
-        expect(response).to have_http_status(:success)
+        expect(response).to redirect_to(pricing_path)
+        expect(flash[:info]).to eq('Complete your purchase to download the app to your device.')
       end
 
-      it 'assigns download token' do
-        get :show
-        expect(assigns(:download_token)).to eq('trial_token_456')
-      end
-
-      it 'generates new token if none exists' do
+      it 'does not generate a download token for trial users' do
         trial_user.update!(download_token: nil)
-        allow(controller).to receive(:current_user).and_return(trial_user)
-        allow(trial_user).to receive(:generate_download_token!).and_return('new_token_123')
-
         get :show
-        expect(assigns(:download_token)).to eq('new_token_123')
+        expect(trial_user.reload.download_token).to be_nil
       end
     end
 

@@ -1,19 +1,20 @@
 <% if @todo.due_date.present? %>
   <%= turbo_stream.append "todos_date_#{@todo.due_date}" do %>
-    <%= render "todos/todo", todo: @todo %>
+    <%= render "todos/todo", todo: @todo, reveal: true %>
   <% end %>
 <% elsif @todo.page_id.present? %>
-  <%= turbo_stream.before "not-yet-panel-add-#{@todo.page_id}" do %>
+  <%# Same pattern as week columns: append into the tasks list, not into the add-form wrapper %>
+  <%= turbo_stream.append "todos_page_#{@todo.page_id}" do %>
     <% if @todo.is_visual_break? %>
       <%= render "todos/visual_break", todo: @todo %>
     <% else %>
-      <%= render "todos/todo", todo: @todo %>
+      <%= render "todos/todo", todo: @todo, reveal: true %>
     <% end %>
   <% end %>
 <% end %>
 
 <%# Stimulus controller runs on connect — scripts in turbo update don't reliably execute %>
-<% form_id = @todo.due_date.present? ? "todo-form-date-#{@todo.due_date}" : "todo-form-not-yet-#{@todo.page_id}" %>
+<% form_id = @todo.due_date.present? ? "todo-form-date-#{@todo.due_date}" : "todo-form-page-#{@todo.page_id}" %>
 <%= turbo_stream.update "turbo-form-reset-target" do %>
   <div data-controller="form-reset" data-form-reset-form-id-value="<%= form_id %>"></div>
 <% end %>

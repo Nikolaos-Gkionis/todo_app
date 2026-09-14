@@ -20,8 +20,13 @@ class RegistrationsController < ApplicationController
       # Start trial for new user
       @user.start_trial!
 
-      # Send welcome email
-      UserMailer.welcome_trial(@user).deliver_now
+      # Queue the welcome email so Brevo cannot 500 the signup.
+      # Production already failed here with Brevo::ApiError (Unauthorized) on deliver_now.
+      begin
+        UserMailer.welcome_trial(@user).deliver_later
+      rescue StandardError => e
+        Rails.logger.error("[signup] welcome email enqueue failed for user #{@user.id}: #{e.class}: #{e.message}")
+      end
 
       redirect_to app_root_path, notice: "Account created successfully! Your 7-day free trial has started. Welcome!"
     else

@@ -2,7 +2,7 @@
 <% highlight_colors = [nil, '#CCCCCC', '#CC3333', '#FF9933', '#CC9900', '#009933', '#3366CC', '#9966CC'] %>
 <div id="todo_<%= todo.id %>"
      data-id="<%= todo.id %>"
-     data-controller="todo-actions"
+     data-controller="todo-actions<%= ' reveal-todo' if local_assigns[:reveal] %>"
      data-todo-actions-todo-id-value="<%= todo.id %>"
      class="todo-item<%= ' todo-item--done' if todo.completed? %><%= ' todo-item--bold' if todo.bold? %><%= ' todo-item--has-notes' if todo.notes.present? %>"
      <% if todo.highlight_color.present? %>style="background: <%= todo.highlight_color %>22;"<% end %>>

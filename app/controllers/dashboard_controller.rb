@@ -29,13 +29,7 @@ class DashboardController < ApplicationController
     @week_todos = current_user.todos.where(due_date: @week_dates)
     @todos_by_date = @week_todos.group_by(&:due_date)
 
-    # Process custom lists — ensure at least 2 pages (avoids broken "create" flow)
+    # Only show lists the user actually created — never insert placeholder List 1 / List 2
     @pages = current_user.pages.includes(:todos).order(created_at: :desc)
-    if @pages.size < 2 && current_user.can_create_page?
-      (2 - @pages.size).times do |i|
-        current_user.pages.create!(name: "List #{@pages.size + i + 1}", template: "minimal")
-      end
-      @pages = current_user.pages.includes(:todos).order(created_at: :desc)
-    end
   end
 end

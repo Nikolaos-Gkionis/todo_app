@@ -36,17 +36,12 @@ RSpec.describe 'Trial and Download Flow', type: :request do
       expect(response.content_type).to include('application/json')
       expect(response.headers['Content-Disposition']).to include('attachment')
 
-      # Step 5: Visit download page
+      # Step 5: Trial users cannot open the download page until they pay
       get download_path
-      expect(response).to have_http_status(:success)
-      expect(response.body).to include('Download Peponi.to to Your Device')
+      expect(response).to redirect_to(pricing_path)
 
-      # Step 6: Get download token
+      # Step 6: Get download token after purchase
       user.reload
-      download_token = user.download_token
-      expect(download_token).to be_present
-
-      # Step 7: Mark user as downloaded (simulate purchase)
       user.mark_as_downloaded!
       user.reload
 
@@ -124,27 +119,18 @@ RSpec.describe 'Trial and Download Flow', type: :request do
   end
 
   describe 'Download token validation' do
-    it 'validates download tokens' do
-      # Step 1: Log in trial user
+    it 'does not let trial users download the PWA' do
       post login_path, params: { email_address: trial_user.email_address, password: 'password123' }
 
-      # Step 2: Generate valid token
       get download_path
-      trial_user.reload
-      valid_token = trial_user.download_token
-
-      # Step 3: Try download with valid token (trial users are redirected to pricing)
-      get download_app_path, params: { token: valid_token }
       expect(response).to redirect_to(pricing_path)
 
-      # Step 4: Try download with invalid token
-      get download_app_path, params: { token: 'invalid_token' }
-      expect(response).to redirect_to(app_root_path)
-      expect(flash[:error]).to eq('Invalid download token.')
+      trial_user.update!(download_token: 'trial-token')
+      get download_app_path, params: { token: 'trial-token' }
+      expect(response).to redirect_to(pricing_path)
 
-      # Step 5: Try download without token
-      get download_app_path
-      expect(response).to redirect_to(app_root_path)
+      get download_app_path, params: { token: 'invalid_token' }
+      expect(response).to redirect_to(pricing_path)
     end
   end
 

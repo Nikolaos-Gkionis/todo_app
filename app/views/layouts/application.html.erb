@@ -94,7 +94,25 @@
           if (themeColorMeta) {
             themeColorMeta.setAttribute('content', theme === 'dark' ? '#282a36' : '#ffffff');
           }
+
+          if (window.syncOpenDialogs) window.syncOpenDialogs();
         }
+
+        window.THEME_DIALOG_CLASSES = ['theme-dark', 'theme-lined', 'theme-graph', 'theme-vintage'];
+        window.syncDialogTheme = function(dialog) {
+          if (!dialog) return;
+          window.THEME_DIALOG_CLASSES.forEach(function(cls) {
+            dialog.classList.toggle(cls, document.body.classList.contains(cls));
+          });
+        };
+        window.syncOpenDialogs = function() {
+          document.querySelectorAll('dialog[open]').forEach(window.syncDialogTheme);
+        };
+        document.addEventListener('toggle', function(e) {
+          if (e.target && e.target.tagName === 'DIALOG' && e.newState === 'open') {
+            window.syncDialogTheme(e.target);
+          }
+        }, true);
         
         // Marketing pages: never apply app themes (dark/lined/etc) — always light for correct H1/colour visibility
         const isMarketing = document.body.getAttribute('data-marketing-page') === 'true';
@@ -322,6 +340,8 @@ function applyTheme(theme) {
           if (themeColorMeta) {
             themeColorMeta.setAttribute('content', theme === 'dark' ? '#282a36' : '#ffffff');
           }
+
+          if (window.syncOpenDialogs) window.syncOpenDialogs();
         }
       
       function updateActiveButton(theme) {

@@ -31,8 +31,10 @@ export default class extends Controller {
   open() {
     this.displayedMonth = this.initialMonth()
     this.render()
-    // Apply dark theme class so styles work when dialog is in browser top layer
-    if (document.body.classList.contains("theme-dark")) {
+    // Apply dark/vintage/etc class so styles work when dialog is in the browser top layer
+    if (window.syncDialogTheme) {
+      window.syncDialogTheme(this.modalTarget)
+    } else if (document.body.classList.contains("theme-dark")) {
       this.modalTarget.classList.add("theme-dark")
     } else {
       this.modalTarget.classList.remove("theme-dark")

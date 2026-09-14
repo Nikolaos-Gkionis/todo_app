@@ -37,9 +37,11 @@ export default class extends Controller {
             return
         }
 
-        // Exclude add-form from being draggable when present (Not Yet panel)
-        const filter = this.element.querySelector('.not-yet-panel__add') ? '.not-yet-panel__add' : null
-        const isNotYetList = this.element.classList.contains('not-yet-panel__list')
+        // Exclude add-form if it is still inside this list (week columns keep it as a sibling)
+        const filter = this.element.querySelector('.not-yet-panel__add, .lists__column-add')
+            ? '.not-yet-panel__add, .lists__column-add'
+            : null
+        const isNotYetList = this.element.closest('.not-yet-panel') != null
         this.sortable = Sortable.create(this.element, {
             group: 'todos-shared',
             animation: 150,

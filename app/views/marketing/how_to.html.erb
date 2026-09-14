@@ -295,7 +295,7 @@
       <span class="mkt-label mkt-label--amber">Mobile</span>
       <h2 class="mkt-heading">Works beautifully on your phone</h2>
       <p class="mkt-subheading" style="margin: 0 auto;">
-        Full week view, tap to add, calendar at your fingertips. Install as a PWA for a native app feel — no app store needed.
+        Full week view, tap to add, calendar at your fingertips. After purchase, install as a PWA — no app store needed.
       </p>
     </div>
 
@@ -323,8 +323,8 @@
       <span class="mkt-label">Install as a PWA</span>
       <h2 class="mkt-heading">Your app, on your device</h2>
       <p class="mkt-subheading" style="margin: 0 auto;">
-        After downloading, install Peponi.to as a Progressive Web App for a native experience —
-        no app store, no browser chrome, instant launch.
+        After you purchase, install Peponi.to as a Progressive Web App for a native experience —
+        no app store, no browser chrome, instant launch. Trial accounts use the website only.
       </p>
     </div>
 
@@ -445,16 +445,16 @@
   </div>
 </section>
 
-<!-- Omarchy plugin guide -->
+<!-- Omarchy plugin guide: free local-only, or paid signed-in -->
 <section id="omarchy" class="mkt-section bg-white">
   <div class="mkt-inner">
     <div class="mkt-section-intro mkt-reveal" data-scroll-reveal-target="item">
       <span class="mkt-label">Omarchy</span>
       <h2 class="mkt-heading">Use Peponi on your Linux desktop</h2>
       <p class="mkt-subheading" style="margin: 0 auto;">
-        Paid Peponi.to accounts can install a one-day Focus overlay on
-        <a href="https://omarchy.org/" class="mkt-inline-link">Omarchy</a>.
-        Same tasks as the app — opened from the bar, driven by the keyboard.
+        On <a href="https://omarchy.org/" class="mkt-inline-link">Omarchy</a>, you choose:
+        a free local-only overlay, or a signed-in paid license that copies your tasks onto this machine.
+        Same keyboard-first Focus day either way — opened from the bar.
       </p>
     </div>
 
@@ -472,20 +472,31 @@
           <h3 class="mkt-step__title">Install the plugin</h3>
           <p class="mkt-step__text">
             On an Omarchy machine, add the plugin in one command. Omarchy will ask where to put the
-            bar toggle — left, centre, or right.
+            bar toggle — left, centre, or right. You can start using it locally right away.
           </p>
           <pre class="mkt-code-block" tabindex="0"><code>omarchy plugin add https://github.com/Nikolaos-Gkionis/peponi-omarchy.git --enable</code></pre>
           <p class="mkt-step__text" style="margin-top: 0.75rem;">
-            Then finish setup (CLI + sign-in):
+            Optional — paid license (copies your existing tasks onto this machine):
           </p>
           <pre class="mkt-code-block" tabindex="0"><code>~/.config/omarchy/plugins/peponi.one-day/scripts/setup.sh</code></pre>
         </div>
         <div>
-          <div class="mkt-step__visual" style="padding: 1.5rem; background: #F2F5EF; border-radius: 1rem; border: 1px solid #B5C1A8;">
-            <p style="font-size: 0.9rem; color: #4E5C64; line-height: 1.6; margin: 0;">
-              <strong>Need a paid account?</strong> Finish your Peponi.to purchase (or legacy download),
-              then use the same email and password in setup. Trial-only accounts cannot sign in to the desktop helper.
-            </p>
+          <div class="mkt-omarchy-choice mkt-omarchy-choice--stack">
+            <div class="mkt-omarchy-choice__card">
+              <div class="mkt-omarchy-choice__label">Free</div>
+              <h3 class="mkt-omarchy-choice__title">Local only</h3>
+              <p class="mkt-omarchy-choice__text">
+                Skip sign-in. Tasks stay on this machine. Nothing is sent to peponi.to.
+              </p>
+            </div>
+            <div class="mkt-omarchy-choice__card">
+              <div class="mkt-omarchy-choice__label">Paid</div>
+              <h3 class="mkt-omarchy-choice__title">Signed in</h3>
+              <p class="mkt-omarchy-choice__text">
+                Run setup with your paid peponi.to email and password. Trial-only accounts cannot sign in.
+                We copy your existing tasks onto this machine; new work stays here.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -506,7 +517,7 @@
         <div>
           <ul class="mkt-omarchy-list" style="margin-top: 0;">
             <li>Overlay matches your Omarchy theme</li>
-            <li>Shows today&rsquo;s dated tasks from peponi.to</li>
+            <li>Shows today&rsquo;s tasks from this machine (free local, or a copy after paid sign-in)</li>
             <li>Right-click the bar icon to refresh</li>
           </ul>
         </div>
@@ -565,7 +576,7 @@ omarchy bar put peponi.one-day --section center
 omarchy bar put peponi.one-day --section right</code></pre>
       </div>
       <div style="padding: 1.5rem; border-radius: 1rem; border: 1px solid rgba(78,92,100,0.15); background: #fff;">
-        <h3 style="font-size: 1.05rem; font-weight: 700; color: #4E5C64; margin: 0 0 0.5rem;">Sign out / uninstall</h3>
+        <h3 style="font-size: 1.05rem; font-weight: 700; color: #4E5C64; margin: 0 0 0.5rem;">Sign out (paid) / uninstall</h3>
         <pre class="mkt-code-block" tabindex="0"><code>peponi auth logout
 ~/.config/omarchy/plugins/peponi.one-day/scripts/uninstall.sh</code></pre>
         <p style="font-size: 0.85rem; color: #4E5C64; line-height: 1.55; margin: 0.75rem 0 0;">

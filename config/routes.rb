@@ -15,14 +15,18 @@ Rails.application.routes.draw do
   # Polar webhooks (public, no auth - verification via signature)
   post "/webhooks/polar", to: "webhooks/polar#create"
 
-  # Desktop helper API (Omarchy / peponi CLI) — paid accounts only
+  # Desktop helper API (Omarchy / peponi CLI) — paid license + optional snapshot
   namespace :api do
     namespace :v1 do
       post   "auth/login",  to: "auth#login"
       delete "auth/logout", to: "auth#logout"
       get    "auth/status", to: "auth#status"
-      get    "days/:date",  to: "days#show", constraints: { date: /\d{4}-\d{2}-\d{2}/ }
-      get    "not_yet",     to: "not_yet#show"
+      get    "export",            to: "exports#show"
+      get    "days/:date",        to: "days#show",        constraints: { date: /\d{4}-\d{2}-\d{2}/ }
+      post   "days/:date/tasks",  to: "days#create_task", constraints: { date: /\d{4}-\d{2}-\d{2}/ }
+      delete "todos/:id",         to: "todos#destroy"
+      get    "not_yet",           to: "not_yet#show"
+      post   "not_yet/tasks",     to: "not_yet#create_task"
     end
   end
 

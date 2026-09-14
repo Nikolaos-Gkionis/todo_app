@@ -29,7 +29,7 @@ module Api
       def require_paid!
         return if current_user&.can_install_pwa?
 
-        render json: { error: "paid_required", message: "Peponi desktop helpers require a paid peponi.to account." }, status: :forbidden
+        render json: { error: "paid_required", message: "The paid desktop helper is for purchased peponi.to accounts. On Omarchy, use local mode until you pay." }, status: :forbidden
       end
 
       def serialize_todo(todo)

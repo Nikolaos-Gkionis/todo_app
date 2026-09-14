@@ -253,7 +253,7 @@
       <!-- Header -->
       <div class="header">
         <h1>📱 Download Reminder</h1>
-        <p>Don't forget to download Peponi.to to your device!</p>
+        <p>One-time purchase, then install the PWA on your device</p>
       </div>
       
       <!-- Main Content -->
@@ -263,28 +263,28 @@
         </div>
         
         <div class="message">
-          <p>We hope you've been enjoying your <%= @app_name %> experience! Just a friendly reminder that you can download the app to your device for the best experience.</p>
+          <p>We hope you've been enjoying <%= @app_name %> on the website. To install it as a PWA (Add to Home Screen), purchase once first. On Omarchy you can keep using the free local overlay with no account.</p>
         </div>
         
         <!-- Reminder Info -->
         <div class="reminder-info">
-          <h2>📱 Ready to Download?</h2>
-          <p>Get the full app experience with offline access and all features included!</p>
+          <h2>Ready to keep Peponi.to?</h2>
+          <p>One-time purchase. Then install the PWA. Trial accounts cannot install before you pay.</p>
         </div>
         
         <!-- Download Section -->
         <div class="download-section">
-          <h2>Download Your App</h2>
-          <p style="margin: 0 0 20px 0; opacity: 0.9;">One-time purchase • No subscriptions • Your data, your device</p>
-          <a href="<%= @download_url %>" class="download-button">Download <%= @app_name %></a>
+          <h2>Purchase once</h2>
+          <p style="margin: 0 0 20px 0; opacity: 0.9;">No subscriptions. PWA install after payment. Omarchy local mode needs no account.</p>
+          <a href="<%= @download_url %>" class="download-button">View pricing</a>
           <p style="margin: 15px 0 0 0; font-size: 14px; opacity: 0.8;">
-            Secure download link personalized for your account
+            Opens the peponi.to pricing page for your account
           </p>
         </div>
         
         <!-- Benefits Section -->
         <div class="benefits">
-          <h2 style="margin: 0 0 20px 0; color: #333333;">What you get with the download:</h2>
+          <h2 style="margin: 0 0 20px 0; color: #333333;">What you get after purchase:</h2>
           
           <div class="benefit">
             <div class="benefit-icon">📱</div>
@@ -322,7 +322,7 @@
         <!-- Support Section -->
         <div class="support-info">
           <h3>Need Help?</h3>
-          <p>If you have any questions about the download process or need assistance, please contact us at <a href="https://peponi.to/contact">support@peponi.to</a>. We're here to help!</p>
+          <p>If you have any questions about the one-time purchase or need assistance, please contact us at <a href="https://peponi.to/contact">support@peponi.to</a>. We're here to help!</p>
         </div>
         
         <div class="message">
@@ -336,7 +336,7 @@
       <!-- Footer -->
       <div class="footer">
         <p><strong><%= @app_name %></strong> - Your personal productivity companion</p>
-        <p>This download reminder was sent to <%= @user.email_address %>.</p>
+        <p>This reminder was sent to <%= @user.email_address %>.</p>
         <p>
           <a href="https://peponi.to/contact">Contact Support</a> | 
           <a href="https://peponi.to">Visit Website</a>

@@ -4,7 +4,7 @@
 <% body_classes.unshift("focus-mode") if (@view_days || 7) == 1 %>
 <%= content_for :body_class, body_classes.join(" ") %>
 
-<div class="dashboard<%= ' dashboard--focus-mode' if (@view_days || 7) == 1 %><%= " dashboard--lists-#{lists_placement}" unless (@view_days || 7) == 1 %>"
+<div class="dashboard<%= ' dashboard--focus-mode' if (@view_days || 7) == 1 %><%= " dashboard--lists-#{lists_placement}" unless (@view_days || 7) == 1 %><%= ' lists-collapsed' if (@view_days || 7) != 1 && lists_placement == 'bottom' %>"
      data-controller="date-picker"
      data-date-picker-base-path-value="<%= app_root_path %>"
      data-date-picker-start-date-value="<%= @start_date.strftime('%Y-%m-%d') %>">
@@ -186,16 +186,18 @@
             <div class="not-yet-panel__tab-pane<%= ' not-yet-panel__tab-pane--active' if idx == 0 %>"
                  data-not-yet-panel-target="tabPane"
                  data-page-id="<%= page.id %>">
-              <div class="not-yet-panel__list" data-controller="drag" data-drag-page-id="<%= page.id %>" id="todos_page_<%= page.id %>">
-                <% page.todos.ordered.each do |todo| %>
-                  <% if todo.is_visual_break? %>
-                    <%= render "todos/visual_break", todo: todo %>
-                  <% else %>
-                    <%= render "todos/todo", todo: todo %>
+              <div class="not-yet-panel__list">
+                <div class="not-yet-panel__items" data-controller="drag" data-drag-page-id="<%= page.id %>" id="todos_page_<%= page.id %>">
+                  <% page.todos.ordered.each do |todo| %>
+                    <% if todo.is_visual_break? %>
+                      <%= render "todos/visual_break", todo: todo %>
+                    <% else %>
+                      <%= render "todos/todo", todo: todo %>
+                    <% end %>
                   <% end %>
-                <% end %>
-                <div class="not-yet-panel__add" id="not-yet-panel-add-<%= page.id %>">
-                  <%= form_with model: Todo.new, url: todos_path, local: false, class: "todo-form", html: { id: "todo-form-not-yet-#{page.id}" }, data: { controller: "todo-form", action: "keydown->todo-form#onKeydown submit->todo-form#onSubmit" } do |form| %>
+                </div>
+                <div class="not-yet-panel__add" id="todo-page-add-<%= page.id %>">
+                  <%= form_with model: Todo.new, url: todos_path, local: false, class: "todo-form", html: { id: "todo-form-page-#{page.id}" }, data: { controller: "todo-form", action: "keydown->todo-form#onKeydown submit->todo-form#onSubmit" } do |form| %>
                     <%= form.hidden_field :page_id, value: page.id %>
                     <%= form.text_field :title, class: "todo-input", autocomplete: "off", placeholder: "Add task.." %>
                   <% end %>
@@ -247,54 +249,54 @@
     </div>
   </dialog>
 </div>
-<dialog id="new-list-dialog" style="padding: 24px; border-radius: 12px; border: none; box-shadow: 0 10px 25px rgba(0,0,0,0.2); width: 100%; max-width: 450px; margin: auto; font-family: var(--user-font, inherit);">
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-    <h3 style="margin: 0; font-size: 1.25rem; font-weight: 600; color: #333;">Create New List</h3>
+<dialog id="new-list-dialog" class="app-dialog app-dialog--wide">
+  <div class="app-dialog__header">
+    <h3 class="app-dialog__title">Create New List</h3>
     <form method="dialog">
-      <button style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #888;">&times;</button>
+      <button type="submit" class="app-dialog__close" aria-label="Close">&times;</button>
     </form>
   </div>
-  
+
   <%# Standard form submit (data-turbo=false) — full page load ensures new tab appears %>
   <%= form_with model: Page.new, url: pages_path, local: true, html: { "data-turbo": "false" }, class: "space-y-4" do |form| %>
     <div>
-      <%= form.text_field :name, class: "w-full form-input", placeholder: "What's this list about?", required: true, autofocus: true, style: "padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; font-family: var(--user-font, inherit);" %>
+      <%= form.text_field :name, class: "app-dialog__input", placeholder: "What's this list about?", required: true, autofocus: true %>
     </div>
 
-    <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
-      <button type="button" onclick="document.getElementById('new-list-dialog').close()" style="padding: 10px 16px; background: #f3f4f6; color: #4b5563; border: none; border-radius: 6px; font-weight: 500; cursor: pointer;">Cancel</button>
-      <%= form.submit "Create", style: "padding: 10px 20px; background: var(--user-accent, #3b82f6); color: white; border: none; border-radius: 6px; font-weight: 500; cursor: pointer;" %>
+    <div class="app-dialog__actions">
+      <button type="button" onclick="document.getElementById('new-list-dialog').close()" class="app-dialog__btn app-dialog__btn--secondary">Cancel</button>
+      <%= form.submit "Create", class: "app-dialog__btn app-dialog__btn--primary" %>
     </div>
   <% end %>
 </dialog>
 
 <%# ── Rename App Title Modal ── %>
-<dialog id="app-title-dialog" style="padding: 24px; border-radius: 12px; border: none; box-shadow: 0 10px 25px rgba(0,0,0,0.2); width: 100%; max-width: 400px; margin: auto; font-family: var(--user-font, inherit);">
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-    <h3 style="margin: 0; font-size: 1.25rem; font-weight: 600; color: #333;">Rename Your App</h3>
+<dialog id="app-title-dialog" class="app-dialog">
+  <div class="app-dialog__header">
+    <h3 class="app-dialog__title">Rename Your App</h3>
     <form method="dialog">
-      <button style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #888;">&times;</button>
+      <button type="submit" class="app-dialog__close" aria-label="Close">&times;</button>
     </form>
   </div>
 
-  <p style="margin: 0 0 16px; font-size: 0.85rem; color: #888;">
+  <p class="app-dialog__hint">
     Give your app a custom name. This only changes the display title.
   </p>
 
   <form id="app-title-form" style="display: flex; flex-direction: column; gap: 16px;">
     <input type="text"
            id="app-title-input"
+           class="app-dialog__input"
            value="<%= current_user.app_title %>"
            maxlength="30"
            required
-           autofocus
-           style="padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; font-family: var(--user-font, inherit);">
+           autofocus>
 
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-      <span id="app-title-char-count" style="font-size: 0.75rem; color: #aaa;"><%= current_user.app_title.length %>/30</span>
+    <div class="app-dialog__actions app-dialog__actions--split">
+      <span id="app-title-char-count" class="app-dialog__count"><%= current_user.app_title.length %>/30</span>
       <div style="display: flex; gap: 12px;">
-        <button type="button" onclick="document.getElementById('app-title-dialog').close()" style="padding: 10px 16px; background: #f3f4f6; color: #4b5563; border: none; border-radius: 6px; font-weight: 500; cursor: pointer;">Cancel</button>
-        <button type="submit" id="app-title-save-btn" style="padding: 10px 20px; background: var(--user-accent, #3b82f6); color: white; border: none; border-radius: 6px; font-weight: 500; cursor: pointer;">Save</button>
+        <button type="button" onclick="document.getElementById('app-title-dialog').close()" class="app-dialog__btn app-dialog__btn--secondary">Cancel</button>
+        <button type="submit" id="app-title-save-btn" class="app-dialog__btn app-dialog__btn--primary">Save</button>
       </div>
     </div>
   </form>

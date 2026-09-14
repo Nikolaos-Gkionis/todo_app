@@ -6,9 +6,9 @@ class DownloadsController < ApplicationController
 
   # Show download page with instructions
   def show
-    unless @user.trial_active? || @user.device_downloaded?
-      flash[:error] = "You need an active trial or downloaded app to access this page."
-      redirect_to app_root_path
+    unless @user.can_install_pwa?
+      flash[:info] = "Complete your purchase to download the app to your device."
+      redirect_to pricing_path
       return
     end
 
@@ -20,10 +20,10 @@ class DownloadsController < ApplicationController
   def download
     Rails.logger.info "Download requested for user #{@user.id} with token: #{params[:token]}"
 
-    unless @user.trial_active? || @user.device_downloaded?
-      Rails.logger.info "User does not have active trial or downloaded app"
-      flash[:error] = "You need an active trial or downloaded app to download."
-      redirect_to app_root_path
+    unless @user.can_install_pwa?
+      Rails.logger.info "Trial-only user blocked from PWA bundle"
+      flash[:info] = "Complete your purchase to download the app to your device."
+      redirect_to pricing_path
       return
     end
 
@@ -32,13 +32,6 @@ class DownloadsController < ApplicationController
       Rails.logger.info "Invalid download token. Expected: #{@user.download_token}, Got: #{params[:token]}"
       flash[:error] = "Invalid download token."
       redirect_to app_root_path
-      return
-    end
-
-    # Trial-only users must pay before receiving a bundle — do not increment download quota
-    if @user.on_trial? && !@user.device_downloaded?
-      flash[:info] = "Complete your purchase to download the app to your device."
-      redirect_to pricing_path
       return
     end
 
@@ -237,9 +230,9 @@ class DownloadsController < ApplicationController
 
   # Generate new download token
   def generate_token
-    unless @user.trial_active? || @user.device_downloaded?
-      flash[:error] = "You need an active trial or downloaded app to generate a download token."
-      redirect_to app_root_path
+    unless @user.can_install_pwa?
+      flash[:info] = "Complete your purchase to download the app to your device."
+      redirect_to pricing_path
       return
     end
 

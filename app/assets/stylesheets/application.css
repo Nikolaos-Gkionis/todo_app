@@ -18,6 +18,16 @@
   --user-accent: #3b82f6;
   --user-font: inherit;
 
+  /* Modal / dialog surfaces — overridden per notebook theme */
+  --modal-bg: #ffffff;
+  --modal-text: #1f2937;
+  --modal-muted: #6b7280;
+  --modal-border: #e5e7eb;
+  --modal-input-bg: #fafafa;
+  --modal-input-border: #dddddd;
+  --modal-btn-muted-bg: #f3f4f6;
+  --modal-btn-muted-text: #4b5563;
+
   /* Responsive breakpoints (use in media queries) */
   --bp-phone: 768px;
   --bp-tablet: 1024px;
@@ -1500,6 +1510,18 @@ input:-webkit-autofill:active {
 }
 
 /* Theme 4: Vintage Paper — warm dotted grid on cream */
+.theme-vintage,
+dialog.theme-vintage {
+  --modal-bg: #fef9e7;
+  --modal-text: #78350f;
+  --modal-muted: #a16207;
+  --modal-border: rgba(180, 83, 9, 0.2);
+  --modal-input-bg: #fef3c7;
+  --modal-input-border: rgba(180, 83, 9, 0.25);
+  --modal-btn-muted-bg: rgba(254, 243, 199, 0.85);
+  --modal-btn-muted-text: #78350f;
+}
+
 .theme-vintage {
   background-color: #FDFBF7;
   background-image: radial-gradient(circle, #d4af87 1px, transparent 1px);
@@ -1530,6 +1552,19 @@ input:-webkit-autofill:active {
    Orange:        #ffb86c   highlight
    Red:           #ff5555   danger / delete
    ─────────────────────────────────────────────────────────── */
+.theme-dark,
+dialog.theme-dark {
+  --modal-bg: #282a36;
+  --modal-text: #f8f8f2;
+  --modal-muted: #6272a4;
+  --modal-border: #44475a;
+  --modal-input-bg: #21222c;
+  --modal-input-border: #44475a;
+  --modal-btn-muted-bg: #44475a;
+  --modal-btn-muted-text: #f8f8f2;
+  color-scheme: dark;
+}
+
 .theme-dark {
   background-color: #282a36;
   color: #f8f8f2;
@@ -1762,6 +1797,18 @@ input:-webkit-autofill:active {
 
 .theme-dark .lists__titlebar-chevron {
   color: #6272a4;
+}
+
+.theme-dark .lists__drag-handle {
+  color: #6272a4;
+}
+
+.theme-dark .lists__options-btn {
+  color: #6272a4;
+}
+
+.theme-dark .lists__options-btn:hover {
+  color: #f8f8f2;
 }
 
 .theme-dark .lists__titlebar-add {
@@ -3462,6 +3509,190 @@ footer a:hover {
 }
 
 /* =================================
+   NATIVE <dialog> + SHARED APP DIALOG
+   Native dialogs live in the browser top layer and keep a white UA
+   background, so they do not pick up body.theme-dark on their own.
+   We copy the theme class onto the dialog (see syncDialogTheme) and
+   paint from --modal-* variables so font, accent, and theme match.
+   ================================= */
+
+dialog {
+  background-color: var(--modal-bg);
+  color: var(--modal-text);
+  font-family: var(--user-font, inherit);
+  border: none;
+  border-radius: 12px;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.theme-dark dialog::backdrop,
+dialog.theme-dark::backdrop {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.theme-dark dialog,
+dialog.theme-dark,
+.theme-vintage dialog,
+dialog.theme-vintage,
+.theme-lined dialog,
+dialog.theme-lined,
+.theme-graph dialog,
+dialog.theme-graph {
+  background-color: var(--modal-bg);
+  color: var(--modal-text);
+}
+
+.app-dialog {
+  padding: 24px;
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.app-dialog--wide {
+  max-width: 450px;
+}
+
+.app-dialog--compact {
+  padding: 16px;
+  width: 220px;
+  max-width: 90vw;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.app-dialog__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.app-dialog__title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--modal-text);
+  font-family: var(--user-font, inherit);
+}
+
+.app-dialog__close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--modal-muted);
+  line-height: 1;
+  padding: 0 4px;
+}
+
+.app-dialog__close:hover {
+  color: var(--modal-text);
+}
+
+.app-dialog__hint {
+  margin: 0 0 16px;
+  font-size: 0.85rem;
+  color: var(--modal-muted);
+}
+
+.app-dialog__input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid var(--modal-input-border);
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: var(--user-font, inherit);
+  background: var(--modal-input-bg);
+  color: var(--modal-text);
+}
+
+.app-dialog__input:focus {
+  outline: none;
+  border-color: var(--user-accent, #3b82f6);
+}
+
+.app-dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.app-dialog__actions--split {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-dialog__count {
+  font-size: 0.75rem;
+  color: var(--modal-muted);
+}
+
+.app-dialog__btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: var(--user-font, inherit);
+}
+
+.app-dialog__btn--secondary {
+  background: var(--modal-btn-muted-bg);
+  color: var(--modal-btn-muted-text);
+}
+
+.app-dialog__btn--secondary:hover {
+  filter: brightness(0.95);
+}
+
+.app-dialog__btn--primary {
+  padding: 10px 20px;
+  background: var(--user-accent, #3b82f6);
+  color: #fff;
+}
+
+.app-dialog__stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.app-dialog__label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--modal-muted);
+}
+
+.app-dialog__divider {
+  border: none;
+  border-top: 1px solid var(--modal-border);
+  margin: 4px 0;
+}
+
+.app-dialog__danger {
+  background: transparent;
+  color: #e74c3c;
+  border: 1px solid #e74c3c;
+  border-radius: 4px;
+  padding: 6px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: var(--user-font, inherit);
+}
+
+.theme-dark .app-dialog__title,
+dialog.theme-dark .app-dialog__title {
+  color: var(--modal-text) !important;
+}
+
+/* =================================
    LOGOUT MODAL STYLES
    ================================= */
 
@@ -3499,7 +3730,9 @@ footer a:hover {
 }
 
 .logout-modal__dialog {
-  background: white;
+  background: var(--modal-bg);
+  color: var(--modal-text);
+  font-family: var(--user-font, inherit);
   border-radius: 16px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   max-width: 400px;
@@ -3530,9 +3763,8 @@ footer a:hover {
 .logout-modal__title {
   font-size: 20px;
   font-weight: 600;
-  color: #1f2937;
+  color: var(--modal-text);
   margin: 0;
-  /* Inherit the user's chosen font from preferences */
   font-family: var(--user-font, inherit);
 }
 
@@ -3558,14 +3790,14 @@ footer a:hover {
 
 .logout-modal__body p {
   margin: 0 0 8px 0;
-  color: #374151;
+  color: var(--modal-text);
   font-size: 16px;
   line-height: 1.5;
   font-family: var(--user-font, inherit);
 }
 
 .logout-modal__subtext {
-  color: #6b7280;
+  color: var(--modal-muted);
   font-size: 14px;
   font-style: italic;
   font-family: var(--user-font, inherit);
@@ -3591,9 +3823,9 @@ footer a:hover {
 }
 
 .logout-modal__btn--secondary {
-  background: #f9fafb;
-  color: #374151;
-  border-color: #d1d5db;
+  background: var(--modal-btn-muted-bg);
+  color: var(--modal-btn-muted-text);
+  border-color: var(--modal-border);
 }
 
 .logout-modal__btn--secondary:hover {
@@ -4223,35 +4455,35 @@ footer a:hover {
 
 /* Dark mode styles for logout modal */
 .theme-dark .logout-modal__dialog {
-  background: #1f2937;
-  border: 1px solid #374151;
+  background: var(--modal-bg);
+  border: 1px solid var(--modal-border);
 }
 
 .theme-dark .logout-modal__title {
-  color: #f9fafb;
+  color: var(--modal-text);
 }
 
 .theme-dark .logout-modal__body p {
-  color: #d1d5db;
+  color: var(--modal-text);
 }
 
 .theme-dark .logout-modal__subtext {
-  color: #9ca3af;
+  color: var(--modal-muted);
 }
 
 .theme-dark .logout-modal__close {
-  color: #9ca3af;
+  color: var(--modal-muted);
 }
 
 .theme-dark .logout-modal__close:hover {
-  background: #374151;
-  color: #d1d5db;
+  background: var(--modal-btn-muted-bg);
+  color: var(--modal-text);
 }
 
 .theme-dark .logout-modal__btn--secondary {
-  background: #374151;
-  color: #d1d5db;
-  border-color: #4b5563;
+  background: var(--modal-btn-muted-bg);
+  color: var(--modal-btn-muted-text);
+  border-color: var(--modal-border);
 }
 
 .theme-dark .logout-modal__btn--secondary:hover {
@@ -4342,7 +4574,9 @@ footer a:hover {
 }
 
 .confirm-modal__dialog {
-  background: white;
+  background: var(--modal-bg);
+  color: var(--modal-text);
+  font-family: var(--user-font, inherit);
   border-radius: 16px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
   max-width: 380px;
@@ -4378,13 +4612,13 @@ footer a:hover {
 .confirm-modal__title {
   font-size: 18px;
   font-weight: 600;
-  color: #1f2937;
+  color: var(--modal-text);
   margin: 0 0 8px 0;
   font-family: var(--user-font, inherit);
 }
 
 .confirm-modal__message {
-  color: #6b7280;
+  color: var(--modal-muted);
   font-size: 14px;
   line-height: 1.5;
   margin: 0 0 24px 0;
@@ -4410,9 +4644,9 @@ footer a:hover {
 }
 
 .confirm-modal__btn--no {
-  background: #f9fafb;
-  color: #374151;
-  border-color: #d1d5db;
+  background: var(--modal-btn-muted-bg);
+  color: var(--modal-btn-muted-text);
+  border-color: var(--modal-border);
 }
 
 .confirm-modal__btn--no:hover {
@@ -4439,8 +4673,8 @@ footer a:hover {
 
 /* Dark theme */
 .theme-dark .confirm-modal__dialog {
-  background: #1f2937;
-  border: 1px solid #374151;
+  background: var(--modal-bg);
+  border: 1px solid var(--modal-border);
 }
 
 .theme-dark .confirm-modal__icon {
@@ -4448,17 +4682,17 @@ footer a:hover {
 }
 
 .theme-dark .confirm-modal__title {
-  color: #f9fafb;
+  color: var(--modal-text);
 }
 
 .theme-dark .confirm-modal__message {
-  color: #9ca3af;
+  color: var(--modal-muted);
 }
 
 .theme-dark .confirm-modal__btn--no {
-  background: #374151;
-  color: #d1d5db;
-  border-color: #4b5563;
+  background: var(--modal-btn-muted-bg);
+  color: var(--modal-btn-muted-text);
+  border-color: var(--modal-border);
 }
 
 .theme-dark .confirm-modal__btn--no:hover {
@@ -5713,6 +5947,49 @@ footer a:hover {
   margin-bottom: 0.75rem;
 }
 
+/* Two-path choice: free local-only vs paid signed-in */
+.mkt-omarchy-choice {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+  margin-top: 1.25rem;
+}
+
+.mkt-omarchy-choice--stack {
+  grid-template-columns: 1fr;
+  margin-top: 0;
+}
+
+.mkt-omarchy-choice__card {
+  background: #F2F5EF;
+  border: 1px solid #B5C1A8;
+  border-radius: 1rem;
+  padding: 1.1rem 1.2rem;
+}
+
+.mkt-omarchy-choice__label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #4E5C64;
+  margin-bottom: 0.3rem;
+}
+
+.mkt-omarchy-choice__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #4E5C64;
+  margin: 0 0 0.4rem;
+}
+
+.mkt-omarchy-choice__text {
+  font-size: 0.875rem;
+  color: #4E5C64;
+  line-height: 1.5;
+  margin: 0;
+}
+
 .mkt-omarchy-list {
   list-style: none;
   padding: 0;
@@ -5848,6 +6125,13 @@ footer a:hover {
   }
 
   .mkt-omarchy-list {
+    max-width: 28rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .mkt-omarchy-choice {
+    grid-template-columns: 1fr;
     max-width: 28rem;
     margin-left: auto;
     margin-right: auto;
@@ -6455,6 +6739,8 @@ body.lists-placement-bottom .nav-island__chevron {
 .week-col {
   padding: 16px 16px 24px;
   min-height: 200px;
+  display: flex;
+  flex-direction: column;
 }
 
 .week-col+.week-col {
@@ -6492,10 +6778,15 @@ body.lists-placement-bottom .nav-island__chevron {
 
 .week-col__items {
   min-height: 40px;
+  flex: 1 1 auto;
+  order: 0;
 }
 
 .week-col__add {
-  margin-top: 8px;
+  margin-top: auto;
+  padding-top: 8px;
+  flex-shrink: 0;
+  order: 1;
 }
 
 /* ── Todo Item ── */
@@ -6785,6 +7076,8 @@ body.focus-mode .not-yet-panel__trigger {
   border-radius: 16px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.2);
   max-width: 90vw;
+  background: var(--modal-bg);
+  color: var(--modal-text);
 }
 
 .pomodoro-done-modal::backdrop {
@@ -6800,14 +7093,14 @@ body.focus-mode .not-yet-panel__trigger {
   margin: 0 0 12px;
   font-size: 1.75rem;
   font-weight: 800;
-  color: #111;
+  color: var(--modal-text);
   font-family: var(--user-font, inherit);
 }
 
 .pomodoro-done-modal__text {
   margin: 0 0 24px;
   font-size: 1rem;
-  color: #666;
+  color: var(--modal-muted);
   font-family: var(--user-font, inherit);
 }
 
@@ -6881,6 +7174,8 @@ body.focus-mode .not-yet-panel__trigger {
   max-width: 320px;
   margin: auto;
   font-family: var(--user-font, inherit);
+  background: var(--modal-bg);
+  color: var(--modal-text);
 }
 
 .calendar-modal::backdrop {
@@ -6902,7 +7197,7 @@ body.focus-mode .not-yet-panel__trigger {
   margin: 0;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #333;
+  color: var(--modal-text);
 }
 
 .calendar-modal__close {
@@ -6910,7 +7205,7 @@ body.focus-mode .not-yet-panel__trigger {
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: #888;
+  color: var(--modal-muted);
   padding: 0 4px;
   line-height: 1;
 }
@@ -6942,7 +7237,7 @@ body.focus-mode .not-yet-panel__trigger {
 .calendar-modal__month-label {
   font-size: 1rem;
   font-weight: 600;
-  color: #333;
+  color: var(--modal-text);
   min-width: 140px;
   text-align: center;
 }
@@ -7035,8 +7330,8 @@ body.focus-mode .not-yet-panel__trigger {
 
 .calendar-modal__cancel {
   padding: 8px 16px;
-  background: #f3f4f6;
-  color: #4b5563;
+  background: var(--modal-btn-muted-bg);
+  color: var(--modal-btn-muted-text);
   border: none;
   border-radius: 6px;
   font-weight: 500;
@@ -7098,8 +7393,10 @@ body.focus-mode .not-yet-panel__trigger {
 /* Task area above the title bar */
 .lists__body {
   flex: 1;
-  overflow-y: auto;
+  overflow: hidden;
   min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Bottom title bar — chevron | names | + */
@@ -7122,6 +7419,28 @@ body.focus-mode .not-yet-panel__trigger {
   display: flex;
   align-items: center;
   padding: 0 8px 0 0;
+}
+
+/* Grabber (three lines) — distinct from the pencil options button */
+.lists__drag-handle {
+  display: inline-flex;
+  color: #ccc;
+  cursor: grab;
+  user-select: none;
+}
+
+.lists__options-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #888;
+  padding: 0 4px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.lists__options-btn:hover {
+  color: #333;
 }
 
 .lists__titlebar-names {
@@ -7501,11 +7820,24 @@ body.is-dragging-from-not-yet .not-yet-panel__overlay {
 }
 
 .not-yet-panel__list {
-  min-height: 60px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+}
+
+.not-yet-panel__items {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0;
+  order: 0;
 }
 
 .not-yet-panel__add {
   margin-top: 12px;
+  flex-shrink: 0;
+  order: 1;
 }
 
 .not-yet-panel__actions {
@@ -7636,14 +7968,27 @@ body.is-dragging-from-not-yet .not-yet-panel__overlay {
   flex-wrap: nowrap;
   gap: 32px;
   overflow-x: auto;
-  padding-bottom: 16px;
-  align-items: flex-start;
+  overflow-y: hidden;
+  padding-bottom: 8px;
+  align-items: stretch;
   flex: 1;
+  min-height: 0;
 }
 
 .lists__column {
   flex: 0 0 280px;
-  min-height: 80px;
+  min-width: 280px;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tasks scroll; the add field is not inside this box so it cannot jump into the middle */
+.lists__column-items {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0;
+  order: 0;
 }
 
 .lists__column-title {
@@ -7655,7 +8000,14 @@ body.is-dragging-from-not-yet .not-yet-panel__overlay {
 }
 
 .lists__column-add {
+  flex: 0 0 auto;
+  order: 1;
   margin-top: 8px;
+  padding-top: 4px;
+  background-color: var(--modal-bg, #fff);
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
 }
 
 .lists__column--new {
@@ -9671,6 +10023,8 @@ body.is-dragging-from-not-yet .not-yet-panel__overlay {
   max-width: 92vw;
   width: auto;
   margin: auto;
+  background: var(--modal-bg);
+  color: var(--modal-text);
 }
 
 .todo-options-modal::backdrop {
@@ -9727,8 +10081,8 @@ body.is-dragging-from-not-yet .not-yet-panel__overlay {
 
 .todo-options-modal__close {
   padding: 8px 16px;
-  background: #f3f4f6;
-  color: #4b5563;
+  background: var(--modal-btn-muted-bg);
+  color: var(--modal-btn-muted-text);
   border: none;
   border-radius: 6px;
   font-size: 0.9rem;

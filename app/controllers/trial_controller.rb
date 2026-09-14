@@ -13,7 +13,7 @@ class TrialController < ApplicationController
       # Track trial start analytics
       AnalyticsService.track_trial_start(@user)
 
-      flash[:success] = "Your 7-day free trial has started! Enjoy full access to all features."
+      flash_trial_started
       redirect_to app_root_path
     else
       flash[:error] = "Unable to start trial. You may already have an active trial or downloaded app."
@@ -66,9 +66,9 @@ class TrialController < ApplicationController
 
   # Show download page
   def download
-    unless @user.trial_active? || @user.device_downloaded?
-      flash[:error] = "You need an active trial or downloaded app to access this page."
-      redirect_to app_root_path
+    unless @user.can_install_pwa?
+      flash[:info] = "Complete your purchase to download the app to your device."
+      redirect_to pricing_path
       return
     end
 

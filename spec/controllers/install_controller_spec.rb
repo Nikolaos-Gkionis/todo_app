@@ -50,6 +50,16 @@ RSpec.describe InstallController, type: :controller do
       end
     end
 
+    context "with trial user" do
+      before { session[:user_id] = trial_user.id }
+
+      it "redirects to pricing until they purchase" do
+        get :show
+        expect(response).to redirect_to(pricing_path)
+        expect(flash[:info]).to include("purchase")
+      end
+    end
+
     context "with expired trial user" do
       before { session[:user_id] = expired_user.id }
 
