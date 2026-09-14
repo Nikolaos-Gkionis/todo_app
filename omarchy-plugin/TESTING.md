@@ -1,79 +1,103 @@
-# Testing — Omarchy one-day Task Days plugin
+# Testing — Peponi One Day (`peponi.one-day`)
 
-Short checklist to install and validate the plugin on Omarchy (Quickshell). Update key names here if the implementer finalizes different bindings.
+Install and smoke-test the overlay plugin on Omarchy.
 
 ## Prerequisites
 
-- Omarchy with Quickshell / `omarchy-shell`
-- This repo checked out on branch `feature/omarchy-one-day-plugin`
-- Plugin sources present under `omarchy-plugin/` (beyond this stub) **or** already installed under `~/.config/omarchy/plugins/`
+- Omarchy with `omarchy-shell` (Quickshell)
+- Branch `feature/omarchy-one-day-plugin`
+- Sources in `omarchy-plugin/` (this folder)
 
-## 1. Pull the test branch
+## 1. Install into user plugins
 
 ```bash
 cd /home/nikolaos/Documents/GitHub/todo_app
-git fetch origin
-git checkout feature/omarchy-one-day-plugin
-git pull --ff-only origin feature/omarchy-one-day-plugin
+rsync -a --delete ./omarchy-plugin/ ~/.config/omarchy/plugins/peponi.one-day/
 ```
 
-## 2. Install / link the plugin
-
-Once the implementer ships a full plugin tree (e.g. `manifest.json` + QML):
-
-**Option A — copy into the user plugins dir**
+## 2. Validate
 
 ```bash
-# Replace PLUGIN_ID with the id from manifest.json (e.g. peponi.oneday)
-PLUGIN_ID="peponi.oneday"   # update when known
-mkdir -p ~/.config/omarchy/plugins
-rsync -a --delete ./omarchy-plugin/ ~/.config/omarchy/plugins/"$PLUGIN_ID"/
+omarchy plugin validate ~/.config/omarchy/plugins/peponi.one-day
+# Expect exit 0
 ```
 
-**Option B — Omarchy CLI** (preferred when the plugin is published as a git URL)
+Also validate the repo mirror:
 
 ```bash
-# Example shape — adjust URL / id when available
-omarchy plugin add <plugin-git-url> --enable
-# or, for a local checkout already under ~/.config/omarchy/plugins/<id>:
-# omarchy plugin enable <PLUGIN_ID>
+omarchy plugin validate ./omarchy-plugin
 ```
 
-Enable the widget in the bar / shell if required (`omarchy bar ...` or `~/.config/omarchy/shell.json`).
-
-## 3. Reload the shell
+## 3. Enable (does not touch bar layout)
 
 ```bash
 omarchy-shell shell rescanPlugins
-# If keys or panel still look stale:
+omarchy plugin enable peponi.one-day
+```
+
+Confirm:
+
+```bash
+omarchy-shell shell listPlugins | jq '.[] | select(.id=="peponi.one-day")'
+```
+
+## 4. Open the overlay
+
+```bash
+omarchy-shell shell toggle peponi.one-day '{}'
+```
+
+You should see a centered card: **PEPONI**, today’s heading, demo tasks, and a shortcut hint line.
+
+## 5. In-overlay keyboard checks
+
+With the overlay focused:
+
+| Step | Key | Expect |
+|------|-----|--------|
+| 1 | `←` | Previous day (heading + tasks change) |
+| 2 | `→` | Next day |
+| 3 | `t` | Jump back to today |
+| 4 | `y` | Not Yet drawer slides up |
+| 5 | `↑` / `↓` | Move among Not Yet rows |
+| 6 | `y` again | Drawer closes |
+| 7 | `?` | Shortcuts help |
+| 8 | `Esc` | Closes help / drawer first, then overlay |
+
+IPC while open (or to force-open):
+
+```bash
+omarchy-shell shell call peponi.one-day prevDay ''
+omarchy-shell shell call peponi.one-day nextDay ''
+omarchy-shell shell call peponi.one-day toggleDrawer ''
+omarchy-shell shell hide peponi.one-day
+```
+
+## 6. Global binds (optional)
+
+Stock Omarchy already uses `SUPER+CTRL+O` and `SUPER+CTRL+LEFT/RIGHT`. Prefer `SUPER+ALT+…` alternatives documented in **README.md**. Only edit `~/.config/hypr/bindings.lua` after checking:
+
+```bash
+omarchy menu keybindings --print
+```
+
+## 7. After code edits
+
+```bash
+# Hot reload often works for non-keepLoaded plugins; this overlay is keepLoaded:
 omarchy restart shell
 ```
 
-Saving files under `~/.config/omarchy/plugins/` normally hot-reloads; use the commands above if something does not apply.
+## Checklist
 
-## 4. Validate day navigation
+- [ ] `omarchy plugin validate` exits 0
+- [ ] Plugin appears in `listPlugins` and is enabled
+- [ ] Toggle shows one-day view (not multi-day)
+- [ ] ← / → change the day
+- [ ] `y` opens/closes bottom Not Yet drawer
+- [ ] Esc closes drawer before dismissing overlay
+- [ ] Bar layout in `shell.json` unchanged
 
-1. Open the plugin panel / one-day view (bar click or documented open key).
-2. Note the focused date.
-3. Press **Left arrow** or **H** → previous day.
-4. Press **Right arrow** or **L** → next day.
-5. Confirm the header / task list updates for the new day (not a multi-day strip).
+## Demo data note
 
-## 5. Validate bottom drawer
-
-1. With the one-day view focused, press the **bottom-drawer toggle** key (finalize in plugin README; expected: a single toggle, open then close).
-2. Confirm a drawer slides up from the bottom with secondary content (e.g. lists).
-3. Press the same key again → drawer closes.
-4. Optional: verify focus returns to the day view and day-left / day-right still work with the drawer closed.
-
-## 6. Smoke checks
-
-- [ ] Plugin loads without Quickshell errors (`journalctl --user -u` / shell logs as available)
-- [ ] Day-left / day-right change the focused day
-- [ ] Bottom drawer opens and closes
-- [ ] No conflict with global Hyprland binds that steal ←/→/H/L when the panel is focused
-- [ ] `omarchy restart shell` still shows the plugin
-
-## Notes for implementers
-
-This branch may only contain stubs until the sibling agent finishes QML. Prefer updating **this file** and the short key table in `README.md` rather than rewriting both with conflicting large docs.
+Tasks and Not Yet items come from `Model.js` weekday stubs. No Rails/API yet.

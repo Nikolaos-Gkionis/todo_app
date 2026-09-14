@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "peponi.one-day",
+  "name": "Peponi One Day",
+  "version": "0.1.0",
+  "author": "nikolaos",
+  "license": "MIT",
+  "description": "Focused one-day task view with keyboard day navigation and a Not Yet bottom drawer",
+  "homepage": "https://github.com/Nikolaos-Gkionis/todo_app",
+  "repository": "https://github.com/Nikolaos-Gkionis/todo_app",
+  "keywords": [
+    "tasks",
+    "todo",
+    "peponi",
+    "focus",
+    "one-day"
+  ],
+  "kinds": [
+    "overlay"
+  ],
+  "keepLoaded": true,
+  "entryPoints": {
+    "overlay": "Overlay.qml"
+  }
+}
