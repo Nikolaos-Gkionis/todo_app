@@ -34,10 +34,9 @@ RSpec.describe 'User Registration Flow', type: :request do
       user = User.find_by(email_address: 'test@example.com')
       expect(session[:user_id]).to eq(user.id)
 
-      # Step 6: User should have an active trial
-      expect(user.trial_active?).to be true
-      expect(user.trial_started_at).to be_present
-      expect(user.trial_expires_at).to be_present
+      # Step 6: Self-host accounts do not expire
+      expect(user.can_use_app?).to be true
+      expect(user.trial_started?).to be false
     end
 
     it 'handles registration with invalid data' do

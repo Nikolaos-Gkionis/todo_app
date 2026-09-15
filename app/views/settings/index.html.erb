@@ -7,22 +7,32 @@
   </div>
 
   <div class="max-w-2xl space-y-8">
-    <%# Prominent Buy CTA: show for anyone who hasn't purchased (hidden when running as installed PWA via JS) %>
-    <% unless current_user.device_downloaded? %>
-    <div class="notebook-card bg-blue-50 border-blue-200 border" data-standalone-hide="buy">
+    <%# Keep-it CTA: export and source, not a shop %>
+    <div class="notebook-card bg-blue-50 border-blue-200 border">
       <div class="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h2 class="text-lg font-semibold text-blue-900 mb-1">Enjoying Peponi.to?</h2>
-          <p class="text-sm text-blue-800">Purchase once to own it forever and install the PWA on up to three devices. Trial users stay on the website until then. On Omarchy you can use a free local overlay with no account.</p>
+          <h2 class="text-lg font-semibold text-blue-900 mb-1">Keep your lists</h2>
+          <p class="text-sm text-blue-800">
+            <% if current_user.hosted_ephemeral? && current_user.on_trial? %>
+              This hosted week has <strong><%= pluralize(current_user.trial_days_remaining, "day") %></strong> left, then I delete the account.
+            <% else %>
+              This instance is yours.
+            <% end %>
+            Export a JSON copy, or clone the repo and run it yourself.
+          </p>
         </div>
-        <%= button_to "Buy Download (£9.99)",
-              create_checkout_session_path,
-              method: :post,
-              data: { turbo: false },
-              class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 flex-shrink-0" %>
+        <div class="flex flex-wrap gap-2">
+          <%= link_to "Export data",
+                export_trial_data_path,
+                class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700" %>
+          <%= link_to "GitHub",
+                github_source_url,
+                target: "_blank",
+                rel: "noopener",
+                class: "inline-flex items-center px-4 py-2 border border-blue-300 text-sm font-medium rounded-md text-blue-800 bg-white hover:bg-blue-50" %>
+        </div>
       </div>
     </div>
-    <% end %>
 
     <!-- Account Information Section -->
     <div class="notebook-card">
@@ -168,117 +178,19 @@
       </script>
     </div>
 
-    <!-- Trial & Download Status Section -->
-    <% unless current_user.device_downloaded? %>
-      <div class="notebook-card">
-        <h2 class="text-xl font-semibold mb-6">Trial & Download Status</h2>
-
-        <% if current_user.trial_active? %>
-        <div class="bg-blue-50 border border-blue-200 rounded-md p-4 mb-4">
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <svg class="h-5 w-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
-              </svg>
-            </div>
-            <div class="ml-3">
-              <h3 class="text-sm font-medium text-blue-800">
-                Free Trial Active
-              </h3>
-              <div class="mt-2 text-sm text-blue-700">
-                <p>You have <strong><%= pluralize(current_user.trial_days_remaining, 'day') %></strong> remaining in your free trial.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <% end %>
-
-        <!-- Purchase Options - Only show buy button for non-purchased users -->
-        <% unless current_user.device_downloaded? %>
-        <div class="border-t border-gray-200 pt-4" data-standalone-hide="buy">
-          <p class="text-sm text-gray-600 mb-3">Purchase the app to continue using Peponi.to:</p>
-          <div class="flex flex-wrap gap-3">
-            <%= button_to "Buy App (£9.99)",
-                  create_checkout_session_path,
-                  method: :post,
-                  data: { turbo: false },
-                  class: "inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>          </div>
-        </div>
-        <% end %>
-
-        <!-- Download Options - Only show for purchased users -->
-        <% if current_user.device_downloaded? %>
-        <div class="border-t border-gray-200 pt-4">
-          <div class="bg-green-50 border border-green-200 rounded-md p-4 mb-4">
-            <div class="flex items-center">
-              <div class="flex-shrink-0">
-                <svg class="h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                </svg>
-              </div>
-              <div class="ml-3">
-                <h3 class="text-sm font-medium text-green-800">App Purchased</h3>
-                <div class="mt-2 text-sm text-green-700">
-                  <p>You own Peponi.to! Download it on any device using the link below.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <p class="text-sm text-gray-600 mb-3">Download Peponi.to on any device:</p>
-          <div class="flex flex-wrap gap-3">
-            <%= link_to "Download App",
-                  download_path,
-                  class: "inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
-          </div>
-        </div>
-        <% end %>
-
-        <% if current_user.trial_expired? %>
-        <div class="bg-red-50 border border-red-200 rounded-md p-4 mb-4">
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <svg class="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-              </svg>
-            </div>
-            <div class="ml-3">
-              <h3 class="text-sm font-medium text-red-800">
-                Trial Expired
-              </h3>
-              <div class="mt-2 text-sm text-red-700">
-                <p>Your 7-day free trial has ended. Purchase Peponi.to to keep using your account.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Purchase App -->
-        <div class="border-t border-gray-200 pt-4" data-standalone-hide="buy">
-          <p class="text-sm text-gray-600 mb-3">Purchase the app to continue using Peponi.to:</p>
-          <%= button_to "Buy App (£9.99)",
-                create_checkout_session_path,
-                method: :post,
-                data: { turbo: false },
-                class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" %>
-        </div>
-      <% end %>
-
-      <!-- Trial Management -->
-      <div class="border-t border-gray-200 pt-4">
-        <p class="text-sm text-gray-600 mb-3">Manage your trial and download:</p>
-        <div class="flex flex-wrap gap-2">
-          <%= link_to "View Trial Status",
-                trial_status_path,
-                class: "inline-flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50" %>
-          <% if current_user.on_trial? %>
-            <%= link_to "Export Data",
-                  export_trial_data_path,
-                  class: "inline-flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50" %>
-          <% end %>
-        </div>
+    <!-- Your data -->
+    <div class="notebook-card">
+      <h2 class="text-xl font-semibold mb-6">Your data</h2>
+      <p class="text-sm text-gray-600 mb-3">Download a JSON copy of your lists. Handy before a hosted week ends, or when you move to your own instance.</p>
+      <div class="flex flex-wrap gap-2">
+        <%= link_to "Export data",
+              export_trial_data_path,
+              class: "inline-flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50" %>
+        <%= link_to "Install on this device",
+              install_pwa_path,
+              class: "inline-flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50" %>
       </div>
-    <% end %>
+    </div>
 
     <!-- Account Actions Section -->
     <div class="notebook-card">

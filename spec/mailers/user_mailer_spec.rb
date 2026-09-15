@@ -8,21 +8,19 @@ RSpec.describe UserMailer, type: :mailer do
   describe "#trial_expiring_soon" do
     subject(:mail) { described_class.trial_expiring_soon(user) }
 
-    it "sends people to pricing, not a pre-purchase download" do
-      expect(mail.body.encoded).to include("View pricing")
-      expect(mail.body.encoded).to include("example.com/pricing")
-      expect(mail.body.encoded).not_to include("download the app anytime")
-      expect(mail.body.encoded).to include("Omarchy")
+    it "points people at the source repo, not a shop" do
+      expect(mail.subject).to include("week ends")
+      expect(mail.body.encoded).to include("github.com/Nikolaos-Gkionis/todo_app")
+      expect(mail.body.encoded).not_to include("View pricing")
     end
   end
 
-  describe "#download_reminder" do
-    subject(:mail) { described_class.download_reminder(user) }
+  describe "#welcome_trial" do
+    subject(:mail) { described_class.welcome_trial(user) }
 
-    it "asks them to purchase before PWA install" do
-      expect(mail.subject).to include("one-time purchase")
-      expect(mail.body.encoded).to include("View pricing")
-      expect(mail.body.encoded).to include("cannot install before you pay")
+    it "welcomes them without a purchase pitch" do
+      expect(mail.subject).to include("Welcome")
+      expect(mail.body.encoded).not_to include("£9.99")
     end
   end
 end

@@ -27,16 +27,6 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.trial_expiring_very_soon(user)
   end
 
-  def purchase_confirmation
-    user = create_test_user
-    UserMailer.purchase_confirmation(user, "https://example.com/download")
-  end
-
-  def download_reminder
-    user = create_test_user
-    UserMailer.download_reminder(user)
-  end
-
   def account_deleted
     UserMailer.account_deleted("test@example.com")
   end

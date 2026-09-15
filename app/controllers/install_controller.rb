@@ -1,21 +1,18 @@
 # frozen_string_literal: true
 
-# Post-payment PWA install guide. Stays within app flow — no marketing mix.
-# Accessible when logged in or via token (from email).
+# PWA install guide. On peponi.to this is a shortcut to my server for the hosted week.
+# On your own instance it is a real local install.
 class InstallController < ApplicationController
   skip_before_action :require_login, if: :token_provided?
   before_action :set_user
   before_action :authenticate_user_or_token!
 
   def show
-    unless @user.can_install_pwa?
-      flash[:info] = "Complete your purchase to install the app on your device."
-      redirect_to pricing_path
+    unless @user.can_use_app?
+      flash[:info] = flash_hosted_week_ended
+      redirect_to root_path
       return
     end
-
-    # Token for linking back to download (when accessed via email)
-    @download_token = @user.download_token || @user.generate_download_token!
   end
 
   private
@@ -28,7 +25,7 @@ class InstallController < ApplicationController
     return if @user.present?
 
     if params[:token].present?
-      flash[:error] = "Invalid or expired link. Please sign in or open the download page from your email."
+      flash[:error] = "Invalid or expired link. Please sign in."
     else
       flash_login_required
     end

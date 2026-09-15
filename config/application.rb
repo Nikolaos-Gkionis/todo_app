@@ -38,5 +38,9 @@ module TodoApp
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # When true (peponi.to), hosted accounts expire after 7 days and are deleted.
+    # Leave unset when you run this yourself — your data stays on your machine.
+    config.x.hosted_ephemeral = ActiveModel::Type::Boolean.new.cast(ENV.fetch("HOSTED_EPHEMERAL", "false"))
   end
 end

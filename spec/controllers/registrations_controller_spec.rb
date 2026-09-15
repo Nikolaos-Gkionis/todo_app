@@ -51,7 +51,16 @@ RSpec.describe RegistrationsController, type: :controller do
         expect(session[:user_id]).to eq(User.last.id)
       end
 
-      it 'starts trial for the new user' do
+      it 'does not start a hosted week on self-host' do
+        post :create, params: { user: valid_user_params }
+
+        user = User.last
+        expect(user.trial_started?).to be false
+        expect(user.can_use_app?).to be true
+      end
+
+      it 'starts a hosted week when HOSTED_EPHEMERAL is on' do
+        enable_hosted_ephemeral!
         post :create, params: { user: valid_user_params }
 
         user = User.last
@@ -69,7 +78,7 @@ RSpec.describe RegistrationsController, type: :controller do
         post :create, params: { user: valid_user_params }
 
         expect(response).to redirect_to(app_root_path)
-        expect(flash[:notice]).to eq('Account created successfully! Your 7-day free trial has started. Welcome!')
+        expect(flash[:notice]).to eq('Account created. This instance is yours.')
       end
 
       it 'creates user with correct attributes' do
@@ -215,7 +224,9 @@ RSpec.describe RegistrationsController, type: :controller do
       end
     end
 
-    context 'trial management' do
+    context 'hosted week on peponi.to' do
+      before { enable_hosted_ephemeral! }
+
       it 'sets trial start date' do
         Timecop.freeze do
           post :create, params: { user: valid_user_params }

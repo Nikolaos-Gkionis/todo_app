@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
   # Match registrations: trial callback must not run before credentials are applied (remember-cookie edge cases)
   skip_before_action :check_trial_status, only: [ :new, :create ]
   # Never block the login form or credential POST — paywall only applies after a session exists and hits /app
-  skip_before_action :block_expired_trial_without_purchase!, only: [ :new, :create ]
+  skip_before_action :block_expired_hosted_week!, only: [ :new, :create ]
   before_action :set_marketing_nav, only: [ :new, :create ]
 
   def new
@@ -55,12 +55,10 @@ class SessionsController < ApplicationController
 
   private
 
-  # Avoid sending paywalled users to /app (they get redirected to pricing anyway — Turbo can mishandle that chain).
-  # Still honor return_to for marketing/legal URLs on the same host.
-  # Note: can_use_app? is false before a trial has started; only block true trial expiry without purchase.
+  # Avoid sending expired hosted-week users to /app.
   def after_login_redirect_path_for(user)
     return_to = session.delete(:return_to).presence
-    default = paywalled_after_login?(user) ? pricing_path : app_root_path
+    default = hosted_week_ended?(user) ? root_path : app_root_path
     return default if return_to.blank?
 
     begin
@@ -71,13 +69,13 @@ class SessionsController < ApplicationController
       return default
     end
 
-    return pricing_path if paywalled_after_login?(user) && uri.path.start_with?("/app")
+    return root_path if hosted_week_ended?(user) && uri.path.start_with?("/app")
 
     return_to
   end
 
-  def paywalled_after_login?(user)
-    user.trial_started? && user.trial_expired? && !user.can_install_pwa?
+  def hosted_week_ended?(user)
+    user.hosted_ephemeral? && user.trial_started? && user.trial_expired? && !user.can_use_app?
   end
 
   def set_marketing_nav

@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 class PwaController < ApplicationController
-  # Manifest & service worker only for users who may install (paid / legacy device_downloaded).
-  # Matches layout: trial users get no manifest link, no SW registration, no Apple standalone metas.
+  # Manifest & service worker for anyone who may use the app (self-host, or hosted week).
   before_action :ensure_logged_in_for_pwa!, only: [ :manifest, :service_worker ]
-  skip_before_action :block_expired_trial_without_purchase!, only: [ :manifest, :service_worker ]
+  skip_before_action :block_expired_hosted_week!, only: [ :manifest, :service_worker ]
   skip_before_action :require_login, only: [ :manifest, :service_worker ]
   skip_before_action :verify_authenticity_token, only: [ :service_worker ]
 
@@ -30,7 +31,7 @@ class PwaController < ApplicationController
     {
       name: "Peponi.to",
       short_name: "Peponi.to",
-      description: "Organise tasks by day. Try 7 days free on the web, then pay once to install.",
+      description: "Organise tasks by day. Built for myself. Yours to run.",
       start_url: "#{base}/app",
       scope: "#{base}/",
       display_override: [ "fullscreen", "standalone" ],

@@ -10,32 +10,30 @@ RSpec.shared_examples "requires authentication" do
 end
 
 RSpec.shared_examples "requires trial access" do
-  context "when user's trial has expired" do
+  context "when the hosted week has ended" do
     let(:user) { create(:user, :trial_expired) }
 
-    before { sign_in(user) }
-
-    it "redirects to pricing page" do
-      subject
-      expect(response).to redirect_to(pricing_path)
+    before do
+      enable_hosted_ephemeral!
+      sign_in(user)
     end
 
-    it "shows trial expired message" do
+    it "redirects home" do
       subject
-      expect(flash[:alert]).to include("trial has expired")
+      expect(response).to redirect_to(root_path)
     end
   end
 end
 
 RSpec.shared_examples "allows downloaded app users" do
-  context "when user has downloaded the app" do
+  context "when user has a grandfathered purchase" do
     let(:user) { create(:user, :downloaded_app) }
 
     before { sign_in(user) }
 
     it "allows access" do
       subject
-      expect(response).not_to redirect_to(pricing_path)
+      expect(response).not_to redirect_to(root_path)
     end
   end
 end

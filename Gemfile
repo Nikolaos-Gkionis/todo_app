@@ -21,9 +21,6 @@ gem "jbuilder"
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 gem "bcrypt", "~> 3.1.7"
 
-# For creating ZIP files for PWA downloads
-gem "rubyzip", "~> 2.3"
-
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
@@ -43,12 +40,6 @@ gem "thruster", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
-
-# Stripe payment processing (legacy - kept for historical data)
-gem "stripe"
-
-# Faraday for Polar.sh API (Merchant of Record)
-gem "faraday"
 
 # Brevo API for email (avoids blocked SMTP ports on DigitalOcean)
 gem "brevo-rails"

@@ -3,7 +3,7 @@
   <head>
     <title><%= content_for(:title) || (logged_in? && current_user&.app_title.presence) || "Peponi.to" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-    <%# Safari "Add to Home Screen" uses these metas for standalone; gate like manifest/SW so trial users cannot install before purchase %>
+    <%# Safari "Add to Home Screen" uses these metas for standalone %>
     <% if logged_in? && current_user&.can_install_pwa? %>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -14,7 +14,7 @@
 
     <%= yield :head %>
 
-    <%# PWA manifest: only for paid users (trial users cannot install) — full URL helps Chrome show install icon %>
+    <%# PWA manifest: logged-in users who may use the app %>
     <% if logged_in? && current_user&.can_install_pwa? %>
       <%= tag.link rel: "manifest", href: pwa_manifest_url(format: :json), crossorigin: "use-credentials" %>
     <% end %>
@@ -25,10 +25,10 @@
     <meta name="theme-color" content="#ffffff">
     
     <!-- App Meta Tags -->
-    <meta name="description" content="Peponi.to. Organise tasks by day. Try 7 days free, then pay once.">
+    <meta name="description" content="Peponi.to. Organise tasks by day. I built this for myself. MIT, yours to run.">
     <meta name="author" content="Peponi.to">
     <meta property="og:title" content="Peponi.to">
-    <meta property="og:description" content="A day planner you try for a week, then keep. Rename it, name your lists, pick how many days you see.">
+    <meta property="og:description" content="A day planner I built for myself. MIT. Try it here for a week, then run it yourself.">
     <meta property="og:type" content="website">
 
     <%# Preconnect to fonts for snappy font switching %>
@@ -445,7 +445,7 @@ function applyTheme(theme) {
       window.applyThemeGlobal = applyTheme;
     </script>
 
-    <%# PWA Service Worker: only for paid users (trial users cannot install) %>
+    <%# PWA Service Worker: for users who may use the app %>
     <% if logged_in? && current_user&.can_install_pwa? %>
     <script>
       if ('serviceWorker' in navigator) {

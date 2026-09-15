@@ -5,7 +5,7 @@ RSpec.describe 'User Registration', type: :system do
     visit root_path
 
     # Click sign up button
-    click_link 'Start free trial', match: :first
+    click_link 'Try it here', match: :first
 
     # Fill out registration form
     fill_in 'Name', with: 'John Doe'

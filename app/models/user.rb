@@ -17,32 +17,8 @@ class User < ApplicationRecord
     validates :not_yet_panel_title, length: { minimum: 1, maximum: 50 }, allow_blank: false, if: -> { self.class.column_names.include?("not_yet_panel_title") }
     validates :lists_placement, inclusion: { in: %w[bottom right] }, allow_blank: true, if: -> { self.class.column_names.include?("lists_placement") }
 
-    # Download tracking
-    MAX_DOWNLOADS = 3
-
-    def can_download?
-      (download_count || 0) < MAX_DOWNLOADS
-    end
-
     def increment_download_count!
       increment!(:download_count)
-    end
-
-    def downloads_remaining
-      MAX_DOWNLOADS - (download_count || 0)
-    end
-
-    # PWA install restriction: only paid users can install the app
-    # Trial users keep full server access but cannot add the PWA to their device
-    # Include device_downloaded for legacy purchasers who may not have paid_at
-    def can_install_pwa?
-      return true if device_downloaded?
-      respond_to?(:paid_at) && paid_at.present?
-    end
-
-    # Entitlement to use the web app (trial in-browser only, or after purchase / legacy)
-    def can_use_app?
-      trial_active? || can_install_pwa?
     end
 
     # Remember token functionality for persistent authentication

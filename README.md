@@ -1,8 +1,18 @@
 # Peponi.to
 
-A day planner. Tasks live on a day, or in lists you name yourself. Try it on the web for 7 days, then pay once to keep using it and install it as a PWA.
+A day planner. Tasks live on a day, or in lists you name yourself.
+
+I built this for myself. I like it. I like the [Omarchy](https://omarchy.org/) plugin. This is the age of AI — anyone with a little grind can build this, or better. You are welcome to have it.
 
 Live site: [https://peponi.to](https://peponi.to)
+
+The hosted site is a week on my server. After that I delete the account and the tasks. If you want to keep it, run it yourself.
+
+- **Self-host** (this repo): your SQLite database is the data. That is how you get sync — several browsers talking to *your* instance.
+- **Local only, no sync:** run it on one machine, or use the Omarchy overlay. Nothing is sent to peponi.to.
+- **MIT licensed.** No payment. No subscription.
+
+Source: [https://github.com/Nikolaos-Gkionis/todo_app](https://github.com/Nikolaos-Gkionis/todo_app)
 
 ## What it does
 
@@ -13,8 +23,7 @@ Live site: [https://peponi.to](https://peponi.to)
 - **Today mode:** a single-day view with a 15 / 25 / 45 minute timer.
 - **Notes:** extra detail, sub-steps, links, images, on a task when you need them.
 - **Repeat:** daily, weekly, or on days you pick.
-- **Trial vs purchase:** the 7-day trial is the website. PWA install (Add to Home Screen / Install app) is after the one-time £9.99 purchase, on up to three devices. No subscription.
-- **Omarchy Linux:** a free local overlay with no account, or a paid sign-in that copies your existing tasks onto that machine. After that, new work stays there.
+- **Omarchy Linux:** a local overlay with no account, or sign in once to copy existing tasks onto that machine. After that, new work stays there.
 
 Press `?` in the app for keyboard shortcuts.
 
@@ -53,34 +62,49 @@ Shortcuts apply when focus is not in an input, textarea, or editable field.
 
 ## Stack
 
-Rails 8, Ruby 3.4, SQLite, Hotwire/Turbo + Stimulus, custom CSS. Payments via Polar. Email via Brevo.
+Rails 8, Ruby 4.0.1, SQLite, Hotwire/Turbo + Stimulus, custom CSS. Optional email via Brevo on the hosted site.
 
-## Run it locally
+## Run it from source
+
+You need **Ruby 4.0.1**, Bundler, and SQLite development headers (on Arch: `sqlite`).
 
 ```bash
-git clone <your-repo>
+git clone https://github.com/Nikolaos-Gkionis/todo_app.git
 cd todo_app
+bin/setup --skip-server
+bin/rails server
+```
+
+Or, step by step:
+
+```bash
 bundle install
-rails db:migrate
-rails db:seed
-rails server
+bin/rails db:prepare
+bin/rails server
 ```
 
 Then open http://localhost:3000
 
-You’ll need Polar keys in the environment for checkout (`POLAR_ACCESS_TOKEN`, `POLAR_PRODUCT_ID`, `POLAR_WEBHOOK_SECRET`). Copy from whatever env template you use on this machine.
+That instance is yours. Accounts do not expire. Add to Home Screen against this URL if you want a PWA on this machine.
 
-### Docker
+You do **not** need payment keys. Email is optional.
+
+If you use Docker, copy `.env.example` to `.env` first (the compose file expects a `.env` file):
 
 ```bash
-docker-compose up --build
+cp .env.example .env
+docker compose up --build
 ```
 
 App: http://localhost:3000
 
-### Production
+### Hosted peponi.to only
 
-This repo deploys with Kamal to [https://peponi.to](https://peponi.to).
+`HOSTED_EPHEMERAL=true` means accounts on that server are deleted after 7 days. Do not set this when you self-host.
+
+### Production (my droplet)
+
+This repo still deploys with Kamal to [https://peponi.to](https://peponi.to). You do not need Kamal to run it locally.
 
 ## Omarchy plugin
 
@@ -91,3 +115,7 @@ omarchy plugin add https://github.com/Nikolaos-Gkionis/peponi-omarchy.git --enab
 ```
 
 Rails `/api/v1` desktop endpoints for that helper stay in this repository.
+
+## License
+
+[MIT](LICENSE)

@@ -5,17 +5,15 @@ module ResourceAuthorizable
   def ensure_can_create_page!
     return if current_user.can_create_page?
 
-    if current_user.trial_expired? && !current_user.device_downloaded?
+    if current_user.hosted_ephemeral? && current_user.trial_expired? && !current_user.grandfathered_purchaser?
       redirect_to app_root_path, alert: flash_trial_expired_redirect
     else
       redirect_to app_root_path, alert: flash_page_limit_reached
     end
   end
 
-
-  # Check if user has trial or downloaded app access
   def ensure_trial_or_downloaded!
-    return if current_user.trial_active? || current_user.device_downloaded?
+    return if current_user.can_use_app?
 
     flash_download_required
     redirect_to app_root_path
@@ -27,16 +25,6 @@ module ResourceAuthorizable
 
     flash_invalid_token
     redirect_to app_root_path
-  end
-
-  # Check if user needs to complete payment for download
-  def ensure_payment_completed!
-    return if current_user.device_downloaded?
-
-    if current_user.on_trial?
-      flash_payment_required
-      redirect_to pricing_path
-    end
   end
 
   # Set resource and ensure ownership

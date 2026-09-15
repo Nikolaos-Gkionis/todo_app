@@ -162,9 +162,9 @@ RSpec.describe PagesController, type: :controller do
       end
     end
 
-    context 'when user cannot create pages (trial expired)' do
+    context 'when the hosted week has ended' do
       before do
-        # Set up user with expired trial
+        enable_hosted_ephemeral!
         user.update!(
           trial_started_at: 8.days.ago,
           trial_expires_at: 1.day.ago,
@@ -178,11 +178,10 @@ RSpec.describe PagesController, type: :controller do
         }.not_to change(Page, :count)
       end
 
-      it 'redirects to pricing before create (trial expired — no app access)' do
+      it 'redirects home' do
         post :create, params: { page: valid_page_params }
 
-        expect(response).to redirect_to(pricing_path)
-        expect(flash[:alert]).to include('free trial has ended')
+        expect(response).to redirect_to(root_path)
       end
     end
 

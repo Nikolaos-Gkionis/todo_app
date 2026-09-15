@@ -13,7 +13,7 @@ module Api
         raw = bearer_token
         @current_user = User.find_by_desktop_api_token(raw)
 
-        return if @current_user&.can_install_pwa?
+        return if @current_user
 
         render json: { error: "unauthorized" }, status: :unauthorized
       end
@@ -26,10 +26,10 @@ module Api
         request.headers["X-Peponi-Token"].presence
       end
 
-      def require_paid!
-        return if current_user&.can_install_pwa?
+      def require_signed_in_desktop!
+        return if current_user
 
-        render json: { error: "paid_required", message: "The paid desktop helper is for purchased peponi.to accounts. On Omarchy, use local mode until you pay." }, status: :forbidden
+        render json: { error: "unauthorized", message: "Sign in to copy tasks onto this machine. On Omarchy you can also stay local with no account." }, status: :forbidden
       end
 
       def serialize_todo(todo)

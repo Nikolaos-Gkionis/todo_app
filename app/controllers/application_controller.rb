@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   # Require authentication for all actions by default
   before_action :require_login
   before_action :check_trial_status
-  before_action :block_expired_trial_without_purchase!
+  before_action :block_expired_hosted_week!
 
   # Friendly redirect when session/CSRF expires (e.g. after clearing site data)
   rescue_from ActionController::InvalidAuthenticityToken do
@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   end
 
   # Make these methods available in views as well
-  helper_method :current_user, :logged_in?, :trial_status_info, :can_access_app_dashboard?, :app_viewport_fixed_layout?
+  helper_method :current_user, :logged_in?, :trial_status_info, :can_access_app_dashboard?, :app_viewport_fixed_layout?, :github_source_url
 
   private
 
@@ -63,25 +63,24 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # After the 7-day trial, block the app until purchase (bookmarks, PWA, pinned tabs still hit the server).
-  def block_expired_trial_without_purchase!
+  # After the hosted week on peponi.to, the account is on its way out.
+  def block_expired_hosted_week!
     return unless logged_in?
     return if current_user.can_use_app?
-    return if expired_trial_allowed_request?
+    return if expired_hosted_week_allowed_request?
 
     respond_to do |format|
       format.html do
-        redirect_to pricing_path, alert: flash_trial_expired_paywall
+        redirect_to root_path, alert: flash_hosted_week_ended
       end
       format.turbo_stream do
-        redirect_to pricing_path, alert: flash_trial_expired_paywall
+        redirect_to root_path, alert: flash_hosted_week_ended
       end
       format.json { head :forbidden }
       format.any { head :forbidden }
     end
   end
 
-  # Logged-in users who may use /app (active trial, or purchased / legacy download)
   def can_access_app_dashboard?
     logged_in? && current_user.can_use_app?
   end
@@ -90,15 +89,16 @@ class ApplicationController < ActionController::Base
     logged_in? && APP_VIEWPORT_FIXED_CONTROLLERS.include?(controller_name)
   end
 
-  def expired_trial_allowed_request?
+  def github_source_url
+    "https://github.com/Nikolaos-Gkionis/todo_app"
+  end
+
+  def expired_hosted_week_allowed_request?
     case controller_path
-    when "sessions", "registrations", "marketing", "polar", "purchase", "contact"
-      true
-    when "webhooks/polar"
+    when "sessions", "registrations", "marketing", "contact"
       true
     when "trial"
-      # start: before trial exists; extend_trial: special cases (controller still checks trial_active?)
-      %w[start extend_trial].include?(action_name)
+      %w[export_data status].include?(action_name)
     else
       false
     end
@@ -107,19 +107,16 @@ class ApplicationController < ActionController::Base
   def check_trial_status
     return unless logged_in?
 
-    # Check if user needs to start trial
     if current_user.needs_trial_start?
       current_user.start_trial!
-      # Reload so trial_active? / can_use_app? see DB state before the paywall callback runs
       @current_user = current_user.reload
       flash_trial_started
     end
 
-    # Show trial status flash messages only on specific pages
     if should_show_trial_flash?
       if current_user.on_trial?
         flash_trial_active(current_user.trial_days_remaining)
-      elsif current_user.trial_expired? && !current_user.device_downloaded?
+      elsif current_user.hosted_ephemeral? && current_user.trial_expired? && !current_user.grandfathered_purchaser?
         flash_trial_expired
       end
     end
@@ -137,8 +134,6 @@ class ApplicationController < ActionController::Base
       }
     end
   end
-
-  private
 
   def should_show_trial_flash?
     # Show trial flash messages only on pages index and settings index

@@ -10,7 +10,7 @@
       <div>
         <div class="mkt-hero__eyebrow">
           <span class="mkt-hero__eyebrow-dot"></span>
-          Try free for 7 days. No credit card.
+          Try it here for a week. Then run it yourself.
         </div>
 
         <h1 class="mkt-hero__title">
@@ -19,24 +19,24 @@
         </h1>
 
         <p class="mkt-hero__subtitle">
-          A day planner you try on the web for a week, then keep if it suits you.
-          Pay once, install it on your phone or computer, and name it whatever you like.
-          On Omarchy Linux you can also run it locally, with no account at all.
+          I built this for myself. I like it. I like the Omarchy plugin.
+          This is the age of AI — anyone with a little grind can build this, or better.
+          You are welcome to have it.
         </p>
 
         <div class="mkt-hero__cta-group">
           <%= link_to signup_path, class: "mkt-btn mkt-btn--primary" do %>
-            Start free trial &rarr;
+            Try it here &rarr;
           <% end %>
-          <%= link_to pricing_path, class: "mkt-btn mkt-btn--ghost" do %>
-            See pricing
+          <%= link_to github_source_url, class: "mkt-btn mkt-btn--ghost", target: "_blank", rel: "noopener" do %>
+            Run it yourself
           <% end %>
         </div>
 
         <div class="mkt-hero__trust-strip">
-          <span class="mkt-hero__trust-item">7-day free trial</span>
-          <span class="mkt-hero__trust-item">Install after purchase</span>
-          <span class="mkt-hero__trust-item">One-time payment</span>
+          <span class="mkt-hero__trust-item">A week on my server</span>
+          <span class="mkt-hero__trust-item">Then I delete the data</span>
+          <span class="mkt-hero__trust-item">MIT, from source</span>
           <span class="mkt-hero__trust-item">No tracking</span>
         </div>
       </div>
@@ -112,10 +112,10 @@
         <div class="mkt-card__icon bg-purple-100 text-purple-600">
           <%= inline_icon "device-phone-mobile" %>
         </div>
-        <div class="mkt-card__title">Try on the web, install after you buy</div>
+        <div class="mkt-card__title">Try it here, keep it by running it</div>
         <p class="mkt-card__text">
-          The 7-day trial is the website. After a one-time £9.99 purchase you can install it as a PWA
-          on your phone, tablet, or desktop. No app store.
+          The hosted site is a week on my server. After that I delete the account.
+          Clone the repo to keep your lists. On your own instance you can Add to Home Screen.
         </p>
       </div>
 
@@ -125,8 +125,8 @@
         </div>
         <div class="mkt-card__title">No social logins</div>
         <p class="mkt-card__text">
-          Email and password. No Google, Facebook, or Apple. We don’t mine your tasks for ads,
-          and we don’t run analytics on you.
+          Email and password. No Google, Facebook, or Apple. I don’t mine your tasks for ads,
+          and I don’t run analytics on you.
         </p>
       </div>
 
@@ -137,7 +137,7 @@
         <div class="mkt-card__title">Export anytime</div>
         <p class="mkt-card__text">
           Download a copy of your data whenever you want. Delete your account whenever you want.
-          On Omarchy, local mode never sends tasks to us at all.
+          On Omarchy, local mode never sends tasks to peponi.to at all.
         </p>
       </div>
 
@@ -156,7 +156,7 @@
   </div>
 </section>
 
-<!-- Omarchy desktop helper: two paths, free local-only or paid signed-in -->
+<!-- Omarchy desktop helper -->
 <section id="omarchy" class="mkt-section mkt-section--cream">
   <div class="mkt-inner">
     <div class="mkt-split mkt-reveal" data-scroll-reveal-target="item">
@@ -164,32 +164,31 @@
         <span class="mkt-label">Omarchy</span>
         <h2 class="mkt-heading" style="text-align: left;">Your Focus day, on the Linux desktop</h2>
         <p class="mkt-subheading" style="margin: 0; text-align: left; max-width: 36rem;">
-          On <a href="https://omarchy.org/" class="mkt-inline-link">Omarchy</a>, you choose how to use Peponi.
-          Stay free and local: tasks never leave this machine. Or sign in with a paid peponi.to licence
-          so we can copy your existing tasks here. After that, new work stays on this machine.
+          This is what I actually use. On <a href="https://omarchy.org/" class="mkt-inline-link">Omarchy</a>,
+          stay local: tasks never leave this machine. Or sign in once during your hosted week
+          to copy existing tasks here. After that, new work stays on this machine.
           Open it from the bar, step days with arrows,
           Not Yet with <kbd class="mkt-kbd">y</kbd>, today with <kbd class="mkt-kbd">t</kbd>.
         </p>
         <div class="mkt-omarchy-choice">
           <div class="mkt-omarchy-choice__card">
-            <div class="mkt-omarchy-choice__label">Free</div>
-            <h3 class="mkt-omarchy-choice__title">Local only</h3>
+            <div class="mkt-omarchy-choice__label">Local</div>
+            <h3 class="mkt-omarchy-choice__title">No account</h3>
             <p class="mkt-omarchy-choice__text">
-              No account. Tasks stay on this Linux machine. Nothing is sent to peponi.to.
+              Tasks stay on this Linux machine. Nothing is sent to peponi.to.
             </p>
           </div>
           <div class="mkt-omarchy-choice__card">
-            <div class="mkt-omarchy-choice__label">Paid</div>
-            <h3 class="mkt-omarchy-choice__title">Signed in</h3>
+            <div class="mkt-omarchy-choice__label">Optional</div>
+            <h3 class="mkt-omarchy-choice__title">Signed in once</h3>
             <p class="mkt-omarchy-choice__text">
-              Buy once, sign in once. We copy your existing tasks onto this machine.
-              After that they live here. We are not your cloud.
+              Copy existing tasks onto this machine. After that they live here. I am not your cloud.
             </p>
           </div>
         </div>
         <ul class="mkt-omarchy-list">
           <li>One-command install for Omarchy plugins</li>
-          <li>Start local, or sign in when you are ready</li>
+          <li>Start local, or sign in once if you want a snapshot of hosted lists</li>
           <li>Bar toggle on the left, centre, or right. Your choice</li>
         </ul>
         <div class="mkt-hero__cta-group" style="margin-top: 1.5rem;">
@@ -263,7 +262,7 @@
   <div class="mkt-inner">
     <div class="mkt-section-intro mkt-reveal" data-scroll-reveal-target="item">
       <span class="mkt-label mkt-label--green">Privacy</span>
-      <h2 class="mkt-heading">We collect as little as we can</h2>
+      <h2 class="mkt-heading">I collect as little as I can</h2>
       <p class="mkt-subheading" style="margin: 0 auto;">
         No ads. No tracking pixels. No “sign in with” buttons that phone home to someone else.
         You can export or delete everything from Settings.
@@ -283,16 +282,16 @@
         <div class="mkt-trust-icon bg-blue-100 text-blue-600">
           <%= inline_icon "circle-stack" %>
         </div>
-        <div class="mkt-trust-title">Pay once</div>
-        <p class="mkt-trust-text">No subscription. Install on up to three devices you own. Export whenever you like.</p>
+        <div class="mkt-trust-title">Run it yourself</div>
+        <p class="mkt-trust-text">MIT. Clone the repo. Your SQLite file is the data. That is how you keep it.</p>
       </div>
 
       <div class="mkt-trust-item mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 160ms">
         <div class="mkt-trust-icon bg-purple-100 text-purple-600">
           <%= inline_icon "bolt" %>
         </div>
-        <div class="mkt-trust-title">Works offline after install</div>
-        <p class="mkt-trust-text">Once you’ve bought and installed the PWA, you can keep working without a connection. On a plane, underground, wherever.</p>
+        <div class="mkt-trust-title">Local on your machine</div>
+        <p class="mkt-trust-text">Self-host, or use the Omarchy overlay. A PWA against peponi.to is only a shortcut to my server for that week.</p>
       </div>
 
       <div class="mkt-trust-item mkt-reveal" data-scroll-reveal-target="item" style="--reveal-delay: 240ms">
@@ -323,18 +322,18 @@
   <div class="mkt-inner">
     <h2 class="mkt-cta__title">Ready to organise your days?</h2>
     <p class="mkt-cta__subtitle">
-      Try Peponi.to free for 7 days. No credit card. No commitment.<br>
-      Keep it forever for £9.99 when you’re ready.
+      Try it here for a week. Then I delete the account.<br>
+      Keep it by running it from source.
     </p>
     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
       <%= link_to signup_path, class: "mkt-btn mkt-btn--white" do %>
-        Start free trial
+        Try it here
       <% end %>
-      <%= link_to pricing_path, class: "mkt-btn mkt-btn--ghost" do %>
-        View pricing
+      <%= link_to github_source_url, class: "mkt-btn mkt-btn--ghost", target: "_blank", rel: "noopener" do %>
+        GitHub
       <% end %>
     </div>
-    <p class="mkt-cta__trust">No credit card required &nbsp;&middot;&nbsp; 7-day free trial &nbsp;&middot;&nbsp; Download forever for £9.99</p>
+    <p class="mkt-cta__trust">No payment &nbsp;&middot;&nbsp; MIT &nbsp;&middot;&nbsp; Built for myself</p>
   </div>
 </section>
 

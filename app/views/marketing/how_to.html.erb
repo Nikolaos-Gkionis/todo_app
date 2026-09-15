@@ -190,9 +190,9 @@
         <h3 style="font-size: 1.05rem; font-weight: 700; color: #4E5C64; margin: 0 0 0.75rem;">Account</h3>
         <ul class="mkt-omarchy-list" style="margin: 0;">
           <li>Name, email, password</li>
-          <li>Buy the download if you’re still on the trial</li>
+          <li>Export your data before the hosted week ends</li>
           <li>Sign out, or delete the account</li>
-          <li>Export your data from Trial status while the trial is active</li>
+          <li>Clone the repo if you want to keep it</li>
         </ul>
       </div>
     </div>
@@ -381,10 +381,10 @@
     <div class="mkt-step mkt-step--reverse mkt-reveal" data-scroll-reveal-target="item">
       <div>
         <span class="mkt-label">Account</span>
-        <h2 class="mkt-heading" style="margin-top: 0.5rem;">Download when you’re ready</h2>
+        <h2 class="mkt-heading" style="margin-top: 0.5rem;">Export, then run it yourself</h2>
         <p class="mkt-step__text" style="margin-bottom: 0;">
-          The trial is the website. After you pay once, your account page is where you download
-          and install the app. No subscription. You can put it on up to three devices you own.
+          The hosted site is a week on my server. Export your lists from Settings, then clone the repo.
+          On your own instance you can Add to Home Screen. I am not a cloud for your todos.
         </p>
       </div>
       <div class="mkt-step__visual app-preview">
@@ -401,8 +401,8 @@
       <span class="mkt-label mkt-label--amber">Mobile</span>
       <h2 class="mkt-heading">Works on your phone</h2>
       <p class="mkt-subheading" style="margin: 0 auto;">
-        Add tasks, open the calendar, swipe through days. After purchase, install it as a PWA
-        so it sits on your home screen like any other app. No app store.
+        Add tasks, open the calendar, swipe through days. On your own instance you can install it as a PWA
+        so it sits on your home screen. A shortcut to peponi.to only lasts for the hosted week.
       </p>
     </div>
 
@@ -430,9 +430,9 @@
       <span class="mkt-label">Install as a PWA</span>
       <h2 class="mkt-heading">Your app, on your device</h2>
       <p class="mkt-subheading" style="margin: 0 auto;">
-        After you purchase, install Peponi.to as a Progressive Web App.
+        On your own instance, install Peponi.to as a Progressive Web App.
         Full screen, no browser chrome, launches from your home screen or dock.
-        Trial accounts stay on the website until then.
+        On peponi.to that shortcut still talks to my server, and the account is deleted after a week.
       </p>
     </div>
 
@@ -553,15 +553,15 @@
   </div>
 </section>
 
-<!-- Omarchy plugin guide: free local-only, or paid signed-in -->
+<!-- Omarchy plugin guide -->
 <section id="omarchy" class="mkt-section bg-white">
   <div class="mkt-inner">
     <div class="mkt-section-intro mkt-reveal" data-scroll-reveal-target="item">
       <span class="mkt-label">Omarchy</span>
       <h2 class="mkt-heading">Use Peponi on your Linux desktop</h2>
       <p class="mkt-subheading" style="margin: 0 auto;">
-        On <a href="https://omarchy.org/" class="mkt-inline-link">Omarchy</a>, you choose:
-        a free local-only overlay, or a signed-in paid licence that copies your tasks onto this machine.
+        This is what I actually use. On <a href="https://omarchy.org/" class="mkt-inline-link">Omarchy</a>,
+        stay local with no account, or sign in once to copy hosted tasks onto this machine.
         Same keyboard-first Focus day either way, opened from the bar.
       </p>
     </div>
@@ -584,25 +584,25 @@
           </p>
           <pre class="mkt-code-block" tabindex="0"><code>omarchy plugin add https://github.com/Nikolaos-Gkionis/peponi-omarchy.git --enable</code></pre>
           <p class="mkt-step__text" style="margin-top: 0.75rem;">
-            Optional, paid licence (copies your existing tasks onto this machine):
+            Optional, sign in once (copies your existing tasks onto this machine):
           </p>
           <pre class="mkt-code-block" tabindex="0"><code>~/.config/omarchy/plugins/peponi.one-day/scripts/setup.sh</code></pre>
         </div>
         <div>
           <div class="mkt-omarchy-choice mkt-omarchy-choice--stack">
             <div class="mkt-omarchy-choice__card">
-              <div class="mkt-omarchy-choice__label">Free</div>
-              <h3 class="mkt-omarchy-choice__title">Local only</h3>
+              <div class="mkt-omarchy-choice__label">Local</div>
+              <h3 class="mkt-omarchy-choice__title">No account</h3>
               <p class="mkt-omarchy-choice__text">
                 Skip sign-in. Tasks stay on this machine. Nothing is sent to peponi.to.
               </p>
             </div>
             <div class="mkt-omarchy-choice__card">
-              <div class="mkt-omarchy-choice__label">Paid</div>
-              <h3 class="mkt-omarchy-choice__title">Signed in</h3>
+              <div class="mkt-omarchy-choice__label">Optional</div>
+              <h3 class="mkt-omarchy-choice__title">Signed in once</h3>
               <p class="mkt-omarchy-choice__text">
-                Run setup with your paid peponi.to email and password. Trial-only accounts cannot sign in.
-                We copy your existing tasks onto this machine; new work stays here.
+                Run setup with your peponi.to email and password during the hosted week.
+                I copy your existing tasks onto this machine; new work stays here.
               </p>
             </div>
           </div>
@@ -706,12 +706,12 @@ omarchy bar put peponi.one-day --section right</code></pre>
   <div class="mkt-inner">
     <h2 class="mkt-cta__title">Ready to get started?</h2>
     <p class="mkt-cta__subtitle">
-      Try Peponi.to free for 7 days. No credit card. Keep it forever for £9.99 when you’re ready.
+      Try it here for a week. Then run it yourself.
     </p>
     <%= link_to signup_path, class: "mkt-btn mkt-btn--white" do %>
-      Start free trial
+      Try it here
     <% end %>
-    <p class="mkt-cta__trust">No credit card required &nbsp;&middot;&nbsp; 7-day free trial</p>
+    <p class="mkt-cta__trust">MIT &nbsp;&middot;&nbsp; No payment &nbsp;&middot;&nbsp; Source on GitHub</p>
   </div>
 </section>
 

@@ -17,10 +17,10 @@ module Api
           return render json: { error: "invalid_credentials", message: "Invalid email or password." }, status: :unauthorized
         end
 
-        unless user.can_install_pwa?
+        unless user.can_use_app?
           return render json: {
-            error: "paid_required",
-            message: "Trial accounts cannot sign in to the paid desktop helper. On Omarchy, use local mode (no account), or purchase first, then sign in to copy your tasks onto this machine."
+            error: "hosted_week_ended",
+            message: "This hosted week is over. Run Peponi.to from source, or use Omarchy local mode with no account."
           }, status: :forbidden
         end
 
@@ -49,7 +49,7 @@ module Api
       def status
         render json: {
           authenticated: true,
-          paid: current_user.can_install_pwa?,
+          hosted: current_user.hosted_ephemeral?,
           user: {
             email: current_user.email_address,
             name: current_user.display_name,

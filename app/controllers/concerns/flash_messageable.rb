@@ -29,29 +29,32 @@ module FlashMessageable
 
   # Trial-specific messages
   def flash_trial_started
-    flash[:success] = "Your 7-day free trial has started. The website is yours for 7 days. PWA install is after you purchase."
+    flash[:success] = "A week on this server has started. Export or clone the repo before it ends if you want to keep your lists."
   end
 
   def flash_trial_active(days_remaining)
     day_text = days_remaining == 1 ? "day" : "days"
-    flash[:trial] = "⏰ Free Trial Active - #{days_remaining} #{day_text} remaining. Purchase to install the PWA after trial."
+    flash[:trial] = "#{days_remaining} #{day_text} left on this server. Export your data or run the app yourself to keep it."
   end
 
   def flash_trial_expired
-    flash[:trial] = "⚠️ Trial Expired - Purchase Peponi.to to keep using your account."
+    flash[:trial] = "This hosted week is over. Export if you still can, then run Peponi.to from source."
   end
 
-  # Access control messages
+  def flash_hosted_week_ended
+    "This hosted week is over. Clone the repo and run it yourself to keep your lists."
+  end
+
   def flash_trial_expired_redirect
-    flash_error("Your trial has expired. Please download the app to continue creating pages.")
+    flash_error(flash_hosted_week_ended)
   end
 
   def flash_trial_expired_paywall
-    flash_error("Your free trial has ended. Purchase Peponi.to to keep using your account.")
+    flash_hosted_week_ended
   end
 
   def flash_page_limit_reached
-    flash_error("You've reached the page limit. Download the app for unlimited pages!")
+    flash_error("You cannot create more pages on this account.")
   end
 
 
@@ -74,15 +77,11 @@ module FlashMessageable
 
   # Download messages
   def flash_download_required
-    flash[:error] = "You need an active trial or downloaded app to access this page."
+    flash[:error] = "You need an active account to access this page."
   end
 
   def flash_invalid_token
     flash[:error] = "Invalid download token."
-  end
-
-  def flash_payment_required
-    flash[:info] = "Complete your purchase to download the app to your device."
   end
 
   # Validation messages

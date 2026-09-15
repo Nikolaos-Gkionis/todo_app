@@ -1,185 +1,61 @@
-<!-- Download Page Header -->
 <div class="download-header">
   <div class="container">
     <div class="download-header__content">
       <%= link_to app_root_path, class: "download-header__back", style: "display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: #4b5563; text-decoration: none; font-size: 0.95rem;" do %>
         ← Back to app
       <% end %>
-      <h1 class="download-header__title">Download Peponi.to to Your Device</h1>
+      <h1 class="download-header__title">Take your lists with you</h1>
       <p class="download-header__subtitle">
-        Get the app onto this device. After install it works offline, from your home screen or dock.
+        Export a JSON copy, then run Peponi.to from source if you want to keep it.
+        A PWA on peponi.to is only a shortcut to this server for the hosted week.
       </p>
     </div>
   </div>
 </div>
 
-<!-- Download Status -->
-<div class="download-status">
-  <div class="container">
-    <div class="download-status__card">
-    <div class="download-status__icon">📱</div>
-    <div class="download-status__info">
-      <h2 class="download-status__title">Ready to Download</h2>
-      <p class="download-status__description">
-        Your download token has been generated. Click the button below to download the app to your device.
-      </p>
-      <div class="download-count-info">
-        <p class="text-sm text-gray-600">
-          📱 Downloads remaining: <strong><%= @user.downloads_remaining %> of <%= User::MAX_DOWNLOADS %></strong>
-        </p>
-        <p class="text-xs text-gray-500 mt-1">
-          Each device gets its own independent copy - no sync, no server storage.
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Download Instructions -->
 <div class="download-instructions">
   <div class="container">
-    <h3 class="download-instructions__title">How to Install</h3>
-  
-  <div class="download-instructions__steps">
-    <!-- Step 0: Export Data (Optional) -->
-    <div class="download-step">
-      <div class="download-step__number">0</div>
-      <div class="download-step__content">
-        <h4 class="download-step__title">Export Your Data (Recommended)</h4>
-        <p class="download-step__description">
-          Before downloading, export your pages and tasks. This creates a backup file you can use to restore your data on the downloaded app.
-        </p>
-        <div class="download-step__action">
-          <%= link_to "Export My Data", export_trial_data_path,
-                class: "download-button download-button--secondary" %>
-        </div>
-        <p class="download-step__note">
-          <small>💡 <strong>Tip:</strong> Keep this export file safe - you'll need it to restore your data on the downloaded app.</small>
-        </p>
-      </div>
-    </div>
+    <h3 class="download-instructions__title">How to keep it</h3>
 
-    <!-- Step 1: Download -->
-    <div class="download-step">
-      <div class="download-step__number">1</div>
-      <div class="download-step__content">
-        <h4 class="download-step__title">Download the App</h4>
-        <p class="download-step__description">
-          Click the download button below to get the app bundle for your device. If you have an export file, it will be automatically imported.
-        </p>
-        <div class="download-step__action">
-          <%= link_to "Download App", download_app_path(token: @download_token),
-                class: "download-button download-button--primary" %>
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 2: Install PWA -->
-    <div class="download-step">
-      <div class="download-step__number">2</div>
-      <div class="download-step__content">
-        <h4 class="download-step__title">Install on Your Device</h4>
-        <p class="download-step__description">
-          Follow the instructions below for your device type. If you exported your data, it will be automatically restored during installation.
-        </p>
-        <%= link_to (params[:token].present? ? install_pwa_path(token: params[:token]) : install_pwa_path),
-                    class: "download-button download-button--secondary",
-                    style: "margin-bottom: 1rem;" do %>
-          📱 PWA install guide
-        <% end %>
-        
-        <!-- Mobile Instructions -->
-        <div class="device-instructions">
-          <div class="device-instructions__mobile">
-            <h5 class="device-instructions__title">📱 Mobile (iOS/Android)</h5>
-            <ol class="device-instructions__list">
-              <li>Open the downloaded file in your mobile browser</li>
-              <li>Look for the "Add to Home Screen" option in your browser menu</li>
-              <li>Tap "Add" to install the app on your home screen</li>
-              <li>Launch Peponi.to from your home screen</li>
-            </ol>
+    <div class="download-instructions__steps">
+      <div class="download-step">
+        <div class="download-step__number">1</div>
+        <div class="download-step__content">
+          <h4 class="download-step__title">Export your data</h4>
+          <p class="download-step__description">
+            Download a JSON file of your pages and tasks.
+          </p>
+          <div class="download-step__action">
+            <%= link_to "Export My Data", export_trial_data_path, class: "download-button download-button--secondary" %>
           </div>
-          
-          <!-- Desktop Instructions -->
-          <div class="device-instructions__desktop">
-            <h5 class="device-instructions__title">💻 Desktop (Chrome/Edge/Safari)</h5>
-            <ol class="device-instructions__list">
-              <li>Open the downloaded file in your browser</li>
-              <li>Look for the install icon in your browser's address bar</li>
-              <li>Click "Install" when prompted</li>
-              <li>Launch Peponi.to from your applications or desktop</li>
-            </ol>
+        </div>
+      </div>
+
+      <div class="download-step">
+        <div class="download-step__number">2</div>
+        <div class="download-step__content">
+          <h4 class="download-step__title">Run it yourself</h4>
+          <p class="download-step__description">
+            Clone the repo. Follow the README. Your SQLite file is the data.
+          </p>
+          <div class="download-step__action">
+            <%= link_to "GitHub", github_source_url, class: "download-button download-button--primary", target: "_blank", rel: "noopener" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="download-step">
+        <div class="download-step__number">3</div>
+        <div class="download-step__content">
+          <h4 class="download-step__title">Optional: Add to Home Screen here</h4>
+          <p class="download-step__description">
+            On this hosted site that only lasts the week. On your own instance it stays.
+          </p>
+          <div class="download-step__action">
+            <%= link_to "Install guide", install_pwa_path, class: "download-button download-button--secondary" %>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- Step 3: Restore Data (if exported) -->
-    <div class="download-step">
-      <div class="download-step__number">3</div>
-      <div class="download-step__content">
-        <h4 class="download-step__title">Restore Your Data</h4>
-        <p class="download-step__description">
-          If you exported your data in Step 0, it will be automatically restored when you first open the downloaded app. Your pages and tasks will be exactly as they were.
-        </p>
-      </div>
-    </div>
-
-    <!-- Step 4: Enjoy -->
-    <div class="download-step">
-      <div class="download-step__number">4</div>
-      <div class="download-step__content">
-        <h4 class="download-step__title">Enjoy Offline Access</h4>
-        <p class="download-step__description">
-          Your app is now installed and works completely offline. All your data stays on your device.
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Benefits Section -->
-<div class="download-benefits">
-  <div class="container">
-    <h3 class="download-benefits__title">What You Get</h3>
-  <div class="download-benefits__grid">
-    <div class="benefit-card">
-      <div class="benefit-card__icon">⚡</div>
-      <h4 class="benefit-card__title">Works offline</h4>
-      <p class="benefit-card__description">Opens from your home screen. No internet needed after install.</p>
-    </div>
-    <div class="benefit-card">
-      <div class="benefit-card__icon">🔒</div>
-      <h4 class="benefit-card__title">On this device</h4>
-      <p class="benefit-card__description">Each install is its own copy. No sync between devices.</p>
-    </div>
-    <div class="benefit-card">
-      <div class="benefit-card__icon">📱</div>
-      <h4 class="benefit-card__title">Full screen</h4>
-      <p class="benefit-card__description">No browser tabs around it</p>
-    </div>
-    <div class="benefit-card">
-      <div class="benefit-card__icon">🔄</div>
-      <h4 class="benefit-card__title">Always Updated</h4>
-      <p class="benefit-card__description">Automatic updates when available</p>
-    </div>
-  </div>
-</div>
-
-<!-- Troubleshooting -->
-<div class="download-troubleshooting">
-  <div class="container">
-    <details class="troubleshooting-details">
-    <summary class="troubleshooting-summary">Need Help? Troubleshooting Guide</summary>
-    <div class="troubleshooting-content">
-      <h4>Common Issues:</h4>
-      <ul>
-        <li><strong>Download not starting:</strong> Check your browser's popup blocker settings</li>
-        <li><strong>Install option not showing:</strong> Make sure you're using a modern browser (Chrome, Edge, Safari)</li>
-        <li><strong>App not working offline:</strong> Try refreshing the page and reinstalling</li>
-      </ul>
-      <p>Still having trouble? <%= link_to "Contact our support team", contact_path %></p>
-    </div>
-  </details>
   </div>
 </div>

@@ -2,35 +2,33 @@
   <div class="mkt-inner">
     <div class="mkt-footer__grid mkt-footer__grid--compact">
 
-      <!-- Brand -->
       <div>
         <div class="mkt-footer__brand-name">
           <%= image_tag "peponito.png", alt: "Peponi.to", class: "mkt-footer__logo", width: 36, height: 36 %>
           Peponi.to
         </div>
         <p class="mkt-footer__brand-desc">
-          Tasks organised by day. Private by design.
-          Try free for 7 days, download forever for £9.99
+          Tasks organised by day. I built this for myself. You can have it too.
           <%= link_to "Contact", contact_path, class: "mkt-footer__link" %>
         </p>
         <p class="mkt-footer__tagline">Made in Bolton, UK.</p>
       </div>
 
-      <!-- Legal -->
       <div>
         <div class="mkt-footer__col-title">Legal</div>
         <ul class="mkt-footer__links">
           <li><%= link_to "Privacy Policy", privacy_policy_path, class: "mkt-footer__link" %></li>
           <li><%= link_to "Terms of Service", terms_of_service_path, class: "mkt-footer__link" %></li>
           <li><%= link_to "Omarchy setup", how_to_path(anchor: "omarchy"), class: "mkt-footer__link" %></li>
+          <li><%= link_to "Source on GitHub", github_source_url, class: "mkt-footer__link", target: "_blank", rel: "noopener" %></li>
         </ul>
       </div>
 
     </div>
 
     <div class="mkt-footer__bottom">
-      <p class="mkt-footer__copyright">&copy; 2026 PROTO DSGN Limited. All rights reserved.</p>
-      <p class="mkt-footer__copyright">Tasks organised by day &middot; Private by design</p>
+      <p class="mkt-footer__copyright">Made in Bolton. MIT. Source on GitHub.</p>
+      <p class="mkt-footer__copyright">Tasks organised by day</p>
     </div>
   </div>
 </footer>

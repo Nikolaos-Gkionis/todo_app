@@ -82,35 +82,11 @@ RSpec.describe User, type: :model do
   end
 
   describe 'download functionality' do
-    describe '#can_download?' do
-      it 'returns true when download count is below limit' do
-        user = create(:user, download_count: 2)
-        expect(user.can_download?).to be true
-      end
-
-      it 'returns false when download count reaches limit' do
-        user = create(:user, download_count: 3)
-        expect(user.can_download?).to be false
-      end
-    end
-
     describe '#increment_download_count!' do
       it 'increments download count' do
         user = create(:user, download_count: 1)
         user.increment_download_count!
         expect(user.reload.download_count).to eq(2)
-      end
-    end
-
-    describe '#downloads_remaining' do
-      it 'calculates remaining downloads correctly' do
-        user = create(:user, download_count: 1)
-        expect(user.downloads_remaining).to eq(2)
-      end
-
-      it 'returns 0 when at limit' do
-        user = create(:user, download_count: 3)
-        expect(user.downloads_remaining).to eq(0)
       end
     end
   end
@@ -296,7 +272,8 @@ RSpec.describe User, type: :model do
       end
 
       describe '#on_trial?' do
-        it 'returns true when trial is active and app not downloaded' do
+        it 'returns true when hosted ephemeral and trial is active' do
+          enable_hosted_ephemeral!
           user = create(:user, :with_trial)
           expect(user.on_trial?).to be true
         end
@@ -325,17 +302,25 @@ RSpec.describe User, type: :model do
       end
 
       describe '#needs_trial_start?' do
-        it 'returns true when trial not started and app not downloaded' do
+        it 'returns false when hosted ephemeral is off' do
+          user = create(:user)
+          expect(user.needs_trial_start?).to be false
+        end
+
+        it 'returns true when hosted ephemeral and trial not started' do
+          enable_hosted_ephemeral!
           user = create(:user)
           expect(user.needs_trial_start?).to be true
         end
 
         it 'returns false when trial started' do
+          enable_hosted_ephemeral!
           user = create(:user, :with_trial)
           expect(user.needs_trial_start?).to be false
         end
 
         it 'returns false when app downloaded' do
+          enable_hosted_ephemeral!
           user = create(:user, :downloaded_app)
           expect(user.needs_trial_start?).to be false
         end
@@ -344,17 +329,19 @@ RSpec.describe User, type: :model do
 
     describe 'access control methods' do
       describe '#can_create_page?' do
-        it 'returns true when app is downloaded' do
-          user = create(:user, :downloaded_app)
+        it 'returns true when self-hosting, even after a week would have ended' do
+          user = create(:user, :trial_expired)
           expect(user.can_create_page?).to be true
         end
 
-        it 'returns true when on trial' do
+        it 'returns true when on an active hosted week' do
+          enable_hosted_ephemeral!
           user = create(:user, :with_trial)
           expect(user.can_create_page?).to be true
         end
 
-        it 'returns false when trial expired and app not downloaded' do
+        it 'returns false when the hosted week ended' do
+          enable_hosted_ephemeral!
           user = create(:user, :trial_expired)
           expect(user.can_create_page?).to be false
         end
@@ -371,9 +358,9 @@ RSpec.describe User, type: :model do
           expect(user.remaining_pages).to eq('∞')
         end
 
-        it 'returns 0 when trial expired and app not downloaded' do
+        it 'returns infinity when self-hosting after a hosted week would have ended' do
           user = create(:user, :trial_expired)
-          expect(user.remaining_pages).to eq('0')
+          expect(user.remaining_pages).to eq('∞')
         end
       end
 
@@ -385,8 +372,8 @@ RSpec.describe User, type: :model do
       end
 
       describe '#can_install_pwa?' do
-        it 'returns true when device_downloaded' do
-          expect(create(:user, :downloaded_app).can_install_pwa?).to be true
+        it 'returns true on self-host during a hosted-style week' do
+          expect(create(:user, :with_trial).can_install_pwa?).to be true
         end
 
         it 'returns true when paid_at is set' do
@@ -394,37 +381,49 @@ RSpec.describe User, type: :model do
           expect(u.can_install_pwa?).to be true
         end
 
-        it 'returns false during trial without purchase' do
-          expect(create(:user, :with_trial).can_install_pwa?).to be false
+        it 'returns true during a hosted week' do
+          enable_hosted_ephemeral!
+          expect(create(:user, :with_trial).can_install_pwa?).to be true
+        end
+
+        it 'returns false after the hosted week' do
+          enable_hosted_ephemeral!
+          expect(create(:user, :trial_expired).can_install_pwa?).to be false
         end
       end
 
       describe '#can_use_app?' do
-        it 'returns true during active trial' do
+        it 'returns true on self-host even without a trial' do
+          expect(create(:user).can_use_app?).to be true
+        end
+
+        it 'returns true during an active hosted week' do
+          enable_hosted_ephemeral!
           expect(create(:user, :with_trial).can_use_app?).to be true
         end
 
         it 'returns true when purchased or legacy downloaded' do
+          enable_hosted_ephemeral!
           expect(create(:user, :downloaded_app).can_use_app?).to be true
         end
 
-        it 'returns true when paid_at set (e.g. webhook pending)' do
+        it 'returns true when paid_at set' do
+          enable_hosted_ephemeral!
           u = create(:user, :trial_expired, paid_at: Time.current, device_downloaded: false)
           expect(u.can_use_app?).to be true
         end
 
-        it 'returns false after trial with no purchase' do
+        it 'returns false after the hosted week with no purchase' do
+          enable_hosted_ephemeral!
           expect(create(:user, :trial_expired).can_use_app?).to be false
-        end
-
-        it 'returns false before trial starts and without purchase' do
-          expect(create(:user).can_use_app?).to be false
         end
       end
     end
 
     describe 'trial management methods' do
       describe '#start_trial!' do
+        before { enable_hosted_ephemeral! }
+
         it 'starts trial with correct dates' do
           user = create(:user)
           Timecop.freeze do
@@ -471,6 +470,7 @@ RSpec.describe User, type: :model do
       end
 
       describe '#should_show_trial_warning?' do
+        before { enable_hosted_ephemeral! }
         it 'returns true when 3 days remaining' do
           user = create(:user)
           user.trial_started_at = 4.days.ago

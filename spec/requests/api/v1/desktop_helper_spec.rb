@@ -39,10 +39,17 @@ RSpec.describe "Api::V1 desktop helper", type: :request do
       expect(JSON.parse(response.body)["error"]).to eq("invalid_credentials")
     end
 
-    it "returns 403 for a trial-only user" do
+    it "returns a token for a trial user" do
       post "/api/v1/auth/login", params: { email: trial_user.email_address, password: password }, as: :json
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "returns 403 when the hosted week has ended" do
+      enable_hosted_ephemeral!
+      expired = create(:user, :trial_expired, password: password, password_confirmation: password, paid_at: nil, device_downloaded: false)
+      post "/api/v1/auth/login", params: { email: expired.email_address, password: password }, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(JSON.parse(response.body)["error"]).to eq("paid_required")
+      expect(JSON.parse(response.body)["error"]).to eq("hosted_week_ended")
     end
   end
 
@@ -53,7 +60,7 @@ RSpec.describe "Api::V1 desktop helper", type: :request do
       expect(response).to have_http_status(:ok)
       body = JSON.parse(response.body)
       expect(body["authenticated"]).to eq(true)
-      expect(body["paid"]).to eq(true)
+      expect(body["hosted"]).to eq(false)
     end
 
     it "returns 401 without a token" do

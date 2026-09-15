@@ -279,7 +279,7 @@
       <!-- Header -->
       <div class="header">
         <h1>⚠️ Trial Expiring Very Soon</h1>
-        <p>Only a few days left to purchase and keep your account</p>
+        <p>Only a few days left on my server</p>
       </div>
       
       <!-- Main Content -->
@@ -289,7 +289,7 @@
         </div>
         
         <div class="message">
-          <p>Your <%= @app_name %> trial is running out very soon! We don't want you to lose access to your organized life.</p>
+          <p>Your <%= @app_name %> trial is running out very soon! Export your lists, then run the app from source.</p>
         </div>
         
         <!-- Warning Info -->
@@ -304,8 +304,8 @@
         <div class="trial-details">
           <h3>What happens when your trial ends:</h3>
           <p>• You'll lose website access to your todos and pages</p>
-          <p>• Your data will be kept for 7 days so you can still purchase</p>
-          <p>• Purchase once to keep your account and install the PWA</p>
+          <p>• I delete the account when the week ends. Export first.</p>
+          <p>• Export your lists, then clone the repo to keep them</p>
           <p>• On Omarchy you can keep using the free local overlay with no account</p>
           <p>• No automatic charges - you're in complete control</p>
         </div>
@@ -313,16 +313,16 @@
         <!-- Download Section -->
         <div class="download-section">
           <h2>Keep Peponi.to</h2>
-          <p style="margin: 0 0 20px 0; opacity: 0.9;">One-time purchase. Then install the PWA on your device. Trial accounts cannot install before you pay.</p>
-          <a href="<%= @download_url %>" class="download-button">View pricing</a>
+          <p style="margin: 0 0 20px 0; opacity: 0.9;">Clone the repo. MIT. No payment.</p>
+          <a href="<%= @source_url %>" class="download-button">GitHub</a>
           <p style="margin: 15px 0 0 0; font-size: 14px; opacity: 0.8;">
-            One-time purchase • No subscriptions • Your data, your device
+            MIT • No payment • Run it yourself
           </p>
         </div>
         
         <!-- Benefits Section -->
         <div class="benefits">
-          <h2 style="margin: 0 0 20px 0; color: #333333;">Why purchase?</h2>
+          <h2 style="margin: 0 0 20px 0; color: #333333;">Why run it yourself?</h2>
           
           <div class="benefit">
             <div class="benefit-icon">📱</div>
@@ -360,11 +360,11 @@
         <!-- Support Section -->
         <div class="support-info">
           <h3>Questions About Your Trial?</h3>
-          <p>If you have any questions about your trial or the one-time purchase, please contact us at <a href="https://peponi.to/contact">support@peponi.to</a>. We're here to help!</p>
+          <p>Questions: <a href="https://peponi.to/contact">support@peponi.to</a>. Write via the contact form if you need to.</p>
         </div>
         
         <div class="message">
-          <p>Buy today if you want to keep your account after the trial.</p>
+          <p>Export today if you want to keep your lists.</p>
           
           <p>Best regards,<br>
           The <%= @app_name %> Team</p>

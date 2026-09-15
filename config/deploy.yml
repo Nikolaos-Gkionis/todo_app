@@ -45,12 +45,12 @@ registry:
 env:
   secret:
     - RAILS_MASTER_KEY
-    - POLAR_ACCESS_TOKEN
-    - POLAR_PRODUCT_ID
-    - POLAR_WEBHOOK_SECRET
     - CONTACT_EMAIL
     - BREVO_API_KEY
   clear:
+    # Delete hosted accounts after 7 days. Do not set this on a self-hosted clone.
+    HOSTED_EPHEMERAL: true
+
     # Run the Solid Queue Supervisor inside the web server's Puma process to do jobs.
     # When you start using multiple servers, you should split out job processing to a dedicated machine.
     # Re-enabled now that droplet is upsized (was disabled for 2GB memory)
@@ -96,7 +96,7 @@ builder:
   #
   # # Pass arguments and secrets to the Docker build process
   # args:
-  #   RUBY_VERSION: ruby-3.4.5
+  #   RUBY_VERSION: 4.0.1
   # secrets:
   #   - GITHUB_TOKEN
   #   - RAILS_MASTER_KEY

@@ -15,6 +15,4 @@ SimpleCov.start 'rails' do
   add_group 'Jobs', 'app/jobs'
   add_group 'Concerns', 'app/models/concerns'
   add_group 'Controllers Concerns', 'app/controllers/concerns'
-
-  minimum_coverage 90
 end

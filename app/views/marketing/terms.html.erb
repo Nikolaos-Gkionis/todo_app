@@ -1,7 +1,6 @@
 <div class="marketing-page" data-controller="scroll-reveal">
 <%= render 'shared/marketing_header' %>
 
-<!-- Header -->
 <section class="mkt-hero" style="padding: 4rem 0 5rem;">
   <div class="mkt-inner">
     <span class="mkt-hero__eyebrow" style="margin-bottom: 1.25rem; display: inline-flex;">
@@ -10,209 +9,67 @@
     </span>
     <h1 class="mkt-hero__title" style="font-size: clamp(2rem, 4.5vw, 3.25rem);">Terms of Service</h1>
     <p class="mkt-hero__subtitle" style="max-width: 36rem;">
-      Plain-language terms for a small product. We’ve tried to keep this short and fair.
+      Plain language for a small personal project. I have tried to keep this short.
     </p>
   </div>
 </section>
 
-<!-- Content -->
 <div class="mkt-section bg-white">
   <div class="mkt-inner--narrow">
 
     <div class="mkt-highlight-box mkt-highlight-box--blue mkt-reveal" data-scroll-reveal-target="item" style="margin-bottom: 3rem;">
-      By accessing or using Peponi.to, you agree to be bound by these Terms of Service and our Privacy Policy.
-      If you disagree with any part of these terms, you may not access the service.
+      By using peponi.to you agree to these terms and the privacy policy.
+      If you disagree, don’t use the hosted site — clone the repo instead.
     </div>
 
     <div class="mkt-prose mkt-reveal" data-scroll-reveal-target="item">
 
-      <h2>1. Service Description</h2>
-
-      <h3>1.1 What We Provide</h3>
+      <h2>What this is</h2>
       <p>
-        Peponi.to is a self-managed productivity application that allows you to organise your tasks by day. Our service includes:
+        Peponi.to is a day planner I built for myself. The code is MIT-licensed on
+        <a href="<%= github_source_url %>">GitHub</a>. The website at peponi.to is a hosted sandbox:
+        you can try the full app for seven days. After that I delete the account and the tasks on my server.
       </p>
-      <ul>
-        <li>A 7-day free trial on the website (PWA install after purchase)</li>
-        <li>Unlimited pages and tasks during your trial</li>
-        <li>Multiple themes and customisation options</li>
-        <li>Data export functionality</li>
-        <li>A one-time purchase option to download the app to your device</li>
-        <li>An optional Omarchy Linux overlay: free local-only on your machine, or a paid sign-in that copies your tasks onto that machine</li>
-      </ul>
-
-      <h3>1.2 Our Philosophy</h3>
       <p>
-        Peponi.to is built so your lists stay yours. After purchase you can install the app and work offline.
-        We don't track usage or collect analytics.
+        There is no payment, no subscription, and no paid licence. If you want to keep your lists,
+        run the app from source (self-host for sync, or one machine for local-only).
+        The Omarchy plugin can stay local with no account at all.
       </p>
 
-      <h2>2. Trial Terms</h2>
-
-      <h3>2.1 Free Trial</h3>
-      <ul>
-        <li>Your 7-day free trial begins when you create an account</li>
-        <li>Full access to the website during the trial period (PWA install after purchase)</li>
-        <li>No credit card required to start your trial</li>
-        <li>Unlimited pages and tasks during trial</li>
-        <li>On Omarchy you may use a free local overlay with no account; paid sign-in requires a purchase</li>
-      </ul>
-
-      <h3>2.2 Trial Expiration</h3>
-      <p>When your trial expires:</p>
-      <ul>
-        <li>You will lose access to your account and data</li>
-        <li>Your data is retained for 7 days to allow purchase</li>
-        <li>After 7 days, your data will be permanently deleted</li>
-        <li>You can purchase the app any time before data deletion</li>
-      </ul>
-
-      <div class="mkt-highlight-box mkt-highlight-box--amber">
-        <strong>Important:</strong> We will send you email reminders before your trial expires.
-        It's your responsibility to purchase the app if you want to keep your data.
-      </div>
-
-      <h2>3. Purchase and Download</h2>
-
-      <h3>3.1 One-Time Purchase</h3>
-      <ul>
-        <li>One-time payment of £9.99 (no recurring charges)</li>
-        <li>Download the app to your device for offline use</li>
-        <li>Complete ownership of your data</li>
-        <li>No monthly or annual subscriptions</li>
-      </ul>
-
-      <h3>3.2 Download Rights</h3>
-      <p>After purchase, you can:</p>
-      <ul>
-        <li>Download the app to up to 3 devices you own</li>
-        <li>Use the app completely offline</li>
-        <li>Export and import your data</li>
-        <li>Customise the app to your preferences</li>
-      </ul>
-
-      <h3>3.4 Omarchy Linux overlay</h3>
+      <h2>Your content</h2>
       <p>
-        You may use the Omarchy overlay locally with no peponi.to account. Tasks then stay on that machine.
-        Signing in to copy tasks from peponi.to requires a paid account. Trial-only accounts are not entitled
-        to that paid sign-in, and trial users cannot install the PWA until they purchase.
+        Your lists belong to you. I don’t claim them. Export them before the hosted week ends
+        if you want a copy. After deletion I cannot restore them.
       </p>
 
-      <h3>3.3 Refund Policy</h3>
+      <h2>The hosted week</h2>
       <p>
-        We offer a 7-day money-back guarantee. If Peponi.to isn't right for you,
-        <%= link_to "contact us", contact_path %> within 7 days
-        of purchase for a full refund, no questions asked.
+        On peponi.to I will send a reminder before I delete the account, when email is working.
+        A PWA installed from peponi.to is still talking to my server. It will stop working when the week ends.
+        Add to Home Screen against <em>your</em> instance if you want it on a machine you control.
       </p>
 
-      <h2>4. User Responsibilities</h2>
-
-      <h3>4.1 Account Security</h3>
-      <ul>
-        <li>Keep your login credentials secure</li>
-        <li>Don't share your account with others</li>
-        <li>Notify us immediately of any security breaches</li>
-        <li>Use a strong, unique password</li>
-      </ul>
-
-      <h3>4.2 Acceptable Use</h3>
-      <p>You agree not to:</p>
-      <ul>
-        <li>Use the service for illegal activities</li>
-        <li>Attempt to hack or compromise our systems</li>
-        <li>Share inappropriate or harmful content</li>
-        <li>Violate any applicable laws or regulations</li>
-      </ul>
-
-      <h3>4.3 Data Backup</h3>
+      <h2>Availability</h2>
       <p>
-        While we maintain backups of your data during the trial period, you are responsible
-        for backing up your important information. We provide export functionality for this purpose.
+        I run a small droplet. I don’t promise uptime. I may change or stop the hosted site.
+        The source stays yours to run.
       </p>
 
-      <h2>5. Intellectual Property</h2>
-
-      <h3>5.1 Our Rights</h3>
+      <h2>Acceptable use</h2>
       <p>
-        Peponi.to and its original content, features, and functionality are owned by PROTO DSGN Limited and are protected
-        by international copyright, trademark, and other intellectual property laws.
+        Don’t abuse the hosted site (spam accounts, attacks, illegal content). I may delete accounts that do.
       </p>
 
-      <h3>5.2 Your Content</h3>
+      <h2>Warranty</h2>
       <p>
-        You retain full ownership of all content you create using Peponi.to. We don't claim ownership
-        of your pages, tasks, or personal data. You can export and use your data however you see fit.
+        The software is provided “as is”, as the MIT licence says. I am not liable for lost lists
+        or anything you do with a clone.
       </p>
 
-      <h2>6. Service Availability</h2>
-
-      <h3>6.1 Uptime</h3>
+      <h2>Contact</h2>
       <p>
-        We strive to maintain high service availability, but we don't guarantee 100% uptime.
-        We may need to perform maintenance or updates that temporarily affect service availability.
+        Questions: the <%= link_to "contact form", contact_path %>.
       </p>
-
-      <h3>6.2 Service Changes</h3>
-      <p>
-        We reserve the right to modify or discontinue the service at any time.
-        We will provide reasonable notice of any material changes that affect your use of the service.
-      </p>
-
-      <h2>7. Limitation of Liability</h2>
-
-      <h3>7.1 Service Disclaimer</h3>
-      <p>
-        The service is provided "as is" without warranties of any kind.
-        We disclaim all warranties, express or implied, including but not limited to merchantability,
-        fitness for a particular purpose, and non-infringement.
-      </p>
-
-      <h3>7.2 Limitation of Damages</h3>
-      <p>
-        In no event shall we be liable for any indirect, incidental, special, consequential, or punitive damages,
-        including without limitation, loss of profits, data, use, goodwill, or other intangible losses.
-      </p>
-
-      <h2>8. Termination</h2>
-
-      <h3>8.1 Account Termination</h3>
-      <p>
-        You may terminate your account at any time through the settings page.
-        We may terminate or suspend your account if you violate these terms.
-      </p>
-
-      <h3>8.2 Effect of Termination</h3>
-      <p>
-        Upon termination, your right to use the service will cease immediately.
-        We will retain your data for 7 days to allow you to export it,
-        after which it will be permanently deleted.
-      </p>
-
-      <h2>9. Governing Law</h2>
-      <p>
-        These terms shall be governed by and construed in accordance with the laws
-        of the United Kingdom, without regard to its conflict of law provisions.
-      </p>
-
-      <h2>10. Changes to Terms</h2>
-      <p>
-        We reserve the right to modify these terms at any time. We will notify you of any material
-        changes by email or through the app. If you keep using the service after that, you accept the new terms.
-      </p>
-
-      <h2>11. Contact</h2>
-      <p>If you have any questions about these Terms of Service, please contact us:</p>
-      <div style="background: #F0EDEA; border: 1px solid #D8D4CC; border-radius: 0.5rem; padding: 1.25rem 1.5rem;">
-        <p style="margin: 0; color: #4E5C64;">
-          <strong>Email:</strong> <a href="mailto:support@peponi.to">support@peponi.to</a><br>
-          <strong>Subject:</strong> Terms of Service Inquiry
-        </p>
-      </div>
-
-      <div class="mkt-highlight-box mkt-highlight-box--blue" style="margin-top: 2.5rem;">
-        <strong>Fair and transparent:</strong> These terms are designed to be clear and honest.
-        We believe in plain-language agreements. If anything is unclear, please reach out and we'll explain.
-      </div>
 
     </div>
   </div>
