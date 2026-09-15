@@ -8,13 +8,20 @@ module Api
         date = parse_date!(params[:date])
         return if performed?
 
+        # Same as the website dashboard: if the user rolls unfinished
+        # tasks forward, leftover open todos land on today.
+        if current_user.roll_over? && date == Date.current
+          current_user.todos.pending.where("due_date < ?", date).update_all(due_date: date)
+        end
+
         todos = current_user.todos
           .where(due_date: date, page_id: nil)
           .order(:position, :id)
 
         render json: {
           date: date.iso8601,
-          tasks: todos.map { |t| serialize_todo(t) }
+          tasks: todos.map { |t| serialize_todo(t) },
+          prefs: { roll_over: current_user.roll_over != false }
         }
       end
 
@@ -42,6 +49,23 @@ module Api
             message: todo.errors.full_messages.to_sentence.presence || "Could not save task."
           }, status: :unprocessable_entity
         end
+      end
+
+      # PATCH /api/v1/days/:date/reorder
+      # Body: { todo_ids: [1, 2, 3] } — new order for that day's Focus list.
+      def reorder
+        date = parse_date!(params[:date])
+        return if performed?
+
+        ids = Array(params[:todo_ids]).map { |id| Integer(id) rescue nil }.compact
+        scoped = current_user.todos.where(due_date: date, page_id: nil, id: ids)
+        if ids.empty? || scoped.count != ids.size
+          render json: { error: "not_found", message: "Those tasks are not on this day." }, status: :not_found
+          return
+        end
+
+        Todo.reorder_positions!(ids)
+        render json: { ok: true, todo_ids: ids }
       end
 
       private

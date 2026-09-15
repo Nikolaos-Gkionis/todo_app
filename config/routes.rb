@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       get    "export",            to: "exports#show"
       get    "days/:date",        to: "days#show",        constraints: { date: /\d{4}-\d{2}-\d{2}/ }
       post   "days/:date/tasks",  to: "days#create_task", constraints: { date: /\d{4}-\d{2}-\d{2}/ }
+      patch  "days/:date/reorder", to: "days#reorder", constraints: { date: /\d{4}-\d{2}-\d{2}/ }
       delete "todos/:id",         to: "todos#destroy"
       patch  "todos/:id",         to: "todos#update"
       get    "not_yet",           to: "not_yet#show"
