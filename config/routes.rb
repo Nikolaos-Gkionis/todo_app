@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       get    "days/:date",        to: "days#show",        constraints: { date: /\d{4}-\d{2}-\d{2}/ }
       post   "days/:date/tasks",  to: "days#create_task", constraints: { date: /\d{4}-\d{2}-\d{2}/ }
       delete "todos/:id",         to: "todos#destroy"
+      patch  "todos/:id",         to: "todos#update"
       get    "not_yet",           to: "not_yet#show"
       post   "not_yet/tasks",     to: "not_yet#create_task"
     end

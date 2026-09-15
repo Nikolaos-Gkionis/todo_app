@@ -15,7 +15,8 @@ module Api
             email: current_user.email_address,
             name: current_user.display_name,
             app_title: current_user.app_title,
-            not_yet_panel_title: current_user.not_yet_panel_title
+            not_yet_panel_title: current_user.not_yet_panel_title,
+            roll_over: current_user.roll_over != false
           }
         }
       end

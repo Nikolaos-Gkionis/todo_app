@@ -14,6 +14,16 @@ module Api
         render json: { ok: true, id: todo.id }
       end
 
+      # PATCH /api/v1/todos/:id
+      # Body: { completed: true|false }
+      def update
+        todo = current_user.todos.find(params[:id])
+        if params.key?(:completed)
+          todo.update!(completed: ActiveModel::Type::Boolean.new.cast(params[:completed]))
+        end
+        render json: { ok: true, task: serialize_todo(todo) }
+      end
+
       private
 
       def render_not_found

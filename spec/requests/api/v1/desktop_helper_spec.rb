@@ -174,6 +174,22 @@ RSpec.describe "Api::V1 desktop helper", type: :request do
     end
   end
 
+  describe "PATCH /api/v1/todos/:id" do
+    it "toggles completed for a todo the paid user owns" do
+      token = login_as(paid_user)
+      todo = create(:todo, user: paid_user, page: nil, due_date: Date.current, title: "Ship", completed: false)
+
+      patch "/api/v1/todos/#{todo.id}",
+        params: { completed: true },
+        headers: auth_headers(token),
+        as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body).dig("task", "completed")).to eq(true)
+      expect(todo.reload.completed).to eq(true)
+    end
+  end
+
   describe "GET /api/v1/not_yet" do
     before do
       page = create(:page, user: paid_user, name: "Someday")
@@ -209,6 +225,14 @@ RSpec.describe "Api::V1 desktop helper", type: :request do
       expect(body["not_yet"].first["title"]).to eq("Book dentist")
       expect(body["not_yet"].first["list"]).to eq("Someday")
       expect(body.dig("user", "email")).to eq(paid_user.email_address)
+      expect(body.dig("user", "roll_over")).to eq(true)
+    end
+
+    it "copies the user's unfinished roll-over preference" do
+      paid_user.update!(roll_over: false)
+      token = login_as(paid_user)
+      get "/api/v1/export", headers: auth_headers(token)
+      expect(JSON.parse(response.body).dig("user", "roll_over")).to eq(false)
     end
 
     it "returns 401 without a token" do

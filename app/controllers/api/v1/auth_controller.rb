@@ -33,7 +33,8 @@ module Api
             email: user.email_address,
             name: user.display_name,
             app_title: user.app_title,
-            not_yet_panel_title: user.not_yet_panel_title
+            not_yet_panel_title: user.not_yet_panel_title,
+            roll_over: user.roll_over != false
           }
         }
       end
@@ -53,7 +54,8 @@ module Api
             email: current_user.email_address,
             name: current_user.display_name,
             app_title: current_user.app_title,
-            not_yet_panel_title: current_user.not_yet_panel_title
+            not_yet_panel_title: current_user.not_yet_panel_title,
+            roll_over: current_user.roll_over != false
           },
           expires_at: current_user.desktop_api_token_expires_at&.iso8601
         }
