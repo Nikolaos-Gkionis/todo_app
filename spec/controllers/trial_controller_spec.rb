@@ -57,7 +57,7 @@ RSpec.describe TrialController, type: :controller do
         post :start
 
         expect(response).to redirect_to(app_root_path)
-        expect(flash[:success]).to eq('Your 7-day free trial has started! The website is yours for 7 days — PWA install unlocks after purchase.')
+        expect(flash[:success]).to eq('Your 7-day free trial has started. The website is yours for 7 days. PWA install is after you purchase.')
       end
 
       it 'handles trial start failure' do

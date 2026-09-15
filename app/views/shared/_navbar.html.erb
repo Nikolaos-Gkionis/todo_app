@@ -23,7 +23,7 @@
           </div>
           <div class="navbar__actions space-x-4">
             <%= link_to "Sign In", login_path, class: "navbar__nav-link" %>
-            <%= link_to "Get Started", signup_path, class: "btn btn--primary" %>
+            <%= link_to "Start trial", signup_path, class: "btn btn--primary" %>
           </div>
         <% elsif logged_in? %>
           <!-- Authenticated User Navigation -->
@@ -105,7 +105,7 @@
               <%= link_to "Sign In", login_path, class: "mobile-menu__action-link" %>
             </div>
             <div class="mobile-menu__action-item">
-              <%= link_to "Get Started", signup_path, class: "mobile-menu__action-btn" %>
+              <%= link_to "Start trial", signup_path, class: "mobile-menu__action-btn" %>
             </div>
           </div>
         <% elsif logged_in? %>

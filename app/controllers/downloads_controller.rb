@@ -156,9 +156,9 @@ class DownloadsController < ApplicationController
   def create_manifest_json
     <<~JSON
       {
-        "name": "Peponi.to - Organise Your Days",
+        "name": "Peponi.to",
         "short_name": "Peponi.to",
-        "description": "Beautiful, offline-first todo app. Your data, your device.",
+        "description": "Organise tasks by day. Pay once to install.",
         "start_url": "./index.html",
         "scope": "./",
         "display": "standalone",

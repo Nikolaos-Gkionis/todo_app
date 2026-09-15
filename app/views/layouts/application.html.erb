@@ -25,10 +25,10 @@
     <meta name="theme-color" content="#ffffff">
     
     <!-- App Meta Tags -->
-    <meta name="description" content="Peponi.to - Organise tasks by day. 100% Yours.">
+    <meta name="description" content="Peponi.to. Organise tasks by day. Try 7 days free, then pay once.">
     <meta name="author" content="Peponi.to">
-    <meta property="og:title" content="Peponi.to - Organise Your Days">
-    <meta property="og:description" content="Reduced mental clutter. Offline-first. Zero-Cloud. Private by design.">
+    <meta property="og:title" content="Peponi.to">
+    <meta property="og:description" content="A day planner you try for a week, then keep. Rename it, name your lists, pick how many days you see.">
     <meta property="og:type" content="website">
 
     <%# Preconnect to fonts for snappy font switching %>
@@ -52,7 +52,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="<%= 'body--font-handwritten' if logged_in? && current_user&.font_family == 'handwritten' %><%= " #{yield :body_class}" if content_for?(:body_class) %>" id="app-body" data-controller="app-keyboard<%= ' keyboard-shortcuts' if logged_in? && controller_name != 'marketing' && controller_name != 'contact' %>" data-purchased="<%= (current_user&.device_downloaded?) ? 'true' : 'false' %><%= ' data-marketing-page="true"' if controller_name == 'marketing' || controller_name == 'contact' %>"<%= " data-keyboard-shortcuts-app-root-value=\"#{app_root_path}\"" if logged_in? && controller_name != 'marketing' && controller_name != 'contact' %> style="<%= "height: 100vh; overflow: hidden; height: 100dvh;" if app_viewport_fixed_layout? %><%= 'font-family: var(--user-font);' if logged_in? && current_user && font_stack_for(current_user) %>">
+  <body class="<%= 'body--font-handwritten' if logged_in? && current_user&.font_family == 'handwritten' %><%= " #{yield :body_class}" if content_for?(:body_class) %>" id="app-body" data-controller="app-keyboard<%= ' keyboard-shortcuts' if logged_in? && controller_name != 'marketing' && controller_name != 'contact' %>" data-purchased="<%= (current_user&.device_downloaded?) ? 'true' : 'false' %>"<% if %w[marketing contact sessions registrations].include?(controller_name) %> data-marketing-page="true"<% end %><%= " data-keyboard-shortcuts-app-root-value=\"#{app_root_path}\"" if logged_in? && controller_name != 'marketing' && controller_name != 'contact' %> style="<%= "height: 100vh; overflow: hidden; height: 100dvh;" if app_viewport_fixed_layout? %><%= 'font-family: var(--user-font);' if logged_in? && current_user && font_stack_for(current_user) %>">
     <%# Hidden div for Turbo Stream form-reset target (todo create clears input without full reload) %>
     <div id="turbo-form-reset-target" hidden aria-hidden="true"></div>
     <!-- Skip to main content - first focusable for keyboard/screen reader users -->
@@ -124,7 +124,7 @@
       })();
     </script>
   <!-- FAB Navigation (only for authenticated app pages) -->
-  <% if controller_name != 'marketing' && logged_in? %>
+  <% if logged_in? && !%w[marketing contact sessions registrations].include?(controller_name) %>
     <%= render 'shared/fab_navigation' %>
   <% end %>
 

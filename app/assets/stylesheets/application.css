@@ -5357,6 +5357,111 @@ dialog.theme-dark .app-dialog__title {
   box-shadow: 0 0 0 4px rgba(78, 92, 100, 0.12), var(--mkt-shadow-portal);
 }
 
+/* Space below the heading so the form card sits further down, still in the pink band */
+.mkt-hero--auth {
+  padding: 3.5rem 0 6.5rem;
+  margin-bottom: 6rem;
+}
+
+.mkt-auth-card {
+  max-width: 28rem;
+  margin: 0 auto;
+  background: #fff;
+  border: 1.5px solid #D8D4CC;
+  border-radius: 1.25rem;
+  padding: 2.25rem;
+}
+
+.mkt-auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.mkt-auth-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #4E5C64;
+  margin-bottom: 0.4rem;
+}
+
+.mkt-auth-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.625rem;
+}
+
+.mkt-auth-check {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.9rem;
+  color: #4E5C64;
+  cursor: pointer;
+}
+
+.mkt-auth-check__input {
+  width: 1rem;
+  height: 1rem;
+  accent-color: #4E5C64;
+}
+
+.mkt-auth-hint {
+  margin: 0;
+  font-size: 0.825rem;
+  line-height: 1.5;
+  color: #4E5C64;
+}
+
+.mkt-auth-submit {
+  width: 100%;
+  justify-content: center;
+  margin-top: 0.25rem;
+  appearance: none;
+  -webkit-appearance: none;
+  font-family: inherit;
+}
+
+.mkt-auth-alt {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #4E5C64;
+  margin: 1.5rem 0 0;
+}
+
+.mkt-auth-alt a {
+  color: #4E5C64;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.mkt-auth-alt a:hover {
+  color: #3A4A52;
+}
+
+.mkt-auth-errors {
+  background: #FBF2F3;
+  border: 1px solid #E8B4B8;
+  border-radius: 0.75rem;
+  padding: 0.9rem 1.1rem;
+  color: #4E5C64;
+  margin-bottom: 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.mkt-auth-errors__title {
+  font-weight: 600;
+  margin: 0 0 0.4rem;
+}
+
+.mkt-auth-errors ul {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
 .mkt-pricing-badge {
   position: absolute;
   top: -1rem;

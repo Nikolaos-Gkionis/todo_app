@@ -310,9 +310,7 @@
         </div>
         
         <div class="message">
-          <p>Welcome to <%= @app_name %>! We're thrilled to have you join our community of productive users.</p>
-          
-          <p>Your 7-day free trial is now active on the website. After you purchase, you can install the PWA on your device.</p>
+          <p>Welcome to <%= @app_name %>. Your 7-day trial is on the website. After you purchase, you can install it on your device.</p>
         </div>
         
         <!-- Trial Info -->
@@ -327,7 +325,7 @@
         <div class="trial-details">
           <h3>What's included in your trial:</h3>
           <p>• Full access to the website and all themes</p>
-          <p>• Create unlimited pages and todos</p>
+          <p>• Create unlimited lists and tasks</p>
           <p>• Export your data anytime</p>
           <p>• PWA install (Add to Home Screen) after you purchase</p>
           <p>• On Omarchy: free local overlay, or paid sign-in to copy tasks onto that machine</p>
@@ -341,23 +339,23 @@
           <div class="feature">
             <div class="feature-icon">📝</div>
             <div class="feature-text">
-              <div class="feature-title">Organize Your Life</div>
-              <div class="feature-description">Create pages for different areas of your life and organize todos within them</div>
+              <div class="feature-title">Organise by day</div>
+              <div class="feature-description">Write tasks on a day, or park them in lists you name yourself. Click the title to rename the app.</div>
             </div>
           </div>
           
           <div class="feature">
             <div class="feature-icon">🎨</div>
             <div class="feature-text">
-              <div class="feature-title">Beautiful Themes</div>
-              <div class="feature-description">5 themes, 4 fonts, 8 accent colours — 160 combinations to match your style</div>
+              <div class="feature-title">Themes, fonts, colours</div>
+              <div class="feature-description">5 themes, 4 fonts, 8 accent colours. 160 combinations. Today, or 2 through 7 days.</div>
             </div>
           </div>
           
           <div class="feature">
             <div class="feature-icon">📱</div>
             <div class="feature-text">
-              <div class="feature-title">Download to Device</div>
+              <div class="feature-title">Install after you buy</div>
               <div class="feature-description">After you purchase, install the PWA on your device. On Omarchy, local mode needs no account.</div>
             </div>
           </div>
@@ -365,36 +363,36 @@
           <div class="feature">
             <div class="feature-icon">⚡</div>
             <div class="feature-text">
-              <div class="feature-title">Lightning Fast</div>
-              <div class="feature-description">Quick and responsive interface that gets out of your way</div>
+              <div class="feature-title">Keyboard shortcuts</div>
+              <div class="feature-description">Press ? in the app for the list. n for a new task, y for Not Yet, s for Settings.</div>
             </div>
           </div>
         </div>
         
         <!-- CTA Section -->
         <div class="cta-section">
-          <h2 style="margin: 0 0 15px 0;">Ready to get started?</h2>
-          <p style="margin: 0 0 20px 0; opacity: 0.9;">Jump right in and start organizing your life!</p>
-          <a href="https://peponi.to/app" class="cta-button">Start Using <%= @app_name %></a>
+          <h2 style="margin: 0 0 15px 0;">Open the app</h2>
+          <p style="margin: 0 0 20px 0; opacity: 0.9;">Add a task to today. Rename the title if you want. That’s enough for day one.</p>
+          <a href="https://peponi.to/app" class="cta-button">Open <%= @app_name %></a>
         </div>
         
         <!-- Support Section -->
         <div class="support-info">
           <h3>Need Help Getting Started?</h3>
-          <p>If you have any questions or need assistance, please don't hesitate to contact us at <a href="https://peponi.to/contact">support@peponi.to</a>. We're here to help you make the most of your trial!</p>
+          <p>If you have questions, write to us at <a href="https://peponi.to/contact">support@peponi.to</a>.</p>
         </div>
         
         <div class="message">
-          <p>We hope you love using <%= @app_name %> as much as we loved building it for you!</p>
+          <p>Thanks for trying <%= @app_name %>.</p>
           
-          <p>Happy organizing!<br>
-          The <%= @app_name %> Team</p>
+          <p>Nikolaos<br>
+          <%= @app_name %></p>
         </div>
       </div>
       
       <!-- Footer -->
       <div class="footer">
-        <p><strong><%= @app_name %></strong> - Your personal productivity companion</p>
+        <p><strong><%= @app_name %></strong> · Tasks organised by day</p>
         <p>This welcome email was sent to <%= @user.email_address %> because you started a free trial.</p>
         <p>
           <a href="https://peponi.to/contact">Contact Support</a> | 

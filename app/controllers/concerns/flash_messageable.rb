@@ -29,7 +29,7 @@ module FlashMessageable
 
   # Trial-specific messages
   def flash_trial_started
-    flash[:success] = "Your 7-day free trial has started! The website is yours for 7 days — PWA install unlocks after purchase."
+    flash[:success] = "Your 7-day free trial has started. The website is yours for 7 days. PWA install is after you purchase."
   end
 
   def flash_trial_active(days_remaining)

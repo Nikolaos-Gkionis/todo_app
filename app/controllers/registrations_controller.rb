@@ -3,6 +3,7 @@ class RegistrationsController < ApplicationController
   skip_before_action :require_login, only: [ :new, :create ]
   skip_before_action :check_trial_status, only: [ :new, :create ]
   skip_before_action :block_expired_trial_without_purchase!, only: [ :new, :create ]
+  before_action :set_marketing_nav, only: [ :new, :create ]
 
   def new
     # Show the signup form
@@ -40,5 +41,9 @@ class RegistrationsController < ApplicationController
   def user_params
     # Only allow these parameters for security
     params.require(:user).permit(:name, :email_address, :password, :password_confirmation)
+  end
+
+  def set_marketing_nav
+    @marketing_nav = true
   end
 end

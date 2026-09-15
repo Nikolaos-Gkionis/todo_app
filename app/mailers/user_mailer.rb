@@ -117,7 +117,7 @@ class UserMailer < ApplicationMailer
 
     mail(
       to: @user.email_address,
-      subject: "Keep Peponi.to after your trial — one-time purchase"
+      subject: "Keep Peponi.to after your trial: one-time purchase"
     )
   end
 

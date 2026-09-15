@@ -290,7 +290,7 @@ RSpec.describe DownloadsController, type: :controller do
 
         expect { JSON.parse(manifest) }.not_to raise_error
         parsed = JSON.parse(manifest)
-        expect(parsed['name']).to eq('Peponi.to - Organise Your Days')
+        expect(parsed['name']).to eq('Peponi.to')
         expect(parsed['short_name']).to eq('Peponi.to')
         expect(parsed['display']).to eq('standalone')
         expect(parsed['icons']).to be_an(Array)

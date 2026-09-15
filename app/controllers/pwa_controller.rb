@@ -28,9 +28,9 @@ class PwaController < ApplicationController
     base = request.base_url
     icon = "#{base}#{helpers.asset_path("peponito.png")}"
     {
-      name: "Peponi.to - Organise Your Days",
+      name: "Peponi.to",
       short_name: "Peponi.to",
-      description: "Beautiful, offline-first todo app. Start with a 7-day free trial, then download forever. Your data, your device.",
+      description: "Organise tasks by day. Try 7 days free on the web, then pay once to install.",
       start_url: "#{base}/app",
       scope: "#{base}/",
       display_override: [ "fullscreen", "standalone" ],
@@ -46,9 +46,9 @@ class PwaController < ApplicationController
         { src: icon, sizes: "512x512", type: "image/png", purpose: "maskable" }
       ],
       shortcuts: [
-        { name: "Add New Page", short_name: "New Page", description: "Create a new todo page",
+        { name: "New list", short_name: "New list", description: "Create a Not Yet list",
           url: "#{base}/app/pages/new", icons: [ { src: icon, sizes: "192x192" } ] },
-        { name: "View All Pages", short_name: "My Pages", description: "See all your todo pages",
+        { name: "Open planner", short_name: "Planner", description: "Your days and lists",
           url: "#{base}/app", icons: [ { src: icon, sizes: "192x192" } ] },
         { name: "Settings", short_name: "Settings", description: "App settings and preferences",
           url: "#{base}/app/settings", icons: [ { src: icon, sizes: "192x192" } ] }

@@ -1,24 +1,30 @@
-<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-sm w-full space-y-8">
-    <!-- Back link -->
-    <div class="text-center">
-      <%= link_to "← Back to Home", root_path, class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline--blue" %>
-    </div>
-    
-    <div>
-      <h1 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-        Create your account
-      </h1>
-    </div>
-    
-    <%= form_with model: @user, url: signup_path, local: true, class: "mt-8 space-y-6" do |form| %>
-      <!-- Display validation errors -->
+<div class="marketing-page" data-controller="scroll-reveal">
+<%= render 'shared/navbar' %>
+
+<section class="mkt-hero mkt-hero--auth">
+  <div class="mkt-inner" style="text-align: center;">
+    <span class="mkt-hero__eyebrow" style="margin-bottom: 1.25rem; display: inline-flex;">
+      <span class="mkt-hero__eyebrow-dot"></span>
+      7 days free. No credit card.
+    </span>
+    <h1 class="mkt-hero__title" style="font-size: clamp(2rem, 4.5vw, 3.25rem);">
+      Create your account
+    </h1>
+    <p class="mkt-hero__subtitle" style="margin: 0 auto;">
+      Email and a password. That’s the whole signup.
+    </p>
+  </div>
+</section>
+
+<section class="mkt-section bg-white" style="padding-top: 0;">
+  <div class="mkt-inner">
+    <div class="mkt-auth-card mkt-reveal" data-scroll-reveal-target="item">
       <% if @user.errors.any? %>
-        <div class="text-red-700 mb-4 text-center" role="alert">
-          <h3 class="font-medium mb-2">
-            ⚠️ <%= pluralize(@user.errors.count, "error") %> prohibited this account from being saved:
-          </h3>
-          <ul class="list-disc pl-5 space-y-1 text-left">
+        <div class="mkt-auth-errors" role="alert">
+          <p class="mkt-auth-errors__title">
+            <%= pluralize(@user.errors.count, "error") %> prohibited this account from being saved:
+          </p>
+          <ul>
             <% @user.errors.full_messages.each do |message| %>
               <li><%= message %></li>
             <% end %>
@@ -26,48 +32,50 @@
         </div>
       <% end %>
 
-      <div class="rounded-md shadow-sm -space-y-px">
+      <%= form_with model: @user, url: signup_path, local: true, class: "mkt-auth-form" do |form| %>
         <div>
-          <%= form.label :name, "Name", class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= form.label :name, "Name", class: "mkt-auth-label" %>
           <%= form.text_field :name,
-                placeholder: "Name",
+                placeholder: "Your name",
                 required: true,
-                class: "w-full form-input" %>
+                autocomplete: "name",
+                class: "form-input mkt-auth-input" %>
         </div>
         <div>
-          <%= form.label :email_address, "Email", class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= form.label :email_address, "Email", class: "mkt-auth-label" %>
           <%= form.email_field :email_address,
-                placeholder: "Email",
+                placeholder: "you@example.com",
                 required: true,
-                class: "w-full form-input" %>
+                autocomplete: "email",
+                class: "form-input mkt-auth-input" %>
         </div>
         <div>
-          <%= form.label :password, "Password", class: "block text-sm font-medium text-gray-700 mb-1" %>
-          <%= form.password_field :password, 
-                placeholder: "Password", 
+          <%= form.label :password, "Password", class: "mkt-auth-label" %>
+          <%= form.password_field :password,
+                placeholder: "At least 6 characters",
                 required: true,
-                class: "w-full form-input" %>
+                autocomplete: "new-password",
+                class: "form-input mkt-auth-input" %>
         </div>
         <div>
-          <%= form.label :password_confirmation, "Confirm Password", class: "block text-sm font-medium text-gray-700 mb-1" %>
-          <%= form.password_field :password_confirmation, 
-                placeholder: "Confirm Password", 
+          <%= form.label :password_confirmation, "Confirm Password", class: "mkt-auth-label" %>
+          <%= form.password_field :password_confirmation,
+                placeholder: "Confirm Password",
                 required: true,
-                class: "w-full form-input" %>
+                autocomplete: "new-password",
+                class: "form-input mkt-auth-input" %>
         </div>
-      </div>
 
-      <div>
-        <%= form.submit "Create Account", 
-              class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline-blue cursor-pointer bg-transparent border-0 w-full flex justify-center" %>
-      </div>
-      
-      <div class="text-center">
-        <p class="text-sm text-gray-600">
-          Already have an account? 
-          <%= link_to "Sign in", login_path, class: "font-medium text-indigo-600 hover:text-indigo-500" %>
-        </p>
-      </div>
-    <% end %>
+        <%= form.submit "Create Account", class: "mkt-btn mkt-btn--primary mkt-auth-submit" %>
+      <% end %>
+
+      <p class="mkt-auth-alt">
+        Already have an account?
+        <%= link_to "Sign in", login_path %>
+      </p>
+    </div>
   </div>
+</section>
+
+<%= render 'shared/footer' %>
 </div>

@@ -7,7 +7,7 @@
       <% end %>
       <h1 class="download-header__title">Download Peponi.to to Your Device</h1>
       <p class="download-header__subtitle">
-        Get the full offline experience with all your data stored locally on your device.
+        Get the app onto this device. After install it works offline, from your home screen or dock.
       </p>
     </div>
   </div>
@@ -85,7 +85,7 @@
         <%= link_to (params[:token].present? ? install_pwa_path(token: params[:token]) : install_pwa_path),
                     class: "download-button download-button--secondary",
                     style: "margin-bottom: 1rem;" do %>
-          📱 View detailed PWA install guide (viewport lock, account icon)
+          📱 PWA install guide
         <% end %>
         
         <!-- Mobile Instructions -->
@@ -145,18 +145,18 @@
   <div class="download-benefits__grid">
     <div class="benefit-card">
       <div class="benefit-card__icon">⚡</div>
-      <h4 class="benefit-card__title">Lightning Fast</h4>
-      <p class="benefit-card__description">Works instantly, no internet required</p>
+      <h4 class="benefit-card__title">Works offline</h4>
+      <p class="benefit-card__description">Opens from your home screen. No internet needed after install.</p>
     </div>
     <div class="benefit-card">
       <div class="benefit-card__icon">🔒</div>
-      <h4 class="benefit-card__title">Private & Secure</h4>
-      <p class="benefit-card__description">Your data stays on your device</p>
+      <h4 class="benefit-card__title">On this device</h4>
+      <p class="benefit-card__description">Each install is its own copy. No sync between devices.</p>
     </div>
     <div class="benefit-card">
       <div class="benefit-card__icon">📱</div>
-      <h4 class="benefit-card__title">Native Feel</h4>
-      <p class="benefit-card__description">Works like a native app</p>
+      <h4 class="benefit-card__title">Full screen</h4>
+      <p class="benefit-card__description">No browser tabs around it</p>
     </div>
     <div class="benefit-card">
       <div class="benefit-card__icon">🔄</div>

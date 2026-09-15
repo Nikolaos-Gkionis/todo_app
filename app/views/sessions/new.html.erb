@@ -1,61 +1,67 @@
-<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-sm w-full space-y-8">
-    <!-- Back link -->
-    <div class="text-center">
-      <%= link_to "← Back to Home", root_path, class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline--blue" %>
-    </div>
-    
-    <div>
-      <h1 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-        Sign in to your account
-      </h1>
-    </div>
-    
-    <%= form_with url: login_path, local: true, data: { turbo: false }, class: "mt-8 space-y-6" do |form| %>
-      <div class="rounded-md shadow-sm -space-y-px">
-        <div>
-          <%= form.label :email_address, "Email address", class: "block text-sm font-medium text-gray-700 mb-1" %>
-          <%= form.email_field :email_address, 
-                placeholder: "Email address", 
-                required: true,
-                class: "w-full form-input" %>
-        </div>
-        <div>
-          <%= form.label :password, "Password", class: "block text-sm font-medium text-gray-700 mb-1" %>
-          <%= form.password_field :password, 
-                placeholder: "Password", 
-                required: true,
-                class: "w-full form-input" %>
-        </div>
-      </div>
+<div class="marketing-page" data-controller="scroll-reveal">
+<%= render 'shared/navbar' %>
 
-      <!-- Remember Me checkbox -->
-      <div class="flex items-center">
-        <%= form.check_box :remember_me, 
-              { class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" }, 
-              "1", "0" %>
-        <%= form.label :remember_me, "Keep me signed in", 
-              class: "ml-2 block text-sm text-gray-900" %>
-      </div>
-      
-      <!-- PWA tip -->
-      <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
-        <p class="text-sm text-blue-800">
-          💡 <strong>PWA Tip:</strong> Check "Keep me signed in" to stay logged in when using the app on your phone or tablet. This works just like YouTube, Spotify, and other apps - you'll stay signed in indefinitely as long as you use the app regularly.
-        </p>
-      </div>
-
-      <div>
-        <%= form.submit "Sign in", 
-              class: "text-blue-600 hover:text-blue-800 font-medium hand-underline hand-underline-blue cursor-pointer bg-transparent border-0 w-full flex justify-center" %>
-      </div>
-      
-      <div class="text-center">
-        <p class="text-sm text-gray-600">
-          Don't have an account? 
-          <%= link_to "Sign up", signup_path, class: "font-medium text-indigo-600 hover:text-indigo-500" %>
-        </p>
-      </div>
-    <% end %>
+<section class="mkt-hero mkt-hero--auth">
+  <div class="mkt-inner" style="text-align: center;">
+    <span class="mkt-hero__eyebrow" style="margin-bottom: 1.25rem; display: inline-flex;">
+      <span class="mkt-hero__eyebrow-dot"></span>
+      Welcome back
+    </span>
+    <h1 class="mkt-hero__title" style="font-size: clamp(2rem, 4.5vw, 3.25rem);">
+      Sign in to your account
+    </h1>
+    <p class="mkt-hero__subtitle" style="margin: 0 auto;">
+      Same email and password you used to start your trial.
+    </p>
   </div>
+</section>
+
+<section class="mkt-section bg-white" style="padding-top: 0;">
+  <div class="mkt-inner">
+    <div class="mkt-auth-card mkt-reveal" data-scroll-reveal-target="item">
+      <% if flash[:alert] %>
+        <div class="mkt-auth-errors" role="alert">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+
+      <%= form_with url: login_path, local: true, data: { turbo: false }, class: "mkt-auth-form" do |form| %>
+        <div>
+          <%= form.label :email_address, "Email address", class: "mkt-auth-label" %>
+          <%= form.email_field :email_address,
+                placeholder: "you@example.com",
+                required: true,
+                autocomplete: "email",
+                class: "form-input mkt-auth-input" %>
+        </div>
+        <div>
+          <%= form.label :password, "Password", class: "mkt-auth-label" %>
+          <%= form.password_field :password,
+                placeholder: "Password",
+                required: true,
+                autocomplete: "current-password",
+                class: "form-input mkt-auth-input" %>
+        </div>
+
+        <label class="mkt-auth-check">
+          <%= form.check_box :remember_me, { class: "mkt-auth-check__input" }, "1", "0" %>
+          <span>Keep me signed in</span>
+        </label>
+
+        <p class="mkt-auth-hint">
+          Tick this if you install the app on your phone. You’ll stay signed in on that device.
+        </p>
+
+        <%= form.submit "Sign in", class: "mkt-btn mkt-btn--primary mkt-auth-submit" %>
+      <% end %>
+
+      <p class="mkt-auth-alt">
+        Don’t have an account?
+        <%= link_to "Start a free trial", signup_path %>
+      </p>
+    </div>
+  </div>
+</section>
+
+<%= render 'shared/footer' %>
 </div>

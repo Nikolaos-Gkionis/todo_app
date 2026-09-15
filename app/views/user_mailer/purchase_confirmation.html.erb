@@ -256,9 +256,7 @@
         </div>
         
         <div class="message">
-          <p>Thank you for purchasing <%= @app_name %>! We're excited to have you join our community of productive users.</p>
-          
-          <p>Your app is now ready to download to your device. Once downloaded, you'll have full offline access to all your todos, with no monthly fees or subscriptions required.</p>
+          <p>Thanks for buying <%= @app_name %>. Your download is ready. After you install it, you can work offline. No monthly fee.</p>
         </div>
         
         <!-- Download Section -->
@@ -287,23 +285,23 @@
             <div class="feature-icon">🎨</div>
             <div class="feature-text">
               <div class="feature-title">All Themes Included</div>
-              <div class="feature-description">5 themes, 4 fonts, 8 accent colours — 160 combinations. F, 2, 4, 7-day views.</div>
+              <div class="feature-description">5 themes, 4 fonts, 8 accent colours. 160 combinations. Today, or 2 through 7 days. Rename the app if you like.</div>
             </div>
           </div>
           
           <div class="feature">
             <div class="feature-icon">💾</div>
             <div class="feature-text">
-              <div class="feature-title">Your Data, Your Device</div>
-              <div class="feature-description">Complete data ownership with local storage and export options</div>
+              <div class="feature-title">Your data, your device</div>
+              <div class="feature-description">Export anytime. Delete anytime. Install on up to three devices you own.</div>
             </div>
           </div>
           
           <div class="feature">
             <div class="feature-icon">⚡</div>
             <div class="feature-text">
-              <div class="feature-title">Lightning Fast</div>
-              <div class="feature-description">Native app performance with instant loading and smooth animations</div>
+              <div class="feature-title">Opens from the home screen</div>
+              <div class="feature-description">Install as a PWA. Full screen, works offline after install.</div>
             </div>
           </div>
         </div>
@@ -311,27 +309,27 @@
         <!-- PWA Install Guide (post-payment URL, no marketing mix) -->
         <div class="support-info">
           <h3>📱 How to install on your device</h3>
-          <p>Follow our step-by-step guide to install Peponi.to as a Progressive Web App (PWA) for a native app experience — no app store, full screen, viewport lock.</p>
+          <p>A short guide to install Peponi.to as a PWA: no app store, full screen, from your home screen or dock.</p>
           <p style="margin-top: 12px;"><a href="<%= @install_guide_url %>" class="download-button" style="display: inline-block; margin: 0;">View PWA install guide</a></p>
         </div>
 
         <!-- Support Section -->
         <div class="support-info">
           <h3>Need Help?</h3>
-          <p>If you have any questions or need assistance with your download, please don't hesitate to contact us at <a href="https://peponi.to/contact">support@peponi.to</a>. We're here to help!</p>
+          <p>If you need a hand with the download, write to <a href="https://peponi.to/contact">support@peponi.to</a>.</p>
         </div>
         
         <div class="message">
-          <p>Thank you for choosing <%= @app_name %>. We hope you enjoy your new productivity companion!</p>
+          <p>Thanks for buying <%= @app_name %>.</p>
           
-          <p>Happy organizing!<br>
-          The <%= @app_name %> Team</p>
+          <p>Nikolaos<br>
+          <%= @app_name %></p>
         </div>
       </div>
       
       <!-- Footer -->
       <div class="footer">
-        <p><strong><%= @app_name %></strong> - Your personal productivity companion</p>
+        <p><strong><%= @app_name %></strong> · Tasks organised by day</p>
         <p>This email was sent to <%= @user.email_address %> because you purchased our app.</p>
         <p>
           <a href="https://peponi.to/contact">Contact Support</a> | 

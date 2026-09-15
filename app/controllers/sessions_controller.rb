@@ -5,6 +5,7 @@ class SessionsController < ApplicationController
   skip_before_action :check_trial_status, only: [ :new, :create ]
   # Never block the login form or credential POST — paywall only applies after a session exists and hits /app
   skip_before_action :block_expired_trial_without_purchase!, only: [ :new, :create ]
+  before_action :set_marketing_nav, only: [ :new, :create ]
 
   def new
     # Show the login form
@@ -77,5 +78,9 @@ class SessionsController < ApplicationController
 
   def paywalled_after_login?(user)
     user.trial_started? && user.trial_expired? && !user.can_install_pwa?
+  end
+
+  def set_marketing_nav
+    @marketing_nav = true
   end
 end
